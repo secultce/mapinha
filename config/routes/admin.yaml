@@ -18,7 +18,3 @@ admin_agent:
   resource: 'admin/agent.yaml'
   prefix: /
   name_prefix: admin_agent_
-admin_initiative:
-  resource: 'admin/initiative.yaml'
-  prefix: /
-  name_prefix: admin_initiative_

@@ -113,33 +113,3 @@ agent.home: Inicio
 
 my-account: Minha Conta
 profile-picture: Foto de Perfil
-
-initiative: Iniciativas
-initiative.past_present_title: Descobrindo o passado no presente
-initiative.cultural_festival_title: Festival Cultural de Cinema Raízes
-initiative.handcraft_exhibition_title: Oficina e Exposição de Artesanato de Guarulhos - 2024
-initiative.id: "ID"
-initiative.badge.workshop: Oficina
-initiative.badge.festival: Festival
-initiative.description.workshop:
-  Oficina de Educação Patrimonial, gratuita, destinada a professores, alunos, agentes de turismo e o público em geral, a escolha da Secretaria Municipal de Cultura de Petrolândia, visando envolver a comunidade no reconhecimento e valorização dos bens de valor histórico, paisagísticos e culturais existentes na cidade.
-initiative.description.festival:
-  O Festival faz uma viagem ao passado ao mesmo tempo que proporciona um espaço para debater as tendências do futuro com os participantes do evento e com a comunidade local, incluindo principalmente o público infantil, com oficinas e filmes dirigidos pelas crianças, falando da origem da vida, da construção das manifestações culturais de um povo.
-initiative.description.handcraft:
-  Na oficina são confeccionados objetos de decoração como potes e garrafas de vidro decorados, sousplat e cestaria de jornal, objetos de madeira (suporte para rolo de papel), através de diversas técnicas, como decoupagem com guardanapo, marmorização, efeito pedra, vintage, arranjos florais em latas e flores de jornal.
-initiative.tags: TAGS (7)
-initiative.access_button: Acessar iniciativa
-initiative.dropdown.recent: Mais recentes primeiro
-initiative.dropdown.older: Mais antigos primeiro
-initiative.dropdown.popular: Mais populares
-initiative.count.found: iniciativas encontradas
-initiative.search.placeholder: Pesquisar por Iniciativas
-initiative.create: Criar iniciativa
-initiative.view: Visualizar como
-initiative.list: Lista
-initiative.chart: Indicadores
-initiative.found: Iniciativas encontradas
-initiative.registered: iniciativas cadastradas
-initiative.ongoing: iniciativas em andamento
-initiative.completed: iniciativa concluída
-initiative.days: cadastrados nos últimos 7 dias

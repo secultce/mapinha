@@ -118,33 +118,3 @@ agent.home: Home
 
 my-account: My Account
 profile-picture: Profile Picture
-
-initiative: Initiatives
-initiative.past_present_title: Discovering the past in the present
-initiative.cultural_festival_title: Cultural Cinema Roots Festival
-initiative.handcraft_exhibition_title: Guarulhos Handcraft Workshop and Exhibition - 2024
-initiative.id: ID
-initiative.badge.workshop: Workshop
-initiative.badge.festival: Festival
-initiative.description.workshop:
-  Heritage Education Workshop, free, aimed at teachers, students, tourism agents, and the general public, chosen by the Municipal Department of Culture of Petrolândia, aiming to involve the community in recognizing and valuing historical, scenic, and cultural assets existing in the city.
-initiative.description.festival:
-  The festival takes a journey into the past while providing a space to discuss future trends with event participants and the local community, including primarily children, with workshops and films directed by children, talking about the origin of life and the construction of cultural manifestations of a people.
-initiative.description.handcraft:
-  In the workshop, decorative objects such as decorated glass jars and bottles, newspaper basketry, and wooden items (paper roll holders) are made using various techniques such as napkin decoupage, marbling, stone effect, vintage, floral arrangements in cans, and newspaper flowers.
-initiative.tags: TAGS (7)
-initiative.access_button: Access initiative
-initiative.dropdown.recent: Más recientes primero
-initiative.dropdown.older: Más antiguos primero
-initiative.dropdown.popular: Más populares
-initiative.count.found: iniciativas encontradas
-initiative.search.placeholder: Buscar iniciativas
-initiative.create: Create an Initiative
-initiative.view: View as
-initiative.list: List
-initiative.chart: Indicators
-initiative.found: Initiative found
-initiative.registered: registered initiatives
-initiative.ongoing: ongoing initiatives
-initiative.completed: initiatives completed
-initiative.days: registered in the last 7 days

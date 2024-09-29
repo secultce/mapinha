@@ -113,33 +113,3 @@ agent.home: Inicio
 
 my-account: Mi cuenta
 profile-picture: Foto de perfil
-
-initiative: Iniciativas
-initiative.past_present_title: Descubriendo el pasado en el presente
-initiative.cultural_festival_title: Festival Cultural de Cine Raíces
-initiative.handcraft_exhibition_title: Taller y Exposición de Artesanía de Guarulhos - 2024
-initiative.id: ID
-initiative.badge.workshop: Taller
-initiative.badge.festival: Festival
-initiative.description.workshop:
-  Taller de Educación Patrimonial, gratuito, dirigido a profesores, estudiantes, agentes de turismo y al público en general, elegido por la Secretaría Municipal de Cultura de Petrolândia, con el objetivo de involucrar a la comunidad en el reconocimiento y la valoración de los bienes históricos, paisajísticos y culturales de la ciudad.
-initiative.description.festival:
-  El festival es un viaje al pasado al mismo tiempo que ofrece un espacio para debatir las tendencias del futuro con los participantes del evento y la comunidad local, incluyendo principalmente al público infantil, con talleres y películas dirigidas por niños, hablando del origen de la vida y de la construcción de las manifestaciones culturales de un pueblo.
-initiative.description.handcraft:
-  En el taller se confeccionan objetos decorativos como frascos y botellas de vidrio decoradas, cestas de papel de periódico, y artículos de madera (soportes para rollos de papel) utilizando diversas técnicas como decoupage con servilletas, marmolado, efecto piedra, vintage, arreglos florales en latas y flores de papel de periódico.
-initiative.tags: ETIQUETAS (7)
-initiative.access_button: Acceder la iniciativa
-initiative.dropdown.recent: Most recent first
-initiative.dropdown.older: Oldest first
-initiative.dropdown.popular: Most popular
-initiative.count.found: initiatives found
-initiative.search.placeholder: Search for Initiatives
-initiative.create: Crear una iniciativa
-initiative.view: Ver como
-initiative.list: Lista
-initiative.chart: Indicadores
-initiative.found: Iniciativa encontrados
-initiative.registered: iniciativas registradas
-initiative.ongoing: iniciativas en curso
-initiative.completed: iniciativa completada
-initiative.days: registrado en los últimos 7 días
