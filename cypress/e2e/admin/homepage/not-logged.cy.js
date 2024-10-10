@@ -20,7 +20,7 @@ describe('Página de Home do ambiente web', () => {
     });
 
     it('Garante que a seção boas-vindas e criar cadastro existam', () => {
-        cy.get('h1').contains('Olá, esta é a plataforma Aurora').should('be.visible');
+        cy.get('h1').contains('Boas vindas, você chegou no Aurora!').should('be.visible');
         cy.get('a').contains('Cadastro').should('be.visible');
     });
 

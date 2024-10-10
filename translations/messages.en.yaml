@@ -190,21 +190,22 @@ view:
       last_days: Registered in the last 7 days
 
   homepage:
-    add_events: Add your events, spaces, initiatives, and opportunities like notices and contests to the cultural radar, so people can participate in what’s happening in the region. With Mapas, you can do all this collaboratively and interactively, democratizing access to culture.
-    api_info: You can use the API to access public data from our database and use it to develop external applications. Additionally, you can contribute freely to Aurora directly on GitHub.
+    add_events: Post your events, spaces, initiatives, and opportunities such as calls for proposals and contests on the cultural radar so that people can participate in what is happening in the region. With Aurora, you can do all this in a collaborative and interactive way, democratizing access to culture.
+    api_info: You can use the API to access public data in our database and utilize it to develop external applications. Additionally, you can also contribute to the open-source Aurora software directly on GitHub.
     check_opportunities: Check Opportunities
     cultural_scene: Stay updated on everything happening in Ceará's cultural scene!
+    contribute_aurora: Contribute to Aurora
     discover_places: Discover places where cultural activities happen. And take the opportunity to register your space on the artistic and cultural radar.
-    entities: Aurora is a world, discover
+    entities: In Aurora, you will find
     find_initiatives: Find support laws, calls, showcases, and notices of your interest or publish your initiatives to the entire community.
     find_nearby: Find activities near you.
     free_software_info: Did you know that Aurora is free software?
     register_access: Register and access the results of notices, workshops, awards, and contests. You can also create your own form and promote an opportunity.
     register_artists: Discover or register artists, managers, producers, groups, collectives, bands, institutions, and companies from the region's artistic and cultural scene.
-    registration_info: Registration is essential to organize information and facilitate access to services and opportunities within the cultural map.
+    registration_info: Registration is essential for organizing information and facilitating access to services and opportunities within Aurora.
     search_calendar: Search the calendar of cultural activities happening in your region. Or create and promote your events for free on the platform.
     subtitle: Find culture in every corner of the city and promote your own culture. Participate in the artistic production of your territory with a free, open, and collaborative platform.
-    title: Hello, this is the Aurora platform!
+    title: Welcome, you've arrived at Aurora!
     discover_open_notice: Discover the latest notices, workshops, awards, and contests with open registrations.
 
   initiative:
