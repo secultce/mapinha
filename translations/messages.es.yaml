@@ -1,7 +1,5 @@
-actions_in_priority_territory: ¿Habrá acciones de iniciativa en algún territorio prioritario?
+actions_in_priority_territory: Will there be initiative actions in any priority territory?
 add: Añadir
-add_new: Añadir Nuevo
-add_occurrence: Añadir ocurrencia
 address_complement: Complemento
 address_data: Datos de Dirección
 add_alternative_address: Añadir dirección alternativa
@@ -9,23 +7,16 @@ add_cover_image: Anãdir imagen de portada
 add_opening_hours: Añadir horario de apertura
 add_phase: Añadir fase
 add_specific_objective: Añadir objetivo específico
-adapted_bathroom: Baño adaptado
-account_confirmation: Confirmación de cuenta
-account_confirmed: Cuenta confirmada
 account_privacy: Cuenta y Privacidad
 account_settings: Configuración de la cuenta de usuario
 access: Acceder
 accessibility: Accesibilidad
 access_main_agent: Acceder al Agente Principal
-access_ramp: Rampas de acceso
 accountability: Rendición de Cuentas
 accompany: Acompañar
-accepted: Aceptado
 action: Acción
 actions: Acciones
 activity: Actividad
-activities: Actividades
-active: Activo
 activity_area: Área de actividad
 activity_created: Se creó el área de actividad
 activity_deleted: Se ha excluido el área de actividad
@@ -40,15 +31,7 @@ add_archive: Añadir
 administration: Administración
 agent: Agente
 agents: Agentes
-agent_information: Información del Agente
 age_rating: Clasificación por Edad
-age_rating.free: Libre
-age_rating.10_years: 10 años
-age_rating.12_years: 12 años
-age_rating.14_years: 14 años
-age_rating.16_years: 16 años
-age_rating.18_years: 18 años
-age_rating.not_rated: No clasificado
 ages_rating:
   all: Libre
   ten: 10 años
@@ -66,7 +49,6 @@ architectural_accessibility_offers: Ofrece accesibilidad física
 archive: Archivar
 archives: Archivos
 archived: Archivados
-awaiting_confirmation: Esperando confirmación
 areas_of_expertise: Áreas de Especialización
 areas_of_interest: Áreas de Interés
 analysis: Periodo de análisis
@@ -80,25 +62,19 @@ asian: Amarillo
 apply_filter: Aplicar filtros
 attachments_and_links: Archivos adjuntos y enlaces
 attitudinal_accessibility: Accesibilidad Actitudinal
-audio_description: Audiodescripción
-awaiting: Esperando
 
 back: Volver
-bank_details: Detalles Bancarios
 birth_date: Fecha de Nacimiento
 black: Negra
 
 calendar: Calendario
 cancel: Cancelar
-cancelled: Cancelado
 capacity_accessibility: Capacidad y Accesibilidad
 category: Categoría
 change_details: Cambiar Detalles
 cep: CEP
 cisgender: Cisgénero
 city: ciudad
-city_id: ID de la ciudad
-city_code: Código de la ciudad
 check: Comprobar
 claim-ownership: Reclamar Propiedad
 clean_filter: Limpiar todos los filtros
@@ -110,42 +86,32 @@ connections: Conexiones
 configure: Configurar
 confirm: Confirmar
 confirm_password: Confirmar Contraseña
-confirmed: Confirmado
 continue: Continuar
 contribute: Contribuir
 control_panel: Panel de control
 completed: Finalizado
 cover_image: Imagen de portada
 copy_id: Copiar ID
-copy_success: ID copiado con éxito
-copy_error: Error al copiar ID
-copy_again: Error al copiar ID. Tente nuevamente.
 cpf: CPF
 cnpj: CNPJ (MEI)
 create: Crear
-creator: Creador
 create_and_publish: Crear y publicar
 create_in_draft: Crear en borrador
 create_account: Crear Cuenta
-create_register: Crear Registro
 created_at: Creado en
 created_by: Creado por
 created_in: Creado en
 chain: Cadena
 change_email: Cambiar correo electrónico
 change_password: Cambiar la contraseña
-changed_password: Contraseña cambiada
 coming_soon: Muy pronto
 communicational_accessibility: Accesibilidad comunicacional
 contact: Contacto
 contacts: Contactos
 cultural_language: Lenguaje cultural
 cultural_languages: Lenguajes culturales
-confirm_user: Confirmar usuario
-check_in: Check In
-check_out: Check Out
+customized: Personalizado
 
-data_need_authorization_to_show: Los datos ingresados a continuación no se mostrarán públicamente, excepto en los casos en que se seleccione la opción "Mostrar públicamente".
 date: Fecha
 date_created: Fecha de creación
 datetime: Fecha y hora
@@ -157,44 +123,35 @@ details: Detalles
 deleted: Eliminados
 description: Descripción
 device: Dispositivo
-device_description: Navegador {browser} en un dispositivo {operationalSystem}
 discover: Descubrir
 does_not_expire: no caduca
 downloadable-files: Archivos Descargables
 
-edit: Editar evento
-edit_event: Editar
+edit: Editar
 edit_faq: Editar preguntas frecuentes
 edit_initiative: Editar Iniciativa
 edit_seals: Editar sellos
 edit_space: Editar espacio
 edit_activity_area: Editar Área de Actividad
-edit_data: Editar Datos
-education: Escolaridad
 email: Correo Electrónico
 entity_banner: Banner de la Entidad
 entity: Entidad
-enter_event: Digite el nombre del evento
-enter_initiative: Digite el nombre de la iniciativa
 enter_opportunity: Ingrese el nombre de la oportunidad
 enter_organization: Ingrese el nombre de la organización
+enter_initiative: Digite el nombre de la iniciativa
 enter_space: Introduce el nombre del espacio
-entry_fee: Tarifa de inscripción
 end_date: Fecha de finalización
 event: Evento
 events: Eventos
-events_month_year: Eventos de {month} de {year}
 event_types:
-  IN_PERSON: En persona
-  ONLINE: En línea
-  HYBRID: Híbrido
+  in_person: En persona
+  online: En línea
+  hybrid: Híbrido
 everybody: Todos
 evidences: Evidencias
 elderly_person: Persona mayor
 execution_period: Período de ejecución
 explore_repository: Explorar Repositorio
-extra_fields: Campos adicionales
-elevator: Ascensor
 
 faq: FaQ
 file: Adjuntar archivo
@@ -208,16 +165,13 @@ functions: Gerenciar funciones
 fundamental: Primaria
 future_registration: Inscripciones futuras
 full_name: Nombre Completo
-form: Formulario
 from: de
 from_to: A
 from_to_date: A
 free: Gratis
-forgot_password: Olvidé mi contraseña
-forgot_paragraph: Introduzca su dirección de correo electrónico registrada para recibir un enlace de restablecimiento de contraseña.
 
 gallery: Galería
-gender: Género
+gender: Seleccione el Género
 general_data: Datos generales
 general_information: Información general
 general_objective: Objetivo General
@@ -237,37 +191,19 @@ image_gallery: Añadir fotos a la galería
 indicators: Indicadores
 indigenous: Indígena
 initiative: Iniciativa
-initiative_remove: Eliminar Iniciativa
 initiative_data: Datos de la Iniciativa
 initiatives: Iniciativas
 in_progress: En Progreso
 inscriptions: Inscripciones
-inscription_realized: Inscripción realizada
-inscription_refused: Inscripción rechazada
-inscription_suspended: Inscripción suspensa
 input_search: Buscar por palabras clave
 introduction: Presentación
-inactive: Inactivo
 is_itinerant: ¿Es agente itinerante?
 is-accessible: ¿El espacio es accesible?
-invalid_credentials: E-mail o contraseña inválidos
-informations: Información
-invite: Invitación
-invite_sent: Invitación enviada
-invite_expired: Invitación caducada
-invite_accept: Invitación aceptada
-invite_to_organization: Invitación a organización
-invite_not_belongs_to_you: La invitación no le pertenece
-Invite was accepted: Invitación aceptada
-Invite was sent: Invitación enviada
-invalid_identifier: Identificador no válido
-inscription_list_for: Lista de inscripción para
 
 language: Idioma
 lastname: Apellido
 last_login: Último inicio de sesión
 last_updated: Última actualización
-libras: Lengua de Señas Brasileña (Libras)
 linked_with: Vinculado Con
 link: Añadir Enlace
 link_description: Descripción del enlace
@@ -281,22 +217,17 @@ login-account: Iniciar sesión en mi cuenta
 logo: Logo
 logout: Salir
 long_description: Descripción larga
-login_registration: No es posible registrarse si la sesión está iniciada.
 
 map: Mapa
 management: Gerenciamiento de Entidades
-mandatory_fields: Campos marcados con asterisco son obligatorios.
 masculine: Masculino
 maroons: Quilombola
-maximum_capacity: Capacidad máxima de personas
 max-capacity: Capacidad máxima de espacio
 max_capacity: Capacidad máxima
 mei: MEI (CNPJ del MEI)
 menu: Menú del Panel de Control
 medium: Secundario
-members: Miembros
 months: meses
-message: Mensaje
 most_recent: Más Reciente
 municipality: Municipio
 my_account: Mi Cuenta
@@ -321,26 +252,24 @@ name_organization: Nombre de la organización
 name_initiative: Nombre de la iniciativa
 name_phases: Nombre de la fase
 neighborhood: Barrio
-next: Próximo
 new_phase: Nueva fase
+next_30_days: Próximos 30 días
 notifications: Notificaciones
 no: No
-no_number: Sin número
 no_inform: No Informar
 no_phase: No se registró ninguna fase.
 no_site: Sin sitio web
 no_type: Sin tipo
 no_address: Sin dirección
-no_tags: Sin etiquetas
 no_title: Intitulado
 no_description: Sin descripción
 no_image: Imagen no disponible
 no_languages: No hay idioma disponible
-no_cultural_languages: No hay lenguajes culturales disponibles
 no_seals: Sin sello
 no_subtitle: Sin subtítulos
 no_areas: Sin áreas
 no_accessibility: Sin accesibilidad
+no_events_available: No se encontraron eventos
 none_area_specified: Ninguna zona especificada
 not_informed: No informado
 not_sent: No enviado
@@ -348,7 +277,6 @@ notice: AVISO PUBLICO
 no_records_found: No se encontraron registros
 number_address: Número
 
-of: de
 offers_architectural_accessibility: Ofrece accesibilidad física
 official_events: Eventos oficiales
 official_spaces: Espacios Oficiales
@@ -365,30 +293,25 @@ opportunity: Oportunidad
 opportunities: Oportunidades
 organizations: Organizaciones
 organization_register: Create an Organization
+orientation: Seleccione la Orientación Sexual
 other_files: Otros archivos
 other_information: Otra información
-owner: Dueño
 
 pardo: Pardo
-paid: Pagado
 people: Gente
 people_capacity: Capacidad de personas
 period: Período
 permissions: Permisos
 portfolio: Portafolio
-previous: Anterior
 privacy: Privacidad
 profile: Perfil
-profile_name: Nombre del perfil
 password: Contraseña
 password_strength: Fuerza de la Contraseña
 participants: Participantes
 personal_data: Datos Personales
-personal_data_legal: Datos de Persona Física
 person_disabled: Persona con Discapacidad
 presentation_information: Información de presentación
 phone: Teléfono
-phone_for_information: Teléfono para información
 postgraduate: Posgrado
 photo: Foto
 phase: Fase
@@ -412,57 +335,30 @@ project_value: Valor del proyecto
 project_information: Información del proyecto
 public: Público
 public_data_notice: Los datos ingresados a continuación se mostrarán a todos los usuarios de la plataforma.
-private_data_notice: Los datos ingresados a continuación %no% se mostrarán públicamente, excepto en los casos en que se seleccionen las opciones "Mostrar públicamente".
 public_email: Correo electrónico público
 public_information: Información pública
-public_phone: telefono publico (con DDD)
+public_phone: telefono publico
 published: Publicados
-publish: Publicar
 published-by: Publicado por
-position: Posición
 
 question_register: Registrar Pregunta
 question: Pregunta
 
-race: Raza/Color
 riverside: Ribereña
 recent_registrations: Inscripciones Recientes
 recently_modified: Modificados recientemente
 reference_point: Complemento o punto de referencia
 register: Registro
-register_address: Registrar Dirección
 registration_date: Fecha de Inscripción
-registration_info: Información sobre la inscripción
-region: Región
 related-agents: Agentes Relacionados
 required_field: Campo obligatorio
 report: Reportar
 responsible_agent: Agente Responsable
-reset: Reiniciar
-reset_password: Restablecer la contraseña
-results: Resultados
-rejected: Rechazado
-refuse: Rechazar
-roles: Papeles
-role.admin: Administrador
-role.manager: Gerente
-role.support: Soporte
-role.municipal_admin: Administrador Municipal
-role.company_admin: Administrador de la Empresa
-read_notifications: Notificaciones leídas
-residential_address: Dirección residencial
-roles_in_culture: Función(es) en la Cultura
 
 tags: Etiquetas
-tag_already_exists: La etiqueta ya existe
 term: Término
 terms: Términos
-term_form: Término de Uso
-term_version: Versión de los Términos
-term_status: Estado de los Términos
 title: Título
-timeline: Línea de tiempo
-this_member_already_belongs_to_organization: Este miembro ya pertenece a la organización
 transsexual: Transexual
 transvestite: Travesti
 theater: Teatro
@@ -470,6 +366,7 @@ The resource was created: La entidad fue creada
 The resource was updated: La entidad fue actualizada
 The resource was deleted: La entidad fue eliminada
 to: hasta
+today: Hoy
 type: Tipo
 type_here: Escriba aquí
 type_agent: Tipo de agente
@@ -478,19 +375,10 @@ type_initiative: Tipo de iniciativa
 type_organization: Tipo de organización
 type_space: Tipo de espacio
 total_value: Valor total
-to_invite: Invitar
-to_invite_agent: Invitar a un agente
 
 user: Usuario
 user_name: Nombre de usuario
-user_created: Crear usuario
-user_already_belongs_the_organization: El usuario ya pertenece a la organización
-user_edit_data: Editar usuario
-user_information: Información del usuario
 users: Usuarios
-updated_at: Actualizado en
-unread_notifications: Notificaciones no leídas
-unpublish: Despublicar
 
 view_all: Ver Todas
 view_file: ver archivo
@@ -516,45 +404,31 @@ select_state: Seleccione el Estado
 select_municipality: Seleccione el Municipio
 select_race: Seleccione la Raza/Color
 select_education: Seleccione su Nivel Educativo
-select_day: Seleccione el Día
-select_agent: Seleccione el Agente
 see_all: ver todo
 see_how: Ver Cómo
 see_more: Ver Más
 see_phase: Ver fase
 seal_name: Nombre del sello
-sexual_orientation: Orientación sexual
-select_sexual_orientation: Seleccione la orientación sexual
 short_description: Breve descripción
-showing: Demostración
-show_public: Mostrar públicamente
-social_media: Redes sociales
+show_calendar: Ver calendario
 site: Sitio Web
+social_media: Redes sociales
 sort_by: Ordenar por
 social_name: Nombre Social
 short_presentation: Presentación Corta
 space: Espacio
 space_type: Tipo de Espacio
 spaces: Espacios
-space_type_deleted: Se ha eliminado el tipo de espacio
 specific_objective: Objetivo Específico
 specific_objective_description: Descripción del objetivo específico
 specify_priority_territory: Especifique el territorio prioritario
-special_handrail: Barandilla especial
 start_now: Comenzar Ahora
 start_date: Fecha de inicio
 state: Estado
 status: Status
-status_draft: Borrador
-status_trashed: En la basura
-status_create: Crear
-status_published: Publicado
 suggestions: Sugerencias
 subscribe: Suscribir
 subsites: Subsitios
-subtitle: Subtítulo
-suspend: Suspender
-suspended: Suspenso
 street: Vía Pública
 
 higher: Superior
@@ -570,32 +444,6 @@ work_plan: Plan de trabajo
 
 yes: Si
 
-you_must_login_now: Debe iniciar sesión ahora
-you_must_register_now: Debe inscribirse ahora
-
-#months
-January: Enero
-February: Febrero
-March: Marzo
-April: Abril
-May: Mayo
-June: Junho
-July: Julio
-August: Agosto
-September: Septiembre
-October: Octubre
-November: Noviembre
-December: Diciembre
-
-#days
-sunday: Domingo
-monday: Lunes
-tuesday: Martes
-wednesday: Miércoles
-thursday: Jueves
-friday: Viernes
-saturday: Sábado
-
 #components
 
 accept-policies:
@@ -608,9 +456,6 @@ accept-policies:
 
 modal_confirm_remove:
   message: Esta acción es irreversible, ¿estás seguro de que quieres continuar?
-
-modal_confirm_toggle_publish:
-  message: ¿Estás seguro de que quieres continuar?
 
 footer:
   and_developed: y desarrollado por
@@ -627,10 +472,7 @@ footer:
   spaces: Mis Espacios
   visit_repository: visita el repositorio
 
-table:
-  type_a_keyword: Introduzca una palabra clave...
-  no_records_found: No se encontraron registros
-  error: Se produjo un error al obtener los datos
+
 
 #pages
 view:
@@ -664,7 +506,6 @@ view:
     message:
       deleted: El agente ha sido eliminado
       created: Nuevo agente ha sido creado
-      updated: Agente actualizado
     quantity:
       total: Agentes Encontrados
       culture: Agentes Culturales
@@ -712,29 +553,9 @@ view:
     add_group: Añadir Grupo
     error_length: El campo debe tener entre {min} y {max} caracteres.
 
-  agent_edit:
-    agent_edit: Edición de {agent}
-    link_platform_space: Vincular a un espacio de la plataforma
-    register_new_address: Registrar una dirección
-    bank_data: Datos bancarios
-    account_type: Tipo de cuenta bancaria para pagos
-    bank_number: Número del banco para pagos
-    bank_account: Número de la cuenta bancaria para pagos
-    bank_agency_number: Número de la agencia bancaria
-    bank_verification: Dígito verificador
-    add_bank_data: Añadir otros datos bancarios
-    single_income: Ingreso individual
-    monthly_income: Ingreso mensual
-    sensitive_data: Datos sensibles
-    profile_data: Datos del perfil
-    is_disabled: ¿Es persona con discapacidad?
-    is_indigenous: ¿Se considera indígena?
-    is_quilombola: ¿Se considera quilombola?
-    is_traditional_people: ¿Pertenece a algún pueblo o comunidad tradicional?
 
   authentication:
     error:
-      an_error_occurred_during_login: Se ha producido un error al iniciar sesión.
       already_logged_in: Ya has iniciado sesión.
       age_rating_valid: Debes seleccionar una clasificación de edad válida.
       email_in_use: Este correo electrónico ya está en uso.
@@ -745,23 +566,10 @@ view:
       last_name_length: El apellido debe tener entre 2 y 50 caracteres.
       password_mismatch: Las contraseñas no coinciden.
       cpf_invalid: Por favor, introduzca un CPF válido.
-      cnpj_invalid: Por favor, introduzca un CNPJ válido.
       phone_invalid: Por favor, introduzca un número de teléfono válido.
-      account_not_confirmed: Cuenta no confirmada
-      email_not_sent: No se pudo enviar el correo electrónico de confirmación.
-      invite_is_not_for_this_email: La invitación no es para este email.
 
     forgot_password: Olvidé mi Contraseña
     paragraph: Inicia sesión con tu cuenta
-
-    forgot:
-      forgot_your_password: ¿Olvidaste tu contraseña?
-      paragraph: Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
-      success: ¡Tu contraseña ha sido restablecida exitosamente!
-      link_sent_to_email: Enlace enviado a tu correo electrónico.
-
-    password_reset:
-      define_your_new_password: Establezca su nueva contraseña
 
     register:
       create_account: Crear Cuenta
@@ -777,13 +585,6 @@ view:
         name_info: Las personas te encontrarán por este nombre.
         select_areas: Selecciona al menos una área de actuación
 
-  cultural_language:
-    create: Crear Lengua Cultural
-    message:
-      created: La lengua cultural ha sido creada
-      edited: La lengua cultural ha sido editada
-      deleted: La lengua cultural ha sido eliminada
-
   entities:
     change_history: historia de cambios
     report: quejar
@@ -798,18 +599,11 @@ view:
       error:
         user_not_logged: Para crear un evento debes estar registrado.
       short_bio: Añade una breve descripción del evento.
-    edit:
-      subtitle: Subtítulo del evento
-      add_occurrence_details: Agrega la fecha, hora y ubicación de la ocurrencia de tu evento. Puedes crear múltiples ocurrencias con información diferente. Los datos ingresados a continuación se mostrarán a todos los usuarios de la plataforma.
-      event_date_time_location: Fecha, hora y ubicación del evento
-      event_information: Información sobre el evento
     format_datetime: d/m/Y \a \l\a\s H:i:s
     id: ID de evento
     message:
       deleted: El evento ha sido eliminado
       without_initiative: Ninguno iniciativa vinculada a este evento
-      created: El evento ha sido creado
-      updated: El evento ha sido actualizado
     not_set_datetime: Fecha y hora no definidas
     quantity:
       finished: Eventos Finalizados
@@ -865,13 +659,6 @@ view:
 
   my-opportunity:
     title_opportunity: PNAB - Promoción de la Ejecución de Acciones Culturales
-
-  my_events:
-    subtitle: Gestionar inscripciones de eventos
-    happening_now: Sucediendo ahora
-    past: Pasados
-    without_events: Sin eventos
-    events_found: Eventos encontrados
 
   seal:
     awarded_by: Sello otorgado por
@@ -984,29 +771,11 @@ view:
     date: Organización fue creada en
     message:
       deleted: La organización ha sido eliminada
-      deleted_member: El miembro ha sido excluido
     quantity:
       total: Organizaciones Encontradas
       culture: Organizaciones Culturales
       inactive: Organizaciones Inactivas
       last_days: Registradas en los últimos 7 días
-    edit: Editar Organización
-    manage_people: Administrar personas
-    name: Nome da Organização
-    add_new: Añadir Nueva
-    data: Datos de la Organización
-    is_legal_person: ¿Es una persona jurídica?
-    is_itinerant: ¿Es itinerante?
-    bank_account_type_for_payments: Tipo de cuenta bancaria para pagos
-    bank_number_for_payments: Número del banco para pagos
-    bank_account_number: Número de la cuenta bancaria
-    check_digit: Dígito verificador
-    branch_number: Número de la agencia bancaria
-    add_other_bank_details: Añadir otros datos bancarios
-    organization_income: Ingresos de la organización
-    annual_revenue: Ingresos anuales
-    editing_organization: Editando
-    show_publicly: Mostrar públicamente
 
   success:
     successfully: ¡Su registro ha sido creado exitosamente!
@@ -1021,17 +790,16 @@ view:
     message:
       deleted: El espacio ha sido eliminado
       created: Nuevo espacio ha sido creado
-      updated: El espacio ha sido actualizado
     quantity:
       total: Espacios Encontrados
       finished: Espacios Cerrados
       opened: Espacios Abiertos
       last_days: Registrados en los últimos 7 días
     picture: Foto del Espacio
-    no_spaces_found: No se encontraron espacios
 
   space-edit:
     edit-space: Editar Espacio
+    mandatory_fields: Campos marcados con asterisco son obligatorios.
 
   space_type:
     create: Crear un Tipo de Espacio
@@ -1100,15 +868,3 @@ view:
     error-text_third: Pero no te preocupes, hay muchas otras páginas por descubrir aquí en Maps.
     error-homepage: Volver a la página de inicio
     error-image: Imagen de duda
-
-zip_code:
-  invalid: Por favor, ingrese un código postal válido con 8 dígitos.
-  not_found: Código postal no encontrado. Por favor, complete el formulario manualmente.
-  number_required: El número de la dirección es obligatorio, por favor complete el campo. Si su dirección no tiene número, seleccione la opción "Sin número".
-  generic_error: Error al buscar el código postal. Verifique su conexión o intente nuevamente.
-  city_not_found: Ciudad no encontrada. Por favor, seleccione manualmente.
-  state_not_found: Estado no encontrado. Por favor, seleccione manualmente.
-
-#exceptions
-exception:
-  already_inscription_event: Ya te has inscrito en el evento.

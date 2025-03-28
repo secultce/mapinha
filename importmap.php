@@ -45,17 +45,23 @@ return [
     '@iconify/iconify' => [
         'version' => '3.1.1',
     ],
-    'tom-select' => [
-        'version' => '2.4.3',
+    'air-datepicker' => [
+        'version' => '3.5.3',
     ],
-    '@orchidjs/sifter' => [
-        'version' => '1.1.0',
+    'air-datepicker/locale/en.js' => [
+        'version' => '3.5.3',
     ],
-    '@orchidjs/unicode-variants' => [
-        'version' => '1.1.2',
+    'air-datepicker/locale/es.js' => [
+        'version' => '3.5.3',
     ],
-    'tom-select/dist/css/tom-select.default.min.css' => [
-        'version' => '2.4.3',
+    'air-datepicker/locale/pt-BR.js' => [
+        'version' => '3.5.3',
+    ],
+    'air-datepicker/locale/pt-br.js' => [
+        'path' => 'vendor/air-datepicker/locale/pt-BR.js',
+    ],
+    'air-datepicker/air-datepicker.css' => [
+        'version' => '3.5.3',
         'type' => 'css',
     ],
 ];

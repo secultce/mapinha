@@ -1,0 +1,76 @@
+.air-datepicker-cell {
+    border: 2px solid var(--adp-border-color-inner);
+}
+
+.air-datepicker-cell.-day- {
+    aspect-ratio: 1;
+}
+
+.air-datepicker-body--cells {
+    gap: .3rem;
+}
+
+.air-datepicker-body--cells.-days- {
+    grid-auto-rows: initial;
+}
+
+.air-datepicker-nav {
+    border-bottom: initial;
+}
+
+.air-datepicker-nav--title, .air-datepicker-nav--action {
+    font-weight: bold;
+}
+
+.air-datepicker-nav--action {
+    border-radius: 50%;
+    border: 1px solid var(--adp-accent-color);
+    aspect-ratio: 1;
+    display: block;
+    padding: 0;
+}
+
+.air-datepicker-nav--action path {
+    stroke: var(--adp-accent-color);
+}
+
+.air-datepicker-nav--title {
+    background-color: var(--adp-accent-color);
+    color: var(--adp-background-color);
+    font-size: 14px;
+}
+
+.air-datepicker-nav--title i {
+    color: var(--adp-background-color);
+}
+
+.air-datepicker-nav--title:hover, .air-datepicker-nav--title:hover i {
+    color: var(--adp-accent-color);
+}
+
+.air-datepicker {
+    --adp-font-size: 10px;
+    --adp-background-color: var(--bs-body-bg);
+    --adp-background-color-hover: var(--bs-primary-bg-subtle);
+    --adp-background-color-active: var(--bs-primary-bg-subtle);
+    --adp-background-color-in-range: rgba(var(--bs-primary-rgb), .1);
+    --adp-background-color-in-range-focused: rgba(var(--bs-primary-rgb), .2);
+    --adp-background-color-selected-other-month-focused: var(--bs-primary-bg-subtle);
+    --adp-background-color-selected-other-month: var(--bs-primary-bg-subtle);
+    --adp-color: var(--bs-body-color);
+    --adp-color-secondary: var(--bs-secondary-color);
+    --adp-accent-color: var(--bs-primary);
+    --adp-color-disabled: var(--bs-dropdown-link-disabled-color);
+    --adp-color-disabled-in-range: var(--bs-nav-link-disabled-color);
+    --adp-border-color: var(--bs-secondary-border-subtle);
+    --adp-day-name-color: var(--adp-color);
+    --adp-cell-border-radius: 7px;
+    --adp-cell-background-color-selected: var(--bs-primary);
+    --adp-cell-background-color-selected-hover: var(--bs-primary);
+    --adp-cell-background-color-in-range: var(--bs-primary-bg-subtle);
+    --adp-cell-background-color-in-range-hover: var(--bs-primary-border-subtle);
+}
+
+.air-datepicker {
+    border: initial;
+}

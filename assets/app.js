@@ -1,3 +1,6 @@
+import 'air-datepicker/air-datepicker.css';
+import './styles/lib/air-datepicker-custom.css';
+
 import './styles/app.css';
 import './styles/components/navbar.css';
 import './styles/components/footer.css';

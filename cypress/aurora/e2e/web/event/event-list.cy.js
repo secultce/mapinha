@@ -58,11 +58,24 @@ describe('Pagina de listar Eventos', () => {
     });
 
     it('Garante que o filtro funciona', () => {
-        cy.get('#open-filter').click();
-        cy.get('#event-name').type('Festival da Rapadura');
+        cy.get('[id=open-filter]').click();
+        cy.scrollTo('top');
+        cy.contains('Ver calendário').click();
+        cy.get('[data-cy=dropdown-calendar]').should('be.visible');
+        cy.get('[data-cy=dropdown-calendar] .air-datepicker-nav--title')
+            .click()
+            .click();
+        cy.get('[data-cy=dropdown-calendar]').contains('2024').click();
+        cy.get('[data-cy=dropdown-calendar]').contains('Jul').click();
+        cy.get('[data-cy=dropdown-calendar]').contains('9').click();
+        cy.get('[data-cy=dropdown-calendar] [data-action=next]').click();
+        cy.get('[data-cy=dropdown-calendar] [data-date="2"]').click();
+        cy.get('#period').should('have.value', '2024-07-09,2024-08-02');
+        cy.get('#period').should('contain.text', '09/07/2024 - 02/08/2024');
+        cy.get('#event-name').type('sertão');
         cy.get('#apply-filters').click();
         cy.get('.total-events').contains('1 Eventos Encontrados').should('be.visible');
-        cy.get('.event-name').contains('Festival da Rapadura').should('be.visible');
+        cy.get('.event-name').contains('Festival Sertão Criativo').should('be.visible');
     });
 
     it('Garante que o botão de limpar filtros funciona', () => {

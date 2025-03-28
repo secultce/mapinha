@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\EventDto;
-use App\DTO\EventFilterDto;
 use App\Entity\Agent;
 use App\Entity\Event;
 use App\Exception\Event\EventResourceNotFoundException;
@@ -103,12 +102,10 @@ readonly class EventService extends AbstractEntityService implements EventServic
 
     public function list(int $limit = 50, array $params = [], string $order = 'DESC'): array
     {
-        $filters = $this->validateInput($params, EventFilterDto::class);
-
         return $this->repository->findByFilters(
-            filters: $filters,
-            orderBy: ['createdAt' => $order],
-            limit: $limit
+            [...$params, ...$this->getDefaultParams()],
+            ['createdAt' => $order],
+            $limit
         );
     }
 
@@ -175,18 +172,5 @@ readonly class EventService extends AbstractEntityService implements EventServic
         $this->repository->save($event);
 
         return $event;
-    }
-
-    public function findByAgent(string $agentId): array
-    {
-        return $this->repository->findByAgent($agentId);
-    }
-
-    public function togglePublish(Uuid $id): void
-    {
-        $event = $this->get($id);
-        $event->setDraft(!$event->isDraft());
-
-        $this->repository->save($event);
     }
 }

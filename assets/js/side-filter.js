@@ -16,13 +16,13 @@ function toggleSidebar() {
 
     if (SIDEBAR.classList.contains('open')) {
         BTN_OPEN_FILTER.style.visibility = 'hidden';
-        BTN_OPEN_FILTER.style.opacity = 0;
+        BTN_OPEN_FILTER.style.opacity = '0';
         return;
     }
 
     setTimeout(() => {
         BTN_OPEN_FILTER.style.visibility = 'visible';
-        BTN_OPEN_FILTER.style.opacity = 1;
+        BTN_OPEN_FILTER.style.opacity = '1';
     }, 300);
 }
 

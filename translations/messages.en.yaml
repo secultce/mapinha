@@ -1,7 +1,5 @@
-actions_in_priority_territory: Will there be initiative actions in any priority territory?
+actions_in_priority_territory: ¿Habrá acciones de la iniciativa en algún territorio prioritario?
 add: Add
-add_new: Add New
-add_occurrence: Add Occurrence
 address_complement: Address Complement
 address_data: Address Data
 add_alternative_address: Add Alternative Address
@@ -9,23 +7,16 @@ add_cover_image: Add cover image
 add_opening_hours: Add Opening Hours
 add_phase: Add Phase
 add_specific_objective: Add Specific Objective
-adapted_bathroom: Adapted bathroom
-account_confirmation: Account confirmation
-account_confirmed: Cuenta confirmada
 account_privacy: Account and Privacy
 account_settings: User Account Settings
 access: Access
 accessibility: Accessibility
 access_main_agent: Access the main agent
-access_ramp: Ramp access
 accountability: Accountability
 accompany: To accompany
-accepted: Accepted
 action: Action
 actions: Actions
 activity: Activity
-activities: Activities
-active: Active
 activity_area: Area of activity
 activity_created: Area of activity was created
 activity_deleted: Area of activity has been excluded
@@ -43,15 +34,7 @@ administration: Administration
 agent: Agent
 agents: Agents
 agent_name: Agent Name
-agent_information: Agent Information
 age_rating: Age Rating
-age_rating.free: Free
-age_rating.10_years: 10 years
-age_rating.12_years: 12 years
-age_rating.14_years: 14 years
-age_rating.16_years: 16 years
-age_rating.18_years: 18 years
-age_rating.not_rated: Not Rated
 ages_rating:
   all: Free for all ages
   ten: 10 years
@@ -66,7 +49,6 @@ answer: Answer
 archive: Archive
 archives: Archives
 archived: Archived
-awaiting_confirmation: Awaiting Confirmation
 areas_of_expertise: Areas of Expertise
 areas_of_interest: Areas of Interest
 analysis: Analysis Period
@@ -80,29 +62,22 @@ asian: Yellow
 apply_filter: Apply Filters
 attachments_and_links: Attachemnts and Links
 attitudinal_accessibility: Attitudinal Accessibility
-audio_description: Audio Description
-awaiting: Awaiting
-agent_has_already_signed_up: The agent has already signed up.
 
 back: Back
-bank_details: Bank Details
 birth_date: Birth Date
 black: Black
 
 calendar: Calendar
 cancel: Cancel
-cancelled: Cancelled
 capacity_accessibility: Capacity and Accessibility
 category: Category
 change_details: Change Details
 cep: CEP
 cisgender: Cisgender
 city: City
-city_id: City ID
-city_code: City Code
 check: Check
 claim-ownership: Claim Ownership
-clean_filter: Clean Filters
+clean_filter: Clean Filter
 close: Close
 closes_at: Closes at
 close_registration: Registration closed
@@ -111,42 +86,32 @@ connections: Connections
 configure: Configure
 confirm: Confirm
 confirm_password: Confirm Password
-confirmed: Confirmed
 continue: Continue
 contribute: Contribute
 control_panel: Control Panel
 completed: Completed
 cover_image: Cover image
 copy_id: Copy ID
-copy_success: Copied to clipboard
-copy_error: Error copying to clipboard
-copy_again: Failed to copy ID. Try again.
 cpf: CPF
 cnpj: CNPJ (MEI)
 create: Create
-creator: Creator
 create_and_publish: Create and Publish
 create_in_draft: Create in Draft
 create_account: Create Account
-create_register: Create Registration
 created_at: Created at
 created_by: Created by
 created_in: Created in
 chain: Chain
 change_email: Change email
 change_password: Change password
-changed_password: Password changed
 coming_soon: Coming soon
 communicational_accessibility: Communicational accessibility
 contact: Contact
 contacts: Contacts
 cultural_language: Cultural language
 cultural_languages: Cultural languages
-confirm_user: Confirm User
-check_in: Check In
-check_out: Check Out
+customized: Customized
 
-data_need_authorization_to_show: The data entered below will not be displayed publicly, except in cases where the "Show Publicly" options are selected.
 date: Date
 date_created: Date created
 datetime: Date and time
@@ -158,44 +123,36 @@ deleted: Deleted
 details: Details
 description: Description
 device: Device
-device_description: Browser {browser} on a {operationalSystem} device
 discover: Discover
 does_not_expire: does not expire
 downloadable-files: Downloadable Files
 
 edit: Edit
-edit_event: Edit Event
 edit_faq: Edit FAQ
 edit_initiative: Edit Initiative
 edit_seals: Edit Seals
 edit_space: Edit Space
 edit_activity_area: Edit Area of Activity
-edit_data: Edit Data
-education: Education
 email: Email
 entity_banner: Entity Banner
 entity: Entity
 entry_fee: Entry fee
-enter_event: Enter the event name
-enter_initiative: Enter the name of the initiative
 enter_opportunity: Enter the opportunity name
 enter_organization: Enter the organization name
+enter_initiative: Enter the name of the initiative
 enter_space: Enter the name of the space
 end_date: End date
 event: Event
 events: Events
-events_month_year: "{month} {year} Events"
 event_types:
-  IN_PERSON: In Person
-  ONLINE: Online
-  HYBRID: Hybrid
+  in_person: In Person
+  online: Online
+  hybrid: Hybrid
 everybody: Everybody
 evidences: Evidences
 elderly_person: Elderly Person
 execution_period: Execution Period
 explore_repository: Explore Repository
-extra_fields: Extra Fields
-elevator: Elevator
 
 faq: FaQ
 file: Attach file
@@ -209,16 +166,13 @@ functions: Manage functions
 fundamental: Elementary
 future_registration: Future registrations
 full_name: Full Name
-form: Form
 from: From
 from_to: To
 from_to_date: To
 free: Free
-forgot_password: Forgot Password
-forgot_paragraph: Enter your registered email address to receive a password reset link.
 
 gallery: Gallery
-gender: Gender
+gender: Select the Gender
 general_data: General data
 general_information: General information
 general_objective: General Objective
@@ -241,35 +195,17 @@ indigenous: Indigenous
 initiative: Initiative
 initiative_data: Initiative Data
 initiatives: Initiatives
-initiative_remove: Remove Initiative
 in_progress: In Progress
 inscriptions: Inscriptions
-inscription_realized: Inscription realized
-inscription_refused: Inscription refused
-inscription_suspended: Inscription suspended
 input_search: Search for keywords
 introduction: Introduction
-inactive: Inactive
 is_itinerant: Is it an itinerant agent?
 is-accessible: Is the space accessible?
-invalid_credentials: E-mail or password invalid
-informations: Informations
-invite: Invite
-invite_sent: Invite send
-invite_accept: Invite accept
-invite_expired: Invite expired
-invite_to_organization: Invite to organization
-invite_not_belongs_to_you: Invite not belongs to you
-Invite was accepted: Invite was accepted
-Invite was sent: Invite was sent
-invalid_identifier: Invalid identifier
-inscription_list_for: Inscription list for
 
 language: Language
 lastname: Last Name
 last_login: Last Login
 last_updated: Last update
-libras: Brazilian Sign Language (Libras)
 linked_with: Linked With
 link: Add Link
 links: Links
@@ -282,23 +218,18 @@ login: Login
 login-account: Log in to my account
 logo: Logo
 logout: Logout
-long_description: Long description
-login_registration: You cannot register while logged in.
 
+long_description: Long description
 map: Map
 management: Management of Entities
-mandatory_fields: Fields marked with asterisco are mandatory.
 masculine: Masculine
 maroons: Maroon
-maximum_capacity: Maximum Capacity
 max-capacity: Maximum space capacity
 max_capacity: Maximum capacity
 mei: MEI (CNPJ of MEI)
 menu: Control Panel Menu
 medium: High School
-members: Members
 months: months
-message: Message
 most_recent: Most Recent
 municipality: Municipality
 my_account: My Account
@@ -313,8 +244,8 @@ my_profile: My Profile
 my_spaces: My Spaces
 my_subscriptions: My Subscriptions
 modified_by: Modified by
-my_reviews: My Reviews
 
+my_reviews: My Reviews
 name: Name
 name_space: Space name
 name_event: Event Name
@@ -323,26 +254,24 @@ name_organization: Organization name
 name_initiative: Nome gives initiative
 name_phases: Phase name
 neighborhood: Neighborhood
-next: Next
 new_phase: New phase
+next_30_days: Next 30 days
 notifications: Notifications
 no: No
-no_number: No number
 no_inform: Do Not Inform
 no_phase: No phase registered.
 no_site: No Website
 no_type: No Type
 no_address: No address
-no_tags: No tags
 no_title: Untitled
 no_description: No description
 no_image: Image not available
 no_languages: No language available
-no_cultural_languages: No cultural language available
 no_seals: No seal
 no_subtitle: No subtitle
 no_areas: No area registered
 no_accessibility: No accessibility registered
+no_events_available: No events available
 none_area_specified: None area specified
 not_informed: Not informed
 not_sent: Not sent
@@ -350,7 +279,6 @@ notice: PUBLIC NOTICE
 no_records_found: No records found
 number_address: Number
 
-of: of
 offers_architectural_accessibility: Offers physical accessibility
 official_events: Official Events
 official_spaces: Official Spaces
@@ -367,29 +295,25 @@ opening-hours: Opening Hours
 opportunities: Opportunities
 organizations: Organizations
 organization_register: Create an Organization
+orientation: Select the Sexual Orientation
 other_files: Other files
 other_information: Other information
-owner: Owner
 
 pardo: Mixed Race
-paid: Paid
 people: People
 people_capacity: People Capacity
 period: Period
 permissions: Permissions
 portfolio: Portfolio
-previous: Previous
 privacy: Privacy
 profile: Profile
 password: Password
 password_strength: Password Strength
 participants: Participants
 personal_data: Personal Data
-personal_data_legal: Personal Data of Individual
 person_disabled: Person with Disability
 presentation_information: Presentation Information
 phone: Phone
-phone_for_information: Phone for information
 postgraduate: Postgraduate
 photo: Photo
 phase: Phase
@@ -404,7 +328,6 @@ private_email: Private Email
 private_phone: Private Telephone (with area code)
 profile_picture: Profile Picture
 profile_of_public: Profile of the public
-profile_name: Profile Name
 projects: Projects
 promotion: Promotion
 promotion_strategy: Promotion Strategy
@@ -414,64 +337,38 @@ project_value: Project value
 project_information: Project Information
 public: Public
 public_data_notice: The data entered below will be displayed to all users on the platform.
-private_data_notice: The data entered below will %no% be displayed publicly, except in cases where the "Show publicly" options are selected.
 public_information: Public Information
 public_email: Public Email
-public_phone: Public Telephone with DDD
-publish: Publish
+public_phone: Public Telephone
 published: Published
-position: Position
 
 published-by: Publicado por
 question_register: Register Question
-question: Question
 
-race: Race/Color
+question: Question
 riverside: Riverside
 recent_registrations: Recent Registrations
 recently_modified: Recently modified
 reference_point: Complement or reference point
 register: Register
-register_address: Register Address
 registration_date: Registration Date
-registration_info: Information about registration
-region: Region
 related-agents: Related Agents
 required_field: Required Field
 report: Report
-results: Results
-rejected: Rejected
-refuse: Refuse
-roles: Roles
-role.admin: Administrator
-role.manager: Manager
-role.support: Support
-role.municipal_admin: Municipal Administrator
-role.company_admin: Company Administrator
-read_notifications: Read Notifications
-residential_address: Residential Address
-roles_in_culture: Roles in Culture
-responsible_agent: Responsible Agent
-reset: Reset
-reset_password: Reset Password
 
+responsible_agent: Responsible Agent
 tags: Tags
-tag_already_exists: Tag already exists
 term: Term
 terms: Terms
-term_form: Terms of Use
-term_version: Terms of Use Version
-term_status: Terms of Use Status
 transsexual: Transsexual
 transvestite: Transvestite
 title: Title
-timeline: Timeline
-this_member_already_belongs_to_organization: This member already belongs to organization
 theater: Theater
 The resource was created: The entity was created
 The resource was updated: The entity was updated
 The resource was deleted: The entity was deleted
 to: to
+today: Today
 type: Type
 type_here: Type here
 type_agent: Agent type
@@ -480,19 +377,10 @@ type_organization: Organization Type
 type_initiative: Type of initiative
 type_space: Space type
 total_value: Total Value
-to_invite: Invite
-to_invite_agent: Invite agent
 
 user: User
 user_name: User Name
-user_created: Create User
-user_already_belongs_the_organization: User already belongs the organization
-user_edit_data: Edit user
-user_information: User Information
 users: Users
-updated_at: Updated at
-unread_notifications: Unread Notifications
-unpublish: Unpublish
 
 view_all: View All
 view_file: view file
@@ -517,47 +405,33 @@ see_all: see all
 see_how: See How
 see_more: See More
 see_phase: See phase
-sexual_orientation: Sexual Orientation
-select_sexual_orientation: Select the Sexual Orientation
 short_description: Short description
-showing: Showing
-show_public: Show Publicly
 select_bank: Select the bank
 select_state: Select the State
-select_agent: Select the Agent
 select_municipality: Select the Municipality
 select_race: Select the Race/Color
 select_education: Select Your Education Level
-select_day: Select the day
 seal_name: Seal Name
-social_media: Social media
 site: Site
+short_presentation: Short Presentation
+show_calendar: Show Calendar
+social_media: Social media
 sort_by: Sort by
 social_name: Social Name
-short_presentation: Short Presentation
 space: Space
 space_type: Space Type
 spaces: Spaces
-space_type_deleted: Space type has been deleted
 specific_objective: Specific Objective
 specific_objective_description: Specific Objective Description
 specify_priority_territory: Specify the priority territory
-special_handrail: Special handrail
 start_now: Start Now
 start_date: Start date
 state: State
 status: Status
-status_draft: Draft
-status_published: Published
-status_trashed: In the trash
-status_create: Create
 street: Street
 suggestions: Suggestions
 subscribe: Subscribe
 subsites: Subsites
-subtitle: Subtitle
-suspend: Suspend
-suspended: Suspended
 your_name: Enter your name
 your_question: Write your question
 
@@ -568,32 +442,6 @@ white: White
 work_plan: Work plan
 
 yes: Yes
-
-you_must_login_now: You must login now
-you_must_register_now: You must register now
-
-#months
-January: January
-February: February
-March: March
-April: April
-May: May
-June: June
-July: July
-August: August
-September: September
-October: October
-November: November
-December: December
-
-#days
-sunday: Sunday
-monday: Monday
-tuesday: Tuesday
-wednesday: Wednesday
-thursday: Thursday
-friday: Friday
-saturday: Saturday
 
 #components
 
@@ -607,9 +455,6 @@ accept-policies:
 
 modal_confirm_remove:
   message: This action is irreversible, are you sure you want to continue?
-
-modal_confirm_toggle_publish:
-  message: Are you sure you want to continue?
 
 footer:
   and_developed: and developed by
@@ -625,11 +470,6 @@ footer:
   agents: My Agents
   spaces: My Spaces
   visit_repository: visit the repository
-
-table:
-  type_a_keyword: Type a keyword...
-  no_records_found: No records found
-  error: An error occurred while fetching data
 
 #pages
 view:
@@ -663,7 +503,6 @@ view:
     message:
       deleted: The agent has been deleted
       created: A new agent has been created
-      updated: The agent has been updated
     quantity:
       total: Agents Found
       culture: Cultural Agents
@@ -711,29 +550,8 @@ view:
     add_group: Add Group
     error_length: The field must have between {min} and {max} characters.
 
-  agent_edit:
-    agent_edit: Edit {agent}
-    link_platform_space: Link to a platform space
-    register_new_address: Register a new address
-    bank_data: Bank Data
-    account_type: Type of bank account for payments
-    bank_number: Bank number for payments
-    bank_account: Bank account number for payments
-    bank_agency_number: Bank branch number
-    bank_verification: Verification digit
-    add_bank_data: Add other bank data
-    single_income: Individual Income
-    monthly_income: Monthly Income
-    sensitive_data: Sensitive Data
-    profile_data: Profile Data
-    is_disabled: Is a person with a disability?
-    is_indigenous: Do you consider yourself indigenous?
-    is_quilombola: Do you consider yourself quilombola?
-    is_traditional_people: Do you belong to any traditional people or community?
-
   authentication:
     error:
-      an_error_occurred_during_login: An error occurred during login.
       already_logged_in: You are already logged in.
       age_rating_valid: You must select a valid age rating.
       email_in_use: This email is already in use.
@@ -744,23 +562,10 @@ view:
       last_name_length: The last name must be between 2 and 50 characters.
       password_mismatch: The passwords do not match.
       cpf_invalid: Please enter a valid CPF.
-      cnpj_invalid: Please enter a valid CNPJ.
       phone_invalid: Please enter a valid phone number.
-      account_not_confirmed: Account not confirmed
-      email_not_sent: Confirmation email not sent
-      invite_is_not_for_this_email: Invite is not for this email.
 
     forgot_password: Forgot my password
     paragraph: Log in with your account
-
-    forgot:
-      forgot_your_password: Forgot your password?
-      paragraph: Enter your email address below, and we will send you a link to reset your password.
-      success: Your password has been reset successfully!
-      link_sent_to_email: A link to reset your password has been sent to your email address.
-
-    password_reset:
-      define_your_new_password: Define your new password
 
     register:
       create_account: Create Account
@@ -776,13 +581,6 @@ view:
         name_info: People will find you by this name.
         select_areas: Select at least one area of activity
 
-  cultural_language:
-    create: Create a Cultural Language
-    message:
-      created: The cultural language has been created
-      edited: The cultural language has been edited
-      deleted: The cultural language has been deleted
-
   entities:
     change_history: change history
     report: report
@@ -797,18 +595,11 @@ view:
       error:
         user_not_logged: To create an event you must be logged in.
       short_bio: Add a brief description of the event.
-    edit:
-      subtitle: Event Subtitle
-      add_occurrence_details: Add the date, time, and location of your event occurrence. You can create multiple occurrences with different information. The data entered below will be displayed to all users on the platform.
-      event_date_time_location: Date, time, and location of the event
-      event_information: Event information
     format_datetime: d/m/Y \a\t h:i:s
     id: Event ID
     message:
       deleted: The event has been deleted
       without_initiative: No initiatives linked to this event
-      created: The event has been created
-      updated: The event has been updated
     not_set_datetime: Date and time not set
     quantity:
       finished: Completed Events
@@ -865,13 +656,6 @@ view:
 
   my-opportunity:
     title_opportunity: PNAB - Promotion of the Implementation of Cultural Actions
-
-  my_events:
-    subtitle: Manage event inscription
-    happening_now: Happening now
-    past: Past events
-    without_events: No events
-    events_found: Events found
 
   seal:
     awarded_by: Seal awarded by
@@ -984,29 +768,11 @@ view:
     date: Organization was created on
     message:
       deleted: The organization has been deleted
-      deleted_member: The member was excluded
     quantity:
       total: Organizations Found
       culture: Cultural Organizations
       inactive: Inactive Organizations
       last_days: Registered in the last 7 days
-    edit: Edit Organization
-    manage_people: Manage people
-    name: Organization Name
-    add_new: Add New
-    data: Organization Data
-    is_legal_person: Is a legal person?
-    is_itinerant: Is it an itinerant organization?
-    bank_account_type_for_payments: Type of bank account for payments
-    bank_number_for_payments: Bank number for payments
-    bank_account_number: Bank account number
-    check_digit: Check digit
-    branch_number: Bank branch number
-    add_other_bank_details: Add other bank details
-    organization_income: Organization Income
-    annual_revenue: Annual Revenue
-    editing_organization: Editing Organization
-    show_publicly: Show publicly
 
   success:
     successfully: Your registration has been created successfully!
@@ -1021,18 +787,16 @@ view:
     message:
       deleted: The space has been deleted
       created: A new space has been created
-      updated: The space has been updated
     quantity:
       total: Spaces Found
       finished: Closed Spaces
       opened: Open Spaces
       last_days: Registered in the last 7 days
     picture: Space Picture
-    no_spaces_found: No spaces found
 
   space-edit:
     edit-space: Edit Space
-
+    mandatory_fields: Fields marked with asterisco are mandatory.
   space_type:
     create: Create a Space Type
     edit: Edit Space Type
@@ -1101,15 +865,3 @@ view:
     error-text_third: But don't worry, there are many other pages to discover here at Aurora.
     error-homepage: Back to home page
     error-image: Doubt image
-
-zip_code:
-  invalid: Please enter a valid ZIP code with 8 digits.
-  not_found: ZIP code not found. Please fill out the form manually.
-  number_required: The address number is required, please fill in the field. If your address does not have a number, select the "No number" option.
-  generic_error: Error fetching ZIP code. Check your connection or try again.
-  city_not_found: City not found. Please select manually.
-  state_not_found: State not found. Please select manually.
-
-#exceptions
-exception:
-  already_inscription_event: You have already registered for the event.

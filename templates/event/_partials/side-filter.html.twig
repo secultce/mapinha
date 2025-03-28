@@ -1,4 +1,4 @@
-<form id="filter-sidebar" class="sidebar" method="GET" action="">
+<form id="filter-sidebar" class="sidebar z-3" method="GET" action="">
     <div class="close-filter">
         <span class="d-flex gap-3">
           <i class="material-icons text-primary">filter_alt</i>
@@ -9,11 +9,33 @@
 
     <div class="filter-fields">
         <div class="form-group">
-            <label class="filter-label">{{ 'period' | trans }}</label>
-            <div class="d-flex align-items-center gap-2">
-                <input type="date" class="filter-form" id="period_start" name="period[start]" title="{{ 'start_date'|trans }}">
-                <span>-</span>
-                <input type="date" class="filter-form" id="period_end" name="period[end]" title="{{ 'end_date'|trans }}">
+            <label for="period" class="filter-label">{{ 'period' | trans }}</label>
+            <select class="filter-form mb-3" id="period" name="period">
+                <option value="">{{ 'select' | trans }}</option>
+                <option value="{{ date()|date('Y-m-d') }},{{ date()|date('Y-m-d') }}">{{ 'today'|trans }}</option>
+                <option value="{{ date()|date('Y-m-d') }},{{ date('+30days')|date('Y-m-d') }}">{{ 'next_30_days'|trans }}</option>
+                <option class="d-none" data-name="custom" value="">{{ 'customized'|trans }}</option>
+            </select>
+
+            <div class="dropdown">
+                <button class="btn btn-primary w-100" type="button" id="dropdownMenuButton"
+                        data-bs-auto-close="false" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <i class="material-icons">calendar_month</i>
+                    {{ 'show_calendar'|trans }}
+                </button>
+                <div class="dropdown-menu px-4 pb-3" aria-labelledby="dropdownMenuButton" style="width: fit-content"
+                     data-cy="dropdown-calendar">
+                    <i id="close-calendar" class="material-icons text-primary position-absolute end-0 top-0 m-1"
+                       style="cursor: pointer" data-cy="close-calendar"
+                       onclick="this.parentElement.previousElementSibling.click()">close</i>
+
+                    <label class="fw-bold" for="datepicker">{{ 'calendar'|trans }}</label>
+
+                    <div id="datepicker" class="mt-3" style="width: fit-content"></div>
+                    <button type="button" class="btn btn-primary mx-auto d-block m-3"
+                            id="apply-period-filter">{{ 'apply_filter'|trans }}</button>
+                </div>
             </div>
         </div>
 
@@ -28,32 +50,23 @@
         </div>
 
         <div class="form-group">
-            <label for="event-cultural-languages" class="filter-label">{{ 'cultural_language' | trans }}</label>
-            <select class="filter-form" id="event-cultural-languages" name="culturalLanguages">
+            <label for="event-language" class="filter-label">{{ 'language' | trans }}</label>
+            <select class="filter-form" id="event-language" name="language">
                 <option value="">{{ 'select' | trans }}</option>
-                {% for language in languages %}
-                    <option value="{{ language.id }}">{{ language.name }}</option>
-                {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
             <label for="age-rating" class="filter-label">{{ 'age_rating' | trans }}</label>
-            <select class="filter-form" id="age-rating" name="ageRating">
+            <select class="filter-form" id="age-rating" name="age-rating">
                 <option value="">{{ 'select' | trans }}</option>
-                {% for ageRating in ageRatings %}
-                    <option value="{{ ageRating.value }}">{{ ('age_rating.' ~ ageRating.value|lower|replace({' ': '_'}) ) | trans }}</option>
-                {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
-            <label for="tags" class="filter-label">{{ 'tags' | trans }}</label>
-            <select class="filter-form" id="tags" name="tags">
+            <label for="seals" class="filter-label">{{ 'seals' | trans }}</label>
+            <select class="filter-form" id="seals" name="seals">
                 <option value="">{{ 'select' | trans }}</option>
-                {% for tag in tags %}
-                    <option value="{{ tag.id }}">{{ tag.name }}</option>
-                {% endfor %}
             </select>
         </div>
 
@@ -61,9 +74,6 @@
             <label for="state" class="filter-label">{{ 'state' | trans }}</label>
             <select class="filter-form" id="state" name="state">
                 <option value="">{{ 'select' | trans }}</option>
-                {% for state in states %}
-                    <option value="{{ state.id }}">{{ state.name }}</option>
-                {% endfor %}
             </select>
         </div>
 
@@ -75,14 +85,10 @@
         </div>
 
         <div class="d-flex flex-column gap-2">
-            <button id="apply-filters" type="submit" class="btn btn-primary fw-bold py-3">{{ 'apply_filter' | trans }}</button>
-            <a href="{{ path("web_event_list") }}" class="btn btn-outline-primary py-3 fw-bold">{{ 'clean_filter' | trans }}</a>
+            <button id="apply-filters" type="submit"
+                    class="btn btn-primary fw-bold py-3">{{ 'apply_filter' | trans }}</button>
+            <a href="{{ path("web_event_list") }}"
+               class="btn btn-outline-primary py-3 fw-bold">{{ 'clean_filter' | trans }}</a>
         </div>
     </div>
 </form>
-
-{% block extra_javascripts %}
-    <script type="module" src="{{ asset('js/side-filter.js') }}"></script>
-    <script type="module" src="{{ asset('js/period-filter-validation.js') }}"></script>
-    <script type="module" src="{{ asset('js/load-cities.js') }}"></script>
-{% endblock %}
