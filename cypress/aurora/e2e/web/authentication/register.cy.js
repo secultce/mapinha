@@ -176,7 +176,7 @@ describe('Página de Cadastro', () => {
 
         cy.get('input[type="search"]').type('João da Silva');
 
-        cy.get('table tbody tr').contains('awaiting_confirmation').parents('tr').within(() => {
+        cy.get('table tbody tr').contains('Aguardando confirmação').parents('tr').within(() => {
             cy.contains('confirm_user').click();
         });
         cy.get('a[data-modal-button="confirm-link"]').click();
