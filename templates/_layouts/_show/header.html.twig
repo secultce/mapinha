@@ -24,7 +24,7 @@
             <h2 class="name__entity-details fw-bold ms-2 mt-2 ms-sm-4 mt-sm-3">{{ entity.name }}</h2>
 
             <div class="ms-auto mt-3 d-none d-xxl-inline">
-                {% include "_components/_show/info-btns.html.twig" %}
+                {% include "_components/_show/info-btns.html.twig" with { 'actions': actions is defined ? actions : [] } %}
             </div>
         </div>
 

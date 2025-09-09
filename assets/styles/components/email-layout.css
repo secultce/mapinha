@@ -1,0 +1,31 @@
+body {
+    font-family: 'Roboto', 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+.email-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.email-header img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+.email-footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #777;
+}
+.email-rodape img {
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}

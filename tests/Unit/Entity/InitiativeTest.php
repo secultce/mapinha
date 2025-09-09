@@ -79,5 +79,7 @@ class InitiativeTest extends TestCase
         $this->assertArrayHasKey('space', $arrayData);
         $this->assertArrayHasKey('parent', $arrayData);
         $this->assertArrayHasKey('createdBy', $arrayData);
+        $this->assertIsArray($arrayData['socialNetworks']);
+        $this->assertEmpty($arrayData['socialNetworks']);
     }
 }

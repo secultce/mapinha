@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Api;
 
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ExampleApiTest extends AbstractWebTestCase
+class ExampleApiTest extends AbstractApiTestCase
 {
     public function testRouteNotExists(): void
     {

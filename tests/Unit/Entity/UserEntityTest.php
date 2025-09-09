@@ -6,13 +6,14 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Agent;
 use App\Entity\User;
-use App\Tests\AbstractWebTestCase;
+use App\Enum\UserStatusEnum;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Uid\Uuid;
 
-class UserEntityTest extends AbstractWebTestCase
+class UserEntityTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromUserEntityShouldBeSuccessful(): void
     {
@@ -20,7 +21,7 @@ class UserEntityTest extends AbstractWebTestCase
 
         $this->assertCount(0, $user->getAgents());
         $this->assertNull($user->getLastLogin());
-        $this->assertTrue($user->isActive());
+        $this->assertFalse($user->isActive());
 
         $id = Uuid::v4();
         $firstname = 'Fulano';
@@ -83,6 +84,7 @@ class UserEntityTest extends AbstractWebTestCase
             'socialName' => $socialName,
             'email' => $email,
             'image' => $image,
+            'status' => UserStatusEnum::AWAITING_CONFIRMATION->value,
             'createdAt' => $createdAt->format('Y-m-d H:i:s'),
             'updatedAt' => $updatedAt->format('Y-m-d H:i:s'),
             'deletedAt' => $deletedAt->format('Y-m-d H:i:s'),

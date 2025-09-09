@@ -6,12 +6,14 @@ namespace App\Serializer\Denormalizer;
 
 use App\Entity\ActivityArea;
 use App\Entity\Agent;
+use App\Entity\CulturalLanguage;
 use App\Entity\Event;
+use App\Entity\EventType;
 use App\Entity\Initiative;
 use App\Entity\Space;
 use App\Entity\Tag;
 use App\Enum\AccessibilityInfoEnum;
-use App\Enum\EventTypeEnum;
+use App\Enum\EventFormatEnum;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -101,6 +103,20 @@ readonly class EventDenormalizer implements DenormalizerInterface
             $event->setTags(new ArrayCollection($tags));
         }
 
+        if (true === array_key_exists('culturalLanguages', $data)) {
+            $culturalLanguages = array_map(
+                fn (string $id) => $this->entityManager->find(CulturalLanguage::class, $id),
+                $data['culturalLanguages']
+            );
+
+            $event->setCulturalLanguages(new ArrayCollection($culturalLanguages));
+        }
+
+        if (true === array_key_exists('eventType', $data)) {
+            $eventType = $this->entityManager->getRepository(EventType::class)->find($data['eventType']);
+            $event->setEventType($eventType);
+        }
+
         return $event;
     }
 
@@ -132,12 +148,12 @@ readonly class EventDenormalizer implements DenormalizerInterface
     private function denormalizeEventType(mixed $eventType): int
     {
         if (true === is_string($eventType)) {
-            $choice = EventTypeEnum::fromName($eventType);
+            $choice = EventFormatEnum::fromName($eventType);
 
             return $choice->value;
         }
 
-        if ($eventType instanceof EventTypeEnum) {
+        if ($eventType instanceof EventFormatEnum) {
             return $eventType->value;
         }
 

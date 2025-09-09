@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Fixtures;
 
+use App\Enum\UserStatusEnum;
 use Symfony\Component\Uid\Uuid;
 
 class UserTestFixtures implements TestFixtures
@@ -18,6 +19,7 @@ class UserTestFixtures implements TestFixtures
             'email' => 'user.test@mail.com',
             'password' => 'Aurora@2024',
             'image' => null,
+            'status' => UserStatusEnum::ACTIVE->value,
         ];
     }
 

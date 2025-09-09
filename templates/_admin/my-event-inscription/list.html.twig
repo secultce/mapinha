@@ -1,0 +1,28 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %}
+    {{ 'my_subscriptions' | trans }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/my-inscription.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="d-flex">
+        {% include "_components/side-bar.html.twig" %}
+
+        <section class="management-content w-100 my-inscription-page">
+            <div class="management-panel__white-square d-flex flex-column justify-content-between">
+                {% include "_admin/my-event-inscription/_partials/title.html.twig" %}
+
+                {% include "_admin/my-event-inscription/_partials/tabs/tabs.html.twig" %}
+            </div>
+
+            {% include "_admin/my-event-inscription/_partials/tabs/content-tabs.html.twig" %}
+        </section>
+    </section>
+{% endblock %}
+
+{% block footer %}{% endblock %}

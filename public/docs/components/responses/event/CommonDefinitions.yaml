@@ -167,6 +167,10 @@ EventBase:
         free:
           type: boolean
           description: Se a entrada é livre
+        draft:
+          type: boolean
+          description: Se o evento está em rascunho
+          example: false
         createdAt:
           type: string
           format: date-time
@@ -271,6 +275,10 @@ EventBase:
     free:
       type: boolean
       description: Se a entrada é livre
+    draft:
+      type: boolean
+      description: Se o evento está em rascunho
+      example: false
     createdAt:
         type: string
         format: date-time

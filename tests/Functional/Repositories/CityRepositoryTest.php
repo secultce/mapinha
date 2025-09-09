@@ -35,11 +35,11 @@ final class CityRepositoryTest extends KernelTestCase
 
         $this->assertIsArray($cities);
         $this->assertCount(184, $cities);
-        $this->assertSame('Abaiara', $cities[0]->getName());
-        $this->assertSame('Acarape', $cities[1]->getName());
-        $this->assertSame('Acaraú', $cities[2]->getName());
-        $this->assertSame('Acopiara', $cities[3]->getName());
-        $this->assertSame('Aiuaba', $cities[4]->getName());
+        $this->assertSame('Fortaleza', $cities[0]->getName());
+        $this->assertSame('Abaiara', $cities[1]->getName());
+        $this->assertSame('Acarape', $cities[2]->getName());
+        $this->assertSame('Acaraú', $cities[3]->getName());
+        $this->assertSame('Acopiara', $cities[4]->getName());
     }
 
     public function testGetCitiesByLowercaseAcronym(): void
@@ -48,11 +48,11 @@ final class CityRepositoryTest extends KernelTestCase
 
         $this->assertIsArray($cities);
         $this->assertCount(184, $cities);
-        $this->assertSame('Abaiara', $cities[0]->getName());
-        $this->assertSame('Acarape', $cities[1]->getName());
-        $this->assertSame('Acaraú', $cities[2]->getName());
-        $this->assertSame('Acopiara', $cities[3]->getName());
-        $this->assertSame('Aiuaba', $cities[4]->getName());
+        $this->assertSame('Fortaleza', $cities[0]->getName());
+        $this->assertSame('Abaiara', $cities[1]->getName());
+        $this->assertSame('Acarape', $cities[2]->getName());
+        $this->assertSame('Acaraú', $cities[3]->getName());
+        $this->assertSame('Acopiara', $cities[4]->getName());
     }
 
     public function testGetCitiesByInvalidAcronym(): void
@@ -71,10 +71,10 @@ final class CityRepositoryTest extends KernelTestCase
 
         $this->assertIsArray($cities);
         $this->assertCount(184, $cities);
-        $this->assertSame('Abaiara', $cities[0]->getName());
-        $this->assertSame('Acarape', $cities[1]->getName());
-        $this->assertSame('Acaraú', $cities[2]->getName());
-        $this->assertSame('Acopiara', $cities[3]->getName());
-        $this->assertSame('Aiuaba', $cities[4]->getName());
+        $this->assertSame('Fortaleza', $cities[0]->getName());
+        $this->assertSame('Abaiara', $cities[1]->getName());
+        $this->assertSame('Acarape', $cities[2]->getName());
+        $this->assertSame('Acaraú', $cities[3]->getName());
+        $this->assertSame('Acopiara', $cities[4]->getName());
     }
 }

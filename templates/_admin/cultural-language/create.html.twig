@@ -1,0 +1,39 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %} {{ "control_panel"|trans }} - {{ "cultural_language"|trans }} {% endblock %}
+
+{% block content %}
+    <section class="d-flex">
+        {% include "_components/side-bar.html.twig" %}
+
+        <div class="w-100 p-4">
+            <div class="container d-grid justify-content-start mt-4">
+                <a href="{{ (path("admin_cultural_language_list")) }}" class="nav-link centered-icon-text text-primary">
+                    <i class="material-icons">arrow_back</i>
+                    {{ "back"|trans }}
+                </a>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <div class="card card-body shadow">
+                        <h2>{{ 'create'|trans }} {{ 'cultural_language'|trans|lower }}</h2>
+                        <hr>
+
+                        <form action="{{ path("admin_cultural_language_create") }}" method="post">
+                            <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
+
+                            <div class="mb-3">
+                                <label for="name" class="mb-1">{{ "name"|trans }}</label>
+                                <input type="text" class="form-control" id="name" name="name" data-cy="name" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary me-3" data-cy="submit">{{ "save"|trans }}</button>
+                            <a href="{{ path("admin_cultural_language_list") }}" class="btn btn-outline-danger">{{ "cancel"|trans }}</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

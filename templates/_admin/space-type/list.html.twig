@@ -12,7 +12,7 @@
                 <div class="d-flex justify-content-between">
                     <h2>{{ 'space_type'|trans }}</h2>
                     <div class="d-flex align-items-center">
-                        <a href="{{  path('admin_space_type_create') }}" class="btn btn-primary">
+                        <a href="{{ path('admin_space_type_create') }}" class="btn btn-primary">
                             {{ 'create' | trans }}
                         </a>
                     </div>
@@ -36,7 +36,18 @@
                                     <a href="{{ path('admin_space_type_edit', {'id': item.id}) }}" class="btn btn-outline-warning btn-sm">
                                         {{ 'edit'|trans }}
                                     </a>
+                                    <button data-bs-toggle="modal"
+                                            data-bs-target="#modalRemoveConfirm"
+                                            onclick="confirmRemove(this)"
+                                            data-href="{{ path('admin_space_type_remove', {'id': item.id}) }}"
+                                            class="btn btn-outline-danger btn-sm">
+                                        {{ 'delete'|trans }}
+                                    </button>
                                 </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">{{ 'no_records_found'|trans }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -45,4 +56,9 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block extra_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/modal-confirm-remove.js') }}"></script>
 {% endblock %}

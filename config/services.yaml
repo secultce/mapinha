@@ -5,8 +5,11 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.migrations.odm: 'migrations-odm'
-    app.dir.storage: '%env(resolve:STORAGE_IMAGES_DIR)%'
+    app.dir.storage: '%env(resolve:STORAGE_DIR)%'
     app.url.storage: '%env(resolve:STORAGE_BASE_URL)%'
+    app.dir.storage.images: '%env(resolve:STORAGE_IMAGES_DIR)%'
+    app.url.storage.images: '%env(resolve:STORAGE_IMAGES_BASE_URL)%'
+    app.email.address: '%env(EMAIL_ADDRESS)%'
 
 imports:
     - { resource: directories.yaml }
@@ -26,11 +29,19 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    _instanceof:
+        App\Service\ExporterInscriptions\InscriptionExporterStrategyInterface:
+            tags: ['app.inscription_exporter_strategy']
+
+    App\Service\InscriptionEventExportService:
+        arguments:
+            $strategies: !tagged_iterator app.inscription_exporter_strategy
+
     App\Controller\:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    App\Repository\Interface\OrganizationRepositoryInterface: '@App\Repository\OrganizationRepository'
 
     App\Service\FileService:
         arguments:

@@ -1,0 +1,72 @@
+<div class="entity-imgs">
+    <div class="banner">
+        <input class="banner-input" id="banner-input" type="file" accept="image/*" />
+        <label for="banner-input" class="banner-label">
+            <span class="iconify entity-edit-icon me-2" data-icon="tabler:camera-plus"></span>
+            {{ 'add_cover_image' | trans }}
+        </label>
+    </div>
+
+    <div class="profile-pic">
+        <label for="profile-input" class="profile-label">
+            <img id="profile-img" src="{{ user.image }}" alt="{{ 'photo' | trans }}" class="profile-label">
+            <input id="profile-input" type="file" accept="image/*" name="profileImage" />
+        </label>
+    </div>
+</div>
+
+<div class="entity-introduction-data">
+
+    <div id="image-error"></div>
+
+    <label for="firstname">
+        {{ 'first_name' | trans }}
+        <span class="text-dange r">*</span>
+    </label>
+    <input type="text"
+           class="form-control"
+           id="firstname" name="firstname"
+           value="{{ user.firstname }}"
+           placeholder="{{ 'first_name' | trans }}"
+           required
+    >
+    <label for="lastname">
+        {{ 'lastname' | trans }}
+         <span class="text-danger">*</span>
+    </label>
+    <input type="text"
+           class="form-control"
+           id="lastname" name="lastname"
+           value="{{ user.lastname }}"
+           placeholder="{{ 'lastname' | trans }}"
+           required
+    >
+    <label for="socialName">
+        {{ 'social_name' | trans }}
+    </label>
+    <input type="text"
+           class="form-control"
+           id="socialName" name="socialName"
+           value="{{ user.socialName }}"
+           placeholder="{{ 'social_name' | trans }}"
+    >
+    <label for="email">
+        {{ 'email' | trans }}
+         <span class="text-danger">*</span>
+    </label>
+    <input type="email"
+           class="form-control"
+           id="email" name="email"
+           value="{{ user.email }}"
+           placeholder="{{ 'email' | trans }}"
+           required
+    >
+    <label for="password">
+        {{ 'password' | trans }}
+    </label>
+    <input type="password"
+           class="form-control"
+           id="password" name="password"
+           placeholder="{{ 'password' | trans }}"
+    >
+</div>

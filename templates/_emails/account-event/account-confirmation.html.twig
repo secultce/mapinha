@@ -1,0 +1,13 @@
+{% block content %}
+    <h1>Olá {{ first_name }}!</h1>
+
+    <p>Obrigado por se registrar em nosso site. Por favor, confirme sua conta clicando no link abaixo:</p>
+
+    <p>
+        <a href="{{ confirmation_link }}">Confirmar minha conta</a>
+    </p>
+
+    <p>Este link expirará em {{ expiration_date|date('d/m/Y H:i') }}.</p>
+
+    <p>Se você não se registrou, por favor ignore este e-mail.</p>
+{% endblock %}

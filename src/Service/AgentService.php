@@ -69,14 +69,16 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
         return $this->repository->save($agentObj);
     }
 
-    public function createFromUser(array $user): void
+    public function createFromUser(array $user, ?array $extraFields = null): Agent
     {
         $agent = $this->organizeDefaultAgentData($user);
+        $agent['extraFields'] = $extraFields;
+        $agent['main'] = true;
         $agent = $this->validateInput($agent, AgentDto::class, AgentDto::CREATE);
 
         $agentObj = $this->serializer->denormalize($agent, Agent::class);
 
-        $this->repository->save($agentObj);
+        return $this->repository->save($agentObj);
     }
 
     public function findBy(array $params = [], int $limit = 50): array
@@ -114,6 +116,11 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
         }
 
         return $agent;
+    }
+
+    public function getMainAgentByEmail(string $email): ?Agent
+    {
+        return $this->repository->getMainAgentByEmail($email);
     }
 
     public function list(int $limit = 50, array $params = [], string $order = 'DESC'): array
@@ -205,7 +212,8 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
             $uploadedFile
         );
 
-        $agent->setImage($this->fileService->urlOfImage($uploadedImage->getFilename()));
+        $relativePath = '/uploads'.$this->parameterBag->get(self::DIR_AGENT_PROFILE).'/'.$uploadedImage->getFilename();
+        $agent->setImage($relativePath);
 
         $agent->setUpdatedAt(new DateTime());
 

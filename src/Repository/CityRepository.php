@@ -19,10 +19,18 @@ class CityRepository extends AbstractRepository implements CityRepositoryInterfa
     public function findByState(State|string $state): array
     {
         if ($state instanceof State) {
-            return $this->findBy(
-                ['state' => $state],
-                ['name' => 'ASC']
-            );
+            $capitalId = $state->getCapital()->getId();
+
+            return $this->getEntityManager()->createQueryBuilder()
+                ->select('c')
+                ->from(City::class, 'c')
+                ->where('c.state = :state')
+                ->setParameter('state', $state)
+                ->orderBy('CASE WHEN c.id = :capitalId THEN 0 ELSE 1 END', 'ASC')
+                ->addOrderBy('c.name', 'ASC')
+                ->setParameter('capitalId', $capitalId)
+                ->getQuery()
+                ->getResult();
         }
 
         if (2 === strlen($state)) {
@@ -32,7 +40,8 @@ class CityRepository extends AbstractRepository implements CityRepositoryInterfa
                 ->join('c.state', 's')
                 ->where('s.acronym = :acronym')
                 ->setParameter('acronym', strtoupper($state))
-                ->orderBy('c.name', 'ASC')
+                ->orderBy('CASE WHEN c = s.capital THEN 0 ELSE 1 END', 'ASC')
+                ->addOrderBy('c.name', 'ASC')
                 ->getQuery()
                 ->getResult();
         }

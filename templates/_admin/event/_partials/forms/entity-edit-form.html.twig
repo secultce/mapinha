@@ -1,0 +1,82 @@
+<form id="event-edit-form" method="POST" class="entity-edit-form">
+    <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
+    <div class="accordion accordion-flush accordion-cards mt-4" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne"
+                        aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                    {{ 'presentation_information' | trans }}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <hr>
+                    {% include "_admin/event/_partials/forms/introduction.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item mt-4 mb-4">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                    {{ 'view.event.edit.event_information' | trans}}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <hr>
+                    {% include "_admin/event/_partials/forms/information.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item mt-4 mb-4">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseThree"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseThree">
+                    {{ 'view.event.edit.event_date_time_location' | trans }}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {% include "_admin/event/_partials/forms/date-location.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item mt-4 mb-4">
+            <h2 class="accordion-header">
+                <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseFour"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseFour">
+                    {{ 'social_media' | trans }}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <hr>
+                    {% include "_admin/event/_partials/forms/social-media.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

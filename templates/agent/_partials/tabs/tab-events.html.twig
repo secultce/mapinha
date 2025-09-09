@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-end align-items-center mb-4">
+    {% set sublist_tabs = [
+        {
+            'id': 'list',
+            'title': 'list' | trans,
+            'icon': 'list',
+        },
+        {
+            'id': 'cards',
+            'title': 'Cards',
+            'icon': 'view_module',
+        },
+        {
+            'id': 'calendar',
+            'title': 'calendar' | trans,
+            'icon': 'calendar_today',
+        },
+    ] %}
+
+    {% include '_components/_sublist/see-how.html.twig' with { 'sublist_tabs': sublist_tabs } %}
+</div>
+
+{% set sublist_contents = [
+    {
+        'id': 'list',
+        'content': include('_components/_sublist/event/list.html.twig')
+    },
+    {
+        'id': 'cards',
+        'content': include('_components/_sublist/event/cards.html.twig')
+    },
+] %}
+
+{% include '_components/_sublist/content-tabs.html.twig' with { 'sublist_contents': sublist_contents } %}

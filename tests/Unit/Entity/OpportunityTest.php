@@ -213,6 +213,8 @@ class OpportunityTest extends TestCase
         $this->assertIsArray($array['createdBy']);
         $this->assertSame('agent-uuid', $array['createdBy']['id']);
 
+        $this->assertIsArray($array['socialNetworks']);
+
         $this->assertSame('2025-01-02 10:00:00', $array['createdAt']);
         $this->assertSame('2025-01-03 12:00:00', $array['updatedAt']);
         $this->assertSame('2025-01-04 14:00:00', $array['deletedAt']);

@@ -8,6 +8,11 @@ list:
   controller: App\Controller\Web\Admin\SpaceTypeAdminController::list
   methods: ['GET']
 
+remove:
+  path: /{id}/remover
+  controller: App\Controller\Web\Admin\SpaceTypeAdminController::remove
+  methods: ['GET']
+
 edit:
   path: /editar/{id}
   controller: App\Controller\Web\Admin\SpaceTypeAdminController::edit

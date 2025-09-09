@@ -32,11 +32,20 @@
     }
 ] %}
 
+{% set actions = [
+    {
+        'icon': 'person',
+        'key': 'subscribe',
+        'path': path('admin_event_inscription_create', {id: event.id})
+    }
+] %}
+
 {% block content %}
     {% include '_layouts/_show/header.html.twig' with {
         'entity': event,
         'entityName': 'event',
-        'pills': pills
+        'pills': pills,
+        'actions': actions
     } %}
 
     <div class="container py-4">

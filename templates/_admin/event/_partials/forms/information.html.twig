@@ -1,0 +1,117 @@
+<div class="container-fluid event-information px-0">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="ageRating" class="form-label required">
+                {{ "age_rating" | trans }}
+            </label>
+            <select class="form-select" id="ageRating">
+                <option selected>Digite ou selecione</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="maximumCapacity" class="form-label">{{ 'maximum_capacity' | trans }}</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="maximumCapacity"
+                    placeholder="{{ 'type_here' | trans }}"
+            >
+        </div>
+
+        <div class="col-md-4">
+            <label for="phone" class="form-label">{{ 'phone_for_information' | trans }}</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    placeholder="(00) 00000-0000"
+            >
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <label for="registrationInfo" class="form-label">{{ 'registration_info' | trans }}</label>
+            <select class="form-select" id="registrationInfo">
+                <option selected>{{ 'select' | trans }}</option>
+            </select>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h6 class="fw-bold">{{ 'accessibility' | trans }}</h6>
+
+    <div class="row">
+        <div class="col">
+            <label class="form-label d-block">{{ 'libras' | trans }}</label>
+            <div class="form-check form-check-inline">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="libras"
+                        id="librasYes"
+                        value="1"
+                >
+                <label class="form-check-label" for="librasYes">{{ 'yes' | trans }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="libras"
+                        id="librasNo"
+                        value="0"
+                >
+                <label class="form-check-label" for="librasNo">{{ 'no' | trans}}</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="libras"
+                        id="librasNotInformed"
+                        value=""
+                >
+                <label class="form-check-label" for="librasNotInformed">{{ 'not_informed' | trans }}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label class="form-label d-block">{{ 'audio_description' | trans }}</label>
+            <div class="form-check form-check-inline">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="audioDescription"
+                        id="audioYes"
+                        value="1"
+                >
+                <label class="form-check-label" for="audioYes">{{ 'yes' | trans }}</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="audioDescription"
+                        id="audioNao"
+                        value="0"
+                >
+                <label class="form-check-label" for="audioNao">{{ 'no' | trans}}</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="audioDescription"
+                        id="audioNotInformed"
+                        value=""
+                >
+                <label class="form-check-label" for="audioNotInformed">{{ 'not_informed' | trans }}</label>
+            </div>
+        </div>
+    </div>
+</div>

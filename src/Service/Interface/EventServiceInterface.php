@@ -28,4 +28,8 @@ interface EventServiceInterface
     public function update(Uuid $id, array $event): Event;
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Event;
+
+    public function findByAgent(string $agentId): array;
+
+    public function togglePublish(Uuid $id): void;
 }

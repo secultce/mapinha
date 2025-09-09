@@ -28,4 +28,6 @@ interface SpaceServiceInterface
     public function update(Uuid $identifier, array $space): Space;
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Space;
+
+    public function togglePublish(Uuid $id): void;
 }

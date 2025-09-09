@@ -20,30 +20,42 @@
         </div>
 
         <div class="form-group">
-            <label for="type" class="filter-label">{{ 'type_space' | trans }}</label>
-            <select class="filter-form" id="type" name="type">
+            <label for="spaceType" class="filter-label">{{ 'type_space' | trans }}</label>
+            <select class="filter-form" id="spaceType" name="spaceType">
                 <option value="">{{ 'select' | trans }}</option>
+                {% for spaceType in spaceTypes %}
+                    <option value="{{ spaceType.id }}">{{ spaceType.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
-            <label for="accessibility" class="filter-label">{{ 'accessibility' | trans }}</label>
-            <select class="filter-form" id="accessibility" name="accessibility">
+            <label for="accessibilities" class="filter-label">{{ 'accessibility' | trans }}</label>
+            <select class="filter-form" id="accessibilities" name="accessibilities">
                 <option value="">{{ 'everybody' | trans }}</option>
+                {% for accessibility in architecturalAccessibility %}
+                    <option value="{{ accessibility.id }}">{{ accessibility.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
-            <label for="status" class="filter-label">{{ 'areas_of_expertise' | trans }}</label>
-            <select class="filter-form" id="status" name="status">
+            <label for="activityAreas" class="filter-label">{{ 'areas_of_expertise' | trans }}</label>
+            <select class="filter-form" id="activityAreas" name="activityAreas">
                 <option value="">{{ 'everybody' | trans }}</option>
+                {% for activityArea in activityAreas %}
+                    <option value="{{ activityArea.id }}">{{ activityArea.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
-            <label for="seals" class="filter-label">{{ 'seals' | trans }}</label>
-            <select class="filter-form" id="seals" name="seals">
+            <label for="tags" class="filter-label">{{ 'seals' | trans }}</label>
+            <select class="filter-form" id="tags" name="tags">
                 <option value="">{{ 'select' | trans }}</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
@@ -51,12 +63,15 @@
             <label for="state" class="filter-label">{{ 'state' | trans }}</label>
             <select class="filter-form" id="state" name="state">
                 <option value="">{{ 'select' | trans }}</option>
+                {% for state in states %}
+                    <option value="{{ state.id }}">{{ state.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
         <div class="form-group">
-            <label for="city" class="filter-label">{{ 'city' | trans }}</label>
-            <select class="filter-form" id="city" name="city">
+            <label for="address" class="filter-label">{{ 'city' | trans }}</label>
+            <select class="filter-form" id="city" name="address" data-placeholder="{{ 'select' | trans }}">
                 <option value="">{{ 'select' | trans }}</option>
             </select>
         </div>
@@ -67,3 +82,8 @@
         </div>
     </div>
 </form>
+
+{% block extra_javascripts %}
+    <script type="module" src="{{ asset('js/side-filter.js') }}"></script>
+    <script type="module" src="{{ asset('js/load-cities.js') }}"></script>
+{% endblock %}

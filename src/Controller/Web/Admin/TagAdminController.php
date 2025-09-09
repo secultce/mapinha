@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Web\Admin;
 
 use App\Enum\FlashMessageTypeEnum;
+use App\Enum\UserRolesEnum;
 use App\Exception\ValidatorException;
 use App\Service\TagService;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -28,6 +30,7 @@ class TagAdminController extends AbstractAdminController
     ) {
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         return $this->render(self::LIST, [
@@ -35,6 +38,7 @@ class TagAdminController extends AbstractAdminController
         ]);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function create(Request $request): Response
     {
         if (false === $request->isMethod(Request::METHOD_POST)) {
@@ -70,6 +74,7 @@ class TagAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_tag_list');
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function remove(string $id): Response
     {
         try {
@@ -82,6 +87,7 @@ class TagAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_tag_list');
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function edit(Request $request, string $id): Response
     {
         try {

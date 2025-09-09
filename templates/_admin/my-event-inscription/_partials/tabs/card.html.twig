@@ -1,0 +1,18 @@
+<div class="resource-card mt-4">
+    <div class="resource-card-header">
+        <div class="resource-icon"></div>
+        <h4 class="resource-title">{{ inscription.event.name }}</h4>
+    </div>
+    <div class="resource-card-body">
+        <div class="resource-details">
+            <p><strong>{{ 'subtitle' | trans }}</strong> {{ inscription.event.subtitle }}</p>
+            <p><strong>{{ 'type' | trans }}</strong> {{ inscription.event.subtitle }}</p>
+            <p><strong>{{ 'analysis' | trans }}</strong> {{ inscription.event.startDate | date('d/m/Y') }} {{ 'to'|trans }} {{ inscription.event.endDate | date('d/m/Y') }}</p>
+        </div>
+    </div>
+    <div class="text-end mt-3">
+        <a href="{{ path('web_event_show', {id: inscription.event.id}) }}" class="btn btn-primary" role="button">
+            {{ 'view.event.access' | trans }} <i class="material-icons">chevron_right</i>
+        </a>
+    </div>
+</div>

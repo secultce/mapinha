@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Fixtures;
 
 use App\DataFixtures\Entity\AgentFixtures;
+use App\Enum\OrganizationTypeEnum;
 use Symfony\Component\Uid\Uuid;
 
 class OrganizationTestFixtures implements TestFixtures
@@ -16,6 +17,7 @@ class OrganizationTestFixtures implements TestFixtures
             'name' => 'Test Organization',
             'owner' => AgentFixtures::AGENT_ID_1,
             'createdBy' => AgentFixtures::AGENT_ID_1,
+            'type' => OrganizationTypeEnum::EMPRESA->value,
         ];
     }
 

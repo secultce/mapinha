@@ -1,0 +1,40 @@
+InscriptionEventBase:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: Identificador da inscrição no evento
+    agent:
+      description: Agente inscrito no evento
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador do agente
+    event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador do evento
+    status:
+      type: string
+      enum:
+        - active
+        - cancelled
+        - confirmed
+        - suspended
+    createdAt:
+      $ref: '../../common-types/date.yaml'
+      description: Data e hora da criação da inscrição no evento
+    updatedAt:
+      $ref: '../../common-types/date.yaml'
+      nullable: true
+      description: Data e hora da última atualização da inscrição no evento
+    deletedAt:
+      $ref: '../../common-types/date.yaml'
+      nullable: true
+      description: Data e hora da exclusão da inscrição no evento

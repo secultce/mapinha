@@ -1,0 +1,9 @@
+create:
+  path: /
+  controller: App\Controller\Web\Admin\InscriptionEventController::inscription
+  methods: [POST]
+
+download:
+  path: /download/{format}
+  controller: App\Controller\Web\Admin\InscriptionEventController::download
+  methods: [GET]

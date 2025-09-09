@@ -17,3 +17,28 @@ timeline:
   path: /{id}/timeline
   controller: App\Controller\Web\Admin\EventAdminController::timeline
   methods: ['GET']
+
+edit:
+  path: /{id}/editar
+  controller: App\Controller\Web\Admin\EventAdminController::edit
+  methods: ['GET', 'POST']
+
+toggle_publish:
+  path: /{id}/toggle-publish
+  controller: App\Controller\Web\Admin\EventAdminController::togglePublish
+  methods: ['GET']
+
+get:
+  path: /{id}
+  controller: App\Controller\Web\Admin\EventAdminController::getOne
+  methods: ['GET']
+
+suspend_inscription:
+  path: /{id}/suspender/{inscription}
+  controller: App\Controller\Web\Admin\EventAdminController::suspendInscription
+  methods: ['GET']
+
+check_in_inscription:
+  path: /{id}/check-in/{inscription}
+  controller: App\Controller\Web\Admin\EventAdminController::checkInInscription
+  methods: ['GET']

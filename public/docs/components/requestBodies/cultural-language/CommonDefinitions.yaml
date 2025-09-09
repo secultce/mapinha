@@ -1,0 +1,8 @@
+CulturalLanguageBase:
+  type: object
+  properties:
+    name:
+      type: string
+      maxLength: 50
+      description: Nome da linguagem cultural.
+      examples: Arte e Música

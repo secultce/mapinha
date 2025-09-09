@@ -17,6 +17,13 @@ security:
             stateless: true
             json_login:
                 check_path: api_auth_login
+        api_public:
+            pattern: ^/api/states
+            methods: [GET]
+            security: false
+        api_users_email-exists:
+            pattern: ^/api/users/exists
+            security: false
         api:
             pattern: ^/api
             stateless: true
@@ -24,12 +31,14 @@ security:
         web:
             lazy: true
             provider: app_user_provider
+            user_checker: App\Security\UserChecker
             form_login:
                 login_path: web_auth_login
                 check_path: web_auth_login
+                failure_handler: App\Security\LoginFailureHandler
                 username_parameter: email
                 password_parameter: password
-                default_target_path: web_home_homepage
+                default_target_path: admin_dashboard
                 enable_csrf: true
             logout:
                 path: /logout
@@ -48,6 +57,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/api/login, roles: PUBLIC_ACCESS }
+         - { path: ^/api/regions, roles: PUBLIC_ACCESS }
          - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
          - { path: ^/painel, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }

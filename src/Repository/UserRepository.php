@@ -37,4 +37,24 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
     {
         $this->getEntityManager()->rollback();
     }
+
+    public function findOneByRole(string $role): ?User
+    {
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = <<<SQL
+            SELECT id FROM app_user
+            WHERE roles @> :role
+            AND deleted_at IS NULL
+            LIMIT 1
+            SQL;
+
+        $result = $connection->executeQuery($sql, [
+            'role' => json_encode([$role]),
+        ]);
+
+        $id = $result->fetchOne();
+
+        return $id ? $this->find($id) : null;
+    }
 }

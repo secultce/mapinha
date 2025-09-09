@@ -12,11 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Start the aurora
         run: docker compose up -d --build
 
       - name: Install dependencies
-        run: docker compose exec --user root php composer install
+        run: docker compose exec --user root php composer install --ignore-platform-req=ext-mongodb
 
       - name: Generate public/private keys for use in your application.
         run: docker compose exec --user root php bin/console lexik:jwt:generate-keypair
@@ -44,3 +47,7 @@ jobs:
         with:
           files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Remove o .env file
+        run: rm .env
+          

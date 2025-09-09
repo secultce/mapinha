@@ -6,14 +6,16 @@ namespace App\Tests\Functional\Api;
 
 use App\DataFixtures\Entity\ActivityAreaFixtures;
 use App\DataFixtures\Entity\AgentFixtures;
+use App\DataFixtures\Entity\CulturalLanguageFixtures;
 use App\DataFixtures\Entity\EventFixtures;
+use App\DataFixtures\Entity\EventTypeFixtures;
 use App\DataFixtures\Entity\InitiativeFixtures;
 use App\DataFixtures\Entity\SpaceFixtures;
 use App\DataFixtures\Entity\TagFixtures;
 use App\Entity\Event;
 use App\Enum\AccessibilityInfoEnum;
-use App\Enum\EventTypeEnum;
-use App\Tests\AbstractWebTestCase;
+use App\Enum\EventFormatEnum;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\EventTestFixtures;
 use App\Tests\Fixtures\ImageTestFixtures;
 use DateTimeInterface;
@@ -23,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class EventApiControllerTest extends AbstractWebTestCase
+class EventApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/events';
 
@@ -48,13 +50,15 @@ class EventApiControllerTest extends AbstractWebTestCase
             'space' => ['id' => SpaceFixtures::SPACE_ID_1],
             'initiative' => ['id' => InitiativeFixtures::INITIATIVE_ID_1],
             'parent' => null,
-            'extraFields' => null,
+            'extraFields' => $event->getExtraFields(),
             'createdBy' => ['id' => self::getLoggedAgentId()],
             'coverImage' => null,
             'subtitle' => null,
             'shortDescription' => null,
             'longDescription' => null,
-            'type' => EventTypeEnum::HYBRID->value,
+            'format' => EventFormatEnum::IN_PERSON->value,
+            'eventType' => null,
+            'startDate' => '2025-01-16T00:00:00+00:00',
             'endDate' => '2025-04-01T00:00:00+00:00',
             'activityAreas' => [],
             'tags' => [],
@@ -64,6 +68,8 @@ class EventApiControllerTest extends AbstractWebTestCase
             'accessibleAudio' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
+            'draft' => true,
+            'culturalLanguages' => [],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -98,13 +104,15 @@ class EventApiControllerTest extends AbstractWebTestCase
                 'space' => ['id' => SpaceFixtures::SPACE_ID_3],
                 'initiative' => ['id' => InitiativeFixtures::INITIATIVE_ID_2],
                 'parent' => null,
-                'extraFields' => null,
+                'extraFields' => $event->getExtraFields(),
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
                 'coverImage' => null,
                 'subtitle' => 'Subtítulo de exemplo',
                 'shortDescription' => null,
                 'longDescription' => 'Uma descrição mais longa',
-                'type' => EventTypeEnum::ONLINE->value,
+                'format' => EventFormatEnum::ONLINE->value,
+                'eventType' => null,
+                'startDate' => '2024-07-10T10:00:00+00:00',
                 'endDate' => '2024-09-10T11:30:00+00:00',
                 'activityAreas' => [
                     [
@@ -127,26 +135,40 @@ class EventApiControllerTest extends AbstractWebTestCase
                 'accessibleAudio' => AccessibilityInfoEnum::YES->value,
                 'accessibleLibras' => AccessibilityInfoEnum::YES->value,
                 'free' => false,
+                'draft' => false,
+                'culturalLanguages' => [
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
+                        'name' => 'Arte e Música',
+                        'description' => 'Pintura, escultura, literatura, dança, teatro, música e outras formas artísticas que comunicam ideias, histórias e sentimentos.',
+                    ],
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_2,
+                        'name' => 'Costumes e Rituais',
+                        'description' => 'Celebrações, festivais, cerimônias religiosas e ritos de passagem que expressam identidades culturais.',
+                    ],
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_3,
+                        'name' => 'Moda e Vestuário',
+                        'description' => 'Estilos de vestir que comunicam status social, afiliação cultural, crenças ou até protestos.',
+                    ],
+                ],
                 'createdAt' => '2024-07-10T11:30:00+00:00',
                 'updatedAt' => '2024-07-10T11:35:00+00:00',
                 'deletedAt' => null,
             ],
-            'extraFields' => [
-                'occurrences' => [
-                    '2025-01-16T09:45:00-03:00',
-                    '2025-02-13T09:45:00-03:00',
-                    '2025-03-13T09:45:00-03:00',
-                ],
-                'description' => 'Test Event Description',
-                'locationDescription' => 'Test Event Location',
-                'instagram' => '@mytestevent',
-            ],
+            'extraFields' => $event->getExtraFields(),
             'createdBy' => ['id' => self::getLoggedAgentId()],
             'coverImage' => 'coverimage.jpg',
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => 'Descrição curta',
             'longDescription' => 'Uma descrição mais longa',
-            'type' => EventTypeEnum::HYBRID->value,
+            'format' => EventFormatEnum::IN_PERSON->value,
+            'eventType' => [
+                'id' => EventTypeFixtures::EVENT_TYPE_ID_1,
+                'name' => 'Show Musical',
+            ],
+            'startDate' => '2025-01-16T00:00:00+00:00',
             'endDate' => '2025-04-01T00:00:00+00:00',
             'activityAreas' => [
                 [
@@ -178,6 +200,8 @@ class EventApiControllerTest extends AbstractWebTestCase
             'accessibleAudio' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
+            'draft' => true,
+            'culturalLanguages' => [],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -209,8 +233,7 @@ class EventApiControllerTest extends AbstractWebTestCase
                     ['field' => 'id', 'message' => 'This value should not be blank.'],
                     ['field' => 'name', 'message' => 'This value should not be blank.'],
                     ['field' => 'type', 'message' => 'This value should not be blank.'],
-                    ['field' => 'endDate', 'message' => 'This value should not be blank.'],
-                    ['field' => 'maxCapacity', 'message' => 'This value should not be blank.'],
+                    ['field' => 'startDate', 'message' => 'This value should not be blank.'],
                 ],
             ],
             'id is not a valid UUID' => [
@@ -357,14 +380,14 @@ class EventApiControllerTest extends AbstractWebTestCase
                     ['field' => 'longDescription', 'message' => 'This value should be of type string.'],
                 ],
             ],
-            'type should be a string' => [
-                'requestBody' => array_merge($requestBody, ['type' => 123]),
+            'type should be a integer' => [
+                'requestBody' => array_merge($requestBody, ['type' => 'abc']),
                 'expectedErrors' => [
-                    ['field' => 'type', 'message' => 'This value should be of type string.'],
+                    ['field' => 'type', 'message' => 'This value should be of type integer.'],
                 ],
             ],
             'type should be a valid choice' => [
-                'requestBody' => array_merge($requestBody, ['type' => 'invalid-choice']),
+                'requestBody' => array_merge($requestBody, ['type' => 5]),
                 'expectedErrors' => [
                     ['field' => 'type', 'message' => 'The value you selected is not a valid choice.'],
                 ],
@@ -489,6 +512,12 @@ class EventApiControllerTest extends AbstractWebTestCase
                     ['field' => 'free', 'message' => 'This value should be of type boolean.'],
                 ],
             ],
+            'draft should be boolean' => [
+                'requestBody' => array_merge($requestBody, ['draft' => 'invalid']),
+                'expectedErrors' => [
+                    ['field' => 'draft', 'message' => 'This value should be of type boolean.'],
+                ],
+            ],
         ];
     }
 
@@ -501,7 +530,7 @@ class EventApiControllerTest extends AbstractWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertCount(count(EventFixtures::EVENTS), json_decode($response));
+        $this->assertCount(count(EventFixtures::EVENTS) - 1, json_decode($response));
 
         $this->assertJsonContains([
             'id' => EventFixtures::EVENT_ID_1,
@@ -522,7 +551,9 @@ class EventApiControllerTest extends AbstractWebTestCase
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => null,
             'longDescription' => 'Uma descrição mais longa',
-            'type' => EventTypeEnum::ONLINE->value,
+            'format' => EventFormatEnum::ONLINE->value,
+            'eventType' => null,
+            'startDate' => '2024-07-10T10:00:00+00:00',
             'endDate' => '2024-09-10T11:30:00+00:00',
             'activityAreas' => [
                 [
@@ -545,6 +576,24 @@ class EventApiControllerTest extends AbstractWebTestCase
             'accessibleAudio' => AccessibilityInfoEnum::YES->value,
             'accessibleLibras' => AccessibilityInfoEnum::YES->value,
             'free' => false,
+            'draft' => false,
+            'culturalLanguages' => [
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
+                    'name' => 'Arte e Música',
+                    'description' => 'Pintura, escultura, literatura, dança, teatro, música e outras formas artísticas que comunicam ideias, histórias e sentimentos.',
+                ],
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_2,
+                    'name' => 'Costumes e Rituais',
+                    'description' => 'Celebrações, festivais, cerimônias religiosas e ritos de passagem que expressam identidades culturais.',
+                ],
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_3,
+                    'name' => 'Moda e Vestuário',
+                    'description' => 'Estilos de vestir que comunicam status social, afiliação cultural, crenças ou até protestos.',
+                ],
+            ],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => '2024-07-10T11:35:00+00:00',
             'deletedAt' => null,
@@ -588,7 +637,9 @@ class EventApiControllerTest extends AbstractWebTestCase
                     'id' => InitiativeFixtures::INITIATIVE_ID_7,
                 ],
                 'parent' => null,
-                'extraFields' => null,
+                'extraFields' => [
+                    'ageRating' => '18 years',
+                ],
                 'createdBy' => [
                     'id' => AgentFixtures::AGENT_ID_2,
                 ],
@@ -596,7 +647,9 @@ class EventApiControllerTest extends AbstractWebTestCase
                 'subtitle' => null,
                 'shortDescription' => 'Descrição curta',
                 'longDescription' => 'Uma descrição mais longa',
-                'type' => EventTypeEnum::HYBRID->value,
+                'format' => EventFormatEnum::HYBRID->value,
+                'eventType' => null,
+                'startDate' => '2024-07-18T10:00:00+00:00',
                 'endDate' => '2024-07-18T11:30:00+00:00',
                 'activityAreas' => [
                     [
@@ -624,15 +677,19 @@ class EventApiControllerTest extends AbstractWebTestCase
                 'accessibleAudio' => AccessibilityInfoEnum::NOT_INFORMED->value,
                 'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
                 'free' => true,
+                'draft' => false,
+                'culturalLanguages' => [
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_6,
+                        'name' => 'Sistemas de Simbolismo',
+                        'description' => 'Símbolos, gestos, mitos e narrativas que comunicam significados compartilhados.',
+                    ],
+                ],
                 'createdAt' => '2024-07-16T17:22:00+00:00',
                 'updatedAt' => null,
                 'deletedAt' => null,
             ],
-            'extraFields' => [
-                'subtitle' => 'Cores do Sertão',
-                'description' => 'Cores do Sertão',
-                'occurrences' => ['2025-08-05T10:30:00-03:00'],
-            ],
+            'extraFields' => $event->getExtraFields(),
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_3,
             ],
@@ -640,7 +697,9 @@ class EventApiControllerTest extends AbstractWebTestCase
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => 'Descrição curta',
             'longDescription' => null,
-            'type' => EventTypeEnum::HYBRID->value,
+            'format' => EventFormatEnum::HYBRID->value,
+            'eventType' => null,
+            'startDate' => '2025-08-05T10:30:00+00:00',
             'endDate' => '2024-08-10T18:30:00+00:00',
             'activityAreas' => [
                 [
@@ -672,6 +731,19 @@ class EventApiControllerTest extends AbstractWebTestCase
             'accessibleAudio' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
+            'draft' => false,
+            'culturalLanguages' => [
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
+                    'name' => 'Arte e Música',
+                    'description' => 'Pintura, escultura, literatura, dança, teatro, música e outras formas artísticas que comunicam ideias, histórias e sentimentos.',
+                ],
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_8,
+                    'name' => 'Oralidade e Tradição Popular',
+                    'description' => 'Histórias, provérbios, músicas e conhecimentos transmitidos verbalmente entre gerações.',
+                ],
+            ],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -755,13 +827,15 @@ class EventApiControllerTest extends AbstractWebTestCase
                 'space' => ['id' => SpaceFixtures::SPACE_ID_3],
                 'initiative' => ['id' => InitiativeFixtures::INITIATIVE_ID_2],
                 'parent' => null,
-                'extraFields' => null,
+                'extraFields' => $event->getExtraFields(),
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
                 'coverImage' => null,
                 'subtitle' => 'Subtítulo de exemplo',
                 'shortDescription' => null,
                 'longDescription' => 'Uma descrição mais longa',
-                'type' => EventTypeEnum::ONLINE->value,
+                'format' => EventFormatEnum::ONLINE->value,
+                'eventType' => null,
+                'startDate' => '2024-07-10T10:00:00+00:00',
                 'endDate' => '2024-09-10T11:30:00+00:00',
                 'activityAreas' => [
                     [
@@ -784,6 +858,24 @@ class EventApiControllerTest extends AbstractWebTestCase
                 'accessibleAudio' => AccessibilityInfoEnum::YES->value,
                 'accessibleLibras' => AccessibilityInfoEnum::YES->value,
                 'free' => false,
+                'draft' => false,
+                'culturalLanguages' => [
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
+                        'name' => 'Arte e Música',
+                        'description' => 'Pintura, escultura, literatura, dança, teatro, música e outras formas artísticas que comunicam ideias, histórias e sentimentos.',
+                    ],
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_2,
+                        'name' => 'Costumes e Rituais',
+                        'description' => 'Celebrações, festivais, cerimônias religiosas e ritos de passagem que expressam identidades culturais.',
+                    ],
+                    [
+                        'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_3,
+                        'name' => 'Moda e Vestuário',
+                        'description' => 'Estilos de vestir que comunicam status social, afiliação cultural, crenças ou até protestos.',
+                    ],
+                ],
                 'createdAt' => '2024-07-10T11:30:00+00:00',
                 'updatedAt' => '2024-07-10T11:35:00+00:00',
                 'deletedAt' => null,
@@ -794,7 +886,12 @@ class EventApiControllerTest extends AbstractWebTestCase
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => 'Descrição curta',
             'longDescription' => 'Uma descrição mais longa',
-            'type' => EventTypeEnum::HYBRID->value,
+            'format' => EventFormatEnum::HYBRID->value,
+            'eventType' => [
+                'id' => EventTypeFixtures::EVENT_TYPE_ID_1,
+                'name' => 'Show Musical',
+            ],
+            'startDate' => '2025-01-16T00:00:00+00:00',
             'endDate' => '2025-04-01T00:00:00+00:00',
             'activityAreas' => [
                 [
@@ -826,6 +923,14 @@ class EventApiControllerTest extends AbstractWebTestCase
             'accessibleAudio' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
+            'draft' => false,
+            'culturalLanguages' => [
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_6,
+                    'name' => 'Sistemas de Simbolismo',
+                    'description' => 'Símbolos, gestos, mitos e narrativas que comunicam significados compartilhados.',
+                ],
+            ],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $event->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'deletedAt' => null,
@@ -996,14 +1101,14 @@ class EventApiControllerTest extends AbstractWebTestCase
                     ['field' => 'longDescription', 'message' => 'This value should be of type string.'],
                 ],
             ],
-            'type should be a string' => [
-                'requestBody' => array_merge($requestBody, ['type' => 123]),
+            'type should be a integer' => [
+                'requestBody' => array_merge($requestBody, ['type' => 'abc']),
                 'expectedErrors' => [
-                    ['field' => 'type', 'message' => 'This value should be of type string.'],
+                    ['field' => 'type', 'message' => 'This value should be of type integer.'],
                 ],
             ],
             'type should be a valid choice' => [
-                'requestBody' => array_merge($requestBody, ['type' => 'invalid-choice']),
+                'requestBody' => array_merge($requestBody, ['type' => 5]),
                 'expectedErrors' => [
                     ['field' => 'type', 'message' => 'The value you selected is not a valid choice.'],
                 ],
@@ -1128,6 +1233,12 @@ class EventApiControllerTest extends AbstractWebTestCase
                     ['field' => 'free', 'message' => 'This value should be of type boolean.'],
                 ],
             ],
+            'draft should be boolean' => [
+                'requestBody' => array_merge($requestBody, ['draft' => 'invalid']),
+                'expectedErrors' => [
+                    ['field' => 'draft', 'message' => 'This value should be of type boolean.'],
+                ],
+            ],
         ];
     }
 
@@ -1158,13 +1269,13 @@ class EventApiControllerTest extends AbstractWebTestCase
             'image' => $event->getImage(),
             'agentGroup' => null,
             'space' => [
-                'id' => SpaceFixtures::SPACE_ID_6,
+                'id' => SpaceFixtures::SPACE_ID_8,
             ],
             'initiative' => [
                 'id' => InitiativeFixtures::INITIATIVE_ID_2,
             ],
             'parent' => null,
-            'extraFields' => null,
+            'extraFields' => $event->getExtraFields(),
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_4,
             ],
@@ -1172,7 +1283,9 @@ class EventApiControllerTest extends AbstractWebTestCase
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => 'Descrição curta',
             'longDescription' => null,
-            'type' => EventTypeEnum::IN_PERSON->value,
+            'format' => EventFormatEnum::IN_PERSON->value,
+            'eventType' => null,
+            'startDate' => '2024-08-13T10:00:00+00:00',
             'endDate' => '2024-08-13T11:30:00+00:00',
             'activityAreas' => [
                 [
@@ -1204,6 +1317,24 @@ class EventApiControllerTest extends AbstractWebTestCase
             'accessibleAudio' => AccessibilityInfoEnum::NO->value,
             'accessibleLibras' => AccessibilityInfoEnum::NO->value,
             'free' => false,
+            'draft' => false,
+            'culturalLanguages' => [
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_2,
+                    'name' => 'Costumes e Rituais',
+                    'description' => 'Celebrações, festivais, cerimônias religiosas e ritos de passagem que expressam identidades culturais.',
+                ],
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_4,
+                    'name' => 'Gastronomia',
+                    'description' => 'Pratos e modos de preparo que refletem tradições, identidades e até histórias de resistência ou adaptação cultural.',
+                ],
+                [
+                    'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_6,
+                    'name' => 'Sistemas de Simbolismo',
+                    'description' => 'Símbolos, gestos, mitos e narrativas que comunicam significados compartilhados.',
+                ],
+            ],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $event->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'deletedAt' => null,

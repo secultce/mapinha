@@ -8,11 +8,11 @@ use App\Entity\Opportunity;
 use App\Exception\ValidatorException;
 use App\Repository\UserRepository;
 use App\Service\Interface\OpportunityServiceInterface;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\ImageTestFixtures;
 use Doctrine\ORM\EntityManagerInterface;
 
-class OpportunityServiceTest extends AbstractWebTestCase
+class OpportunityServiceTest extends AbstractApiTestCase
 {
     private OpportunityServiceInterface $service;
 

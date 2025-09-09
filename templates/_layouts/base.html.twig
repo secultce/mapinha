@@ -9,6 +9,10 @@
         <link rel="icon" href="/favicons/favicon-16x16.png">
         <link href="https://cdn.jsdelivr.net/npm/aurora-user-interface@5.3.23/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/combine/npm/aurora-user-interface@5.3.23/dist/css/card.min.css,npm/aurora-user-interface@5.3.23/dist/css/colors.min.css,npm/aurora-user-interface@5.3.23/dist/css/accordion.min.css,npm/aurora-user-interface@5.3.23/dist/css/custom.min.css,npm/aurora-user-interface@5.3.23/dist/css/editor.min.css,npm/aurora-user-interface@5.3.23/dist/css/faq.min.css,npm/aurora-user-interface@5.3.23/dist/css/filter-date.min.css,npm/aurora-user-interface@5.3.23/dist/css/forms.min.css,npm/aurora-user-interface@5.3.23/dist/css/layout.min.css,npm/aurora-user-interface@5.3.23/dist/css/navigation.min.css,npm/aurora-user-interface@5.3.23/dist/css/side-filter.min.css,npm/aurora-user-interface@5.3.23/dist/css/snackbar.min.css,npm/aurora-user-interface@5.3.23/dist/css/timeline.min.css" rel="stylesheet">
+        <link
+                href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+                rel="stylesheet"
+        />
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
@@ -21,6 +25,7 @@
         {% block body %}{% endblock %}
 
         <script src="https://cdn.jsdelivr.net/npm/aurora-user-interface@5.3.23/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
 
         {% block extra_javascripts %}
         {% endblock %}

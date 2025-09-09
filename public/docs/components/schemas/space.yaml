@@ -29,6 +29,9 @@ properties:
       key:
         type: string
         description: 'Valor da chave'
+  isDraft:
+    type: boolean
+    description: "Indica se o espaço é um rascunho"
   createdAt:
     $ref: '../common-types/date.yaml'
     description: "Data e hora da criação do espaço"

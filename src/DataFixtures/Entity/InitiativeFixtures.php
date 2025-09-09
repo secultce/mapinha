@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
 use App\Entity\Initiative;
+use App\Entity\Space;
+use App\Enum\SocialNetworkEnum;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,6 +45,9 @@ final class InitiativeFixtures extends AbstractFixture implements DependentFixtu
                     'endDate' => '2024-08-31',
                 ],
                 'shortDescription' => 'Vozes do Sertão é um festival de música que reúne artistas de todo o Brasil para celebrar a cultura nordestina.',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'vozdosertao',
             ],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => null,
@@ -310,15 +316,15 @@ final class InitiativeFixtures extends AbstractFixture implements DependentFixtu
         /** @var Initiative $initiative */
         $initiative = $this->serializer->denormalize($initiativeData, Initiative::class, context: $context);
 
-        $initiative->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $initiativeData['createdBy'])));
+        $initiative->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $initiativeData['createdBy']), Agent::class));
 
         if (null !== $initiativeData['parent']) {
-            $parent = $this->getReference(sprintf('%s-%s', self::INITIATIVE_ID_PREFIX, $initiativeData['parent']));
+            $parent = $this->getReference(sprintf('%s-%s', self::INITIATIVE_ID_PREFIX, $initiativeData['parent']), Initiative::class);
             $initiative->setParent($parent);
         }
 
         if (null !== $initiativeData['space']) {
-            $parent = $this->getReference(sprintf('%s-%s', SpaceFixtures::SPACE_ID_PREFIX, $initiativeData['space']));
+            $parent = $this->getReference(sprintf('%s-%s', SpaceFixtures::SPACE_ID_PREFIX, $initiativeData['space']), Space::class);
             $initiative->setSpace($parent);
         }
 

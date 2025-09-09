@@ -9,4 +9,6 @@ use App\Entity\Organization;
 interface OrganizationRepositoryInterface
 {
     public function save(Organization $organization): Organization;
+
+    public function findOrganizationByRegionAndState(string $region, string $state): array;
 }

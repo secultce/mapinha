@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\AgentTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 
-class AgentDocumentTest extends AbstractWebTestCase
+class AgentDocumentTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromAgentDocumentShouldBeSuccessful(): void
     {

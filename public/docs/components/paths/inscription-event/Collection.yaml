@@ -1,0 +1,55 @@
+post:
+  parameters:
+    - in: path
+      name: 'event'
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: O identificador do evento
+  tags:
+    - Inscrição no evento
+  summary: Cria uma inscrição no evento
+  requestBody:
+    description: Inscrição no evento
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../requestBodies/inscription-event/InscriptionEventPostItemRequest.yaml'
+  responses:
+    '201':
+      description: Inscrição no evento criada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/inscription-event/InscriptionEventPostItemResponse.yaml'
+    '400':
+      description: Dados inválidos, inscrição no evento não criada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/InvalidResponse.yaml'
+
+get:
+  parameters:
+    - in: path
+      name: 'event'
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: O identificador do evento
+  tags:
+    - Inscrição no evento
+  summary: Recupera uma lista de inscrições no evento
+  responses:
+    '200':
+      description: Lista de inscrições no evento
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '../../responses/inscription-event/InscriptionEventGetCollectionResponse.yaml'

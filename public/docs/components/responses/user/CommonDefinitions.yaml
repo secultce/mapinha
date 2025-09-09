@@ -24,6 +24,13 @@ UserBase:
     agents:
       type: array
       description: "Agente padrão do usuário"
+    status:
+      type: string
+      enum:
+        - AwaitingConfirmation
+        - Active
+        - Blocked
+      description: "Status do usuário"
     createdAt:
       type: string
       format: date-time

@@ -1,0 +1,16 @@
+get:
+  parameters:
+    - $ref: '../../parameters/path/state-id.yaml'
+  tags:
+    - Cidades
+  summary: Recupera uma lista de cidades de um estado
+  responses:
+    '200':
+      description: Lista de cidades
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '../../responses/city/CityCollectionResponse.yaml'

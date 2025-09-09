@@ -1,0 +1,19 @@
+list:
+  path: /
+  controller: App\Controller\Web\Admin\CulturalLanguageAdminController::list
+  methods: ['GET']
+
+create:
+  path: /adicionar
+  controller: App\Controller\Web\Admin\CulturalLanguageAdminController::create
+  methods: ['GET', 'POST']
+
+edit:
+  path: /{id}/editar
+  controller: App\Controller\Web\Admin\CulturalLanguageAdminController::edit
+  methods: ['GET', 'POST']
+
+delete:
+  path: /{id}/remover
+  controller: App\Controller\Web\Admin\CulturalLanguageAdminController::delete
+  methods: ['GET']

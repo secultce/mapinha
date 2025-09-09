@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Repositories;
 use App\Entity\Agent;
 use App\Entity\Organization;
 use App\Entity\User;
+use App\Enum\OrganizationTypeEnum;
 use App\Repository\OrganizationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -60,6 +61,7 @@ class OrganizationRepositoryTest extends KernelTestCase
         $organization = new Organization();
         $organization->setId(Uuid::v4());
         $organization->setName('Test Organization');
+        $organization->setType(OrganizationTypeEnum::EMPRESA->value);
         $organization->setOwner($agent);
         $organization->setCreatedBy($agent);
 
@@ -79,6 +81,7 @@ class OrganizationRepositoryTest extends KernelTestCase
         $organization = new Organization();
         $organization->setId(Uuid::v4());
         $organization->setName('Find Test Org');
+        $organization->setType(OrganizationTypeEnum::EMPRESA->value);
         $organization->setOwner($agent);
         $organization->setCreatedBy($agent);
 

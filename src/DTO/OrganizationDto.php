@@ -40,7 +40,6 @@ class OrganizationDto
     public mixed $description;
 
     #[Sequentially([
-        new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
         new Uuid(groups: [self::CREATE, self::UPDATE]),
         new Exists(Agent::class, groups: [self::CREATE, self::UPDATE]),
@@ -48,7 +47,6 @@ class OrganizationDto
     public mixed $createdBy;
 
     #[Sequentially([
-        new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
         new Uuid(groups: [self::CREATE, self::UPDATE]),
         new Exists(Agent::class, groups: [self::CREATE, self::UPDATE]),

@@ -1,6 +1,8 @@
 {% extends "_layouts/blank.html.twig" %}
 
-{% block title %} {{ 'control_panel'|trans }} - {{ 'initiatives'|trans }}{% endblock %}
+{% block title %}
+    {{ 'control_panel'|trans }} - {{ 'initiatives'|trans }}
+{% endblock %}
 
 {% block content %}
     {% include '_components/modal-confirm-remove.html.twig' %}
@@ -17,16 +19,21 @@
                                 <h2>{{ 'my_initiatives'|trans }}</h2>
                             </span>
                             <span class="float-end">
-                                <a href="{{ path('admin_initiative_create') }}" class="btn btn-outline-success btn-sm">{{ 'view.initiative.create'|trans }}</a>
+                                <a href="{{ path('admin_initiative_create') }}"
+                                   class="btn btn-outline-success btn-sm">
+                                    {{ 'view.initiative.create'|trans }}
+                                </a>
                             </span>
                         </div>
 
                         <hr>
 
-                        <table class="table table-hover table-striped" data-cy="table-initiative-list">
+                        <table class="table table-hover table-striped"
+                               data-cy="table-initiative-list">
                             <thead class="table-dark">
                             <tr>
                                 <th>{{ 'name'|trans }}</th>
+                                <th>{{ 'status'|trans }}</th>
                                 <th>{{ 'created_at'|trans }}</th>
                                 <th></th>
                                 <th></th>
@@ -36,14 +43,55 @@
                             <tbody>
                             {% for item in initiatives %}
                                 <tr data-cy="{{ item.id }}">
-                                    <td data-cy="name-{{ item.name }}"><a href="{{ path('web_initiative_show', {id: item.id}) }}">{{ item.name }}</a></td>
-                                    <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
+                                    <td data-cy="name-{{ item.name }}">
+                                        {% if item.deletedAt %}
+                                            <span class="text-secondary">
+                                                    {{ item.name }}
+                                                </span>
+                                        {% else %}
+                                            <a href="{{ path('web_initiative_show', { id: item.id }) }}">
+                                                {{ item.name }}
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.deletedAt %}
+                                            <span class="badge bg-secondary"
+                                                  data-bs-toggle="tooltip"
+                                                  title="{{ item.deletedAt|date('d/m/Y H:i:s') }}">
+                                                    {{ 'status_trashed'|trans }}
+                                                </span>
+                                        {% else %}
+                                            <span class="badge bg-success">
+                                                    {{ 'status_published'|trans }}
+                                                </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ item.createdAt.format('d/m/Y H:i:s') }}
+                                    </td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <a href="{{ path('admin_initiative_timeline', {id: item.id}) }}" class="btn btn-outline-info btn-sm">{{ 'Timeline'|trans }}</a>
-                                        <a href="{{ path('admin_initiative_edit', {id: item.id}) }}" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
-                                        <button data-cy="remove-{{ item.id }}" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm" onclick="confirmRemove(this)" data-href="{{ path('admin_initiative_remove', {id: item.id}) }}" class="btn btn-outline-danger btn-sm">{{ 'delete'|trans }}</button>
+                                        <a href="{{ path('admin_initiative_timeline', { id: item.id }) }}"
+                                           data-cy="btn-timeline-{{ item.id }}"
+                                           class="btn btn-outline-primary btn-sm">
+                                            {{ 'timeline'|trans }}
+                                        </a>
+                                        {% if not item.deletedAt %}
+                                            <a href="{{ path('admin_initiative_edit', { id: item.id }) }}"
+                                               class="btn btn-outline-warning btn-sm">
+                                                {{ 'edit'|trans }}
+                                            </a>
+                                            <button data-cy="remove-{{ item.id }}"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalRemoveConfirm"
+                                                    onclick="confirmRemove(this)"
+                                                    data-href="{{ path('admin_initiative_remove', { id: item.id }) }}"
+                                                    class="btn btn-outline-danger btn-sm">
+                                                {{ 'delete'|trans }}
+                                            </button>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

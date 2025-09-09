@@ -8,7 +8,7 @@ use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\OpportunityFixtures;
 use App\DataFixtures\Entity\PhaseFixtures;
 use App\Entity\Phase;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\PhaseTestFixtures;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class PhaseApiControllerTest extends AbstractWebTestCase
+class PhaseApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/opportunities/{opportunity}/phases';
 

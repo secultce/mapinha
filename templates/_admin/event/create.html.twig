@@ -29,23 +29,14 @@
             </div>
 
             <div class="mb-4">
-                <label for="areas-container">
-                    {{ 'cultural_language'|trans }}
-                </label>
-                <div id="areas-container" class="mt-3 d-flex flex-wrap gap-2"></div>
-
-                <div class="dropdown" id="cultural-language">
-                    <button id="add-area-btn" class="btn area-tag bg-primary text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ 'view.authentication.register.profile.add_other_area'|trans }}
-                        <i class="material-icons fs-4 ms-2">add</i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="add-area-btn">
-                        <li><a class="dropdown-item" data-value="area0">Área</a></li>
-                        <li><a class="dropdown-item" data-value="area1">Área de interesse</a></li>
-                        <li><a class="dropdown-item" data-value="area2">Área de interesse media</a></li>
-                        <li><a class="dropdown-item" data-value="area3">Área de interesse grande para testar</a></li>
-                    </ul>
-                </div>
+                {% include '_components/tags-selector.html.twig' with {
+                    inputName: 'culturalLanguage',
+                    inputLabel: 'cultural_language'|trans,
+                    items: culturalLanguageItems|map(culturalLanguage => { 'label': culturalLanguage.name, 'value': culturalLanguage.id }),
+                    tags: [],
+                    required: false,
+                    questionFill: true,
+                } %}
             </div>
 
             <div class="mb-4">
@@ -57,45 +48,24 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label" for="age-rating">{{ 'age_rating'|trans }}</label>
-                <span class="text-danger">*</span>
-                <select class="form-select mt-1" id="age-rating" name="age_rating">
-                    <option selected disabled id="desabilitado">{{ 'select'|trans }}</option>
-                    <option value="livre">{{ 'ages_rating.all'|trans }}</option>
-                    <option value="10">{{ 'ages_rating.ten'|trans }}</option>
-                    <option value="12">{{ 'ages_rating.twelve'|trans }}</option>
-                    <option value="14">{{ 'ages_rating.fourteen'|trans }}</option>
-                    <option value="16">{{ 'ages_rating.sixteen'|trans }}</option>
-                    <option value="18">{{ 'ages_rating.eighteen'|trans }}</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
                 <label class="form-label" for="event-type">{{ 'type'|trans }}</label>
                 <span class="text-danger">*</span>
                 <select class="form-select mt-1" id="event-type" name="type" required>
                     <option selected disabled value="">{{ 'select'|trans }}</option>
-                    <option value="in_person">{{ 'event_types.in_person'|trans }}</option>
-                    <option value="online">{{ 'event_types.online'|trans }}</option>
-                    <option value="hybrid">{{ 'event_types.hybrid'|trans }}</option>
+                    {% for type in typeItems %}
+                        <option value="{{ type.value }}">{{ ('event_types.' ~ type.name)|trans }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
             <div class="mb-4">
-                <label for="end-date" class="form-label"> {{ 'end_date' | trans}} </label>
+                <label for="start_date" class="form-label"> {{ 'start_date' | trans}} </label>
                 <span class="text-danger">*</span>
-                <input type="date" class="form-control" id="end-date" name="end_date" required>
-            </div>
-
-            <div class="mb-4">
-                <label for="max-capacity" class="form-label"> {{ 'max_capacity' | trans}} </label>
-                <span class="text-danger">*</span>
-                <input type="number" min="0" step="1" class="form-control" id="max-capacity" name="max_capacity" required>
+                <input type="date" class="form-control" id="start_date" name="startDate" required>
             </div>
 
             <div class="btn-form-group mt-5">
-                <button type="submit" class="btn btn-primary">{{ 'create_and_publish'|trans }}</button>
-                <button class="btn btn-secondary">{{ 'create_in_draft'|trans }}</button>
+                <button type="submit" class="btn btn-primary me-3" data-cy="submit">{{ 'create_in_draft'|trans }}</button>
                 <button type="button" class="btn btn-link">{{ 'cancel'|trans }}</button>
             </div>
         </form>
@@ -103,6 +73,7 @@
 {% endblock %}
 
 {% block extra_javascripts %}
+    <script type="module" src="{{ asset('js/_components/tags-selector.js') }}"></script>
     <script type="module" src="{{ asset('js/counter.js') }}"></script>
     <script type="module" src="{{ asset('js/dropdown.js') }}"></script>
     <script type="module" src="{{ asset('js/authentication/event/create.js') }}"></script>

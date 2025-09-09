@@ -1,0 +1,128 @@
+<div class="edit-entity">
+    <h6 class="fw-bold mb-4">{{ 'personal_data_legal' | trans }}</h6>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="social_name">{{ 'social_name'|trans }}</label>
+            <input type="text" class="form-control" id="social_name" name="social_name"
+                   placeholder="{{ 'social_name'|trans }}">
+        </div>
+        <div class="col-md-6">
+            <label for="full_name">{{ 'full_name'|trans }}</label>
+            <input type="text" class="form-control" id="full_name" name="full_name"
+                   placeholder="{{ 'full_name'|trans }}">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <label for="cpf">{{ 'cpf'|trans }}</label>
+            <input type="text" class="form-control" id="cpf" name="cpf"
+                placeholder="123.456.789-10">
+        </div>
+        <div class="col-md-4">
+            <label for="private_email">{{ 'private_email'|trans }}</label>
+            <input type="text" class="form-control" id="private_email" name="private_email"
+                placeholder="email@email.com">
+        </div>
+        <div class="col-md-4">
+            <label for="private_phone">{{ 'private_phone'|trans }}</label>
+            <input type="text" class="form-control" id="private_phone" name="private_phone"
+                placeholder="(00) 00000-0000">
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h6 class="fw-bold mb-4">
+        {{ 'address_data' | trans }}
+        <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill" ></span>
+    </h6>
+
+    <p class="fw-bold">{{ 'residential_address' | trans }}</p>
+    <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="link_space" name="residential_address" value="link_space">
+        <label class="form-check-label" for="link_space">{{ 'view.agent_edit.link_platform_space'|trans }}</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="register_address" name="residential_address" value="register_address">
+        <label class="form-check-label" for="register_address">{{ 'view.agent_edit.register_new_address'|trans }}</label>
+    </div>
+
+    <p class="fw-bold mt-3">
+        {{ 'is_itinerant' | trans }}
+        <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill" ></span>
+    </p>
+    <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="is_itinerant" name="is_itinerant" value="1">
+        <label class="form-check-label" for="is_itinerant">{{ 'yes'|trans }}</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="not_is_itinerant" name="is_itinerant" value="0">
+        <label class="form-check-label" for="not_is_itinerant">{{ 'no'|trans }}</label>
+    </div>
+
+    <hr class="my-4">
+
+    <h6 class="fw-bold mb-4">{{ 'view.agent_edit.bank_data'|trans }}</h6>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="account_type">{{ 'view.agent_edit.account_type'|trans }}</label>
+            <select class="form-select" name="account_type" id="account_type">
+                <option value="">{{ 'select'|trans }}</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="bank_number">{{ 'view.agent_edit.bank_number'|trans }}</label>
+            <input type="text" class="form-control" id="bank_number" name="bank_number"
+                   placeholder="000">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <label for="bank_account">{{ 'view.agent_edit.bank_account'|trans }}</label>
+            <input type="text" class="form-control" id="bank_account" name="bank_account"
+                   placeholder="000000">
+        </div>
+        <div class="col-md-2">
+            <label for="account_digit">{{ 'view.agent_edit.bank_verification'|trans }}</label>
+            <input type="text" class="form-control" id="account_digit" name="account_digit"
+                   placeholder="0">
+        </div>
+        <div class="col-md-4">
+            <label for="agency">{{ 'view.agent_edit.bank_agency_number'|trans }}</label>
+            <input type="text" class="form-control" id="agency" name="agency"
+                   placeholder="0000">
+        </div>
+        <div class="col-md-2">
+            <label for="agency_digit">{{ 'view.agent_edit.bank_verification'|trans }}</label>
+            <input type="text" class="form-control" id="agency_digit" name="agency_digit"
+                   placeholder="0">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <a class="add-data-button" href="#">
+                <span class="icon material-icons">add_circle</span> {{ 'view.agent_edit.add_bank_data'|trans }}
+            </a>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h6 class="fw-bold mb-4">{{ 'view.agent_edit.single_income'|trans }}</h6>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="monthly_income">{{ 'view.agent_edit.monthly_income'|trans }}</label>
+                <select class="form-select" name="monthly_income" id="monthly_income">
+                    <option value="">{{ 'select'|trans }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

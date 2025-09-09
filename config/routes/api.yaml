@@ -26,6 +26,12 @@ api_auth:
   prefix: /api
   name_prefix: api_auth_
 
+api_cultural_language:
+  resource: 'api/cultural-language.yaml'
+  prefix: /api/cultural-languages
+  name_prefix: api_cultural_language_
+  trailing_slash_on_root: false
+
 api_events:
   resource: 'api/event.yaml'
   prefix: /api/events
@@ -48,6 +54,12 @@ api_initiative:
   resource: 'api/initiative.yaml'
   prefix: /api/initiatives
   name_prefix: api_initiative_
+  trailing_slash_on_root: false
+
+api_inscription_event:
+  resource: 'api/inscription-event.yaml'
+  prefix: /api/events/{event}/inscriptions
+  name_prefix: api_inscription_event_
   trailing_slash_on_root: false
 
 api_inscription_opportunity:
@@ -80,6 +92,12 @@ api_phase:
   name_prefix: api_phase_
   trailing_slash_on_root: false
 
+api_region:
+  resource: 'api/region.yaml'
+  prefix: /api/regions
+  name_prefix: api_region_
+  trailing_slash_on_root: false
+
 api_seal:
   resource: 'api/seal.yaml'
   prefix: /api/seals
@@ -96,6 +114,12 @@ api_space_type:
   resource: 'api/space-type.yaml'
   prefix: /api/space-types
   name_prefix: api_space_type_
+  trailing_slash_on_root: false
+
+api_state:
+  resource: 'api/state.yaml'
+  prefix: /api/states
+  name_prefix: api_state_
   trailing_slash_on_root: false
 
 api_tag:

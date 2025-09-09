@@ -6,12 +6,12 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Agent;
 use App\Entity\Seal;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
-class SealTest extends AbstractWebTestCase
+class SealTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromSealEntityShouldBeSuccessful(): void
     {

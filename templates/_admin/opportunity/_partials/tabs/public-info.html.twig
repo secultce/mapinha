@@ -57,7 +57,7 @@
 
         <div class="my-2">
             {% include '_components/tags-selector.html.twig' with {
-                inputName: 'extraFields[areasOfActivity]',
+                inputName: 'activityAreas',
                 inputLabel: 'areas_of_expertise'|trans,
                 items: [
                     { value: 'Artesanato', label: 'Artesanato' },
@@ -68,16 +68,18 @@
                 ],
                 tags: areasOfExpertise,
                 required: true,
+                questionFill: false,
             } %}
         </div>
 
         <div class="my-4">
             {% include '_components/tags-selector.html.twig' with {
-                inputName: 'extraFields[tags]',
+                inputName: 'tags',
                 inputLabel: 'tags'|trans,
                 items: tagItems,
                 tags: tags,
                 required: true,
+                questionFill: false,
             } %}
         </div>
     </fieldset>

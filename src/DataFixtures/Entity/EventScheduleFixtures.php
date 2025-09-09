@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Event;
 use App\Entity\EventSchedule;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -140,7 +141,7 @@ final class EventScheduleFixtures extends AbstractFixture implements DependentFi
     {
         $eventSchedule = $this->serializer->denormalize($eventScheduleData, EventSchedule::class, context: $context);
 
-        $eventSchedule->setEvent($this->getReference(sprintf('%s-%s', EventFixtures::EVENT_ID_PREFIX, $eventScheduleData['event'])));
+        $eventSchedule->setEvent($this->getReference(sprintf('%s-%s', EventFixtures::EVENT_ID_PREFIX, $eventScheduleData['event']), Event::class));
 
         return $eventSchedule;
     }

@@ -1,0 +1,67 @@
+<form method="POST" action="">
+    <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
+
+    <div class="alert alert-danger d-none" id="error-message"></div>
+
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label for="first_name" class="form-label">{{ 'first_name' | trans }}</label>
+            <input type="text" class="form-control" id="first_name" name="firstname" placeholder={{ 'first_name' | trans}} required>
+        </div>
+        <div class="col-6 mb-3">
+            <label for="last_name" class="form-label">{{ 'last_name' | trans }}</label>
+            <input type="text" class="form-control" id="last_name" name="lastname" placeholder={{ 'last_name' | trans}} required>
+        </div>
+
+        
+    </div>
+
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" class="form-control" data-mask="cpf" id="cpf" name="cpf" placeholder="CPF" required maxlength="14">
+        </div>
+
+        <div class="col-6 mb-3">
+            <label for="position" class="form-label">{{ 'position' | trans }}</label>
+            <input type="text" class="form-control" id="position" name="position" placeholder={{ 'position' | trans}} required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-3">
+            <label for="emai" class="form-label">{{ 'email' | trans }}</label>
+            <input type="email" class="form-control" id="emai" name="email" placeholder={{ 'email' | trans}} required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <label for="password" class="form-label">{{ 'password' | trans }}</label>
+            <input type="password" class="form-control" minlength="8" id="password" name="password" placeholder={{ 'password' | trans}} autocomplete="new-password" required>
+        </div>
+        <div class="col-6">
+            <label for="confirm_password" class="form-label">{{ 'confirm_password' | trans }}</label>
+            <input type="password" class="form-control" minlength="8" id="confirm_password" name="confirm_password" placeholder={{ 'confirm_password' | trans}} autocomplete="new-password" required>
+        </div>
+        <div class="col-12">
+            <small class="form-text text-secondary fw-semibold">
+                {{ 'password_rules' | trans }}
+            </small>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <p id="strengthMessage"></p>
+            <div class="progress-password">
+                <div id="progressBar" class="progress-bar-password" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-form-group">
+        <button class="btn btn-primary w-100 btn-lg" type="submit">
+            {{ 'save' | trans }}
+        </button>
+    </div>
+</form>

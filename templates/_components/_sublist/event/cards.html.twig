@@ -1,0 +1,43 @@
+<div class="row p-2">
+    {% for event in events %}
+        <div class="col-md-4 p-1">
+            <div class="card h-100">
+                <div class="pt-3 px-3">
+                    <span class="text-white rounded-pill px-3 py-1 bg-info">
+                        {{ event.maxCapacity ?? 0 }}
+                        {{ 'participants'|trans|lower }}
+                    </span>
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-center mb-3">
+                        <img src="{{ asset('img/home-events.png') }}" alt="Foto do evento" class="rounded-circle event-image">
+                        <div>
+                            <h5 class="card-title text-primary">{{ event.name }}</h5>
+                            <h6 class="card-subtitle text-muted">{{ event.extraFields.type ?? '' }}</h6>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="material-icons text-primary">event</i>
+                        <strong class="text-dark">
+                            {% set nextOccurrence = event.eventSchedules|sort((a, b) => a.startHour <=> b.startHour)|find(o => o.startHour > "now"|date) %}
+                            {{ nextOccurrence ? nextOccurrence.startHour|date('d/m/Y - H:i') : 'view.event.not_set_datetime' | trans }}
+                        </strong>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="material-icons text-primary">location_on</i>
+                        <span class="fw-bold text-dark">{{ event.space ? event.space.name : 'event.card.location' | trans }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="material-icons text-primary">monetization_on</i>
+                        <strong class="text-dark">{{ 'entry_fee' | trans }}:</strong>
+                        <span class="text-dark">{{ event.free ? 'free' | trans : 'paid' | trans }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

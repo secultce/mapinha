@@ -2,6 +2,11 @@
 
 {% block title %}{{ 'edit_space' | trans }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/tom-select/dist/css/tom-select.default.min.css') }}">
+{% endblock %}
+
 {% block content %}
     <section class="d-flex">
         {% include "_components/side-bar.html.twig" %}
@@ -9,7 +14,7 @@
             {% include "_admin/space/_partials/space-edit-header.html.twig" %}
             <section class="entity-edit-content mt-4">
                 {% set asterisk = '<span class="text-danger">*</span>' %}
-                <span class="entity-mandatory-fields">{{ 'view.space-edit.mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
+                <span class="entity-mandatory-fields">{{ 'mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
 
                 {% include "_admin/space/_partials/forms/entity-edit-form.html.twig" %}
             </section>
@@ -27,15 +32,23 @@
                 </div>
                 <div class="logout-submit">
                     <button class="btn btn-outline-light">{{ 'logout' | trans }}</button>
-                    <button type="submit" class="btn btn-light">{{ 'save' | trans}}</button>
+                    <button form="space-edit-form" type="submit" class="btn btn-light">{{ 'save' | trans}}</button>
                 </div>
             </div>
 
             {% if error is defined and error %}
-                <div class="alert alert-danger mt-3">
+                <div class="alert alert-danger mt-3" id="error">
                     {{ error }}
                 </div>
             {% endif %}
         </div>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="module" src="{{ asset('js/load-cities.js') }}"></script>
+    <script type="module" src="{{ asset('js/viacep-integration.js') }}"></script>
+    <script type="module" src="{{ asset('js/space/opening-hours.js') }}"></script>
+    <script type="module" src="{{ asset('js/_components/forms/space-accessibility.js') }}"></script>
 {% endblock %}

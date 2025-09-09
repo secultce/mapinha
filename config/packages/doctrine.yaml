@@ -24,6 +24,9 @@ doctrine:
                 alias: App
         controller_resolver:
             auto_mapping: false
+        dql:
+            string_functions:
+                JSON_GET_TEXT: App\Doctrine\DQL\Functions\Postgresql\JsonGetText
 
 when@test:
     doctrine:

@@ -7,12 +7,12 @@ namespace App\Tests\Functional\EventListener\Audit;
 use App\DataFixtures\Entity\SpaceFixtures;
 use App\DataFixtures\Entity\UserFixtures;
 use App\Document\SpaceTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuditUpdateListenerTest extends AbstractWebTestCase
+class AuditUpdateListenerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/spaces';
 

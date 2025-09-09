@@ -1,7 +1,8 @@
 
 ###> symfony/framework-bundle ###
-/.env
+.env
 /.env.local
+/.env.prod
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -32,6 +33,7 @@ package-lock.json
 ###> phpunit/php-code-coverage ###
 /coverage-html
 coverage.xml
+coverage.txt
 ###< phpunit/php-code-coverage ###
 
 ###> symfony/asset-mapper ###
@@ -44,6 +46,7 @@ coverage.xml
 /var/cache/
 /var/log/
 /var/tmp/
+/var/translations/
 ###< ux-translator ###
 
 ###> league/flysystem-bundle ###

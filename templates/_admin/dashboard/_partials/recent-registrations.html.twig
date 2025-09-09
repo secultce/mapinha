@@ -1,3 +1,5 @@
+{% if env.aurora.dashboard.inscriptions_area == true %}
+
 <section class="mt-5 row">
     <span class="fs-4 fw-bold">{{ "recent_registrations" | trans }}</span>
 
@@ -29,3 +31,4 @@
         </div>
     {% endif %}
 </section>
+{% endif %}

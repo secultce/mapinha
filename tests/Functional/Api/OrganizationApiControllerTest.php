@@ -7,7 +7,7 @@ namespace App\Tests\Functional\Api;
 use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\OrganizationFixtures;
 use App\Entity\Organization;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\ImageTestFixtures;
 use App\Tests\Fixtures\OrganizationTestFixtures;
 use DateTimeInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class OrganizationApiControllerTest extends AbstractWebTestCase
+class OrganizationApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/organizations';
 
@@ -38,6 +38,7 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
             'description' => null,
+            'type' => 'Empresa',
             'image' => null,
             'agents' => [],
             'owner' => ['id' => AgentFixtures::AGENT_ID_1],
@@ -66,6 +67,7 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
             'description' => 'Test Organization',
+            'type' => 'Empresa',
             'image' => null,
             'agents' => array_map(fn ($id) => ['id' => $id], $requestBody['agents']),
             'owner' => ['id' => AgentFixtures::AGENT_ID_1],
@@ -103,8 +105,6 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
                 'expectedErrors' => [
                     ['field' => 'id', 'message' => 'This value should not be blank.'],
                     ['field' => 'name', 'message' => 'This value should not be blank.'],
-                    ['field' => 'createdBy', 'message' => 'This value should not be blank.'],
-                    ['field' => 'owner', 'message' => 'This value should not be blank.'],
                 ],
             ],
             'id is not a valid UUID' => [
@@ -180,10 +180,15 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
 
         $this->assertJsonContains([
             'id' => OrganizationFixtures::ORGANIZATION_ID_1,
-            'name' => 'PHP com Rapadura',
-            'description' => 'Comunidade de devs PHP do Estado do Ceará',
+            'name' => $organization->getName(),
+            'description' => $organization->getDescription(),
+            'type' => $organization->getType(),
             'image' => $organization->getImage(),
-            'agents' => [],
+            'agents' => [
+                [
+                    'id' => AgentFixtures::AGENT_ID_1,
+                ],
+            ],
             'owner' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
@@ -212,10 +217,15 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
 
         $this->assertResponseBodySame([
             'id' => OrganizationFixtures::ORGANIZATION_ID_3,
-            'name' => 'Devs do Sertão',
-            'description' => 'Grupo de devs que se reúnem velas veredas do sertão',
+            'name' => $organization->getName(),
+            'description' => $organization->getDescription(),
+            'type' => $organization->getType(),
             'image' => $organization->getImage(),
-            'agents' => [],
+            'agents' => [
+                [
+                    'id' => AgentFixtures::AGENT_ID_3,
+                ],
+            ],
             'owner' => [
                 'id' => AgentFixtures::AGENT_ID_3,
             ],
@@ -223,7 +233,10 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
                 'id' => AgentFixtures::AGENT_ID_3,
             ],
             'extraFields' => [
-                'instagram' => '@devsdosertao',
+                'cnpj' => '04.117.525/0001-62',
+                'email' => 'secretaria@igrejaderussas.org.br',
+                'phone' => '(85) 99999-0003',
+                'site' => 'https://www.igrejaderussas.org.br',
             ],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
@@ -291,6 +304,7 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
             'id' => OrganizationFixtures::ORGANIZATION_ID_4,
             'name' => $requestBody['name'],
             'description' => $requestBody['description'],
+            'type' => 'Empresa',
             'image' => $organization->getImage(),
             'agents' => array_map(fn ($id) => ['id' => $id], $requestBody['agents']),
             'owner' => ['id' => AgentFixtures::AGENT_ID_1],
@@ -419,10 +433,15 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
 
         $this->assertResponseBodySame([
             'id' => OrganizationFixtures::ORGANIZATION_ID_10,
-            'name' => 'Banda de Forró tô nem veno',
-            'description' => 'Banda de forró formada com pessoas de baixa ou nenhuma visão',
+            'name' => $organization->getName(),
+            'description' => $organization->getDescription(),
+            'type' => $organization->getType(),
             'image' => $organization->getImage(),
-            'agents' => [],
+            'agents' => [
+                [
+                    'id' => AgentFixtures::AGENT_ID_1,
+                ],
+            ],
             'owner' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
@@ -430,7 +449,10 @@ class OrganizationApiControllerTest extends AbstractWebTestCase
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
             'extraFields' => [
-                'instagram' => '@forrotonemveno',
+                'cnpj' => '00.000.000/0001-10',
+                'email' => 'acr@example.com',
+                'phone' => '(85) 99999-0010',
+                'site' => 'https://www.acr.com.br',
             ],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $organization->getUpdatedAt()->format(DateTimeInterface::ATOM),

@@ -1,0 +1,9 @@
+type: object
+allOf:
+  - type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Identificador da inscrição no evento
+  - $ref: './CommonDefinitions.yaml#/InscriptionEventBase'

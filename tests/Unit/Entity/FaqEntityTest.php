@@ -6,12 +6,12 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Faq;
 use App\Helper\DateFormatHelper;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
-class FaqEntityTest extends AbstractWebTestCase
+class FaqEntityTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromFaqEntityShouldBeSuccessful(): void
     {

@@ -58,7 +58,11 @@ class UserDto
     #[Sequentially([
         new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
-        new PasswordStrength(minScore: PasswordStrength::STRENGTH_WEAK, groups: [self::CREATE, self::UPDATE]),
+        new PasswordStrength(
+            minScore: PasswordStrength::STRENGTH_WEAK,
+            message: 'password.too_weak',
+            groups: [self::CREATE, self::UPDATE]
+        ),
         new Type('string', groups: [self::CREATE, self::UPDATE]),
         new Length(max: 255, groups: [self::CREATE, self::UPDATE]),
     ])]

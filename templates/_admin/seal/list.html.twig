@@ -1,6 +1,6 @@
 {% extends "_layouts/blank.html.twig" %}
 
-{% block title %} {{ 'seals'|trans }}{% endblock %}
+{% block title %} {{ 'seals'|trans }} {% endblock %}
 
 {% block content %}
     {% include '_components/modal-confirm-remove.html.twig' %}
@@ -20,37 +20,62 @@
                         <div class="d-flex justify-content-between">
                             <h2>{{ 'seals'|trans }}</h2>
                             <div>
-                                <a href="{{  path('admin_seal_add') }}" class="btn btn-primary">
-                                    {{ 'create' | trans }}
+                                <a href="{{ path('admin_seal_add') }}" class="btn btn-primary">
+                                    {{ 'create'|trans }}
                                 </a>
                             </div>
                         </div>
 
                         <hr>
 
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped" data-cy="table-seal-list">
                             <thead class="table-dark">
                             <tr>
                                 <th>{{ 'name'|trans }}</th>
                                 <th>{{ 'status'|trans }}</th>
                                 <th>{{ 'created_at'|trans }}</th>
+                                <th></th>
                                 <th>{{ 'actions'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for seal in seals %}
-                                <tr>
+                                <tr data-cy="{{ seal.id }}">
                                     <td>{{ seal.name }}</td>
-                                    <td>{{ seal.active ? 'view.seal.status.active'|trans : 'view.seal.status.inactive'|trans }}</td>
-                                    <td>{{ seal.createdAt|date('d/m/Y H:i') }}</td>
                                     <td>
-                                        <a href="{{ path('admin_seal_edit', {'id': seal.id}) }}" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
-                                        <button data-cy="remove-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm" onclick="confirmRemove(this)" data-href="{{ path('admin_seal_remove', {id: seal.id}) }}" class="btn btn-outline-danger btn-sm">{{ 'delete'|trans }}</button>
+                                        {% if seal.active %}
+                                            <span class="badge bg-success">
+                                                    {{ 'view.seal.status.active'|trans }}
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-danger">
+                                                    {{ 'view.seal.status.inactive'|trans }}
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ seal.createdAt|date('d/m/Y H:i') }}</td>
+                                    <td></td>
+                                    <td>
+                                        <a href="{{ path('admin_seal_edit', {'id': seal.id}) }}"
+                                           class="btn btn-outline-warning btn-sm">
+                                            {{ 'edit'|trans }}
+                                        </a>
+                                        <button
+                                                data-cy="remove-{{ loop.index }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalRemoveConfirm"
+                                                onclick="confirmRemove(this)"
+                                                data-href="{{ path('admin_seal_remove', {id: seal.id}) }}"
+                                                class="btn btn-outline-danger btn-sm"
+                                        >
+                                            {{ 'delete'|trans }}
+                                        </button>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

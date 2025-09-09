@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
 use App\Entity\Space;
+use App\Enum\SocialNetworkEnum;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,6 +43,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => null,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Instituição Cultural',
                 'description' => 'A Secretaria da Cultura (SECULT) é responsável por fomentar a arte e a cultura no estado, organizando eventos e oferecendo apoio a iniciativas locais.',
@@ -61,6 +64,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
                 TagFixtures::TAG_ID_1,
                 TagFixtures::TAG_ID_2,
             ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'secult',
+            ],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
@@ -80,6 +86,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => null,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Centro Cultural',
                 'description' => 'O Sítio das Artes é um espaço dedicado à promoção de atividades culturais e oficinas artísticas, com uma vasta programação para todas as idades.',
@@ -97,6 +104,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'tags' => [
                 TagFixtures::TAG_ID_3,
                 TagFixtures::TAG_ID_4,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'sitio.das.artes',
             ],
             'createdAt' => '2024-07-11T10:49:00+00:00',
             'updatedAt' => null,
@@ -117,6 +127,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_2,
             'parent' => self::SPACE_ID_2,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Galeria de Arte',
                 'description' => 'A Galeria Caatinga é especializada em exposições de artistas regionais, com foco na arte nordestina e obras inspiradas pela fauna e flora do sertão.',
@@ -135,6 +146,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'tags' => [
                 TagFixtures::TAG_ID_5,
                 TagFixtures::TAG_ID_6,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'galeria.caatinga',
             ],
             'createdAt' => '2024-07-16T17:22:00+00:00',
             'updatedAt' => null,
@@ -155,6 +169,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => self::SPACE_ID_3,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Centro de Literatura',
                 'description' => 'O Recanto do Cordel é um ponto de encontro para escritores e leitores de literatura de cordel, com eventos de declamação e oficinas.',
@@ -172,6 +187,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'tags' => [
                 TagFixtures::TAG_ID_7,
                 TagFixtures::TAG_ID_8,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'recanto_do_cordel',
             ],
             'createdAt' => '2024-07-17T15:12:00+00:00',
             'updatedAt' => null,
@@ -192,6 +210,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => self::SPACE_ID_3,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Centro Musical',
                 'description' => 'O Ritmos do Mundo promove eventos musicais de várias partes do mundo, com foco na diversidade e na fusão de estilos.',
@@ -210,6 +229,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'tags' => [
                 TagFixtures::TAG_ID_9,
                 TagFixtures::TAG_ID_10,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'ritmos.do.mundo',
             ],
             'createdAt' => '2024-07-22T16:20:00+00:00',
             'updatedAt' => null,
@@ -230,6 +252,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => self::SPACE_ID_3,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Museu',
                 'description' => 'A Casa do Sertão é um museu dedicado à história e cultura do sertão nordestino, com exposições interativas e oficinas educativas.',
@@ -248,6 +271,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
                 TagFixtures::TAG_ID_1,
                 TagFixtures::TAG_ID_2,
                 TagFixtures::TAG_ID_5,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'casa.do.sertao',
             ],
             'createdAt' => '2024-08-10T11:26:00+00:00',
             'updatedAt' => null,
@@ -268,6 +294,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => self::SPACE_ID_6,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Centro de Música',
                 'description' => 'A Vila do Baião é um espaço dedicado à preservação e promoção do forró e de outros ritmos nordestinos, com aulas, ensaios e apresentações.',
@@ -288,6 +315,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
                 TagFixtures::TAG_ID_9,
                 TagFixtures::TAG_ID_10,
             ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'vila.do.baiao',
+            ],
             'createdAt' => '2024-08-11T15:54:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
@@ -307,6 +337,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => null,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Centro Cultural',
                 'description' => 'O Centro Cultural Asa Branca oferece uma programação diversificada com exposições, apresentações teatrais e oficinas de arte.',
@@ -328,6 +359,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
                 TagFixtures::TAG_ID_4,
                 TagFixtures::TAG_ID_5,
             ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'centro.cultural.asa.branca',
+            ],
             'createdAt' => '2024-08-12T14:24:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
@@ -347,6 +381,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => null,
+            'isDraft' => false,
             'extraFields' => [
                 'type' => 'Centro de Capoeira',
                 'description' => 'A Casa da Capoeira é um espaço onde são realizadas aulas, rodas de capoeira e eventos culturais ligados à arte e história da capoeira.',
@@ -363,6 +398,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             ],
             'tags' => [
                 TagFixtures::TAG_ID_10,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'casa.da.capoeira',
             ],
             'createdAt' => '2024-08-13T20:25:00+00:00',
             'updatedAt' => null,
@@ -383,6 +421,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'isAccessible' => true,
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'parent' => null,
+            'isDraft' => true,
             'extraFields' => [
                 'type' => 'Complexo Cultural',
                 'description' => 'O Dragão do Mar é um dos maiores complexos culturais da região, com teatros, cinemas e galerias de arte que promovem a cultura local e internacional.',
@@ -401,6 +440,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'tags' => [
                 TagFixtures::TAG_ID_2,
                 TagFixtures::TAG_ID_9,
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'dragaodomar',
             ],
             'createdAt' => '2024-08-14T10:00:00+00:00',
             'updatedAt' => null,
@@ -508,10 +550,10 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
         /** @var Space $space */
         $space = $this->serializer->denormalize($spaceData, Space::class, context: $context);
 
-        $space->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $spaceData['createdBy'])));
+        $space->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $spaceData['createdBy']), Agent::class));
 
         if (null !== $spaceData['parent']) {
-            $parent = $this->getReference(sprintf('%s-%s', self::SPACE_ID_PREFIX, $spaceData['parent']));
+            $parent = $this->getReference(sprintf('%s-%s', self::SPACE_ID_PREFIX, $spaceData['parent']), Space::class);
             $space->setParent($parent);
         }
 

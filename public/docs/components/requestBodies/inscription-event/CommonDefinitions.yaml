@@ -1,0 +1,18 @@
+InscriptionEventBase:
+  type: object
+  properties:
+    agent:
+      type: string
+      format: uuid
+      description: Identificador do agente
+    event:
+      type: string
+      format: uuid
+      description: Identificador do evento
+    status:
+      type: string
+      enum:
+        - active
+        - cancelled
+        - confirmed
+        - suspended

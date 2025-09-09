@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
+use App\Entity\Event;
+use App\Entity\Initiative;
 use App\Entity\Opportunity;
+use App\Entity\Space;
+use App\Enum\SocialNetworkEnum;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,6 +52,9 @@ final class OpportunityFixtures extends AbstractFixture implements DependentFixt
                 'description' => 'O Festival de Literatura Nordestina é um evento cultural que reúne escritores, poetas, cordelistas e artistas populares para celebrar a literatura e a cultura do Nordeste.',
                 'areasOfActivity' => ['Literatura', 'Cultura popular'],
                 'tags' => ['Literatura', 'Cordel', 'Nordeste'],
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'concursodecordelistas',
             ],
             'createdAt' => '2024-09-01T10:00:00+00:00',
             'updatedAt' => null,
@@ -359,25 +367,25 @@ final class OpportunityFixtures extends AbstractFixture implements DependentFixt
         /** @var Opportunity $opportunity */
         $opportunity = $this->serializer->denormalize($opportunityData, Opportunity::class, context: $context);
 
-        $opportunity->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $opportunityData['createdBy'])));
+        $opportunity->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $opportunityData['createdBy']), Agent::class));
 
         if (null !== $opportunityData['parent']) {
-            $parent = $this->getReference(sprintf('%s-%s', self::OPPORTUNITY_ID_PREFIX, $opportunityData['parent']));
+            $parent = $this->getReference(sprintf('%s-%s', self::OPPORTUNITY_ID_PREFIX, $opportunityData['parent']), Opportunity::class);
             $opportunity->setParent($parent);
         }
 
         if (null !== $opportunityData['space']) {
-            $space = $this->getReference(sprintf('%s-%s', SpaceFixtures::SPACE_ID_PREFIX, $opportunityData['space']));
+            $space = $this->getReference(sprintf('%s-%s', SpaceFixtures::SPACE_ID_PREFIX, $opportunityData['space']), Space::class);
             $opportunity->setSpace($space);
         }
 
         if (null !== $opportunityData['initiative']) {
-            $initiative = $this->getReference(sprintf('%s-%s', InitiativeFixtures::INITIATIVE_ID_PREFIX, $opportunityData['initiative']));
+            $initiative = $this->getReference(sprintf('%s-%s', InitiativeFixtures::INITIATIVE_ID_PREFIX, $opportunityData['initiative']), Initiative::class);
             $opportunity->setInitiative($initiative);
         }
 
         if (null !== $opportunityData['event']) {
-            $event = $this->getReference(sprintf('%s-%s', EventFixtures::EVENT_ID_PREFIX, $opportunityData['event']));
+            $event = $this->getReference(sprintf('%s-%s', EventFixtures::EVENT_ID_PREFIX, $opportunityData['event']), Event::class);
             $opportunity->setEvent($event);
         }
 

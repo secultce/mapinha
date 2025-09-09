@@ -6,6 +6,7 @@ namespace App\Service\Interface;
 
 use App\Entity\City;
 use App\Entity\State;
+use Symfony\Component\Uid\Uuid;
 
 interface CityServiceInterface
 {
@@ -16,4 +17,6 @@ interface CityServiceInterface
     public function findOneBy(array $params): ?City;
 
     public function list(int $limit = 50): array;
+
+    public function get(Uuid|string $id): ?City;
 }

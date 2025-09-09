@@ -8,12 +8,12 @@ use App\Entity\Agent;
 use App\Entity\InscriptionPhase;
 use App\Entity\InscriptionPhaseReview;
 use App\Helper\DateFormatHelper;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
-class InscriptionPhaseReviewTest extends AbstractWebTestCase
+class InscriptionPhaseReviewTest extends AbstractApiTestCase
 {
     public function testGetters(): void
     {

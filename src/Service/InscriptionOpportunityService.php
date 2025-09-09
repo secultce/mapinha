@@ -7,6 +7,7 @@ namespace App\Service;
 use App\DTO\InscriptionOpportunityDto;
 use App\Entity\InscriptionOpportunity;
 use App\Entity\InscriptionPhase;
+use App\Entity\Opportunity;
 use App\Entity\Phase;
 use App\Enum\InscriptionPhaseStatusEnum;
 use App\Exception\InscriptionOpportunity\AlreadyInscriptionOpportunityException;
@@ -177,12 +178,27 @@ readonly class InscriptionOpportunityService extends AbstractEntityService imple
 
     public function findInscriptionWithDetails(Uuid $identifier): array
     {
-        $inscription = $this->repository->findInscriptionWithDetails($identifier, $this->security->getUser()->getAgents()->getValues());
+        $inscription = $this->repository->findInscriptionWithDetailsByOrganizations(
+            $identifier
+        );
 
         if (null === $inscription) {
             throw new InscriptionOpportunityResourceNotFoundException();
         }
 
         return $inscription;
+    }
+
+    public function findOpportunityByOrganization(Uuid $organizationId): Opportunity
+    {
+        $inscriptionOpportunity = $this->repository->findOneBy([
+            'organization' => $organizationId,
+        ]);
+
+        if (null === $inscriptionOpportunity) {
+            throw new InscriptionOpportunityResourceNotFoundException();
+        }
+
+        return $inscriptionOpportunity->getOpportunity();
     }
 }

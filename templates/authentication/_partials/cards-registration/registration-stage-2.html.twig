@@ -30,6 +30,10 @@
         </label>
     </div>
 
+    {% if app.request.query.has('target_path_invite') %}
+        <input type="hidden" name="_target_path" value="{{ app.request.query.get('target_path_invite') }}">
+    {% endif %}
+
     <div class="btn-form-group">
         <button class="btn btn-prev">{{ 'back'|trans }}</button>
         <button type="submit" class="btn btn-form-submit" id="submitPolicies">{{ 'continue'|trans }}</button>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'inscriptions'|trans }} - {{ event.name }}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+        span[class^="status-"] {
+            padding: 2px 5px;
+            border-radius: 5px;
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .status-active {
+            background-color: #28a745;
+        }
+        .status-cancelled {
+            background-color: #dc3545;
+        }
+        .status-confirmed {
+            background-color: #007bff;
+        }
+        .status-suspended {
+            background-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ 'inscription_list_for'|trans }} "{{ event.name }}"</h1>
+    <p>{{ 'total'|trans }}: {{ inscriptions|length }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'status'|trans }}</th>
+                <th>{{ 'created_at'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inscription in inscriptions %}
+            <tr>
+                <td>{{ inscription.agent.name }}</td>
+                <td>
+                    {% set status_name = get_enum_case_name(inscription.status, 'App\\Enum\\InscriptionEventStatusEnum') %}
+                    {% if status_name %}
+                        {% set status_class = status_name|lower %}
+                        <span class="status-{{ status_class }}">
+                            {{ status_name|capitalize|trans }}
+                        </span>
+                    {% endif %}
+                </td>
+                <td>{{ inscription.createdAt.format('d/m/Y H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Helper\EntityIdNormalizerHelper;
+use App\Request\Query\Filters;
 use App\Service\Interface\SpaceServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +34,11 @@ class SpaceApiController extends AbstractApiController
         return $this->json($space, context: ['groups' => ['space.get', 'space.get.item']]);
     }
 
-    public function list(): JsonResponse
+    public function list(Filters $filters): JsonResponse
     {
-        return $this->json($this->service->list(), context: [
+        $spaces = $this->service->list(params: array_merge($filters->toArray(), ['isDraft' => false]));
+
+        return $this->json($spaces, context: [
             'groups' => 'space.get',
             AbstractNormalizer::CALLBACKS => [
                 'parent' => [EntityIdNormalizerHelper::class, 'normalizeEntityId'],

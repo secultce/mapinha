@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller\Web\Admin;
 
-use App\Controller\Web\AbstractWebController;
 use App\Enum\FlashMessageTypeEnum;
+use App\Enum\UserRolesEnum;
 use App\Exception\ValidatorException;
 use App\Service\Interface\FaqServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class FaqAdminController extends AbstractWebController
+class FaqAdminController extends AbstractAdminController
 {
-    public const VIEW_LIST = '_admin/faq/list.html.twig';
-    public const VIEW_ADD = '_admin/faq/add.html.twig';
-    public const VIEW_EDIT = '_admin/faq/edit.html.twig';
+    public const VIEW_LIST = 'faq/list.html.twig';
+    public const VIEW_ADD = 'faq/add.html.twig';
+    public const VIEW_EDIT = 'faq/edit.html.twig';
 
     public const CREATE_FORM_ID = 'add-faq';
     public const EDIT_FORM_ID = 'edit-faq';
@@ -30,6 +31,7 @@ class FaqAdminController extends AbstractWebController
     ) {
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function add(Request $request): Response
     {
         if (false === $request->isMethod(Request::METHOD_POST)) {
@@ -66,6 +68,7 @@ class FaqAdminController extends AbstractWebController
         return $this->redirectToRoute('admin_faq_list');
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         $faqs = $this->faqService->list();
@@ -75,6 +78,7 @@ class FaqAdminController extends AbstractWebController
         ]);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function remove(string $id): Response
     {
         try {
@@ -87,6 +91,7 @@ class FaqAdminController extends AbstractWebController
         return $this->redirectToRoute('admin_faq_list');
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function edit(string $id, Request $request, ValidatorInterface $validator): Response
     {
         try {

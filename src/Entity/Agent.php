@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\SocialNetworkEnum;
 use App\Helper\DateFormatHelper;
 use App\Repository\AgentRepository;
 use DateTime;
@@ -22,7 +23,7 @@ class Agent extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME)]
-    #[Groups(['agent.get', 'event.get', 'initiative.get', 'opportunity.get', 'space.get', 'user.get', 'organization.get', 'phase.get', 'inscription-opportunity.get', 'inscription-phase.get', 'seal.get'])]
+    #[Groups(['agent.get', 'event.get', 'initiative.get', 'opportunity.get', 'space.get', 'user.get', 'organization.get', 'phase.get', 'inscription-opportunity.get', 'inscription-phase.get', 'seal.get', 'inscription-event.get'])]
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 100)]
@@ -63,6 +64,11 @@ class Agent extends AbstractEntity
     #[Groups(['agent.get'])]
     private Collection $organizations;
 
+    #[ORM\ManyToMany(targetEntity: CulturalFunction::class)]
+    #[ORM\JoinTable(name: 'agent_cultural_function')]
+    #[Groups(['agent.get', 'agent.get.item'])]
+    private Collection $culturalFunction;
+
     #[ORM\OneToMany(targetEntity: Opportunity::class, mappedBy: 'createdBy')]
     private Collection $opportunities;
 
@@ -72,6 +78,13 @@ class Agent extends AbstractEntity
     #[ORM\OneToMany(targetEntity: AgentAddress::class, mappedBy: 'owner', orphanRemoval: true)]
     #[Groups(['agent.get.item'])]
     private ?Collection $addresses = null;
+
+    /**
+     * @var array<string, string>
+     */
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    #[Groups(['agent.get.item'])]
+    private array $socialNetworks = [];
 
     #[ORM\Column]
     #[Groups(['agent.get'])]
@@ -91,6 +104,7 @@ class Agent extends AbstractEntity
         $this->opportunities = new ArrayCollection();
         $this->seals = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
+        $this->culturalFunction = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -198,6 +212,16 @@ class Agent extends AbstractEntity
         $this->organizations->add($organization);
     }
 
+    public function getCulturalFunction(): Collection
+    {
+        return $this->culturalFunction;
+    }
+
+    public function setCulturalFunction(Collection $culturalFunction): void
+    {
+        $this->culturalFunction = $culturalFunction;
+    }
+
     public function getOpportunities(): Collection
     {
         return $this->opportunities;
@@ -238,6 +262,29 @@ class Agent extends AbstractEntity
         $this->addresses->removeElement($address);
     }
 
+    public function getSocialNetworks(): array
+    {
+        return $this->socialNetworks;
+    }
+
+    public function setSocialNetworks(array $socialNetworks): void
+    {
+        foreach ($socialNetworks as $key => $username) {
+            $socialNetworksEnum = SocialNetworkEnum::from($key);
+            $this->addSocialNetwork($socialNetworksEnum->value, $username);
+        }
+    }
+
+    public function addSocialNetwork(string $socialNetworksEnum, $username): void
+    {
+        $this->socialNetworks[$socialNetworksEnum] = $username;
+    }
+
+    public function removeSocialNetwork(SocialNetworkEnum $socialNetwork): void
+    {
+        unset($this->socialNetworks[$socialNetwork->name]);
+    }
+
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
@@ -268,6 +315,20 @@ class Agent extends AbstractEntity
         $this->deletedAt = $deletedAt;
     }
 
+    public function createFromUser(User $user): Agent
+    {
+        $this->setUser($user);
+        $this->setCreatedAt(new DateTimeImmutable());
+        $this->setName($user->getName());
+        $this->setImage($user->getImage());
+        $this->setMain(true);
+        $this->shortBio = '';
+        $this->longBio = '';
+        $this->culture = false;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -279,6 +340,8 @@ class Agent extends AbstractEntity
             'culture' => $this->culture,
             'extraFields' => $this->extraFields,
             'organizations' => $this->organizations->map(fn ($organization) => $organization->getId()->toRfc4122())->toArray(),
+            'culturalFunction' => $this->culturalFunction->map(fn ($culturalFunction) => $culturalFunction->getId()->toRfc4122())->toArray(),
+            'socialNetworks' => $this->socialNetworks,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $this->updatedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $this->deletedAt?->format(DateFormatHelper::DEFAULT_FORMAT),

@@ -11,7 +11,7 @@ use App\DataFixtures\Entity\OpportunityFixtures;
 use App\DataFixtures\Entity\PhaseFixtures;
 use App\DataFixtures\Entity\SpaceFixtures;
 use App\Entity\Opportunity;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\ImageTestFixtures;
 use App\Tests\Fixtures\OpportunityTestFixtures;
 use DateTimeInterface;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class OpportunityApiControllerTest extends AbstractWebTestCase
+class OpportunityApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/opportunities';
 

@@ -1,0 +1,12 @@
+<section class="entity-edit-header">
+    {% include '_components/breadcrumb.html.twig' with {
+        items: [
+            {text: 'dashboard'|trans, path: path('admin_dashboard')},
+            {text: 'event'|trans, path: path('admin_event_list')},
+            {text: event.name, path: path('admin_event_edit', {'id': event.id})},
+        ]
+    } %}
+    <h1 class="fs-3 fs- fw-bold"> {{ 'edit_event' | trans }} </h1>
+
+    {% include "_admin/event/_partials/tabs/tabs.html.twig" %}
+</section>

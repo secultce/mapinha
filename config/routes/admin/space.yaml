@@ -22,3 +22,8 @@ edit:
   path: /{id}/editar
   controller: App\Controller\Web\Admin\SpaceAdminController::edit
   methods: ['GET', 'POST']
+
+toggle_publish:
+  path: /{id}/toggle-publish
+  controller: App\Controller\Web\Admin\SpaceAdminController::togglePublish
+  methods: ['GET']

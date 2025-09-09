@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\tests\Functional\Api;
+namespace App\Tests\Functional\Api;
 
 use App\DataFixtures\Entity\FaqFixtures;
 use App\Entity\Faq;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class FaqApiControllerTest extends AbstractWebTestCase
+class FaqApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/faqs';
 

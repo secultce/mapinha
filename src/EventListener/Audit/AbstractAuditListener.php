@@ -7,6 +7,7 @@ namespace App\EventListener\Audit;
 use App\Document\AgentTimeline;
 use App\Document\EventTimeline;
 use App\Document\InitiativeTimeline;
+use App\Document\InscriptionEventTimeline;
 use App\Document\InscriptionOpportunityTimeline;
 use App\Document\OpportunityTimeline;
 use App\Document\OrganizationTimeline;
@@ -16,6 +17,7 @@ use App\Document\UserTimeline;
 use App\Entity\Agent;
 use App\Entity\Event;
 use App\Entity\Initiative;
+use App\Entity\InscriptionEvent;
 use App\Entity\InscriptionOpportunity;
 use App\Entity\Opportunity;
 use App\Entity\Organization;
@@ -66,6 +68,7 @@ abstract class AbstractAuditListener
             Agent::class => AgentTimeline::class,
             Event::class => EventTimeline::class,
             Initiative::class => InitiativeTimeline::class,
+            InscriptionEvent::class => InscriptionEventTimeline::class,
             InscriptionOpportunity::class => InscriptionOpportunityTimeline::class,
             Opportunity::class => OpportunityTimeline::class,
             Organization::class => OrganizationTimeline::class,

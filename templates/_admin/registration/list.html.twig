@@ -6,14 +6,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/pages/registration.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/pages/my-inscription.css') }}">
 {% endblock %}
 
 {% block content %}
     <section class="d-flex">
         {% include "_components/side-bar.html.twig" %}
 
-        <section class="management-content w-100 registration-page">
+        <section class="management-content w-100 my-inscription-page">
             <div class="management-panel__white-square d-flex flex-column justify-content-between">
                 {% include "_admin/registration/_partials/title-registration.html.twig" %}
 

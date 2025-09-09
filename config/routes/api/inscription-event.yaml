@@ -1,0 +1,24 @@
+create:
+  path: /
+  controller: App\Controller\Api\InscriptionEventApiController::create
+  methods: ['POST']
+
+get:
+  path: /{id}
+  controller: App\Controller\Api\InscriptionEventApiController::get
+  methods: ['GET']
+
+list:
+  path: /
+  controller: App\Controller\Api\InscriptionEventApiController::list
+  methods: ['GET']
+
+remove:
+  path: /{id}
+  controller: App\Controller\Api\InscriptionEventApiController::remove
+  methods: ['DELETE']
+
+update:
+  path: /{id}
+  controller: App\Controller\Api\InscriptionEventApiController::update
+  methods: ['PATCH']

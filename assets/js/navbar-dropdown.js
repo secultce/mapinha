@@ -35,4 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 100);
         });
     });
+
+    const notificationBtn = document.getElementById("notificationDropdown");
+    const notificationMenu = document.querySelector(".dropdown-notification .dropdown-menu");
+
+    if (notificationBtn && notificationMenu) {
+        notificationBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            notificationMenu.classList.toggle("show");
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!notificationBtn.contains(event.target) && !notificationMenu.contains(event.target)) {
+                notificationMenu.classList.remove("show");
+            }
+        });
+    }
 });

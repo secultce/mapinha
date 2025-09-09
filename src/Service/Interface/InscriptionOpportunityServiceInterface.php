@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Interface;
 
 use App\Entity\InscriptionOpportunity;
+use App\Entity\Opportunity;
 use Symfony\Component\Uid\Uuid;
 
 interface InscriptionOpportunityServiceInterface
@@ -24,4 +25,6 @@ interface InscriptionOpportunityServiceInterface
     public function findRecentByUser(Uuid $userId, int $limit = 4): array;
 
     public function findInscriptionWithDetails(Uuid $identifier): array;
+
+    public function findOpportunityByOrganization(Uuid $organizationId): Opportunity;
 }

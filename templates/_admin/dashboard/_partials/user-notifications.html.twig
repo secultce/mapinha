@@ -1,0 +1,73 @@
+<div class="accordion accordion-flush accordion-cards mt-4" id="accordionNotifications">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#unreadNotifications"
+                    aria-expanded="true"
+                    aria-controls="unreadNotifications">
+                {{ 'unread_notifications' | trans }}
+            </button>
+        </h2>
+        <div id="unreadNotifications" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>{{ 'message' | trans }}</th>
+                        <th>{{ 'date' | trans }}</th>
+                        <th>{{ 'action' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Você foi avaliado no edital “Arte Viva”.</td>
+                        <td>10/04/2025</td>
+                        <td><button class="btn btn-sm btn-primary">Marcar como lida</button></td>
+                    </tr>
+                    <tr>
+                        <td>Sua inscrição foi confirmada.</td>
+                        <td>08/04/2025</td>
+                        <td><button class="btn btn-sm btn-primary">Marcar como lida</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item mt-4 mb-4">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#readNotifications"
+                    aria-expanded="false"
+                    aria-controls="readNotifications">
+                 {{ 'read_notifications' | trans }}
+            </button>
+        </h2>
+        <div id="readNotifications" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ 'message' | trans }}</th>
+                        <th>{{ 'date' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Proposta enviada com sucesso.</td>
+                        <td>01/04/2025</td>
+                    </tr>
+                    <tr>
+                        <td>Inscrição aprovada no edital “Cultura Jovem”.</td>
+                        <td>28/03/2025</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

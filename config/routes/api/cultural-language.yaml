@@ -1,0 +1,24 @@
+list:
+  path: /
+  controller: App\Controller\Api\CulturalLanguageApiController::list
+  methods: ['GET']
+
+get:
+  path: /{id}
+  controller: App\Controller\Api\CulturalLanguageApiController::get
+  methods: ['GET']
+
+remove:
+  path: /{id}
+  controller: App\Controller\Api\CulturalLanguageApiController::remove
+  methods: ['DELETE']
+
+create:
+  path: /
+  controller: App\Controller\Api\CulturalLanguageApiController::create
+  methods: ['POST']
+
+update:
+  path: /{id}
+  controller: App\Controller\Api\CulturalLanguageApiController::update
+  methods: ['PATCH']

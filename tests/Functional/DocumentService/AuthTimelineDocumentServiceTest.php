@@ -7,12 +7,12 @@ namespace App\Tests\Functional\DocumentService;
 use App\DataFixtures\Entity\UserFixtures;
 use App\DocumentService\Interface\AuthTimelineDocumentServiceInterface;
 use App\Repository\UserRepository;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthTimelineDocumentServiceTest extends AbstractWebTestCase
+class AuthTimelineDocumentServiceTest extends AbstractApiTestCase
 {
     public function testGetTimelineLoginByUser(): void
     {

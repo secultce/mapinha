@@ -1,0 +1,14 @@
+{% set tabs = [
+    {
+        'id': 'happening-now',
+        'content': include('_admin/my-event-inscription/_partials/tabs/happening-now.html.twig')
+    },
+    {
+        'id': 'past',
+        'content': include('_admin/my-event-inscription/_partials/tabs/past.html.twig')
+    },
+] %}
+
+<div class="ps-4 pe-4 mt-4">
+    {% include '_components/tabs/content-tabs.html.twig' with { 'tabs': tabs } %}
+</div>

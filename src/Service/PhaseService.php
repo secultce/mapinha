@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\DTO\PhaseDto;
 use App\Entity\Phase;
+use App\Environment\ConfigEnvironment;
 use App\Exception\Phase\PhaseResourceNotFoundException;
 use App\Repository\Interface\PhaseRepositoryInterface;
 use App\Service\Interface\PhaseServiceInterface;
@@ -24,6 +25,8 @@ readonly class PhaseService extends AbstractEntityService implements PhaseServic
         private EntityManagerInterface $entityManager,
         private SerializerInterface $serializer,
         private ValidatorInterface $validator,
+        private ConfigEnvironment $configEnvironment,
+        private OpportunityService $opportunityService,
     ) {
         parent::__construct($this->security, $serializer, $validator);
     }
@@ -105,5 +108,20 @@ readonly class PhaseService extends AbstractEntityService implements PhaseServic
             ->setParameter('opportunity', $opportunity)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function isPhaseActive(Uuid $opportunityId): bool
+    {
+        $opportunity = $this->opportunityService->get($opportunityId);
+
+        $currentPhase = $this->repository->findCurrentPhase(new DateTime(), $opportunity);
+
+        if (null === $currentPhase) {
+            return false;
+        }
+
+        $currentDate = new DateTime();
+
+        return $currentPhase->getStartDate() <= $currentDate && $currentPhase->getEndDate() >= $currentDate;
     }
 }

@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\City;
 use App\Entity\State;
+use App\Exception\State\StateResourceNotFoundException;
 use App\Repository\Interface\StateRepositoryInterface;
 use App\Service\Interface\StateServiceInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -32,7 +33,13 @@ readonly class StateService extends AbstractEntityService implements StateServic
 
     public function findOneBy(array $params): ?State
     {
-        return $this->repository->findOneBy($params);
+        $state = $this->repository->findOneBy($params);
+
+        if (null === $state) {
+            throw new StateResourceNotFoundException();
+        }
+
+        return $state;
     }
 
     public function list(int $limit = 50): array

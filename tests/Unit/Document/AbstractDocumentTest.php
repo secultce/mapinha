@@ -7,12 +7,13 @@ namespace App\Tests\Unit\Document;
 use App\DataFixtures\Entity\UserFixtures;
 use App\Document\AbstractDocument;
 use App\Document\AgentTimeline;
-use App\Service\Interface\UserServiceInterface;
-use App\Tests\AbstractWebTestCase;
+use App\Entity\User;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Symfony\Component\Uid\Uuid;
 
-class AbstractDocumentTest extends AbstractWebTestCase
+class AbstractDocumentTest extends AbstractApiTestCase
 {
     private DocumentManager $documentManager;
 
@@ -21,41 +22,41 @@ class AbstractDocumentTest extends AbstractWebTestCase
         $this->documentManager = self::bootKernel()->getContainer()->get('doctrine_mongodb')->getManager();
     }
 
-    public function testGetEventsShouldBeReturnAnAuthorAssigned(): void
+    public function testAuthorAssigned(): void
     {
-        $events = [$this->createAgentEvent()];
-        $userService = self::getContainer()->get(UserServiceInterface::class);
-
         $document = $this->createAbstractClass();
 
-        $documentTest = new $document(
-            $userService
-        );
+        $documentTest = new $document();
 
-        $author = $documentTest->getEvents($events)[0]['author'];
+        $author = $this->createPartialMock(User::class, ['toArray']);
+        $author->setId(Uuid::v4());
+        $author->setSocialName('Alessandro Feitoza');
+        $author->method('toArray')->willReturn(['name' => 'Alessandro Feitoza']);
+
+        $documentTest->author = $author;
+
+        $this->assertEquals('Alessandro Feitoza', $documentTest->author->getSocialName());
 
         $this->assertIsArray($documentTest->toArray());
-        $this->assertIsArray($documentTest->getEvents($events));
-        $this->assertEquals(
-            'Alessandro Feitoza',
-            $author['socialName']
-        );
+    }
+
+    public function testToArray(): void
+    {
+        $document = $this->createAgentEvent();
+
         $this->assertEquals([
             'author' => null,
-            'id' => '123',
+            'id' => '67d71508a78241dbf60f58bd',
             'userId' => '2604e656-57dc-4e1c-9fa8-efdf4a00b203',
-            'resourceId' => '789',
-            'title' => 'Title',
+            'resourceId' => 'f457b5a-4710-446b-a119-3980dd32f870',
+            'title' => 'Título',
             'priority' => 1,
-            'datetime' => '2025-02-21T00:00:00Z',
+            'datetime' => new DateTime('2025-02-21T00:00:00Z'),
             'device' => 'smartphone',
             'platform' => 'android',
             'from' => ['name' => 'Fulano'],
             'to' => ['name' => 'Cicrano'],
-        ], $documentTest->toArray());
-
-        $this->documentManager->remove($events[0]);
-        $this->documentManager->flush();
+        ], $document->toArray());
     }
 
     private function createAgentEvent(): AgentTimeline
@@ -73,6 +74,7 @@ class AbstractDocumentTest extends AbstractWebTestCase
         $from = ['name' => 'Fulano'];
         $to = ['name' => 'Cicrano'];
 
+        $agentEvent->setId('67d71508a78241dbf60f58bd');
         $agentEvent->setUserId($userId);
         $agentEvent->setResourceId($resourceId);
         $agentEvent->setTitle($title);
@@ -82,9 +84,6 @@ class AbstractDocumentTest extends AbstractWebTestCase
         $agentEvent->setPlatform($platform);
         $agentEvent->setFrom($from);
         $agentEvent->setTo($to);
-
-        $this->documentManager->persist($agentEvent);
-        $this->documentManager->flush();
 
         return $agentEvent;
     }

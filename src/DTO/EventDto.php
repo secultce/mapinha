@@ -11,10 +11,11 @@ use App\Entity\Initiative;
 use App\Entity\Space;
 use App\Entity\Tag;
 use App\Enum\AccessibilityInfoEnum;
-use App\Enum\EventTypeEnum;
+use App\Enum\EventFormatEnum;
 use App\Validator\Constraints\Exists;
 use App\Validator\Constraints\Json;
 use App\Validator\Constraints\NotNull;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -106,14 +107,20 @@ class EventDto
     #[Sequentially([
         new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
-        new Type('string', groups: [self::CREATE, self::UPDATE]),
-        new Choice(callback: [EventTypeEnum::class, 'getNames'], groups: [self::CREATE, self::UPDATE]),
+        new Type('integer', groups: [self::CREATE, self::UPDATE]),
+        new Choice(callback: [EventFormatEnum::class, 'getValues'], groups: [self::CREATE, self::UPDATE]),
     ])]
     public mixed $type;
 
     #[Sequentially([
         new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
+        new Type('string', groups: [self::CREATE, self::UPDATE]),
+        new DateTime(format: 'Y-m-d', groups: [self::CREATE, self::UPDATE]),
+    ])]
+    public mixed $startDate;
+
+    #[Sequentially([
         new Type('string', groups: [self::CREATE, self::UPDATE]),
         new DateTime(format: 'Y-m-d', groups: [self::CREATE, self::UPDATE]),
     ])]
@@ -144,8 +151,6 @@ class EventDto
     public mixed $phoneNumber;
 
     #[Sequentially([
-        new NotBlank(groups: [self::CREATE]),
-        new NotNull(groups: [self::UPDATE]),
         new Type('integer', groups: [self::CREATE, self::UPDATE]),
     ])]
     public mixed $maxCapacity;
@@ -164,4 +169,10 @@ class EventDto
 
     #[Type('boolean', groups: [self::CREATE, self::UPDATE])]
     public mixed $free;
+
+    #[Sequentially([
+        new NotNull(groups: [self::UPDATE]),
+        new Type(Types::BOOLEAN, groups: [self::CREATE, self::UPDATE]),
+    ])]
+    public mixed $draft = true;
 }

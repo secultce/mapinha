@@ -1,57 +1,120 @@
-const handleTagsFilter = (event, target) => {
-    event.stopPropagation();
-    if ('BUTTON' === target.tagName) {
-        target = target.previousElementSibling;
-    }
-
-    const itemsElements = target.parentNode.parentNode.parentNode.querySelectorAll('&>li:not(.disabled):not(.new-tag-item)');
-    const query = target.value;
-
-    const newTagItem = target.parentNode.parentNode.parentNode.querySelector('&>li.new-tag-item > button');
-    newTagItem.dataset.label = query;
-    newTagItem.dataset.value = query;
-    newTagItem.children[0].innerText = query;
-
-    itemsElements.forEach(item => {
-        if (item.textContent.toLowerCase().includes(query.toLowerCase())) {
-            item.classList.remove('d-none');
-        } else {
-            item.classList.add('d-none');
-        }
-    });
-};
-
-const removeTag = (target, inputName, value) => {
-    target.parentElement.remove();
-    document.querySelector(`button[data-input-name="${inputName}"][data-value="${value}"]`)?.classList.remove('d-none', 'disabled');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.dropdown-item[data-input-name]').forEach(item => {
-        item.addEventListener('click', (event) => {
-            event.preventDefault();
-            const inputName = item.dataset.inputName;
-            const tagLabel = item.dataset.label;
-            const tagValue = item.dataset.value;
-
-            const tagsContainer = document.getElementById(`tags-container-${inputName}`);
-            const tagElement = document.createElement('div');
-            tagElement.classList.add('area-tag');
-            tagElement.innerHTML = `${tagLabel}<input type="hidden" name="${inputName}[]" value="${tagValue}"/>` +
-                `<button type="button" class="remove-tag m-0 p-0 px-1 border-0 bg-transparent">x</button>`;
-            tagsContainer.appendChild(tagElement);
-
-
-            if (item.parentElement.classList.contains('new-tag-item')) {
-                item.querySelector(`[id="new-tag-${inputName}"]`).innerText = '';
-                item.setAttribute('data-value', '');
-                item.setAttribute('data-label', '');
-            } else {
-                item.classList.add('d-none');
-                item.classList.add('disabled');
-            }
-
-            tagElement.querySelector('.remove-tag').addEventListener('click', ({target}) => removeTag(target, inputName, tagValue));
-        });
+    document.querySelectorAll('.tags-selector').forEach(selector => {
+        initializeTagSelector(selector);
     });
 });
+
+function initializeTagSelector(selector) {
+    const inputName = selector.dataset.inputName;
+    const tagsContainer = selector.querySelector(`#tags-container-${inputName}`);
+    const dropdownMenu = selector.querySelector('.dropdown-menu');
+    const searchInput = selector.querySelector('.custom-search-input');
+    const newTagItem = selector.querySelector('.new-tag-item');
+    const newTagButton = newTagItem.querySelector('button');
+    const newTagSpan = newTagButton.querySelector('span')
+    const errorMessage = document.getElementById(`span-message-${inputName}`);
+
+    const addTag = (label, value) => {
+        if (!label || !label.trim()) return;
+
+        const existingTag = tagsContainer.querySelector(`.area-tag[data-value="${value}"]`);
+        if (existingTag) return;
+
+        const tagElement = document.createElement('div');
+        tagElement.className = 'area-tag';
+        tagElement.dataset.value = value;
+        tagElement.innerHTML = `
+            <span>${label}</span>
+            <input type="hidden" name="${inputName}[]" value="${value}"/>
+            <button type="button" class="remove-tag m-0 p-0 px-1 border-0 bg-transparent">x</button>
+        `;
+        tagsContainer.appendChild(tagElement);
+
+        const optionInList = dropdownMenu.querySelector(`li > button[data-value="${value}"]`);
+        if (optionInList) {
+            optionInList.parentElement.classList.add('d-none');
+        }
+        searchInput.value = '';
+        handleFilter();
+    };
+
+    const removeTag = (tagElement) => {
+        const value = tagElement.dataset.value;
+        tagElement.remove();
+
+        const optionInList = dropdownMenu.querySelector(`li > button[data-value="${value}"]`);
+        if (optionInList) {
+            optionInList.parentElement.classList.remove('d-none');
+        }
+    };
+
+    const handleFilter = () => {
+        const query = searchInput.value.trim();
+        const queryLowerCase = query.toLowerCase();
+        const allOptions = dropdownMenu.querySelectorAll('li > button[data-value]');
+        let exactMatchInList = false;
+
+        allOptions.forEach(button => {
+            const label = button.dataset.label.toLowerCase();
+            const parentLi = button.parentElement;
+            const isVisible = label.includes(queryLowerCase);
+            parentLi.style.display = isVisible ? 'block' : 'none';
+            if (isVisible && label === queryLowerCase) {
+                exactMatchInList = true;
+            }
+        });
+
+        const existingTags = Array.from(tagsContainer.querySelectorAll('.area-tag'));
+        const isAlreadySelected = existingTags.some(tag => tag.dataset.value.toLowerCase() === queryLowerCase);
+
+        errorMessage.classList.add('d-none');
+        newTagItem.classList.add('d-none');
+
+        if (!query) return;
+
+        if (isAlreadySelected || exactMatchInList) {
+            errorMessage.classList.remove('d-none');
+            return;
+        }
+
+        newTagSpan.textContent = `Adicionar "${query}"`;
+        newTagItem.classList.remove('d-none');
+    };
+
+    searchInput.addEventListener('input', handleFilter);
+
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            if (!newTagItem.classList.contains('d-none')) {
+                const newLabel = searchInput.value.trim();
+                addTag(newLabel, newLabel);
+                searchInput.focus();
+            }
+        }
+    });
+
+    dropdownMenu.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (newTagButton.contains(target)) {
+            const newLabel = searchInput.value.trim();
+            const newValue = newLabel;
+            addTag(newLabel, newValue);
+            return;
+        }
+
+        const dropdownItem = target.closest('.dropdown-item[data-value]');
+        if (dropdownItem) {
+            addTag(dropdownItem.dataset.label, dropdownItem.dataset.value);
+        }
+    });
+
+    tagsContainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('remove-tag')) {
+            const tagElement = event.target.closest('.area-tag');
+            removeTag(tagElement);
+        }
+    });
+}

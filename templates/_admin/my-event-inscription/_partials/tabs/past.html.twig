@@ -1,0 +1,34 @@
+<section class="management-seals">
+    <div class="filter-control d-flex justify-content-between">
+        <div class="search-box">
+            <input id="search-seal" type="text" placeholder="{{ "input_search" | trans }}" />
+            <i class="material-icons">search</i>
+        </div>
+
+        <div class="d-flex g-4 agent-sort">
+            <label class="agent-options fw-semibold" for="sort-options">{{ 'sort_by' | trans }}:</label>
+            <select id="sort-options" class="form-select">
+                <option value="recent">{{ 'most_recent' | trans }}</option>
+                <option value="old">{{ 'oldest' | trans }}</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+{% set inscriptionsPast = inscriptions|filter(inscription => date(inscription.event.endDate) < date('now')) %}
+
+{% if inscriptionsPast is not empty %}
+    <div class="resources-section mt-4">
+        <h3 class="resources-title">{{ 'view.my_events.events_found' | trans }}</h3>
+        <hr>
+    </div>
+{% else %}
+    <div class="resources-section mt-4">
+        <h3 class="resources-title">{{ 'view.my_events.without_events' | trans }}</h3>
+        <hr>
+    </div>
+{% endif %}
+
+{% for inscription in inscriptionsPast %}
+    {% include "_admin/my-event-inscription/_partials/tabs/card.html.twig" %}
+{% endfor %}

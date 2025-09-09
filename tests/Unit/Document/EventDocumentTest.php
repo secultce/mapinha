@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\EventTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use Datetime;
 use Symfony\Component\Uid\Uuid;
 
-class EventDocumentTest extends AbstractWebTestCase
+class EventDocumentTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromEventDocumentShouldBeSuccessful(): void
     {

@@ -18,6 +18,11 @@ admin_event:
   prefix: /painel/eventos
   name_prefix: admin_event_
 
+admin_event_inscription:
+    resource: 'admin/event-inscription.yaml'
+    prefix: /painel/eventos/{id}/inscricoes
+    name_prefix: admin_event_inscription_
+
 admin_faq:
   resource: 'admin/faq.yaml'
   prefix: /painel/faq
@@ -83,6 +88,11 @@ admin_my_opportunity:
   prefix: /painel/minhas-oportunidades
   name_prefix: admin_my_opportunity_
 
+admin_my_event:
+  resource: 'admin/my-event-inscription.yaml'
+  prefix: /painel/meus-eventos
+  name_prefix: admin_my_event_
+
 admin_activity_area:
   resource: 'admin/activity-area.yaml'
   prefix: /painel/area-atuacao
@@ -102,3 +112,8 @@ admin_architectural_accessibility:
   resource: 'admin/architectural-accessibility.yaml'
   prefix: /painel/admin/acessibilidade
   name_prefix: admin_architectural_accessibility_
+
+admin_cultural_language:
+  resource: 'admin/cultural-language.yaml'
+  prefix: /painel/admin/linguagem-cultural
+  name_prefix: admin_cultural_language_

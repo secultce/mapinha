@@ -27,6 +27,11 @@ class InscriptionOpportunity
     #[Groups(['inscription-opportunity.get'])]
     private ?Agent $agent = null;
 
+    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', nullable: false)]
+    #[Groups(['inscription-opportunity.get'])]
+    private ?Organization $organization = null;
+
     #[ORM\ManyToOne(targetEntity: Opportunity::class, inversedBy: 'phases')]
     #[ORM\JoinColumn(name: 'opportunity_id', referencedColumnName: 'id', nullable: false)]
     #[Groups(['inscription-opportunity.get'])]
@@ -73,7 +78,7 @@ class InscriptionOpportunity
         $this->status = $status;
     }
 
-    public function getAgent(): Agent
+    public function getAgent(): ?Agent
     {
         return $this->agent;
     }
@@ -123,11 +128,22 @@ class InscriptionOpportunity
         $this->deletedAt = $deletedAt;
     }
 
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): void
+    {
+        $this->organization = $organization;
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->id?->toRfc4122(),
-            'agent' => $this->agent->getId(),
+            'agent' => $this->agent?->getId(),
+            'organization' => $this->organization?->getId(),
             'opportunity' => $this->getOpportunity()->getId(),
             'status' => $this->status,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),

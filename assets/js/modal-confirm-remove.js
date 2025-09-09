@@ -1,4 +1,14 @@
-function confirmRemove(event) {
-    const href = event.getAttribute('data-href');
-    document.querySelector('[data-modal-button="confirm-link"]').setAttribute('href', href);
+function confirmRemove(triggerButton, title = null) {
+    const url = triggerButton.getAttribute('data-href');
+    const confirmLink = document.querySelector('[data-modal-button="confirm-link"]');
+    confirmLink.setAttribute('href', url);
+
+    if (title) {
+        const modalTitle = document.getElementById('staticBackdropLabel');
+        if (modalTitle) {
+            modalTitle.textContent = title;
+        }
+    }
 }
+
+window.confirmRemove = confirmRemove;

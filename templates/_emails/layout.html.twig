@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+    <link rel="stylesheet" href="{{ absolute_url(asset('styles/components/email-layout.css')) }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;…&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <img src="{{ absolute_url(asset(env.aurora.email.logo)) }}" alt="Logo Aurora">
+    </div>
+
+    <div class="email-body">
+        {{ content|raw }}
+    </div>
+
+    <div class="email-footer">
+        {{ env.aurora.email.footer|raw }}
+    </div>
+</div>
+</body>
+</html>

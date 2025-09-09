@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/secultce/aurora/graph/badge.svg?token=CG2AH922DO)](https://codecov.io/gh/secultce/aurora)
+[![codecov](https://codecov.io/gh/ecossistema-aurora/aurora/graph/badge.svg?token=AVOPV8MSGC)](https://codecov.io/gh/ecossistema-aurora/aurora)
 
 # Estrutura inicial Aurora
 
@@ -24,6 +24,7 @@ A configuração já está dockerizada, então você só precisa ter o Docker Co
 - [Enums](./help/ENUM.md)
 - [Arquitetura da Aplicação](./help/README.md)
 - [Comandos do terminal](./help/COMMANDS.md)
+- [Deploy](./help/DEPLOY.md)
 
 ## Instalação 
 <details>
@@ -53,9 +54,10 @@ cd aurora
 > O jeito mais fácil é rodar o comando `make setup`, isso já vai executar todos os passos necessários e deixar a aplicação rodando em <http://localhost:8080>
 >
 ```bash
+cp .env.example .env
 make setup
 ```
-Mas se preferir, pode fazer o passo a passo abaixo
+Mas se preferir, pode fazer o passo a passo abaixo, mas o compando de copiar o `.env` é obrigatório
 
 ---
 

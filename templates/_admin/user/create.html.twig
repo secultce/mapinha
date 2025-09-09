@@ -1,0 +1,32 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %} {{ 'control_panel'|trans }} - {{ 'user_created' | trans }} {% endblock %}
+
+{% block content %}
+    <section class="container my-5">
+        <div class="row mb-1">
+            <a href="{{ path('admin_user_list') }}" class="nav-link text-primary">
+                <i class="material-icons align-middle">arrow_back</i>
+                {{ 'back'|trans }}
+            </a>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="fw-bold fs-3">{{ 'user_created'|trans }}</h1>
+                    </div>
+
+                    <div class="card-body">
+                        {% include "_admin/user/_partials/forms/create-user.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script type="module" src="{{ asset('js/user/register.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,84 @@
+<form id="agent-edit-form" method="POST" class="entity-edit-form">
+    <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
+    <div class="accordion accordion-flush accordion-cards mt-4" id="accordionEditAgent">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#panel-introduction"
+                    aria-expanded="true"
+                    aria-controls="panel-introduction">
+                    {{ 'presentation_information' | trans }}
+                </button>
+            </h2>
+
+            <div id="panel-introduction" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <hr>
+                    {% include "_admin/agent/_partials/forms/introduction.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#panel-personal-data"
+                    aria-expanded="false"
+                    aria-controls="panel-personal-data">
+                    {{ 'personal_data' | trans }}
+                </button>
+            </h2>
+
+            <div id="panel-personal-data" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'data_need_authorization_to_show'|trans }}</span>
+                    <hr>
+                    {% include "_admin/agent/_partials/forms/personal-data.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#panel-sensitive-data"
+                    aria-expanded="false"
+                    aria-controls="panel-sensitive-data">
+                    {{ 'view.agent_edit.sensitive_data'|trans }}
+                </button>
+            </h2>
+
+            <div id="panel-sensitive-data" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'data_need_authorization_to_show'|trans }}</span>
+                    <hr>
+                    {% include "_admin/agent/_partials/forms/sensitive-data.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#panel-social-media"
+                    aria-expanded="false"
+                    aria-controls="panel-social-media">
+                    {{ 'social_media' | trans }}
+                </button>
+            </h2>
+
+            <div id="panel-social-media" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <hr>
+                    {% include "_admin/agent/_partials/forms/social-media.html.twig" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -9,16 +9,16 @@
                 <div class="d-flex">
                     <span class="icon material-icons align-self-start">check_circle</span>
                     <div class="toast-body">
-                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                        {{ error.messageKey|trans }}
                     </div>
                     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
         {% endif %}
     </div>
-    <section class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-sm-8 col-md-6 col-lg-5">
+    <section class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-sm-6 col-md-4 col-lg-4">
                 <div class="card card-body mt-3 mb-5">
                     <p class="mb-0">
                         <span class="fs-3 fw-bold">{{ 'welcome'|trans }}!</span>
@@ -34,14 +34,20 @@
                         <label for="password">{{ 'password'|trans }}</label>
                         <input data-cy="password" class="form-control mb-3" type="password" name="password" id="password">
 
+                        {% if app.request.query.has('target_path_invite') %}
+                            <input type="hidden" name="_target_path" value="{{ app.request.query.get('target_path_invite') }}">
+                        {% endif %}
+
                         <button data-cy="submit" class="btn btn-primary w-100">
                             {{ 'login'|trans }}
                         </button>
 
                         <div class="text-end mt-3">
-                            <a href="#">{{ 'view.authentication.forgot_password'|trans }}</a>
+                            <a href="{{ path('web_account_event_forgot') }}">{{ 'view.authentication.forgot_password'|trans }}</a>
                             <br>
-                            <a href="{{ path('web_auth_register') }}">{{ 'register'|trans }}</a>
+                            {% if (env.aurora.register.any == "true") %}
+                                <a href="{{ path('web_auth_register') }}">{{ 'register'|trans }}</a>
+                            {% endif %}
                         </div>
                     </form>
                 </div>

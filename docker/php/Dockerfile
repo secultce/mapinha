@@ -34,6 +34,7 @@ RUN groupadd -g 1000 developer && useradd -u 1000 -ms /bin/bash -g developer use
 COPY --chown=user:developer . /var/www
 
 RUN mkdir -p /var/www/assets/uploads && chown -R www-data /var/www/assets/uploads
+RUN mkdir -p /var/www/storage && chown -R www-data /var/www/storage
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \

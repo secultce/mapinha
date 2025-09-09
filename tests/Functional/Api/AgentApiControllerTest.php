@@ -9,7 +9,8 @@ use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\OrganizationFixtures;
 use App\DataFixtures\Entity\UserFixtures;
 use App\Entity\Agent;
-use App\Tests\AbstractWebTestCase;
+use App\Enum\SocialNetworkEnum;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\AgentTestFixtures;
 use App\Tests\Fixtures\ImageTestFixtures;
 use DateTimeInterface;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class AgentApiControllerTest extends AbstractWebTestCase
+class AgentApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/agents';
 
@@ -58,7 +59,9 @@ class AgentApiControllerTest extends AbstractWebTestCase
             'extraFields' => null,
             'user' => ['id' => $requestBody['user']],
             'organizations' => [],
+            'culturalFunction' => [],
             'addresses' => null,
+            'socialNetworks' => [],
             'createdAt' => $agent->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -97,7 +100,9 @@ class AgentApiControllerTest extends AbstractWebTestCase
             'organizations' => [
                 ['id' => OrganizationFixtures::ORGANIZATION_ID_1],
             ],
+            'culturalFunction' => [],
             'addresses' => null,
+            'socialNetworks' => [],
             'createdAt' => $agent->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -247,11 +252,19 @@ class AgentApiControllerTest extends AbstractWebTestCase
             'shortBio' => 'Desenvolvedor e evangelista de Software',
             'longBio' => 'Fomentador da comunidade de desenvolvimento, um dos fundadores da maior comunidade de PHP do Ceará (PHP com Rapadura)',
             'culture' => false,
-            'main' => false,
+            'main' => true,
             'user' => ['id' => UserFixtures::USER_ID_1],
             'organizations' => [
                 ['id' => OrganizationFixtures::ORGANIZATION_ID_2],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_4],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_7],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_8],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_9],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_10],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_11],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_1],
             ],
+            'culturalFunction' => [],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => '2024-07-10T11:37:00+00:00',
             'deletedAt' => null,
@@ -280,29 +293,38 @@ class AgentApiControllerTest extends AbstractWebTestCase
             'shortBio' => 'Desenvolvedora frontend e entusiasta de UX',
             'longBio' => 'Desenvolvedora frontend especializada em criar interfaces intuitivas e acessíveis. Entusiasta de UX e está sempre em busca de melhorias na experiência do usuário.',
             'culture' => false,
-            'main' => false,
+            'main' => true,
             'extraFields' => [
                 'email' => 'anna@example.com',
                 'instagram' => '@anna',
+                'cargo' => 'Desenvolvedora Frontend',
+                'cpf' => '123.456.789-00',
             ],
             'user' => ['id' => UserFixtures::USER_ID_3],
-            'organizations' => [],
+            'organizations' => [
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_3],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_5],
+            ],
+            'culturalFunction' => [],
             'addresses' => [
                 [
-                    'id' => '425bdb7a-1ea2-41b5-bcb8-3511ef8f750a',
-                    'street' => 'Rua das Flores',
-                    'number' => '123',
-                    'neighborhood' => 'Primavera',
-                    'complement' => 'Bloco A',
+                    'id' => 'b2c3d4e5-f6a7-8901-bcde-ff2345678901',
+                    'street' => 'Rua dos Navegantes',
+                    'number' => '1205',
+                    'neighborhood' => 'Boa Viagem',
+                    'complement' => 'Apto 3',
                     'city' => [
-                        'name' => 'Pedra Branca',
+                        'name' => 'Recife',
                         'state' => [
-                            'name' => 'Ceará',
-                            'acronym' => 'CE',
+                            'name' => 'Pernambuco',
+                            'acronym' => 'PE',
                         ],
                     ],
-                    'zipcode' => '01002000',
+                    'zipcode' => '51020010',
                 ],
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'https://instagram.com/anamouraab',
             ],
             'createdAt' => '2024-07-16T17:22:00+00:00',
             'updatedAt' => null,
@@ -406,22 +428,26 @@ class AgentApiControllerTest extends AbstractWebTestCase
             'organizations' => [
                 ['id' => OrganizationFixtures::ORGANIZATION_ID_1],
             ],
+            'culturalFunction' => [],
             'addresses' => [
                 [
-                    'id' => AddressFixtures::ADDRESS_ID_5,
-                    'street' => 'Travessa do Sol',
-                    'number' => '7',
-                    'neighborhood' => 'Aurora',
-                    'complement' => null,
+                    'id' => AddressFixtures::ADDRESS_ID_13,
+                    'street' => 'Rua 9',
+                    'number' => '303',
+                    'neighborhood' => 'Setor Oeste',
+                    'complement' => 'Sala 12',
                     'city' => [
-                        'name' => 'Brejo Santo',
+                        'name' => 'Goiânia',
                         'state' => [
-                            'name' => 'Ceará',
-                            'acronym' => 'CE',
+                            'name' => 'Goiás',
+                            'acronym' => 'GO',
                         ],
                     ],
-                    'zipcode' => '30330110',
+                    'zipcode' => '74120010',
                 ],
+            ],
+            'socialNetworks' => [
+                'instagram' => 'talysonsoares_',
             ],
             'createdAt' => $agent->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $agent->getUpdatedAt()->format(DateTimeInterface::ATOM),
@@ -458,29 +484,38 @@ class AgentApiControllerTest extends AbstractWebTestCase
             'shortBio' => 'Desenvolvedora frontend e entusiasta de UX',
             'longBio' => 'Desenvolvedora frontend especializada em criar interfaces intuitivas e acessíveis. Entusiasta de UX e está sempre em busca de melhorias na experiência do usuário.',
             'culture' => false,
-            'main' => false,
+            'main' => true,
             'extraFields' => [
                 'email' => 'anna@example.com',
                 'instagram' => '@anna',
+                'cargo' => 'Desenvolvedora Frontend',
+                'cpf' => '123.456.789-00',
             ],
             'user' => ['id' => UserFixtures::USER_ID_3],
-            'organizations' => [],
+            'organizations' => [
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_3],
+                ['id' => OrganizationFixtures::ORGANIZATION_ID_5],
+            ],
+            'culturalFunction' => [],
             'addresses' => [
                 [
-                    'id' => AddressFixtures::ADDRESS_ID_3,
-                    'street' => 'Rua das Flores',
-                    'number' => '123',
-                    'neighborhood' => 'Primavera',
-                    'complement' => 'Bloco A',
+                    'id' => 'b2c3d4e5-f6a7-8901-bcde-ff2345678901',
+                    'street' => 'Rua dos Navegantes',
+                    'number' => '1205',
+                    'neighborhood' => 'Boa Viagem',
+                    'complement' => 'Apto 3',
                     'city' => [
-                        'name' => 'Pedra Branca',
+                        'name' => 'Recife',
                         'state' => [
-                            'name' => 'Ceará',
-                            'acronym' => 'CE',
+                            'name' => 'Pernambuco',
+                            'acronym' => 'PE',
                         ],
                     ],
-                    'zipcode' => '01002000',
+                    'zipcode' => '51020010',
                 ],
+            ],
+            'socialNetworks' => [
+                'instagram' => 'anamouraab',
             ],
             'createdAt' => $agent->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $agent->getUpdatedAt()->format(DateTimeInterface::ATOM),

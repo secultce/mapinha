@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
+use App\Exception\AccountEvent\AccountNotActivatedException;
 use App\Exception\ResourceNotFoundException;
 use App\Exception\ValidatorException;
 use App\Log\Log;
@@ -45,6 +46,12 @@ class ApiCustomResponseSubscriber implements EventSubscriberInterface
 
         if ($exception instanceof ValidatorException) {
             $this->generateValidationError($event);
+
+            return;
+        }
+
+        if ($exception instanceof AccountNotActivatedException) {
+            $this->generateAccountNotActivatedError($event);
 
             return;
         }
@@ -104,6 +111,30 @@ class ApiCustomResponseSubscriber implements EventSubscriberInterface
             new ErrorNotFoundResponse(
                 'not_found',
                 Response::HTTP_NOT_FOUND,
+                $details
+            )
+        );
+    }
+
+    private function generateAccountNotActivatedError(ExceptionEvent $event): void
+    {
+        $details = [];
+        $exception = $event->getThrowable();
+
+        if (false === $this->isApiRequest($event->getRequest())) {
+            $response = new Response(
+                $this->twig->render('authentication/login.html.twig', ['error' => $exception]),
+                Response::HTTP_OK
+            );
+            $event->setResponse($response);
+
+            return;
+        }
+
+        $event->setResponse(
+            new ErrorGeneralResponse(
+                'account_not_activated',
+                Response::HTTP_BAD_REQUEST,
                 $details
             )
         );

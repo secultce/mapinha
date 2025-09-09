@@ -166,4 +166,55 @@ class InscriptionOpportunityRepository extends AbstractRepository implements Ins
 
         return $query->getOneOrNullResult();
     }
+
+    public function findInscriptionWithDetailsByOrganizations(Uuid $identifier): ?array
+    {
+        $sql = <<<SQL
+                select
+                    inscription.id,
+                    json_build_object(
+                        'id', organization.id,
+                        'name', organization.name,
+                        'image', organization.image
+                    ) as "organization",
+                    json_build_object(
+                        'id', opportunity.id,
+                        'name', opportunity.name,
+                        'image', opportunity.image
+                    ) as "opportunity",
+                    (
+                        select
+                            json_build_object(
+                                'id', phase.id,
+                                'name', phase.name,
+                                'description', phase.description,
+                                'startDate', phase.start_date,
+                                'endDate', phase.end_date
+                            )
+                        from phase
+                        where phase.opportunity_id = inscription.opportunity_id
+                          and phase.deleted_at is null
+                        order by phase.start_date desc
+                        limit 1
+                    ) as "lastPhase"
+                from inscription_opportunity as inscription
+                inner join opportunity on opportunity.id = inscription.opportunity_id
+                inner join organization on organization.id = inscription.organization_id
+                where inscription.id = :identifier
+                  and inscription.deleted_at is null
+            SQL;
+
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addScalarResult('id', 'id');
+        $rsm->addScalarResult('organization', 'organization', Types::JSON);
+        $rsm->addScalarResult('opportunity', 'opportunity', Types::JSON);
+        $rsm->addScalarResult('lastPhase', 'lastPhase', Types::JSON);
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameters([
+            'identifier' => $identifier,
+        ], ['agents' => ArrayParameterType::STRING]);
+
+        return $query->getOneOrNullResult();
+    }
 }

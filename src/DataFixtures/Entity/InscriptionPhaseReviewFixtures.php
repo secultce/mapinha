@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
+use App\Entity\InscriptionPhase;
 use App\Entity\InscriptionPhaseReview;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -348,8 +350,8 @@ final class InscriptionPhaseReviewFixtures extends AbstractFixture implements De
         /** @var InscriptionPhaseReview $inscriptionPhaseReview */
         $inscriptionPhaseReview = $this->serializer->denormalize($inscriptionPhaseReviewData, InscriptionPhaseReview::class, context: $context);
 
-        $inscriptionPhaseReview->setReviewer($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $inscriptionPhaseReviewData['reviewer'])));
-        $inscriptionPhaseReview->setInscriptionPhase($this->getReference(sprintf('%s-%s', InscriptionPhaseFixtures::INSCRIPTION_PHASE_ID_PREFIX, $inscriptionPhaseReviewData['inscriptionPhase'])));
+        $inscriptionPhaseReview->setReviewer($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $inscriptionPhaseReviewData['reviewer']), Agent::class));
+        $inscriptionPhaseReview->setInscriptionPhase($this->getReference(sprintf('%s-%s', InscriptionPhaseFixtures::INSCRIPTION_PHASE_ID_PREFIX, $inscriptionPhaseReviewData['inscriptionPhase']), InscriptionPhase::class));
 
         return $inscriptionPhaseReview;
     }

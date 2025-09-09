@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Helper\EntityIdNormalizerHelper;
+use App\Request\Query\Filters;
 use App\Service\Interface\EventServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +34,11 @@ class EventApiController extends AbstractApiController
         return $this->json($event, context: ['groups' => ['event.get', 'event.get.item']]);
     }
 
-    public function list(): JsonResponse
+    public function list(Filters $filters): JsonResponse
     {
-        return $this->json($this->service->list(), context: [
+        $events = $this->service->list(params: array_merge($filters->toArray(), ['draft' => false]));
+
+        return $this->json($events, context: [
             'groups' => 'event.get',
             AbstractNormalizer::CALLBACKS => [
                 'parent' => [EntityIdNormalizerHelper::class, 'normalizeEntityId'],

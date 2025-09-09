@@ -1,6 +1,8 @@
 {% extends "_layouts/blank.html.twig" %}
 
-{% block title %} {{ 'control_panel'|trans }} - {{ 'users'|trans }}{% endblock %}
+{% block title %}
+    {{ 'control_panel'|trans }} - {{ 'users'|trans }}
+{% endblock %}
 
 {% block content %}
     {% include '_components/modal-photo.html.twig' %}
@@ -11,55 +13,140 @@
         <div class="management-content w-100 p-4">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-body shadow">
-                        <h2>{{ 'users'|trans }}</h2>
+                    <div class="card card-body shadow" style="overflow: visible;">
+                        <div class="d-flex justify-content-between">
+                            <h2>{{ 'users'|trans }}</h2>
+                            <a href="{{ path('admin_user_create') }}" class="btn btn-success">
+                                {{ 'user_created'|trans }}
+                            </a>
+                        </div>
 
                         <hr>
 
-                        <table class="table table-hover table-striped">
-                            <thead class="table-dark">
-                            <tr>
-                                <th>{{ 'name'|trans }}</th>
-                                <th>{{ 'email'|trans }}</th>
-                                <th>{{ 'image'|trans }}</th>
-                                <th>{{ 'created_at'|trans }}</th>
-                                <th>{{ 'actions'|trans }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in users %}
+                        <div class="table-responsive">
+                            <table
+                                    class="js-grid table table-hover table-striped w-100"
+                                    style="min-width: 1300px; white-space: nowrap;"
+                            >
+                                <thead class="table-dark">
                                 <tr>
-                                    <td><a href="#">{{ item.name }}</a></td>
-                                    <td>{{ item.email }}</td>
-                                    <td>
-                                        <a
-                                            data-src="{{ asset(item.image ?? 'img/allan.png') }}"
-                                            data-alt="{{ item.name }} Photo"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal-photo"
-                                            onclick="showPhoto(this)"
-                                            href="#"
-                                        >
-                                            <img src="{{ asset(item.image ?? 'img/allan.png') }}"  width="50px" alt="{{ item.name }} Photo">
-                                        </a>
-                                    </td>
-                                    <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
-                                    <td>
-                                        <a href="{{ path('admin_user_timeline', {id: item.id}) }}" class="btn btn-outline-info btn-sm">{{ 'Timeline'|trans }}</a>
-                                        <a href="#" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
-                                    </td>
+                                    <th>{{ 'name'|trans }}</th>
+                                    <th>{{ 'email'|trans }}</th>
+                                    <th>{{ 'image'|trans }}</th>
+                                    <th>{{ 'status'|trans }}</th>
+                                    <th>{{ 'created_at'|trans }}</th>
+                                    <th>{{ 'roles'|trans }}</th>
+                                    <th>{{ 'actions'|trans }}</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% set role_color_map = {
+                                    'ROLE_ADMIN': 'bg-danger',
+                                    'ROLE_MANAGER': 'bg-primary',
+                                    'ROLE_SUPPORT': 'bg-success',
+                                    'ROLE_MUNICIPAL_ADMIN': 'bg-info',
+                                    'ROLE_COMPANY_ADMIN': 'bg-dark'
+                                } %}
+                                {% set status_map = {
+                                    'active': 'active',
+                                    'blocked': 'blocked',
+                                    'awaitingconfirmation': 'awaiting_confirmation'
+                                } %}
+                                {% set status_class_map = {
+                                    'active': 'bg-success',
+                                    'blocked': 'bg-danger',
+                                    'awaitingconfirmation': 'bg-secondary'
+                                } %}
+
+                                {% for item in users %}
+                                    <tr>
+                                        <td><a href="#">{{ item.name }}</a></td>
+                                        <td>{{ item.email }}</td>
+                                        <td>
+                                            <a data-src="{{ asset(item.image ?? 'img/user.png') }}"
+                                               data-alt="{{ item.name }} Photo"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#modal-photo"
+                                               onclick="showPhoto(this)"
+                                               href="#">
+                                                <img src="{{ asset(item.image ?? 'img/user.png') }}"
+                                                     class="rounded-circle"
+                                                     width="50"
+                                                     alt="{{ item.name }} Photo">
+                                            </a>
+                                        </td>
+                                        <td>
+                                                <span class="badge {{ status_class_map[item.status|lower] }}">
+                                                    {{ status_map[item.status|lower]|trans }}
+                                                </span>
+
+                                            {% if item.status|lower == 'awaitingconfirmation' and is_granted('ROLE_ADMIN') %}
+                                                <button onclick="modalConfirmUser('{{ item.id }}', '{{ item.name }}', '{{ item.email }}')"
+                                                        class="btn btn-outline-success btn-sm mt-2">
+                                                    {{ 'confirm_user'|trans }}
+                                                </button>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
+                                        <td>
+                                            {% for role in item.roles %}
+                                                {% if role != 'ROLE_USER' %}
+                                                    {% set translation_key = 'role.' ~ (role|slice(5)|lower) %}
+
+                                                    <span class="badge {{ role_color_map[role]|default('bg-secondary') }} me-1">
+                                                             {{ translation_key|trans }}
+                                                     </span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button
+                                                        class="btn btn-outline-warning btn-sm dropdown-toggle"
+                                                        type="button"
+                                                        id="dropdownMenu{{ item.id }}"
+                                                        data-bs-toggle="dropdown"
+                                                        data-bs-boundary="viewport"
+                                                        data-bs-flip="false"
+                                                        aria-expanded="false">
+                                                    {{ 'actions'|trans }}
+                                                </button>
+                                                <ul
+                                                        class="dropdown-menu dropdown-menu-end"
+                                                        aria-labelledby="dropdownMenu{{ item.id }}"
+                                                        style="--bs-dropdown-min-width: 0; width: auto;">
+                                                    <li>
+                                                        <a href="{{ path('admin_user_timeline', {id: item.id}) }}"
+                                                           class="dropdown-item">
+                                                            {{ 'Timeline'|trans }}
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('admin_user_account_privacy', {id: item.id}) }}"
+                                                           class="dropdown-item">
+                                                            {{ 'edit'|trans }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    {% include '_components/modal-confirm-user.html.twig' %}
 {% endblock %}
 
 {% block extra_javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/modal-photo.js') }}"></script>
+    <script src="{{ asset('js/modal-confirm-user.js') }}"></script>
+    <script type="module" src="{{ asset('js/grid-init.js') }}"></script>
 {% endblock %}

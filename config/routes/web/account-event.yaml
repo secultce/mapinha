@@ -1,0 +1,14 @@
+confirmation:
+  path: /confirmation/{token}
+  controller: App\Controller\Web\AccountEventWebController::confirmAccount
+  methods: ['GET']
+
+forgot:
+  path: /forgot-password
+  controller: App\Controller\Web\AccountEventWebController::forgotPassword
+  methods: ['GET', 'POST']
+
+reset:
+  path: /reset-password/{token}
+  controller: App\Controller\Web\AccountEventWebController::resetAccount
+  methods: ['GET', 'POST']

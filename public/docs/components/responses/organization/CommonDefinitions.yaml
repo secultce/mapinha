@@ -17,6 +17,13 @@ OrganizationBase:
       type: string
       maxLength: 255
       description: "Descrição da organização"
+    type:
+      type: string
+      description: "Tipo da organização"
+      enum:
+        - "Municipio"
+        - "Empresa"
+      example: "Municipio"
     agents:
       description: "Agentes relacionados a organização"
       type: array

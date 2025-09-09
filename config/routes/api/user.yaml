@@ -3,6 +3,11 @@ create:
   controller: App\Controller\Api\UserApiController::create
   methods: ["POST"]
 
+email-exists:
+  path: /exists
+  controller: App\Controller\Api\UserApiController::exists
+  methods: ['GET']
+
 update:
   path: /{id}
   controller: App\Controller\Api\UserApiController::update

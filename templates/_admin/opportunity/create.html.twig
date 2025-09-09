@@ -69,7 +69,7 @@
                             </div>
                             <div class="mb-3">
                                 {% include '_components/tags-selector.html.twig' with {
-                                    inputName: 'extraFields[areasOfActivity]',
+                                    inputName: 'activityAreas',
                                     inputLabel: 'areas_of_expertise'|trans,
                                     items: [
                                         { value: 'Artesanato', label: 'Artesanato' },
@@ -80,6 +80,7 @@
                                     ],
                                     tags: [],
                                     required: true,
+                                    questionFill: false,
                                 } %}
                             </div>
                             <div class="mb-3">

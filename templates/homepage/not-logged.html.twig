@@ -9,6 +9,16 @@
 
 {% block content %}
 
+{% if env.aurora.homepage.sections.banner.enabled == "true" %}
+    <div style="height: 500px; background: url('{{ env.aurora.homepage.sections.banner.image }}'); background-repeat: no-repeat; background-size: cover;">
+        <div class="container">
+            <div class="row align-items-center justify-content-center p-3">
+
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 {% if env.aurora.homepage.sections.header.enabled == "true" %}
     <div class="{{ env.aurora.homepage.sections.header.background ?? 'bg-primary' }}">
         <div class="container">
@@ -19,6 +29,9 @@
                         </strong></h1>
                     <p class="lead mt-3 fw-bold">{{ env.aurora.homepage.sections.header.subtitle ?? 'view.homepage.subtitle'|trans }}</p>
                     <p class="lead mt-2">{{ env.aurora.homepage.sections.header.description ?? 'view.homepage.header_text'|trans }}</p>
+                    {% if env.aurora.homepage.sections.header.action is defined %}
+                        <a class="btn btn-lg btn-primary w-100 mt-4" href="{{ path(env.aurora.homepage.sections.header.action.route) }}">{{ env.aurora.homepage.sections.header.action.title }}</a>
+                    {% endif %}
                 </div>
                 <div class="col-md-7 mt-4 text-end">
                     <img src="{{ asset(env.aurora.homepage.sections.header.image ?? 'img/pessoas-home.png') }}" width="{{ env.aurora.homepage.sections.header.image_width ?? '100%' }}" alt="{{ 'illustration'|trans }}" class="img-fluid">
@@ -29,16 +42,27 @@
 {% endif %}
 
 {% if env.aurora.homepage.sections.register.enabled == "true" %}
-    <div class=" bg-green text-white py-5">
+    <div class=" text-white py-5" style="background-color: {{ env.aurora.homepage.sections.register.color }}">
         <div class="container pb-5">
             <div class="row text-start">
-                <div class="col-md-auto">
-                    <h1 class="fw-bold mt-4">{{ 'create_account'|trans }}</h1>
-                    <p class="lead mt-3">{{ 'view.homepage.registration_info'|trans }}</p>
-                    <a href="{{ path('web_auth_register') }}" class="col-sm-5 mx-auto btn btn-light btn-lg text-green icon-link justify-content-between mt-5">
-                        <h4 class="fw-bold mt-2 text-uppercase">{{ 'register'|trans }}</h4>
-                        <span class="material-icons fs-2">arrow_forward</span>
-                    </a>
+                <div class="col-md-12">
+                    {% if not app.user %}
+                        <h1 class="fw-bold mt-4">{{ 'create_account'|trans }}</h1>
+
+                        <p class="lead mt-3">{{ 'view.homepage.registration_info'|trans }}</p>
+
+                        <div>
+                            <a href="{{ path('web_auth_register') }}"
+                               class="col-sm-3 mx-auto btn btn-light btn-lg text-secondary icon-link justify-content-between mt-5">
+                                <h4 class="fw-bold mt-2 text-uppercase">{{ 'register'|trans }}</h4>
+                                <span class="material-icons fs-2">arrow_forward</span>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div>
+                            {{ 'login_registration'|trans }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -204,7 +228,7 @@
                     agent => include('homepage/_partials/cards/item-agent.html.twig', {
                         'icon': 'person',
                         'status_text': agent.status_text ?? 'Individual',
-                        'image_url': asset('img/ada-lovelace.png'),
+                        'image_url': asset('img/user.png'),
                         'image_alt': 'Imagem não disponível',
                         'name': agent.name ?? 'Sem nome',
                         'areas_of_expertise_count': 3,
@@ -217,7 +241,7 @@
                 {% set events_content = events|map(
                     event => include('homepage/_partials/cards/item-event.html.twig', {
                         'status_icon': 'event',
-                        'image_url': asset('img/ada-lovelace.png'),
+                        'image_url': asset('img/user.png'),
                         'image_alt': 'Imagem não disponível',
                         'title': event.name ?? 'Sem título',
                         'date': '11 de julho às 18:00',
@@ -236,7 +260,7 @@
                     initiative => include('homepage/_partials/cards/item-initiative.html.twig', {
                         'status_icon': 'check_circle',
                         'status_text': initiative.status_text ?? 'Iniciativa',
-                        'image_url': asset('img/allan.png'),
+                        'image_url': asset('img/user.png'),
                         'image_alt': 'Imagem não disponível',
                         'title': initiative.name ?? 'Sem título',
                         'type': 'CICLO',
@@ -253,7 +277,7 @@
                     opportunity => include('homepage/_partials/cards/item-opportunity.html.twig', {
                         'status_icon': 'visibility',
                         'status_text': 'Oportunidades',
-                        'image_url': asset('img/ada-lovelace.png'),
+                        'image_url': asset('img/user.png'),
                         'image_alt': 'Imagem não disponível',
                         'title': opportunity.name ?? 'Sem título',
                         'registration_period': 'Inscrições de 10/08/2024 até 20/08/2024 às 23:59',
@@ -390,7 +414,7 @@
                     <span class="material-icons fw-bold fs-1 mt-2">code</span>
                     <h1 class="fw-bold mt-2">{{ 'view.homepage.free_software_info'|trans }}</h1>
                     <p class="lead mt-4">{{ 'view.homepage.api_info'|trans }}</p>
-                    <a href="https://github.com/secultce/aurora" target="_blank" class="centered-icon-text nav-link text-moss mt-4">
+                    <a href="https://github.com/ecossistema-aurora/aurora" target="_blank" class="centered-icon-text nav-link text-moss mt-4">
                         <span class="ms-3 font-size-14 me-2">{{ 'explore_repository'|trans }}</span>
                         <img src="{{ asset('img/icone-github-dark.png') }}">
                     </a>

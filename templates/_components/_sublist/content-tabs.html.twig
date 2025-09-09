@@ -1,0 +1,7 @@
+<div class="tab-content">
+    {% for tab in sublist_contents %}
+        <div class="tab-pane fade {% if loop.first %}show active{% endif %}" id="sublist-{{ tab.id }}" role="tabpanel" aria-labelledby="pills-{{ tab.id }}-sublist-tab" tabindex="0">
+            {{ tab.content|raw }}
+        </div>
+    {% endfor %}
+</div>

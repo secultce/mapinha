@@ -1,4 +1,6 @@
 <section class="support-info">
-    <p>{{ 'view.faq.looking' | trans}} <a href="#" class="support-link">{{ 'click_here' | trans }}</a> {{ 'view.faq.support' | trans }}
-        {{ 'view.faq.send' | trans }} <a href="mailto:suporteaurora@gmail.com" class="support-email">suporteaurora@gmail.com</a>.</p>
+    <p>{{ 'view.faq.looking' | trans}}
+        <a href="#" class="support-link">{{ 'click_here' | trans }}</a>
+        {{ 'view.faq.support' | trans }}
+        {{ 'view.faq.send' | trans }} <a href="mailto:{{ env.aurora.email.address }}" class="support-email">{{ env.aurora.email.address }}</a>.</p>
 </section>

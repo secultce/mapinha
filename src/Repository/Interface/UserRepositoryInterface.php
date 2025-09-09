@@ -15,4 +15,6 @@ interface UserRepositoryInterface
     public function commit(): void;
 
     public function rollback(): void;
+
+    public function findOneByRole(string $role): ?User;
 }

@@ -72,3 +72,7 @@
         </div>
     </section>
 {% endblock %}
+{% block extra_javascripts %}
+    {{ parent() }}
+    <script type="module" src="{{ asset('js/grid-init.js') }}"></script>
+{% endblock %}

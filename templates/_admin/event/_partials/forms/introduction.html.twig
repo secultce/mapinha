@@ -1,0 +1,99 @@
+<div class="entity-imgs">
+    <div class="banner">
+        <input class="banner-input" type="file" accept="image/*" />
+        <label for="banner-input" class="banner-label">
+            <span class="iconify entity-photo me-2" data-icon="tabler:camera-plus"></span>
+            {{ 'add_cover_image' | trans }}
+        </label>
+    </div>
+
+    <div class="profile-pic">
+        <label for="profile-input" class="profile-label">
+            <span class="iconify entity-photo" data-icon="tabler:camera-plus"></span>
+            <input id="profile-input" type="file" accept="image/*" />
+        </label>
+    </div>
+</div>
+
+<div class="entity-introduction-data">
+    <label for="name" class="required">
+        {{ 'name_event' | trans }}
+    </label>
+    <input type="text"
+           class="form-control"
+           id="name" name="name"
+           value="{{ event.name }}"
+           placeholder="{{ 'enter_event' | trans }}"
+           required
+    >
+
+    <div>
+        <label for="subtitle">{{ 'view.event.edit.subtitle' |trans }}</label>
+        <input type="text"
+               class="form-control"
+               id="subtitle" name="subtitle"
+               placeholder="{{ 'type_here' | trans }}"
+        >
+    </div>
+
+    <div class="my-2">
+        {% include '_components/tags-selector.html.twig' with {
+            inputName: 'culturalLanguages',
+            inputLabel: 'cultural_language'|trans,
+            items: culturalLanguageItems|map(culturalLanguage => { 'label': culturalLanguage.name, 'value': culturalLanguage.id }),
+            tags: event.culturalLanguages ? event.culturalLanguages|map(culturalLanguage => { 'label': culturalLanguage.name, 'value': culturalLanguage.id }) : [],
+            required: false,
+            questionFill: true,
+        } %}
+    </div>
+
+    <div class="my-4">
+        {% include '_components/tags-selector.html.twig' with {
+            inputName: 'tags',
+            inputLabel: 'tags'|trans,
+            items: tagItems|map(tag => { 'label': tag.name, 'value': tag.id }),
+            tags: event.tags ? event.tags|map(tag => { 'label': tag.name, 'value': tag.id }) : [],
+            required: false,
+            questionFill: true,
+        } %}
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label" for="event-type">{{ 'type'|trans }}</label>
+        <span class="text-danger">*</span>
+        <select class="form-select mt-1" id="event-type" name="type" required>
+            <option selected disabled value="">{{ 'select'|trans }}</option>
+            {% for type in typeItems %}
+                <option value="{{ type.value }}">{{ ('event_types.' ~ type.name)|trans }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <label for="short-description">{{ 'short_description' | trans }}</label>
+    <textarea class="form-control"
+              id="short-description" name="short_description"
+              placeholder="{{ 'short_description' | trans }}"
+              maxlength="400"
+    ></textarea>
+
+    <label for="long-description">{{ 'long_description' | trans }}</label>
+    <textarea class="form-control"
+              id="long-description" name="long_description"
+              placeholder="{{ 'long_description' | trans }}"
+    ></textarea>
+
+
+    <div class="d-flex flex-wrap gap-1 gap-md-3">
+        <div class="flex-grow-1">
+            <label for="site">{{ 'site' | trans }} (URL):</label>
+            <input type="text" id="site" class="form-control" placeholder="https://www.site.com">
+        </div>
+        <div class="flex-grow-1">
+            <label for="link-description">{{ 'link_description' | trans }}:</label>
+            <input type="text" id="link-description" name="link_description" class="form-control" placeholder="Digite">
+        </div>
+    </div>
+</div>
+{% block extra_javascripts %}
+    <script src="{{ asset('js/_components/tags-selector.js') }}"></script>
+{% endblock %}

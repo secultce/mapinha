@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
 use App\Entity\InscriptionOpportunity;
+use App\Entity\Opportunity;
 use App\Enum\InscriptionOpportunityStatusEnum;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -339,8 +341,8 @@ final class InscriptionOpportunityFixtures extends AbstractFixture implements De
         /** @var InscriptionOpportunity $inscriptionOpportunity */
         $inscriptionOpportunity = $this->serializer->denormalize($inscriptionOpportunityData, InscriptionOpportunity::class, context: $context);
 
-        $inscriptionOpportunity->setAgent($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $inscriptionOpportunityData['agent'])));
-        $inscriptionOpportunity->setOpportunity($this->getReference(sprintf('%s-%s', OpportunityFixtures::OPPORTUNITY_ID_PREFIX, $inscriptionOpportunityData['opportunity'])));
+        $inscriptionOpportunity->setAgent($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $inscriptionOpportunityData['agent']), Agent::class));
+        $inscriptionOpportunity->setOpportunity($this->getReference(sprintf('%s-%s', OpportunityFixtures::OPPORTUNITY_ID_PREFIX, $inscriptionOpportunityData['opportunity']), Opportunity::class));
 
         return $inscriptionOpportunity;
     }

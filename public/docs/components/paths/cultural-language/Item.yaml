@@ -1,0 +1,55 @@
+get:
+  summary: Recupera uma única linguagem cultural
+  tags:
+    - Linguagem Cultural
+  responses:
+    '200':
+      description: Linguagem cultural encontrada
+      content:
+        application/json:
+          schema:
+              $ref: '../../responses/cultural-language/CulturalLanguageGetItemResponse.yaml'
+    '404':
+      description: Linguagem cultural não encontrada
+      content:
+        application/json:
+          schema:
+              $ref: '../../responses/cultural-language/CulturalLanguageNotFound.yaml'
+
+delete:
+  parameters:
+    - $ref: '../../parameters/path/id.yaml'
+  tags:
+    - Linguagem Cultural
+  summary: Remove uma única linguagem cultural
+  responses:
+    '204':
+      description: Não possui conteúdo de resposta
+      content:
+          application/json: {}
+
+patch:
+  parameters:
+    - $ref: '../../parameters/path/id.yaml'
+  tags:
+    - Linguagem Cultural
+  summary: Atualiza uma única linguagem cultural
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../requestBodies/cultural-language/CulturalLanguagePatchItemRequest.yaml'
+  responses:
+    '200':
+      description: Linguagem cultural atualizada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/cultural-language/CulturalLanguagePatchItemResponse.yaml'
+    '404':
+      description: Linguagem cultural não encontrada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/cultural-language/CulturalLanguageNotFound.yaml'

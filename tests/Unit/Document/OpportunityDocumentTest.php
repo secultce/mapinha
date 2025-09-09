@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\OpportunityTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 
-class OpportunityDocumentTest extends AbstractWebTestCase
+class OpportunityDocumentTest extends AbstractApiTestCase
 {
     public function testsGettersAndSettersFromOpportunityShouldBeSuccessful(): void
     {

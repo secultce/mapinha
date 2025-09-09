@@ -14,7 +14,7 @@
 
                         {% include "_admin/registration/_partials/registration-phase.html.twig" with { phase: inscription.lastPhase } %}
 
-                        {% include "_admin/registration/_partials/registration-agent.html.twig" with { agent: inscription.agent } %}
+                        {% include "_admin/registration/_partials/registration-agent.html.twig" with { agent: inscription.agent ?? inscription.organization } %}
                     </div>
                 </div>
             </div>

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
 use App\Entity\Organization;
+use App\Enum\OrganizationTypeEnum;
+use App\Enum\SocialNetworkEnum;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,20 +29,30 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
     public const string ORGANIZATION_ID_8 = '7241a715-453a-12db-c707-725dc3ab988c';
     public const string ORGANIZATION_ID_9 = '7cb6a1b8-f33e-1218-cb41-820b0f74e4d1';
     public const string ORGANIZATION_ID_10 = '8c4ca8bd-6e33-1b62-c58b-a66969c49f66';
+    public const string ORGANIZATION_ID_11 = '8c4ca8bd-6e33-1b62-c58b-a66969c49f77';
 
     public const array ORGANIZATIONS = [
         [
             'id' => self::ORGANIZATION_ID_1,
-            'name' => 'PHP sem Rapadura',
+            'name' => 'PHP com rapadura',
             'image' => null,
+            'type' => OrganizationTypeEnum::COMUNIDADE->value,
             'description' => 'Comunidade de devs PHP do Estado do Ceará',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
-            'agents' => [],
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@phpcomrapadura',
+                'cnpj' => '00.000.000/0001-01',
+                'email' => 'phpcomrapadura@example.com',
+                'phone' => '(85) 99999-0001',
+                'site' => 'https://www.phpcomrapadura.com.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'phpcomrapadura',
             ],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => null,
@@ -47,9 +60,10 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_2,
-            'name' => 'Grupo de Capoeira Axé Zumbi',
+            'name' => 'SECULT CE',
             'image' => null,
-            'description' => 'Grupo de Capoeira Axé Zumbi',
+            'type' => OrganizationTypeEnum::EMPRESA->value,
+            'description' => 'Secretaria de Cultura do Estado do Ceará',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
             'agents' => [
@@ -59,7 +73,13 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@capoeiraaxezumbi',
+                'cnpj' => '07.954.555/0001-11',
+                'email' => 'agendagab@secult.ce.gov.br',
+                'phone' => '(85) 99999-0002',
+                'site' => 'https://www.secult.ce.gov.br/',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'secultceara',
             ],
             'createdAt' => '2024-07-11T10:49:00+00:00',
             'updatedAt' => null,
@@ -67,15 +87,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_3,
-            'name' => 'Devs do Sertão',
+            'name' => 'Igreja de Russas',
             'image' => null,
-            'description' => 'Grupo de devs que se reúnem velas veredas do sertão',
+            'type' => OrganizationTypeEnum::ENTIDADE->value,
+            'description' => 'Paróquia Nossa Senhora da Consolação – Russas/CE',
             'createdBy' => AgentFixtures::AGENT_ID_3,
             'owner' => AgentFixtures::AGENT_ID_3,
+            'agents' => [
+                AgentFixtures::AGENT_ID_3,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@devsdosertao',
+                'cnpj' => '04.117.525/0001-62',
+                'email' => 'secretaria@igrejaderussas.org.br',
+                'phone' => '(85) 99999-0003',
+                'site' => 'https://www.igrejaderussas.org.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'igrejaderussas',
             ],
             'createdAt' => '2024-07-16T17:22:00+00:00',
             'updatedAt' => null,
@@ -83,15 +113,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_4,
-            'name' => 'SertãoDev',
+            'name' => 'Grupo de Capoeira Axé Zumbi',
             'image' => null,
-            'description' => 'Cooperativa de devs do Estado do Ceará',
+            'type' => OrganizationTypeEnum::COMUNIDADE->value,
+            'description' => 'Grupo de Capoeira Axé Zumbi',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@sertaodev',
+                'cnpj' => '00.000.000/0001-04',
+                'email' => 'axezumbi@example.com',
+                'phone' => '(85) 99999-0004',
+                'site' => 'https://www.axezumbi.com.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'capoeiraaxezumbi',
             ],
             'createdAt' => '2024-07-17T15:12:00+00:00',
             'updatedAt' => null,
@@ -99,15 +139,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_5,
-            'name' => 'De RapEnte',
+            'name' => 'PHPeste',
             'image' => null,
-            'description' => 'Grupo de Rap e Repente da caatinga nordestina',
+            'type' => OrganizationTypeEnum::COMUNIDADE->value,
+            'description' => 'Organização da Conferencia de PHP do Nordeste',
             'createdBy' => AgentFixtures::AGENT_ID_3,
             'owner' => AgentFixtures::AGENT_ID_3,
+            'agents' => [
+                AgentFixtures::AGENT_ID_3,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@grupoderapente',
+                'cnpj' => '00.000.000/0001-05',
+                'email' => 'phpeste@example.com',
+                'phone' => '(85) 99999-0005',
+                'site' => 'https://www.phpeste.com.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'grupoderapente',
             ],
             'createdAt' => '2024-07-22T16:20:00+00:00',
             'updatedAt' => null,
@@ -115,19 +165,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_6,
-            'name' => 'Comunidade Vida com Cristo',
+            'name' => 'ONG Ambiental Ceará',
             'image' => null,
-            'description' => 'Grupo de oração destinado a cristãos de boa fé',
+            'type' => OrganizationTypeEnum::ENTIDADE->value,
+            'description' => 'Projetos de preservação ambiental no Ceará',
             'createdBy' => AgentFixtures::AGENT_ID_2,
             'owner' => AgentFixtures::AGENT_ID_2,
+            'agents' => [
+                AgentFixtures::AGENT_ID_2,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@comunidadevidacomcristo',
-                'locations' => [
-                    'R. Principal, 100, Centro, Fortaleza-CE, 60100-000',
-                    'R. Secondária, 200, Aldeota, Fortaleza-CE, 60200-000',
-                ],
+                'cnpj' => '50.249.137/0001-52',
+                'email' => 'contato@ongambientalce.org.br',
+                'phone' => '(85) 99999-0006',
+                'site' => 'https://www.ongambientalce.org.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'ongambientalce',
             ],
             'createdAt' => '2024-08-10T11:26:00+00:00',
             'updatedAt' => null,
@@ -135,15 +191,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_7,
-            'name' => 'Candomblé Raizes do Brasil ',
+            'name' => 'Folia Cearense ',
             'image' => null,
-            'description' => 'Grupo de praticantes do candomblé - Natal-RN',
+            'type' => OrganizationTypeEnum::EMPRESA->value,
+            'description' => 'Produção e organização de expressões folclóricas e festas populares do Ceará',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@candombleraizesdobrasil',
+                'cnpj' => '14.732.569/0001-03',
+                'email' => 'contato@foliacearense.com.brm',
+                'phone' => '(85) 99999-0007',
+                'site' => 'https://www.foliacearense.com.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'foliacearense',
             ],
             'createdAt' => '2024-08-11T15:54:00+00:00',
             'updatedAt' => null,
@@ -151,15 +217,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_8,
-            'name' => 'Baião de Dev',
+            'name' => 'Federação Cearense de Skate',
             'image' => null,
-            'description' => 'Grupo de desenvolvedores do nordeste',
+            'type' => OrganizationTypeEnum::ENTIDADE->value,
+            'description' => 'Entidade oficial, responsável pela regulamentação e gestão do Skate no Ceará',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => null,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@baiaodedev',
+                'cnpj' => '00.000.000/0001-08',
+                'email' => 'fcskate@example.com',
+                'phone' => '(85) 99999-0008',
+                'site' => 'https://filiados.cbsk.com.br/site/login',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'fesk_skateboard',
             ],
             'createdAt' => '2024-08-12T14:24:00+00:00',
             'updatedAt' => null,
@@ -167,15 +243,25 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_9,
-            'name' => 'PHPeste',
+            'name' => '30praum',
             'image' => null,
-            'description' => 'Organização da Conferencia de PHP do Nordeste',
+            'type' => OrganizationTypeEnum::EMPRESA->value,
+            'description' => 'Gravadora independente de trap, localizada em Fortaleza-CE',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => self::ORGANIZATION_ID_8,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@phpeste',
+                'cnpj' => '32.186.235/0001-06',
+                'email' => '333@fashionlog.com.br',
+                'phone' => '(85) 99999-0009',
+                'site' => 'https://30praum.com.br/',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => '30praum',
             ],
             'createdAt' => '2024-08-13T20:25:00+00:00',
             'updatedAt' => null,
@@ -183,17 +269,54 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
         ],
         [
             'id' => self::ORGANIZATION_ID_10,
-            'name' => 'Banda de Forró tô nem veno',
+            'name' => 'Associação Cultural Cearense do Rock',
             'image' => null,
-            'description' => 'Banda de forró formada com pessoas de baixa ou nenhuma visão',
+            'type' => OrganizationTypeEnum::ENTIDADE->value,
+            'description' => 'Entidade sem fins lucrativos que busca promover o rock como elemento cultural e de transformação',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => self::ORGANIZATION_ID_9,
             'space' => null,
             'extraFields' => [
-                'instagram' => '@forrotonemveno',
+                'cnpj' => '00.000.000/0001-10',
+                'email' => 'acr@example.com',
+                'phone' => '(85) 99999-0010',
+                'site' => 'https://www.acr.com.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'acr_ce',
             ],
             'createdAt' => '2024-08-14T10:00:00+00:00',
+            'updatedAt' => null,
+            'deletedAt' => null,
+        ],
+        [
+            'id' => self::ORGANIZATION_ID_11,
+            'name' => 'Empresa Teste AI',
+            'image' => null,
+            'type' => OrganizationTypeEnum::EMPRESA->value,
+            'description' => 'Organização do tipo EMPRESA para testes do painel',
+            'createdBy' => AgentFixtures::AGENT_ID_1,
+            'owner' => AgentFixtures::AGENT_ID_1,
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
+            'parent' => null,
+            'space' => null,
+            'extraFields' => [
+                'cnpj' => '00.000.000/0001-00',
+                'email' => 'teste@gmail.com,',
+                'phone' => '(85) 99999-9999',
+                'tipo' => 'OSC',
+                'site' => 'https://www.empresa.com.br',
+            ],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'empresa_ai_test',
+            ],
+            'createdAt' => '2024-08-20T09:00:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
         ],
@@ -202,12 +325,15 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
     public const array ORGANIZATIONS_UPDATED = [
         [
             'id' => self::ORGANIZATION_ID_1,
-            'name' => 'PHP com Rapadura',
+            'name' => 'PHP com RAPadura',
             'image' => null,
-            'description' => 'Comunidade de devs PHP do Estado do Ceará',
+            'type' => OrganizationTypeEnum::COMUNIDADE->value,
+            'description' => 'Comunidade dos melhores devs PHP do Estado do Ceará',
             'createdBy' => AgentFixtures::AGENT_ID_1,
             'owner' => AgentFixtures::AGENT_ID_1,
-            'agents' => [],
+            'agents' => [
+                AgentFixtures::AGENT_ID_1,
+            ],
             'parent' => null,
             'space' => null,
             'createdAt' => '2024-07-10T11:30:00+00:00',
@@ -250,12 +376,12 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
 
         foreach ($agents ?? [] as $agentId) {
             $organization->addAgent(
-                $this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $agentId))
+                $this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $agentId), Agent::class)
             );
         }
 
-        $organization->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $organizationData['createdBy'])));
-        $organization->setOwner($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $organizationData['owner'])));
+        $organization->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $organizationData['createdBy']), Agent::class));
+        $organization->setOwner($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $organizationData['owner']), Agent::class));
 
         return $organization;
     }

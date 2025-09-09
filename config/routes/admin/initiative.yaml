@@ -16,7 +16,7 @@ list:
 remove:
   path: /{id}/remove
   controller: App\Controller\Web\Admin\InitiativeAdminController::remove
-  methods: ['GET']
+  methods: ['GET', 'DELETE']
 
 timeline:
   path: /{id}/timeline

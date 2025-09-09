@@ -1,0 +1,5 @@
+send:
+  path: /enviar
+  controller: App\Controller\Web\Admin\InviteAdminController::send
+  methods: ['POST']
+

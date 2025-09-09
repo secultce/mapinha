@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\SocialNetworkEnum;
 use App\Helper\DateFormatHelper;
 use App\Repository\SpaceRepository;
 use DateTime;
@@ -57,13 +58,17 @@ class Space extends AbstractEntity
     #[Groups('space.get.item')]
     private ?string $phoneNumber = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     #[Groups('space.get.item')]
-    private int $maxCapacity;
+    private ?int $maxCapacity = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     #[Groups(['space.get', 'space.get.item'])]
-    private bool $isAccessible;
+    private bool $isAccessible = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Groups(['space.get', 'space.get.item'])]
+    private bool $isDraft = true;
 
     #[ORM\OneToOne(targetEntity: SpaceAddress::class, mappedBy: 'owner', cascade: ['persist', 'remove'])]
     #[Groups(['space.get', 'space.get.item'])]
@@ -89,6 +94,9 @@ class Space extends AbstractEntity
     #[Groups(['space.get', 'space.get.item'])]
     private Collection $activityAreas;
 
+    #[ORM\OneToOne(targetEntity: EntityAssociation::class, mappedBy: 'space', cascade: ['persist'])]
+    private ?EntityAssociation $entityAssociation = null;
+
     #[ORM\ManyToMany(targetEntity: Tag::class)]
     #[ORM\JoinTable(name: 'space_tags')]
     #[Groups(['space.get', 'space.get.item'])]
@@ -98,6 +106,12 @@ class Space extends AbstractEntity
     #[ORM\JoinTable(name: 'spaces_accessibilities')]
     #[Groups(['space.get', 'space.get.item'])]
     private Collection $accessibilities;
+
+    /**
+     * @var array<string, string>
+     */
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $socialNetworks = [];
 
     #[ORM\Column]
     #[Groups(['space.get', 'space.get.item'])]
@@ -229,7 +243,7 @@ class Space extends AbstractEntity
         $this->maxCapacity = $maxCapacity;
     }
 
-    public function getIsAccessible(): bool
+    public function isAccessible(): bool
     {
         return $this->isAccessible;
     }
@@ -237,6 +251,16 @@ class Space extends AbstractEntity
     public function setIsAccessible(bool $isAccessible): void
     {
         $this->isAccessible = $isAccessible;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->isDraft;
+    }
+
+    public function setIsDraft(bool $isDraft): void
+    {
+        $this->isDraft = $isDraft;
     }
 
     public function setCreatedBy(Agent $createdBy): void
@@ -340,6 +364,39 @@ class Space extends AbstractEntity
         $this->accessibilities->removeElement($accessibility);
     }
 
+    public function getEntityAssociation(): ?EntityAssociation
+    {
+        return $this->entityAssociation;
+    }
+
+    public function setEntityAssociation(EntityAssociation $entityAssociation): void
+    {
+        $this->entityAssociation = $entityAssociation;
+    }
+
+    public function getSocialNetworks(): array
+    {
+        return $this->socialNetworks;
+    }
+
+    public function setSocialNetworks(array $socialNetworks): void
+    {
+        foreach ($socialNetworks as $key => $username) {
+            $socialNetworksEnum = SocialNetworkEnum::from($key);
+            $this->addSocialNetwork($socialNetworksEnum->value, $username);
+        }
+    }
+
+    public function addSocialNetwork(string $socialNetworksEnum, $username): void
+    {
+        $this->socialNetworks[$socialNetworksEnum] = $username;
+    }
+
+    public function removeSocialNetwork(SocialNetworkEnum $socialNetwork): void
+    {
+        unset($this->socialNetworks[$socialNetwork->name]);
+    }
+
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
@@ -394,17 +451,20 @@ class Space extends AbstractEntity
             'phoneNumber' => $this->phoneNumber,
             'maxCapacity' => $this->maxCapacity,
             'isAccessible' => $this->isAccessible,
+            'isDraft' => $this->isDraft,
             'createdBy' => $this->createdBy->getId()->toRfc4122(),
             'parent' => $this->parent?->getId()->toRfc4122(),
             'address' => $this->address?->toArray(),
             'extraFields' => $this->extraFields,
             'activityAreas' => $this->activityAreas->map(fn (ActivityArea $activityArea) => $activityArea->toArray())->toArray(),
+            'entityAssociation' => $this->entityAssociation?->toArray(),
             'tags' => $this->tags->map(fn (Tag $tag) => $tag->toArray())->toArray(),
             'accessibilities' => $this->accessibilities->map(fn (ArchitecturalAccessibility $accessibility) => $accessibility->toArray())->toArray(),
+            'spaceType' => $this->spaceType?->toArray(),
+            'socialNetworks' => $this->socialNetworks,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $this->updatedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $this->deletedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
-            'spaceType' => $this->spaceType?->toArray(),
         ];
     }
 }

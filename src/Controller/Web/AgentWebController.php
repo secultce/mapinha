@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Web;
 
 use App\Service\Interface\AgentServiceInterface;
+use App\Service\Interface\EventServiceInterface;
 use App\ValueObject\DashboardCardItemValueObject as CardItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class AgentWebController extends AbstractWebController
     public function __construct(
         public readonly AgentServiceInterface $service,
         private readonly TranslatorInterface $translator,
+        private readonly EventServiceInterface $eventService,
     ) {
     }
 
@@ -51,9 +53,11 @@ class AgentWebController extends AbstractWebController
     public function getOne(Uuid $id): Response
     {
         $agent = $this->service->get($id);
+        $events = $this->eventService->findByAgent($agent->getId()->toRfc4122());
 
         return $this->render('agent/one.html.twig', [
             'agent' => $agent,
+            'events' => $events,
         ]);
     }
 }

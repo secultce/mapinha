@@ -10,7 +10,7 @@ use App\DataFixtures\Entity\ArchitecturalAccessibilityFixtures;
 use App\DataFixtures\Entity\SpaceFixtures;
 use App\DataFixtures\Entity\TagFixtures;
 use App\Entity\Space;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\ImageTestFixtures;
 use App\Tests\Fixtures\SpaceTestFixtures;
 use DateTimeInterface;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class SpaceApiControllerTest extends AbstractWebTestCase
+class SpaceApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/spaces';
 
@@ -38,6 +38,7 @@ class SpaceApiControllerTest extends AbstractWebTestCase
     public function testCanCreateWithPartialRequestBody(): void
     {
         $requestBody = SpaceTestFixtures::partial();
+        $requestBody['isDraft'] = true;
 
         $client = static::apiClient();
 
@@ -61,6 +62,7 @@ class SpaceApiControllerTest extends AbstractWebTestCase
             'phoneNumber' => null,
             'maxCapacity' => 100,
             'isAccessible' => true,
+            'isDraft' => true,
             'address' => null,
             'createdBy' => ['id' => $requestBody['createdBy']],
             'parent' => [
@@ -74,8 +76,17 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                 'email' => $space->getParent()->getEmail(),
                 'phoneNumber' => $space->getParent()->getPhoneNumber(),
                 'maxCapacity' => $space->getParent()->getMaxCapacity(),
-                'isAccessible' => $space->getParent()->getIsAccessible(),
-                'address' => $space->getParent()->getAddress(),
+                'isAccessible' => $space->getParent()->isAccessible(),
+                'isDraft' => $space->getParent()->isDraft(),
+                'address' => [
+                    'id' => 'b1b3eddd-3eac-4d96-97b5-1662767ae5f6',
+                    'street' => 'Rua Doutor João Moreira',
+                    'number' => '540',
+                    'neighborhood' => 'Centro',
+                    'complement' => 'Complexo Estação das Artes',
+                    'city' => [],
+                    'zipcode' => '60030000',
+                ],
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
                 'extraFields' => [
                     'type' => 'Instituição Cultural',
@@ -169,7 +180,8 @@ class SpaceApiControllerTest extends AbstractWebTestCase
             'email' => $space->getEmail(),
             'phoneNumber' => $space->getPhoneNumber(),
             'maxCapacity' => $space->getMaxCapacity(),
-            'isAccessible' => $space->getIsAccessible(),
+            'isAccessible' => $space->isAccessible(),
+            'isDraft' => false,
             'address' => $space->getAddress(),
             'createdBy' => ['id' => $requestBody['createdBy']],
             'parent' => [
@@ -183,8 +195,17 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                 'email' => $space->getParent()->getEmail(),
                 'phoneNumber' => $space->getParent()->getPhoneNumber(),
                 'maxCapacity' => $space->getParent()->getMaxCapacity(),
-                'isAccessible' => $space->getParent()->getIsAccessible(),
-                'address' => $space->getParent()->getAddress(),
+                'isAccessible' => $space->getParent()->isAccessible(),
+                'isDraft' => false,
+                'address' => [
+                    'id' => 'b1b3eddd-3eac-4d96-97b5-1662767ae5f6',
+                    'street' => 'Rua Doutor João Moreira',
+                    'number' => '540',
+                    'neighborhood' => 'Centro',
+                    'complement' => 'Complexo Estação das Artes',
+                    'city' => [],
+                    'zipcode' => '60030000',
+                ],
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
                 'extraFields' => [
                     'type' => 'Instituição Cultural',
@@ -292,8 +313,6 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                     ['field' => 'id', 'message' => 'This value should not be blank.'],
                     ['field' => 'name', 'message' => 'This value should not be blank.'],
                     ['field' => 'createdBy', 'message' => 'This value should not be blank.'],
-                    ['field' => 'maxCapacity', 'message' => 'This value should not be blank.'],
-                    ['field' => 'isAccessible', 'message' => 'This value should not be blank.'],
                 ],
             ],
             'id is not a valid UUID' => [
@@ -404,12 +423,6 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                     ['field' => 'maxCapacity', 'message' => 'This value should be of type integer.'],
                 ],
             ],
-            'maxCapacity should be at least 1' => [
-                'requestBody' => array_merge($requestBody, ['maxCapacity' => 0]),
-                'expectedErrors' => [
-                    ['field' => 'maxCapacity', 'message' => 'This value should be 1 or more.'],
-                ],
-            ],
             'isAccessible should be boolean' => [
                 'requestBody' => array_merge($requestBody, ['isAccessible' => 'invalid']),
                 'expectedErrors' => [
@@ -428,7 +441,7 @@ class SpaceApiControllerTest extends AbstractWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertCount(count(SpaceFixtures::SPACES), json_decode($response));
+        $this->assertCount(9, json_decode($response));
 
         /** @var Space $space */
         $space = $client->getContainer()->get(EntityManagerInterface::class)
@@ -439,8 +452,17 @@ class SpaceApiControllerTest extends AbstractWebTestCase
             'name' => 'SECULT',
             'shortDescription' => $space->getShortDescription(),
             'image' => $space->getImage(),
-            'isAccessible' => $space->getIsAccessible(),
-            'address' => null,
+            'isAccessible' => $space->isAccessible(),
+            'isDraft' => false,
+            'address' => [
+                'id' => 'b1b3eddd-3eac-4d96-97b5-1662767ae5f6',
+                'street' => 'Rua Doutor João Moreira',
+                'number' => '540',
+                'neighborhood' => 'Centro',
+                'complement' => 'Complexo Estação das Artes',
+                'city' => [],
+                'zipcode' => '60030000',
+            ],
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
@@ -523,8 +545,17 @@ class SpaceApiControllerTest extends AbstractWebTestCase
             'email' => $space->getEmail(),
             'phoneNumber' => $space->getPhoneNumber(),
             'maxCapacity' => $space->getMaxCapacity(),
-            'isAccessible' => $space->getIsAccessible(),
-            'address' => null,
+            'isAccessible' => $space->isAccessible(),
+            'isDraft' => false,
+            'address' => [
+                'id' => '425bdb7a-1ea2-41b5-bcb8-3511ef8f750a',
+                'street' => 'Quadra SQS 102',
+                'number' => '5',
+                'neighborhood' => 'Asa Sul',
+                'complement' => 'Bloco A',
+                'city' => [],
+                'zipcode' => '70330000',
+            ],
             'createdBy' => [
                 'id' => '84a5b3d1-a7a4-49a6-aff8-902a325f97f9',
             ],
@@ -540,14 +571,15 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                 'phoneNumber' => $space->getParent()->getPhoneNumber(),
                 'maxCapacity' => 100,
                 'isAccessible' => true,
+                'isDraft' => false,
                 'address' => [
                     'id' => 'b8636a9e-3906-4751-b4a9-7a24995813aa',
-                    'street' => 'Avenida das Oliveiras',
-                    'number' => 'S/N',
-                    'neighborhood' => 'Jardins',
-                    'complement' => null,
+                    'street' => 'Rua Vinte e Oito de Setembro',
+                    'number' => '250',
+                    'neighborhood' => 'Centro',
+                    'complement' => 'Apto 202',
                     'city' => [],
-                    'zipcode' => '60300100',
+                    'zipcode' => '65010000',
                 ],
                 'createdBy' => [
                     'id' => '0cc8c682-b0cd-4cb3-bd9d-41a9161b3566',
@@ -724,15 +756,16 @@ class SpaceApiControllerTest extends AbstractWebTestCase
             'email' => $space->getEmail(),
             'phoneNumber' => $space->getPhoneNumber(),
             'maxCapacity' => $space->getMaxCapacity(),
-            'isAccessible' => $space->getIsAccessible(),
+            'isAccessible' => $space->isAccessible(),
+            'isDraft' => false,
             'address' => [
                 'id' => 'fd64752a-c7ed-44ff-b092-44076dea4b4c',
-                'street' => 'Avenida Central',
-                'number' => '456',
-                'neighborhood' => 'Centro',
-                'complement' => 'Sala 302',
+                'street' => 'Rua dos Andradas',
+                'number' => '896',
+                'neighborhood' => 'Centro Histórico',
+                'complement' => 'de 0835 a 0999 - lado ímpar',
                 'city' => [],
-                'zipcode' => '30003210',
+                'zipcode' => '90020005',
             ],
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'parent' => [
@@ -747,7 +780,16 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                 'phoneNumber' => $space->getParent()->getPhoneNumber(),
                 'maxCapacity' => 100,
                 'isAccessible' => true,
-                'address' => null,
+                'isDraft' => false,
+                'address' => [
+                    'id' => 'b1b3eddd-3eac-4d96-97b5-1662767ae5f6',
+                    'street' => 'Rua Doutor João Moreira',
+                    'number' => '540',
+                    'neighborhood' => 'Centro',
+                    'complement' => 'Complexo Estação das Artes',
+                    'city' => [],
+                    'zipcode' => '60030000',
+                ],
                 'createdBy' => [
                     'id' => AgentFixtures::AGENT_ID_1,
                 ],
@@ -886,7 +928,16 @@ class SpaceApiControllerTest extends AbstractWebTestCase
             'phoneNumber' => $space->getPhoneNumber(),
             'maxCapacity' => 100,
             'isAccessible' => true,
-            'address' => null,
+            'isDraft' => false,
+            'address' => [
+                'id' => 'b1b3eddd-3eac-4d96-97b5-1662767ae5f6',
+                'street' => 'Rua Doutor João Moreira',
+                'number' => '540',
+                'neighborhood' => 'Centro',
+                'complement' => 'Complexo Estação das Artes',
+                'city' => [],
+                'zipcode' => '60030000',
+            ],
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
@@ -1080,6 +1131,12 @@ class SpaceApiControllerTest extends AbstractWebTestCase
                 'requestBody' => array_merge($requestBody, ['isAccessible' => 'invalid']),
                 'expectedErrors' => [
                     ['field' => 'isAccessible', 'message' => 'This value should be of type boolean.'],
+                ],
+            ],
+            'isDraft should be boolean' => [
+                'requestBody' => array_merge($requestBody, ['isDraft' => 'invalid']),
+                'expectedErrors' => [
+                    ['field' => 'isDraft', 'message' => 'This value should be of type boolean.'],
                 ],
             ],
         ];

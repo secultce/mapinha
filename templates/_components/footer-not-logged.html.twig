@@ -1,152 +1,238 @@
 <footer class="footer">
     <div class="container mt-4">
         <p class="font-title font-size-16">
-            {{ 'footer.help'|trans }} <a href="#" class="text-primary">{{ 'click_here'|trans }}</a> {{ 'footer.contact_support'|trans }}
-            {{ 'footer.send_email'|trans }} <a href="mailto:suporteaurora@gmail.com" class="text-primary">suporteaurora@gmail.com</a>
+            {{ 'footer.help'|trans }} <a href="#" class="text-primary d-none">{{ 'click_here'|trans }}</a> {{ 'footer.contact_support'|trans }}
+            {{ 'footer.send_email'|trans }} <a href="mailto:{{ env.aurora.email.address }}" class="text-primary">{{ env.aurora.email.address }}</a>
         </p>
     </div>
 
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center ">
             <div>
-                <a href="#"><img src="{{ asset(env.aurora.logo.vertical.path) }}" width="100px" alt="Logo" class="img-fluid"></a>
+                <a href="#"><img src="{{ asset(env.aurora.logo.vertical.path) }}" width="200px" alt="Logo" class="img-fluid"></a>
             </div>
+            {% if env.aurora.homepage.sections.footer.social_network == 'true' %}
             <div class="social-icons">
                 <a href="#"><img src="{{ asset('img/icone-facebook.png') }}" alt="Facebook" class="me-4"></a>
                 <a href="#"><img src="{{ asset('img/icone-x.png') }}" alt="X" class="me-4"></a>
                 <a href="#"><img src="{{ asset('img/icone-youtube.png') }}" alt="YouTube"></a>
             </div>
+            {% endif %}
         </div>
     </div>
 
     <div class="container">
-        <div class="row justify-content-end">
-            <div class="col-md-3 mb-3">
-                <h5>{{ 'discover'|trans }}</h5>
-                <br>
-                <ul class="list-unstyled">
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="{{ path('web_opportunity_list') }}" class="centered-icon-text nav-link text-dark">
-                                <i class="material-icons icon-wb-incandescent">wb_incandescent</i>
-                                <span class="ms-3 font-title font-size-16">{{ 'footer.notices_opportunities'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="{{ path('web_event_list') }}" class="centered-icon-text nav-link text-dark">
-                                <i class="material-icons">event</i>
-                                <span class="ms-3 font-title font-size-16">{{ 'my_events'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="{{ path('web_agent_list') }}" class="centered-icon-text nav-link text-dark">
-                                <i class="material-icons">group</i>
-                                <span class="ms-3 font-title font-size-16">{{ 'my_agents'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="{{ path('web_space_list') }}" class="centered-icon-text nav-link text-dark">
-                                <i class="material-icons">location_city</i>
-                                <span class="ms-3 font-title font-size-16">{{ 'my_spaces'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="{{ path('web_initiative_list') }}" class="centered-icon-text nav-link text-dark">
-                                <i class="material-icons">article</i>
-                                <span class="ms-3 font-title font-size-16">{{ 'my_initiatives'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div class="row justify-content-start">
+            {% if env.aurora.homepage.sections.footer.discover == "true" %}
+                <div class="col-md-3 mb-3">
+                    <h5>{{ 'discover'|trans }}</h5>
+                    <br>
+                    <ul class="list-unstyled">
+                        {% if (env.aurora.modules.opportunities is not empty ) %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('web_opportunity_list') }}" class="centered-icon-text nav-link text-dark">
+                                        <i class="material-icons icon-wb-incandescent">wb_incandescent</i>
+                                        <span class="ms-3 font-title font-size-16">{{ env.aurora.modules.opportunities }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
 
-            <div class="col-md-3 mb-3">
-                <h5>{{ 'footer.control_panel'|trans }}</h5>
-                <br>
-                <ul class="list-unstyled">
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'my_opportunities'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'my_events'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'my_agents'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'my_spaces'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        {% if (env.aurora.modules.agents is not empty) %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('web_agent_list') }}" class="centered-icon-text nav-link text-dark">
+                                        <i class="material-icons">group</i>
+                                        <span class="ms-3 font-title font-size-16">{{ env.aurora.modules.agents }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
 
-            <div class="col-md-4 mb-3">
-                <h5>{{ 'footer.help'|trans }}</h5>
-                <br>
-                <ul class="list-unstyled">
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="{{ path('web_faq_faq') }}" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'view.faq.description'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'footer.privacy_policy'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark">
-                                <span class="font-title font-size-16">{{ 'footer.image_authorization'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex align-items-center mb-3">
-                            <a href="#" class="nav-link text-dark font-title font-size-16">
-                                <span class="font-title font-size-16">{{ 'lgpd'|trans }}</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        {% if (env.aurora.modules.organizations is not empty) %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('web_organization_list') }}" class="centered-icon-text nav-link text-dark">
+                                        <i class="material-icons">corporate_fare</i>
+                                        <span class="ms-3 font-title font-size-16">{{ env.aurora.modules.organizations }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if (env.aurora.modules.events is not empty) %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('web_event_list') }}" class="centered-icon-text nav-link text-dark">
+                                        <i class="material-icons">event</i>
+                                        <span class="ms-3 font-title font-size-16">{{ env.aurora.modules.events }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if (env.aurora.modules.spaces is not empty) %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('web_space_list') }}" class="centered-icon-text nav-link text-dark">
+                                        <i class="material-icons">location_city</i>
+                                        <span class="ms-3 font-title font-size-16">{{ env.aurora.modules.spaces }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if (env.aurora.modules.initiatives is not empty) %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('web_initiative_list') }}" class="centered-icon-text nav-link text-dark">
+                                        <i class="material-icons">article</i>
+                                        <span class="ms-3 font-title font-size-16">{{ env.aurora.modules.initiatives }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if env.aurora.homepage.sections.footer.control_panel == "true" %}
+                <div class="col-md-3 mb-3">
+                    <h5>{{ 'footer.control_panel'|trans }}</h5>
+                    <br>
+                    <ul class="list-unstyled">
+                        {% if env.aurora.modules.opportunities is not empty %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('admin_opportunity_list') }}" class="nav-link text-dark">
+                                        <span class="font-title font-size-16">
+                                            {{ env.aurora.modules.opportunities != 'Oportunidades' ? env.aurora.modules.opportunities : 'my_opportunities'|trans }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if env.aurora.modules.agents is not empty %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('admin_agent_list') }}" class="nav-link text-dark">
+                                        <span class="font-title font-size-16">
+                                            {{ env.aurora.modules.agents != 'Agentes' ? env.aurora.modules.agents : 'my_agents'|trans }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if env.aurora.modules.organizations is not empty %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('admin_organization_list') }}" class="nav-link text-dark">
+                                        <span class="font-title font-size-16">
+                                            {{ env.aurora.modules.organizations != 'Organizações' ? env.aurora.modules.organizations : 'my_organizations'|trans }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if env.aurora.modules.events is not empty %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('admin_event_list') }}" class="nav-link text-dark">
+                                        <span class="font-title font-size-16">
+                                            {{ env.aurora.modules.events != 'Eventos' ? env.aurora.modules.events : 'my_events'|trans }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+
+                        {% if env.aurora.modules.spaces is not empty %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('admin_space_list') }}" class="nav-link text-dark">
+                                        <span class="font-title font-size-16">
+                                            {{ env.aurora.modules.spaces != 'Espaços' ? env.aurora.modules.spaces : 'my_spaces'|trans }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if env.aurora.modules.initiatives is not empty %}
+                            <li>
+                                <div class="d-flex align-items-center mb-3">
+                                    <a href="{{ path('admin_space_list') }}" class="nav-link text-dark">
+                                        <span class="font-title font-size-16">
+                                            {{ env.aurora.modules.initiatives != 'Iniciativas' ? env.aurora.modules.initiatives : 'my_initiatives'|trans }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if env.aurora.homepage.sections.footer.help == "true" %}
+                <div class="col-md-4 mb-3">
+                    <h5>{{ 'footer.help'|trans }}</h5>
+                    <br>
+                    <ul class="list-unstyled">
+                        <li>
+                            <div class="d-flex align-items-center mb-3">
+                                <a href="{{ path('web_faq_faq') }}" class="nav-link text-dark">
+                                    <span class="font-title font-size-16">{{ 'view.faq.description'|trans }}</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex align-items-center mb-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalPrivacy" class="nav-link text-dark">
+                                    <span class="font-title font-size-16">{{ 'footer.privacy_policy'|trans }}</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex align-items-center mb-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalImageAuthorization" class="nav-link text-dark">
+                                    <span class="font-title font-size-16">{{ 'footer.image_authorization'|trans }}</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex align-items-center mb-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalLGPD" class="nav-link text-dark font-title font-size-16">
+                                    <span class="font-title font-size-16">{{ 'LGPD'|trans }}</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
     </div>
 
     <div class="text-center pt-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <span class="font-size-14">{{ 'footer.platform_created'|trans }} <strong>aurora</strong> {{ 'footer.and_developed'|trans }} <strong>{{ env.aurora.author }}</strong></span>
-            <a href="" class=" centered-icon-text nav-link">
-                <span class="ms-3 font-size-14 me-2">{{ 'footer.visit_repository'|trans }}</span>
-                <img alt="Github" src="{{ asset('img/icone-github-ligth.png') }}">
-            </a>
+            <span class="font-size-14">{{ 'footer.platform_created'|trans }} <strong>{{ env.aurora.author }}</strong> {{ 'footer.and_developed'|trans }} <a class="fw-bold text-white" href="https://github.com/ecossistema-aurora/aurora">Aurora</a></span>
+
+            {% if (env.aurora.visit_repository == 'true') %}
+                <a href="" class=" centered-icon-text nav-link">
+                    <span class="ms-3 font-size-14 me-2">{{ 'footer.visit_repository'|trans }}</span>
+                    <img alt="Github" src="{{ asset('img/icone-github-ligth.png') }}">
+                </a>
+            {% endif %}
         </div>
     </div>
 </footer>
+
+{% include "_components/modal-privacy.html.twig" %}
+
+{% include "_components/modal-image-authorization.html.twig" %}
+
+{% include "_components/modal-lgpd.html.twig" %}

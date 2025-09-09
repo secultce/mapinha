@@ -18,7 +18,7 @@
     --snow-mist: #F7F7F7;
     --medium-gray: #666;
     --deep-teal: #117C83;
-    --bg-icon-circle: #1976d2;
+    --bg-icon-circle: #117C83;
     --bg-initiative: #8E46B4;
     --faq-color: #FFD699;
     --input-border: #ACACAC;
@@ -34,9 +34,17 @@
     --img-entity-border-color: #666666;
     --entity-name-color: #1E1E1E;
     --navlink-organization: #6A5ACD;
-    --text-entity-details: #0074C1;
+    --text-entity-details: #117C83;
     --solar-amber: #F59F00;
     --graphite: #8A8A8A;
     --cloud-gray: #CCCCCC;
     --border-gray: #757575;
+    --bs-primary: #117C83 !important;
+    --bs-primary-hover: #016A6E !important;
+    --bs-primary-rgb: 17, 124, 131;
+    --bs-primary-hover-rgb: 1, 106, 110;
+    --bs-link-color-rgb: var(--bs-primary-rgb);
+    --bs-link-hover-color-rgb: var(--bs-primary-hover-rgb);
+    --bs-link-color: var(--bs-primary);
+    --bs-link-hover-color: var(--bs-primary-hover);
 }

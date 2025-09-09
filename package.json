@@ -4,6 +4,7 @@
   },
   "devDependencies": {
     "cypress": "^13.13.2",
+    "cypress-downloadfile": "^1.2.4",
     "cypress-file-upload": "^5.0.8",
     "dotenv": "^16.4.5",
     "node": "^22.6.0",

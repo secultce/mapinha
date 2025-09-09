@@ -1,0 +1,88 @@
+<form method="get" class="row mb-3">
+    <div class="col-md-3">
+        <label for="region-filter" class="form-label">{{ 'region'|trans }}</label>
+        <select id="region-filter" name="region" class="form-select" data-placeholder="{{ 'all_regions'| trans }}">
+            <option value="">{{ 'all_regions'|trans }}</option>
+
+            {% for region in regions %}
+                <option value="{{ region.value }}" {% if region.value == app.request.get('region') %}selected{% endif %}>
+                    {{ region.value }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label for="state-filter" class="form-label">{{ 'state'|trans }}</label>
+        <select id="state-filter" name="state" class="form-select" data-placeholder="{{ 'all_states'| trans }}">
+            <option value="">{{ 'all_states'|trans }}</option>
+            {% for state in states %}
+                <option value="{{ state.acronym }}" {% if state.acronym == app.request.get('state') %}selected{% endif %}>
+                    {{ state.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    {% if app.request.attributes.get('_route') == 'admin_regmel_municipality_document_list' %}
+        <div class="col-md-3">
+            <label for="status-filter" class="form-label">{{ 'status'|trans }}</label>
+            <select id="status-filter" name="status" class="form-select" data-placeholder="{{ 'all_cities'|trans }}">
+                <option value="">
+                    {{ 'all_status'|trans }}
+                </option>
+
+                {% for status in status %}
+                    <option value="{{ status }}" {% if status == app.request.get('status') %}selected{% endif %}>
+                        {{ ('document.status.' ~ status)|trans }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+
+
+    {% if app.request.attributes.get('_route') == 'admin_regmel_proposal_list' %}
+        <div class="col-md-3">
+            <label for="city-filter" class="form-label">{{ 'city'|trans }}</label>
+            <select id="city-filter" name="city" class="form-select" data-placeholder="{{ 'all_cities'|trans }}">
+                <option value="">
+                    {{ 'all_cities'|trans }}
+                </option>
+                {% for city in cities %}
+                    <option
+                            value="{{ city.id }}"
+                            {% if city.id == app.request.get('city')|striptags %}selected{% endif %}
+                    >
+                        {{ city.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label for="status-filter" class="form-label">{{ 'status'|trans }}</label>
+            <select id="status-filter" name="status" class="form-select" data-placeholder="{{ 'statuses'|trans }}">
+                <option value="">
+                    {{ 'statuses'|trans }}
+                </option>
+                {% for status in statuses %}
+                    <option
+                            value="{{ status.value }}"
+                            {% if status.value == app.request.get('status') %}selected{% endif %}
+                    >
+                        {{ status.value }}
+                    </option>
+                {% endfor %}
+}
+            </select>
+        </div>
+    {% endif %}
+
+</form>
+
+<div class="col-md-3 d-flex align-items-end">
+    <a href="{{ path(app.request.attributes.get('_route')) }}" class="btn btn-outline-dark btn-sm">
+        {{ 'reset'|trans }}
+    </a>
+</div>

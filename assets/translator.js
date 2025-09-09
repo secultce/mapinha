@@ -1,7 +1,7 @@
 import { trans, getLocale, setLocale, setLocaleFallbacks, throwWhenNotFound } from '@symfony/ux-translator';
 
 setLocaleFallbacks({
-    'pt-br': 'pt-br',
+    'pt_br': 'pt-br',
     'en': 'en',
     'es': 'es',
 });

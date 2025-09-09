@@ -21,6 +21,8 @@ readonly class FileService implements FileServiceInterface
     private const ASSETS_PATTERN = '/^\/var\/www(?:\/var)?\/assets(.*)/';
     private string $storageDir;
     private string $storageUrl;
+    private string $storageImagesDir;
+    private string $storageImagesUrl;
 
     public function __construct(
         private FilesystemOperator $filesystem,
@@ -28,6 +30,8 @@ readonly class FileService implements FileServiceInterface
     ) {
         $this->storageDir = $this->parameterBag->get('app.dir.storage');
         $this->storageUrl = $this->parameterBag->get('app.url.storage');
+        $this->storageImagesDir = $this->parameterBag->get('app.dir.storage.images');
+        $this->storageImagesUrl = $this->parameterBag->get('app.url.storage.images');
     }
 
     public function uploadFile(string $filename, string $content): void
@@ -51,7 +55,7 @@ readonly class FileService implements FileServiceInterface
 
     public function deleteFileByUrl(string $url): void
     {
-        $filename = str_replace($this->storageUrl, '', $url);
+        $filename = str_replace($this->storageImagesUrl, '', $url);
 
         $path = dirname(__DIR__, 2)."/assets{$filename}";
 
@@ -70,6 +74,62 @@ readonly class FileService implements FileServiceInterface
     /**
      * @throws FilesystemException
      */
+    public function uploadPDF(UploadedFile $uploadedFile, ?string $fileName = null, string $extraPath = ''): File
+    {
+        $fileName ??= uniqid('', true);
+        $fileName = $fileName.'.'.$uploadedFile->guessExtension();
+        $filePath = rtrim($this->storageDir, '/').$extraPath;
+
+        $newFile = $uploadedFile->move($filePath, $fileName);
+
+        $stream = fopen($newFile->getRealPath(), 'r');
+
+        $this->validateMimeType($newFile->getRealPath(), $stream, ['application/pdf']);
+        $this->validateExtension($uploadedFile, ['pdf']);
+
+        fclose($stream);
+
+        return $newFile;
+    }
+
+    /**
+     * @throws FilesystemException
+     */
+    public function uploadMixedFile(UploadedFile $uploadedFile, string $extraPath = '', ?string $optionalName = null): File
+    {
+        if (null === $optionalName) {
+            $fileName = uniqid('', true).'.'.$uploadedFile->getClientOriginalExtension();
+        } else {
+            $fileName = $optionalName.'.'.$uploadedFile->getClientOriginalExtension();
+        }
+
+        $filePath = rtrim($this->storageDir, '/').$extraPath;
+
+        $newFile = $uploadedFile->move($filePath, $fileName);
+
+        $stream = fopen($newFile->getRealPath(), 'r');
+
+        $this->validateMimeType($newFile->getRealPath(), $stream, [
+            'application/pdf',
+            'application/jpg',
+            'image/jpeg',
+            'image/png',
+            'image/jpg',
+            'application/xml',
+            'application/vnd.google-earth.kml+xml',
+            'application/vnd.google-earth.kmz',
+            'application/octet-stream',
+        ]);
+        $this->validateExtension($uploadedFile, ['pdf', 'jpeg', 'jpg', 'png', 'kml', 'kmz', 'shp']);
+
+        fclose($stream);
+
+        return $newFile;
+    }
+
+    /**
+     * @throws FilesystemException
+     */
     public function uploadImage(string $path, UploadedFile $uploadedFile): File
     {
         $fileName = uniqid('', true).'.'.$uploadedFile->guessExtension();
@@ -83,18 +143,18 @@ readonly class FileService implements FileServiceInterface
         $this->filesystem->writeStream($filePath, $stream);
         fclose($stream);
 
-        return new File($this->storageDir.$filePath);
+        return new File($this->storageImagesDir.$filePath);
     }
 
     /**
      * @throws InvalidFileMimeTypeException
      */
-    private function validateMimeType(string $filePath, mixed $stream): void
+    private function validateMimeType(string $filePath, mixed $stream, array $allowedTypes = self::IMAGE_ALLOWED_TYPES): void
     {
         $mimeTypeDetector = new FinfoMimeTypeDetector();
         $mimeType = $mimeTypeDetector->detectMimeType($filePath, $stream);
 
-        if (false === in_array($mimeType, self::IMAGE_ALLOWED_TYPES)) {
+        if (false === in_array($mimeType, $allowedTypes)) {
             throw new InvalidFileMimeTypeException();
         }
     }
@@ -102,17 +162,22 @@ readonly class FileService implements FileServiceInterface
     /**
      * @throws InvalidFileExtensionException
      */
-    private function validateExtension(UploadedFile $uploadedFile): void
+    private function validateExtension(UploadedFile $uploadedFile, array $allowedExtensions = self::IMAGE_ALLOWED_EXTENSIONS): void
     {
-        $extension = $uploadedFile->getClientOriginalExtension();
+        $extension = strtolower($uploadedFile->getClientOriginalExtension());
 
-        if (false === in_array($extension, self::IMAGE_ALLOWED_EXTENSIONS)) {
+        if (false === in_array($extension, $allowedExtensions)) {
             throw new InvalidFileExtensionException();
         }
     }
 
     public function urlOfImage(string $path): string
     {
-        return $this->storageUrl.'/'.$path;
+        return $this->storageImagesUrl.'/'.$path;
+    }
+
+    public function urlOfPDF(string $filename): string
+    {
+        return $this->storageUrl.'/'.$filename;
     }
 }

@@ -11,44 +11,87 @@
         <div class="management-content w-100 p-4">
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-body shadow">
+                    <div class="card card-body shadow" style="overflow: visible; min-height: 500px;">
                         <div class="clearfix">
                             <span class="float-start">
                                 <h2>{{ 'my_opportunities'|trans }}</h2>
                             </span>
                             <span class="float-end">
-                                <a href="{{ path('admin_opportunity_create') }}" class="btn btn-outline-success btn-sm">{{ 'view.opportunity.create'|trans }}</a>
+                                <a href="{{ path('admin_opportunity_create') }}" class="btn btn-outline-success btn-sm">
+                                    {{ 'view.opportunity.create'|trans }}
+                                </a>
                             </span>
                         </div>
 
                         <hr>
 
-                        <table class="table table-hover table-striped">
-                            <thead class="table-dark">
+                        <div class="table-responsive">
+                            <table
+                                    class="js-grid table table-hover table-striped w-100"
+                                    style="min-width: 1200px; white-space: nowrap;"
+                            >
+                                <thead class="table-dark">
                                 <tr>
                                     <th>{{ 'name'|trans }}</th>
                                     <th>{{ 'created_at'|trans }}</th>
-                                    <th></th>
-                                    <th></th>
                                     <th>{{ 'actions'|trans }}</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in opportunities %}
-                                <tr>
-                                    <td><a href="{{ path('admin_opportunity_get', {id: item.id}) }}">{{ item.name }}</a></td>
-                                    <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <a href="{{ path('admin_opportunity_timeline', {id: item.id}) }}" class="btn btn-outline-info btn-sm">{{ 'Timeline'|trans }}</a>
-                                        <a href="{{ path('admin_opportunity_edit', {id: item.id}) }}" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
-                                        <button data-cy="remove-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm" onclick="confirmRemove(this)" data-href="{{ path('admin_opportunity_remove', {id: item.id}) }}" class="btn btn-outline-danger btn-sm">{{ 'delete'|trans }}</button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for item in opportunities %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('admin_opportunity_get', {id: item.id}) }}">
+                                                {{ item.name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button
+                                                        class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                                        type="button"
+                                                        id="dropdownMenu{{ item.id }}"
+                                                        data-bs-toggle="dropdown"
+                                                        data-bs-boundary="viewport"
+                                                        data-bs-flip="false"
+                                                        aria-expanded="false">
+                                                    {{ 'actions'|trans }}
+                                                </button>
+                                                <ul
+                                                        class="dropdown-menu dropdown-menu-end horizontal-menu"
+                                                        aria-labelledby="dropdownMenu{{ item.id }}"
+                                                        style="--bs-dropdown-min-width: 0; width: auto;">
+                                                    <li>
+                                                        <a href="{{ path('admin_opportunity_timeline', {id: item.id}) }}"
+                                                           class="dropdown-item">
+                                                            {{ 'Timeline'|trans }}
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('admin_opportunity_edit', {id: item.id}) }}"
+                                                           class="dropdown-item">
+                                                            {{ 'edit'|trans }}
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button"
+                                                                class="dropdown-item text-danger"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalRemoveConfirm"
+                                                                onclick="confirmRemove(this)"
+                                                                data-href="{{ path('admin_opportunity_remove', {id: item.id}) }}">
+                                                            {{ 'delete'|trans }}
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,4 +102,5 @@
 {% block extra_javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/modal-confirm-remove.js') }}"></script>
+    <script type="module" src="{{ asset('js/grid-init.js') }}"></script>
 {% endblock %}

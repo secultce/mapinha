@@ -1,0 +1,24 @@
+<section class="entity-address-data">
+        <label for="agent-select">{{ 'select_agent' | trans }} <span class="text-danger">*</span></label>
+        <select class="form-select" id="agent-select" name="agent" required>
+                {% for agent in agents %}
+                        {% set selected = loop.index == 1?'selected':'' %}
+                        <option {{ selected}} value="{{ agent.id }}">{{ agent.name }}</option>
+                {% endfor %}
+        </select>
+
+        <label for="name">{{ 'name' | trans }} <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="{{ 'name' | trans }}" required>
+
+        <label for="short-description">{{ 'short_description' | trans }} <span class="text-danger">*</span></label>
+        <textarea class="form-control" id="short-description" name="short_description" placeholder="{{ 'short_description' | trans }}" required maxlength="400"></textarea>
+
+        <label for="long-description">{{ 'long_description' | trans }} <span class="text-danger">*</span></label>
+        <textarea class="form-control" id="long-description" name="long_description" placeholder="{{ 'long_description' | trans }}" required></textarea>
+
+        <label for="cargo">{{ 'position' | trans }} <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="cargo" name="cargo" placeholder="{{ 'cargo' | trans }}" required>
+
+        <label for="cpf">{{ 'cpf' | trans }} <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="cpf" name="cpf" placeholder="{{ 'cpf' | trans }}" required>
+</section>

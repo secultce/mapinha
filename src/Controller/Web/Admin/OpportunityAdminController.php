@@ -6,6 +6,7 @@ namespace App\Controller\Web\Admin;
 
 use App\Document\OpportunityTimeline;
 use App\DocumentService\OpportunityTimelineDocumentService;
+use App\Enum\UserRolesEnum;
 use App\Exception\InscriptionOpportunity\AlreadyInscriptionOpportunityException;
 use App\Exception\UnauthorizedException;
 use App\Exception\ValidatorException;
@@ -17,9 +18,11 @@ use App\Service\Interface\OpportunityServiceInterface;
 use App\Service\Interface\SpaceServiceInterface;
 use Exception;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -62,6 +65,10 @@ class OpportunityAdminController extends AbstractAdminController
         return $data;
     }
 
+    #[IsGranted(new Expression('
+        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
+        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function create(Request $request): Response
     {
         if ('POST' !== $request->getMethod()) {
@@ -109,6 +116,10 @@ class OpportunityAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_opportunity_list');
     }
 
+    #[IsGranted(new Expression('
+        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
+        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         $opportunities = $this->service->findBy();
@@ -118,13 +129,15 @@ class OpportunityAdminController extends AbstractAdminController
         ]);
     }
 
+    #[IsGranted(new Expression('
+        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
+        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function edit(?Uuid $id, Request $request): Response
     {
         if ('POST' !== $request->getMethod()) {
-            $opportunity = $this->service->get($id);
-
             return $this->render('opportunity/edit.html.twig', [
-                'opportunity' => $opportunity,
+                'opportunity' => $this->service->get($id),
                 'form_id' => self::EDIT_FORM_ID,
             ]);
         }
@@ -157,6 +170,10 @@ class OpportunityAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_opportunity_list');
     }
 
+    #[IsGranted(new Expression('
+        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
+        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function remove(?Uuid $id): Response
     {
         $this->service->remove($id);
@@ -165,11 +182,13 @@ class OpportunityAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_opportunity_list');
     }
 
+    #[IsGranted(new Expression('
+        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
+        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function timeline(Uuid $id): Response
     {
         $events = $this->documentService->getEventsByEntityId($id);
-
-        $events = $this->opportunityTimeline->getEvents($events);
 
         return $this->render('opportunity/timeline.html.twig', [
             'opportunity' => $this->service->get($id),
@@ -177,10 +196,15 @@ class OpportunityAdminController extends AbstractAdminController
         ]);
     }
 
+    #[IsGranted(new Expression('
+        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
+        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function get(Uuid $id): Response
     {
-        $inscriptions = $this->inscriptionOpportunityService->list($id);
         $opportunity = $this->service->get($id);
+
+        $inscriptions = $this->inscriptionOpportunityService->list($id);
         $phases = $opportunity->getPhases();
 
         return $this->render('opportunity/details.html.twig', [

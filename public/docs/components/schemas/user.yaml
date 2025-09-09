@@ -34,6 +34,13 @@ properties:
     type: string
     maxLength: 100
     description: "URL da imagem do perfil do usuário"
+  status:
+    type: string
+    enum:
+      - AwaitingConfirmation
+      - Active
+      - Blocked
+    description: "Status do usuário"
   createdAt:
     $ref: '../common-types/date.yaml'
     description: "Data e hora da criação do usuário"

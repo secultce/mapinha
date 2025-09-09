@@ -82,17 +82,21 @@ properties:
                 format: uuid
                 description: "Identificador do criador do evento pai"
                 example: "1de186d2-ffbe-42a8-bbfe-340b4da81954"
-          createdAt:
-            $ref: '../common-types/date.yaml'
-            description: "Data e hora da criação do evento"
-          updatedAt:
-            $ref: '../common-types/date.yaml'
-            nullable: true
-            description: "Data e hora da última atualização do evento"
-          deletedAt:
-            $ref: '../common-types/date.yaml'
-            nullable: true
-            description: "Data e hora da exclusão do evento"
+      draft:
+        type: boolean
+        description: Se o evento está em rascunho
+        example: false
+      createdAt:
+        $ref: '../common-types/date.yaml'
+        description: "Data e hora da criação do evento"
+      updatedAt:
+        $ref: '../common-types/date.yaml'
+        nullable: true
+        description: "Data e hora da última atualização do evento"
+      deletedAt:
+        $ref: '../common-types/date.yaml'
+        nullable: true
+        description: "Data e hora da exclusão do evento"
   extraFields:
     type: object
     nullable: true
@@ -106,6 +110,10 @@ properties:
         format: uuid
         description: "Identificador do criador do evento"
         example: "1de186d2-ffbe-42a8-bbfe-340b4da81954"
+  draft:
+    type: boolean
+    description: Se o evento está em rascunho
+    example: false
   createdAt:
     $ref: '../common-types/date.yaml'
     description: "Data e hora da criação do evento"

@@ -58,7 +58,7 @@
             </div>
 
             <p class="initiative-description">
-                {% if initiative.extraFields.shortDescription %}
+                {% if initiative.extraFields.shortDescription is defined %}
                     {{ initiative.extraFields.shortDescription }}
                 {% else %}
                     {{ 'not_informed' | trans }}

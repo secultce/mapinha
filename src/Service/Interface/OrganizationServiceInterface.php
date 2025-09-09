@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\Interface;
 
+use App\Entity\Agent;
 use App\Entity\Organization;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Uid\Uuid;
 
 interface OrganizationServiceInterface
 {
-    public function count(): int;
+    public function count(?Agent $createdBy = null): int;
 
     public function create(array $organization): Organization;
 
@@ -24,7 +25,13 @@ interface OrganizationServiceInterface
 
     public function remove(Uuid $id): void;
 
+    public function removeAgent(Uuid $agentId, Uuid $organizationId): void;
+
     public function update(Uuid $identifier, array $organization): Organization;
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Organization;
+
+    public function getCsvHeaders(?string $type): array;
+
+    public function getCsvRow(object $entity, ?string $type): array;
 }

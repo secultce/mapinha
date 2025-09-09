@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Helper\EntityIdNormalizerHelper;
+use App\Helper\SocialNetworksNormalizerHelper;
 use App\Service\Interface\AgentServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,12 @@ class AgentApiController extends AbstractApiController
     {
         $agent = $this->service->get($id);
 
-        return $this->json($agent, context: ['groups' => ['agent.get', 'agent.get.item']]);
+        return $this->json($agent, context: [
+            'groups' => ['agent.get', 'agent.get.item'],
+            AbstractNormalizer::CALLBACKS => [
+                'socialNetworks' => [SocialNetworksNormalizerHelper::class, 'normalizeSocialNetworks'],
+            ],
+        ]);
     }
 
     public function list(): JsonResponse

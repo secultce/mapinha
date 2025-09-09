@@ -13,3 +13,18 @@ account_privacy:
   controller: App\Controller\Web\Admin\UserAdminController::accountPrivacy
   methods: ['GET']
 
+edit_profile:
+  path: /{id}/edit-user-profile
+  controller: App\Controller\Web\Admin\UserAdminController::editUserProfile
+  methods: ['GET', 'POST']
+
+create:
+  path: /adicionar
+  controller: App\Controller\Web\Admin\UserAdminController::create
+  methods: ['GET', 'POST']
+
+confirm:
+  path: /{id}/confirmar
+  controller: App\Controller\Web\Admin\UserAdminController::confirmAccount
+  methods: ['GET']
+  

@@ -1,0 +1,41 @@
+.edit-entity label {
+    font-weight: bold;
+}
+
+.edit-entity input[type="text"],
+.edit-entity input[type="date"],
+.edit-entity textarea,
+.edit-entity select {
+    border: 1px solid var(--border-gray);
+    margin-top: 0.625rem;
+    padding: 0.7rem;
+}
+
+.edit-entity textarea {
+    height: 12rem;
+}
+
+.edit-entity textarea[maxlength="400"] {
+    height: 6rem;
+}
+
+.edit-entity .form-check-label {
+    font-weight: normal;
+}
+
+.edit-entity .add-data-button {
+    display: flex;
+    font-weight: bold;
+    text-decoration: none;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.edit-entity .add-data-button > .icon {
+    font-size: 1.25rem;
+}
+
+.edit-entity .entity-edit-icon {
+    font-size: 1.4rem;
+    vertical-align: sub;
+}

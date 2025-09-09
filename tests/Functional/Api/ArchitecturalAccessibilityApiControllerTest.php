@@ -6,7 +6,7 @@ namespace App\Tests\Functional\Api;
 
 use App\DataFixtures\Entity\ArchitecturalAccessibilityFixtures;
 use App\Entity\ArchitecturalAccessibility;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\ArchitecturalAccessibilityTestFixtures;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class ArchitecturalAccessibilityApiControllerTest extends AbstractWebTestCase
+class ArchitecturalAccessibilityApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/architectural-accessibilities';
 

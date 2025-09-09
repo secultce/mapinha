@@ -95,6 +95,18 @@ Compila os arquivos do frontend.
 </details>
 
 <details>
+<summary>OPEN_CYPRESS</summary>
+
+### `tests_front`
+Executa as fixtures de dados, concede permissão ao container e abre uma instância gráfica.
+> Certifique-se de que o DISPLAY está corretamente configurado no seu ambiente. Você pode verificar isso rodando echo $DISPLAY no terminal. O valor típico é :0 ou :1.
+- **Uso:** `make open_cypress`
+    - **Descrição:** Carrega os dados de fixtures no banco de dados, concede a permissão ao acesso do servidor X11, permitindo que qualquer aplicação o acesse e em seguida abre uma instância gráfica.
+      Após terminar de usar o Cypress, você pode revogar as permissões de acesso ao servidor X11 com o seguinte comando: `xhost -local:`.
+> Se você estiver usando um sistema Linux com Wayland (em vez de X11), você pode precisar de configurações adicionais ou mudar para o X11.
+</details>
+
+<details>
 <summary>TESTS_FRONT</summary>
 
 ### `tests_front`

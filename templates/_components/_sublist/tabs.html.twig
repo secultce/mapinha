@@ -1,0 +1,14 @@
+<ul class="nav nav-pills justify-content-md-start pill-tabs" id="pills-tab-sublist" role="tablist">
+    {% for tab in sublist_tabs %}
+        <li class="nav-item mb-md-1 me-md-3" role="presentation">
+            <a class="nav-link centered-icon-text {% if loop.first %}active{% endif %}" id="pills-{{ tab.id }}-sublist-tab" data-bs-toggle="pill" href="#sublist-{{ tab.id }}" role="tab" aria-controls="sublist-{{ tab.id }}" aria-selected="{{ loop.first ? 'true' : 'false' }}">
+                {% if tab.icon is defined and tab.icon is not empty %}
+                    <i class="material-icons">{{ tab.icon }}</i>
+                    <span>{{ tab.title }}</span>
+                {% else %}
+                    {{ tab.title }}
+                {% endif %}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

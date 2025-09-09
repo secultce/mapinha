@@ -1,0 +1,18 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %} {{ 'account_confirmation'|trans}} {% endblock %}
+
+{% block content %}
+    <div class="success-card">
+        <div class="success-card container mt-5">
+            <div class="card text-center shadow-lg w-25 mx-auto">
+                <div class="card-body">
+                    <span class="iconify text-success" data-icon="mdi:check-circle-outline" data-width="80" data-height="80"></span>
+                    <h3 class="card-title mt-3">{{ 'account_confirmed' | trans }}</h3>
+                    <a href="/login" class="btn btn-primary btn-lg mt-3">{{ 'login-account' | trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

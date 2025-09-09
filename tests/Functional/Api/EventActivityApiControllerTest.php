@@ -7,7 +7,7 @@ namespace App\Tests\Functional\Api;
 use App\DataFixtures\Entity\EventActivityFixtures;
 use App\DataFixtures\Entity\EventFixtures;
 use App\Entity\EventActivity;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\EventActivityTestFixtures;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class EventActivityApiControllerTest extends AbstractWebTestCase
+class EventActivityApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/events/{event}/activities';
 

@@ -13,9 +13,11 @@ interface AgentServiceInterface
 {
     public function create(array $agent): Agent;
 
-    public function createFromUser(array $user);
+    public function createFromUser(array $user, ?array $extraFields = null): Agent;
 
     public function get(Uuid $id): Agent;
+
+    public function getMainAgentByEmail(string $email): ?Agent;
 
     public function findOneBy(array $params): ?Agent;
 

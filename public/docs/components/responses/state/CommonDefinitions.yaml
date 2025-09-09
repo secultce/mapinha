@@ -1,0 +1,35 @@
+StateBase:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: "Identificador do estado"
+    name:
+      type: string
+      maxLength: 100
+      description: "Nome do estado"
+    acronym:
+      type: string
+      maxLength: 2
+      description: "Sigla do estado"
+    capital:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: "Identificador da capital"
+        name:
+          type: string
+          maxLength: 100
+          description: "Nome da capital"
+    region:
+      type: string
+      enum:
+        - Norte
+        - Nordeste
+        - Centro-Oeste
+        - Sudeste
+        - Sul
+      description: "Região do estado"

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\SocialNetworkEnum;
 use App\Helper\DateFormatHelper;
 use App\Repository\InitiativeRepository;
 use DateTime;
@@ -42,6 +43,16 @@ class Initiative extends AbstractEntity
     #[Groups('initiative.get')]
     private ?Space $space = null;
 
+    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_from_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[Groups('initiative.get')]
+    private ?Organization $organizationFrom = null;
+
+    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_to_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[Groups('initiative.get')]
+    private ?Organization $organizationTo = null;
+
     #[ORM\ManyToOne(targetEntity: Agent::class)]
     #[ORM\JoinColumn(name: 'created_by_id', referencedColumnName: 'id', nullable: false, onDelete: 'SET NULL')]
     #[Groups('initiative.get')]
@@ -50,6 +61,12 @@ class Initiative extends AbstractEntity
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['initiative.get.item'])]
     private ?array $extraFields = null;
+
+    /**
+     * @var array<string, string>
+     */
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $socialNetworks = [];
 
     #[ORM\Column]
     #[Groups('initiative.get')]
@@ -118,6 +135,26 @@ class Initiative extends AbstractEntity
         $this->space = $space;
     }
 
+    public function getOrganizationFrom(): ?Organization
+    {
+        return $this->organizationFrom;
+    }
+
+    public function setOrganizationFrom(?Organization $organization): void
+    {
+        $this->organizationFrom = $organization;
+    }
+
+    public function getOrganizationTo(): ?Organization
+    {
+        return $this->organizationTo;
+    }
+
+    public function setOrganizationTo(?Organization $organization): void
+    {
+        $this->organizationTo = $organization;
+    }
+
     public function getCreatedBy(): Agent
     {
         return $this->createdBy;
@@ -136,6 +173,29 @@ class Initiative extends AbstractEntity
     public function setExtraFields(?array $extraFields): void
     {
         $this->extraFields = $extraFields;
+    }
+
+    public function getSocialNetworks(): array
+    {
+        return $this->socialNetworks;
+    }
+
+    public function setSocialNetworks(array $socialNetworks): void
+    {
+        foreach ($socialNetworks as $key => $username) {
+            $socialNetworksEnum = SocialNetworkEnum::from($key);
+            $this->addSocialNetwork($socialNetworksEnum->value, $username);
+        }
+    }
+
+    public function addSocialNetwork(string $socialNetworksEnum, $username): void
+    {
+        $this->socialNetworks[$socialNetworksEnum] = $username;
+    }
+
+    public function removeSocialNetwork(SocialNetworkEnum $socialNetwork): void
+    {
+        unset($this->socialNetworks[$socialNetwork->name]);
     }
 
     public function getCreatedAt(): ?DateTimeImmutable
@@ -177,6 +237,7 @@ class Initiative extends AbstractEntity
             'space' => $this->space?->getId()->toRfc4122(),
             'createdBy' => $this->createdBy->getId()->toRfc4122(),
             'extraFields' => $this->extraFields,
+            'socialNetworks' => $this->socialNetworks,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $this->updatedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $this->deletedAt?->format(DateFormatHelper::DEFAULT_FORMAT),

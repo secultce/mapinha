@@ -1,0 +1,49 @@
+<form id="user-edit-form" method="POST" enctype="multipart/form-data" class="entity-edit-form" token="{{ token }}">
+    <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
+    <div class="accordion accordion-flush accordion-cards mt-4" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne"
+                        aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                    {{ 'user_information' | trans }}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <hr>
+                    {% include "_admin/user/_partials/forms/user-data.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item mt-4 mb-4">
+            <h2 class="accordion-header">
+                <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                    {{ 'agent_information' | trans }}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
+                    <div id="agent-data-container">
+                        {% include "_admin/user/_partials/forms/agent-data.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% block extra_javascripts %}
+    <script src="{{ asset('js/user/edit-profile/load-agent-data.js') }}"></script>
+{% endblock %}

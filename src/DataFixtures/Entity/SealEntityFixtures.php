@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
 use App\Entity\SealEntity;
 use App\Enum\AuthorizedByEnum;
 use App\Enum\EntityEnum;
@@ -158,7 +159,7 @@ final class SealEntityFixtures extends AbstractFixture implements DependentFixtu
         /** @var SealEntity $sealEntity */
         $sealEntity = $this->serializer->denormalize($sealEntityData, SealEntity::class, context: $context);
 
-        $sealEntity->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $sealEntityData['createdBy'])));
+        $sealEntity->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $sealEntityData['createdBy']), Agent::class));
         $sealEntity->setEntityId($sealEntityData['entityId']);
 
         return $sealEntity;

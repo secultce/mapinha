@@ -6,7 +6,7 @@ namespace App\Tests\Functional\Api;
 
 use App\DataFixtures\Entity\TagFixtures;
 use App\Entity\Tag;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\TagTestFixtures;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class TagApiControllerTest extends AbstractWebTestCase
+class TagApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/tags';
 

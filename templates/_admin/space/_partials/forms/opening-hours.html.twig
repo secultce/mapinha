@@ -1,25 +1,31 @@
-<div class="container-fluid opening-hours p-0">
-    <div class="row g-2 g-md-3 align-items-end">
-        <div class="col-md-6">
-            <label for="week_days" class="form-label">{{ 'week_days' | trans }}</label>
-            <select class="form-select" id="week_days">
-                <option selected>{{ 'select' | trans }}</option>
+<div class="container-fluid opening-hours p-0" id="opening-hours-container">
+    <div class="row g-2 g-md-3 align-items-end opening-hours-row">
+        <div class="col-md-4">
+            <label class="form-label">{{ 'week_days' | trans }}</label>
+            <select class="form-select week_days">
+                <option value="" disabled selected>{{ 'select' | trans }}</option>
             </select>
         </div>
 
         <div class="col-md-3">
-            <label for="opens_at" class="form-label">{{ 'opens_at' | trans }}</label>
-            <input type="time" class="form-control" id="opens_at" placeholder="00:00">
+            <label class="form-label">{{ 'opens_at' | trans }}</label>
+            <input type="time" class="form-control opens_at" placeholder="00:00">
         </div>
 
         <div class="col-md-3">
-            <label for="closes_at" class="form-label">{{ 'closes_at' | trans}}</label>
-            <input type="time" class="form-control" id="closes_at" placeholder="00:00">
+            <label class="form-label">{{ 'closes_at' | trans }}</label>
+            <div class="d-flex align-items-center">
+                <input type="time" class="form-control closes_at me-2" placeholder="00:00">
+                <a href="#" class="remove-opening-hours text-danger d-flex align-items-center">
+                    <i class="iconify fs-4" data-icon="mdi:trash-can-outline"></i>
+                </a>
+            </div>
         </div>
     </div>
+
     <div class="row mt-4">
         <div class="col">
-            <a href="#" class="text-primary fw-bold text-decoration-none">
+            <a href="#" class="text-primary fw-bold text-decoration-none" id="add-opening-hours">
                 <i class="iconify fs-3" data-icon="gridicons:add"></i>
                 {{ 'add_opening_hours' | trans }}
             </a>

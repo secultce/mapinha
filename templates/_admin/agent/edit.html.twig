@@ -1,0 +1,48 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %} {{ 'control_panel'|trans }} - {{ 'agents'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/edit-entity.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <section class="d-flex">
+        {% include "_components/side-bar.html.twig" %}
+        <div class="entity-edit">
+            {% include "_admin/agent/_partials/agent-edit-header.html.twig" %}
+
+            <section class="entity-edit-content mt-4">
+                {% set asterisk = '<span class="text-danger">*</span>' %}
+                <span class="entity-mandatory-fields">{{ 'mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
+
+                {% include "_admin/agent/_partials/forms/entity-edit-form.html.twig" %}
+            </section>
+
+            <div class="entity-edit-submit">
+                <div class="delete-archive">
+                    <button class="btn btn-outline-light">
+                        <i class="iconify fs-3" data-icon="mynaui:trash"></i>
+                        {{ 'delete' | trans }}
+                    </button>
+                    <button class="btn btn-outline-light">
+                        <i class="iconify fs-3" data-icon="mingcute:box-2-line"></i>
+                        {{ 'archive' | trans }}
+                    </button>
+                </div>
+                <div class="logout-submit">
+                    <button class="btn btn-outline-light">{{ 'logout' | trans }}</button>
+                    <button form="agent-edit-form" type="submit" class="btn btn-light">{{ 'save' | trans}}</button>
+                </div>
+            </div>
+
+            {% if error is defined and error %}
+                <div class="alert alert-danger mt-3">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

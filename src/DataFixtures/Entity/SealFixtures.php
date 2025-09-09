@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Agent;
 use App\Entity\Seal;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -209,7 +210,7 @@ final class SealFixtures extends AbstractFixture implements DependentFixtureInte
         /** @var Seal $seal */
         $seal = $this->serializer->denormalize($sealData, Seal::class, context: $context);
 
-        $seal->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $sealData['createdBy'])));
+        $seal->setCreatedBy($this->getReference(sprintf('%s-%s', AgentFixtures::AGENT_ID_PREFIX, $sealData['createdBy']), Agent::class));
 
         return $seal;
     }

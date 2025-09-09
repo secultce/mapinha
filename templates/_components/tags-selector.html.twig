@@ -4,51 +4,57 @@
     {% set isRequired = required %}
 {% endif %}
 
-<div class="tags-selector">
+<div class="tags-selector" data-input-name="{{ inputName }}">
     <label for="add-{{ inputName }}-btn">{{ inputLabel }} <span class="text-danger">{{ isRequired ? '*' : '' }}</span></label>
-    <div id="tags-container-{{ inputName }}" class="my-1 d-flex flex-wrap gap-2">
+    {{ questionFill ? '<span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill"></span>' : '' }}
+
+    <div id="tags-container-{{ inputName }}" class="my-2 d-flex flex-wrap gap-2">
         {% for tag in tags %}
-            <div class="area-tag">
-                {{ tag.label }}
+            <div class="area-tag" data-value="{{ tag.value }}">
+                <span>{{ tag.label }}</span>
                 <input type="hidden" name="{{ inputName }}[]" value="{{ tag.value }}" {{ isRequired ? 'required' : '' }}/>
-                <button type="button" class="remove-tag m-0 p-0 px-1 border-0 bg-transparent" onclick="removeTag(this, '{{ inputName }}', '{{ tag.value }}')">x</button>
+                <button type="button" class="remove-tag m-0 p-0 px-1 border-0 bg-transparent">x</button>
             </div>
         {% endfor %}
     </div>
 
-    <div class="dropdown position-static" id="{{ inputName }}">
-        <button id="add-{{ inputName }}-btn" class="btn area-tag bg-primary text-white" type="button" data-bs-toggle="dropdown" aria-expanded="true" aria-haspopup="true">
+    <div class="dropdown position-static mt-2">
+        <button id="add-{{ inputName }}-btn" class="btn area-tag bg-primary text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{ 'add'|trans }}
             <i class="material-icons fs-4 ms-2">add</i>
         </button>
-        <ul class="dropdown-menu" aria-labelledby="add-{{ inputName }}-btn" style="position: absolute; inset: 0 auto auto 0; margin: 0; transform: translate(0, 38px);" data-popper-placement="bottom-start" role="listbox">
+
+        <ul class="dropdown-menu" aria-labelledby="add-{{ inputName }}-btn">
             <div class="search-input-container">
                 <div class="input-wrapper">
                     <input
                         type="search"
                         id="search-{{ inputName }}-items"
-                        incremental
-                        aria-label="Search through options"
-                        class="form-control custom-search-input"
+                        class="form-control custom-search-input mx-2 no-focus-ring"
                         placeholder="{{ 'search'|trans }}"
-                        onsearch="handleTagsFilter(event, this)"
+                        autocomplete="off"
                     />
-                    <button type="button" class="btn custom-search-icon" onclick="handleTagsFilter(event, this)"><i class="material-icons">search</i></button>
+                    <i class="material-icons custom-search-icon me-4 pb-1" aria-hidden="true">search</i>
                 </div>
             </div>
-            <li class="new-tag-item">
-                <button type="button" class="dropdown-item justify-content-between" style="cursor: pointer" role="option" data-input-name="{{ inputName }}" data-label="" data-value="">
-                    <span id="new-tag-{{ inputName }}"></span>
+
+            <li id="span-message-{{ inputName }}" class="d-none">
+                <span class="tags-selector-error text-danger px-3 py-1 d-block">{{ 'tag_already_exists'|trans }}</span>
+            </li>
+
+            <li class="new-tag-item d-none">
+                <button type="button" class="dropdown-item justify-content-between" style="cursor: pointer">
+                    <span></span>
                     <i class="material-icons fs-4 ms-2">add</i>
                 </button>
             </li>
+
             {% for item in items %}
-                <li role="option">
+                <li class="{{ item.value in tags|column('value') ? 'd-none' : '' }}">
                     <button
                         type="button"
-                        class="dropdown-item {{ item.value in tags|column('value') ? 'd-none disabled' : '' }}"
+                        class="dropdown-item"
                         style="cursor: pointer"
-                        data-input-name="{{ inputName }}"
                         data-label="{{ item.label }}"
                         data-value="{{ item.value }}"
                     >{{ item.label }}</button>

@@ -1,0 +1,113 @@
+<div class="entity-imgs">
+    <div class="banner">
+        <input class="banner-input" type="file" accept="image/*" />
+        <label for="banner-input" class="banner-label">
+            <span class="iconify entity-photo me-2" data-icon="tabler:camera-plus"></span>
+            {{ 'add_cover_image' | trans }}
+        </label>
+    </div>
+
+    <div class="profile-pic">
+        <label for="profile-input" class="profile-label">
+            <span class="iconify entity-photo" data-icon="tabler:camera-plus"></span>
+            <input id="profile-input" type="file" accept="image/*" />
+        </label>
+    </div>
+</div>
+
+<div class="entity-introduction-data">
+    <label for="name">
+        <span class="required">{{ 'view.organization.name' | trans }}</span>
+        <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill"></span>
+    </label>
+    <input type="text"
+           class="form-control"
+           id="name" name="name"
+           value="{{ organization.name }}"
+           placeholder="{{ 'type_here' | trans }}"
+           required
+    >
+
+    <div class="entity-input-tags mb-2">
+        <label>
+            {{ 'area_of_activity'|trans }}
+            <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill"></span>
+        </label>
+        <span class="d-flex align-items-center fw-bold gap-3">
+            {{ 'add_new' | trans|lower }}
+            <span class="iconify fs-5" data-icon="material-symbols:add"></span>
+        </span>
+    </div>
+
+    <div class="entity-input-tags">
+        <label>
+            Tags
+            <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill"></span>
+        </label>
+        <span class="d-flex align-items-center gap-3 fw-bold">
+            {{ 'add_new' | trans|lower }}
+            <span class="iconify fs-5" data-icon="material-symbols:add"></span>
+        </span>
+    </div>
+
+    <label for="short-description" class="required">{{ 'short_description' | trans }}</label>
+    <textarea
+        class="form-control"
+        id="short-description" name="short_description"
+        placeholder="{{ 'short_description' | trans }}"
+        required
+        maxlength="400"
+    >
+        {{- organization.description | default('') -}}
+    </textarea>
+
+    <label for="long-description">{{ 'long_description' | trans }}</label>
+    <textarea
+        class="form-control"
+        id="long-description" name="long_description"
+        placeholder="{{ 'long_description' | trans }}"
+        required
+    >
+        {{- organization.description | default('') -}}
+    </textarea>
+
+
+    <div class="d-flex flex-wrap gap-1 gap-md-3">
+        <div class="flex-grow-1">
+            <label for="site">{{ 'site' | trans }} (URL):</label>
+            <input
+                name="site"
+                type="text"
+                id="site"
+                class="form-control"
+                placeholder="https://www.site.com"
+                value="{{ organization.extraFields.site | default('') }}">
+        </div>
+        <div class="flex-grow-1">
+            <label for="link-description">{{ 'link_description' | trans }}:</label>
+            <input type="text" id="link-description" name="link_description" class="form-control" placeholder="Digite">
+        </div>
+    </div>
+    <div class="d-flex flex-wrap gap-1 gap-md-3 mt-1 mt-md-3">
+        <div class="flex-grow-1">
+            <label for="email">{{ 'public_email' | trans }}:</label>
+            <input
+                type="email"
+                id="email"
+                class="form-control"
+                name="email"
+                placeholder="email@email.com"
+                value="{{ organization.extraFields.email | default('') }}">
+        </div>
+        <div class="flex-grow-1">
+            <label for="phone">{{ 'public_phone' | trans }} :</label>
+            <input
+                type="text"
+                id="phone"
+                name="phone_number"
+                class="form-control"
+                placeholder="(00) 00000-0000"
+                value="{{ organization.extraFields.phone | default('') }}">
+        </div>
+    </div>
+</div>

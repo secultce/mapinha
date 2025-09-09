@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Entity;
+namespace App\Tests\Unit\Entity;
 
 use App\Entity\Agent;
 use App\Entity\AgentAddress;
 use App\Entity\Organization;
 use App\Entity\Seal;
 use App\Entity\User;
+use App\Enum\SocialNetworkEnum;
 use App\Helper\DateFormatHelper;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -47,6 +48,15 @@ class AgentTest extends TestCase
         $extraFields = ['field1' => 'value1'];
         $agent->setExtraFields($extraFields);
         $this->assertSame($extraFields, $agent->getExtraFields());
+
+        $socialNetworks = [
+            SocialNetworkEnum::INSTAGRAM->value => 'hello',
+        ];
+        $agent->setSocialNetworks($socialNetworks);
+        $this->assertSame($socialNetworks, $agent->getSocialNetworks());
+        $agent->removeSocialNetwork(SocialNetworkEnum::INSTAGRAM);
+        $agent->addSocialNetwork(SocialNetworkEnum::INSTAGRAM->value, 'hello');
+        $this->assertSame($socialNetworks, $agent->getSocialNetworks());
 
         $user = $this->createMock(User::class);
         $agent->setUser($user);
@@ -103,6 +113,8 @@ class AgentTest extends TestCase
         $agent->addOrganization($organization1);
         $agent->addOrganization($organization2);
 
+        $agent->addSocialNetwork(SocialNetworkEnum::INSTAGRAM->value, 'hello');
+
         $createdAt = new DateTimeImmutable('2024-01-01 10:00:00');
         $agent->setCreatedAt($createdAt);
 
@@ -117,6 +129,10 @@ class AgentTest extends TestCase
             'organizations' => [
                 $organization1Uuid->toRfc4122(),
                 $organization2Uuid->toRfc4122(),
+            ],
+            'culturalFunction' => [],
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'hello',
             ],
             'createdAt' => $createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => null,

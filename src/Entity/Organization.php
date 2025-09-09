@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\OrganizationTypeEnum;
+use App\Enum\SocialNetworkEnum;
 use App\Helper\DateFormatHelper;
 use App\Repository\OrganizationRepository;
 use DateTime;
@@ -32,6 +34,10 @@ class Organization extends AbstractEntity
     #[Groups('organization.get')]
     private ?string $description = null;
 
+    #[ORM\Column(type: 'string', nullable: false)]
+    #[Groups('organization.get')]
+    private string $type = OrganizationTypeEnum::UNDEFINED->value;
+
     #[ORM\Column(nullable: true)]
     #[Groups('organization.get')]
     private ?string $image = null;
@@ -56,6 +62,12 @@ class Organization extends AbstractEntity
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['organization.get.item'])]
     private ?array $extraFields = null;
+
+    /**
+     * @var array<string, string>
+     */
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $socialNetworks = [];
 
     #[ORM\Column]
     #[Groups('organization.get')]
@@ -105,6 +117,16 @@ class Organization extends AbstractEntity
         $this->description = $description;
     }
 
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;
@@ -128,6 +150,11 @@ class Organization extends AbstractEntity
     public function addAgent(Agent $agent): void
     {
         $this->agents->add($agent);
+    }
+
+    public function removeAgent(Agent $agent): void
+    {
+        $this->agents->removeElement($agent);
     }
 
     public function getOwner(): Agent
@@ -160,6 +187,34 @@ class Organization extends AbstractEntity
         $this->extraFields = $extraFields;
     }
 
+    public function addExtraField(string $name, mixed $value): void
+    {
+        $this->extraFields[$name] = $value;
+    }
+
+    public function getSocialNetworks(): array
+    {
+        return $this->socialNetworks;
+    }
+
+    public function setSocialNetworks(array $socialNetworks): void
+    {
+        foreach ($socialNetworks as $key => $username) {
+            $socialNetworksEnum = SocialNetworkEnum::from($key);
+            $this->addSocialNetwork($socialNetworksEnum->value, $username);
+        }
+    }
+
+    public function addSocialNetwork(string $socialNetworksEnum, $username): void
+    {
+        $this->socialNetworks[$socialNetworksEnum] = $username;
+    }
+
+    public function removeSocialNetwork(SocialNetworkEnum $socialNetwork): void
+    {
+        unset($this->socialNetworks[$socialNetwork->name]);
+    }
+
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
@@ -190,15 +245,23 @@ class Organization extends AbstractEntity
         $this->deletedAt = $deletedAt;
     }
 
+    public function hasAgent(Agent $agent): bool
+    {
+        return $this->agents->contains($agent);
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->id?->toRfc4122(),
             'name' => $this->name,
             'description' => $this->description,
+            'type' => $this->type,
             'agents' => $this->agents->map(fn ($agent) => $agent->getId()->toRfc4122()),
             'owner' => $this->owner->toArray(),
             'createdBy' => $this->createdBy->toArray(),
+            'extraFields' => $this->extraFields,
+            'socialNetworks' => $this->socialNetworks,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $this->updatedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $this->deletedAt?->format(DateFormatHelper::DEFAULT_FORMAT),

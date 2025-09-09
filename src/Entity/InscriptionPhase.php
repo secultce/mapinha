@@ -27,6 +27,11 @@ class InscriptionPhase
     #[Groups(['inscription-phase.get'])]
     private ?Agent $agent = null;
 
+    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', nullable: false)]
+    #[Groups(['inscription-phase.get'])]
+    private ?Organization $organization = null;
+
     #[ORM\ManyToOne(targetEntity: Phase::class)]
     #[ORM\JoinColumn(name: 'phase_id', referencedColumnName: 'id', nullable: false)]
     #[Groups(['inscription-phase.get'])]
@@ -35,6 +40,10 @@ class InscriptionPhase
     #[ORM\Column(type: Types::SMALLINT)]
     #[Groups(['inscription-phase.get'])]
     private ?int $status = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    #[Groups(['inscription-phase.get'])]
+    private ?array $extraFields = null;
 
     #[ORM\Column]
     #[Groups('inscription-phase.get')]
@@ -123,13 +132,35 @@ class InscriptionPhase
         $this->deletedAt = $deletedAt;
     }
 
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): void
+    {
+        $this->organization = $organization;
+    }
+
+    public function getExtraFields(): ?array
+    {
+        return $this->extraFields;
+    }
+
+    public function setExtraFields(?array $extraFields): void
+    {
+        $this->extraFields = $extraFields;
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->id?->toRfc4122(),
-            'agent' => $this->agent->getId(),
+            'agent' => $this->agent?->getId(),
+            'organization' => $this->organization?->getId(),
             'phase' => $this->getPhase()->getId(),
             'status' => $this->status,
+            'extraFields' => $this->extraFields,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $this->updatedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $this->deletedAt?->format(DateFormatHelper::DEFAULT_FORMAT),

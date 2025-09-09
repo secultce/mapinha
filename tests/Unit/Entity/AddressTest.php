@@ -8,11 +8,11 @@ use App\Entity\Address;
 use App\Entity\City;
 use App\Repository\CityRepository;
 use App\Repository\Interface\CityRepositoryInterface;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
-class AddressTest extends AbstractWebTestCase
+class AddressTest extends AbstractApiTestCase
 {
     private CityRepositoryInterface $cityRepository;
 

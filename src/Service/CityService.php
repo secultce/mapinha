@@ -9,6 +9,7 @@ use App\Entity\State;
 use App\Repository\Interface\CityRepositoryInterface;
 use App\Service\Interface\CityServiceInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Uid\Uuid;
 
 readonly class CityService extends AbstractEntityService implements CityServiceInterface
 {
@@ -37,5 +38,10 @@ readonly class CityService extends AbstractEntityService implements CityServiceI
     public function list(int $limit = 50): array
     {
         return $this->repository->findBy([], ['name' => 'ASC'], $limit);
+    }
+
+    public function get(Uuid|string $id): ?City
+    {
+        return $this->repository->find($id);
     }
 }

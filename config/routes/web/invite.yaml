@@ -1,0 +1,4 @@
+accept:
+  path: /{invite}/aceitar
+  controller: App\Controller\Web\InviteController::accept
+  methods: ['GET', 'POST']

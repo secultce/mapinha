@@ -45,14 +45,17 @@
         <input type="password" class="form-control" name="confirm_password" placeholder="{{ 'confirm_password'|trans }}" >
     </div>
 
-    <div class="mb-3">
-        <label for="passwordStrength" class="form-label">{{ 'password_strength'|trans }}</label>
-        <div class="progress" id="passwordStrength" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar" style="width: 0%" aria-label="Password strength"></div>
+    <div class="row mb-3">
+        <div class="col">
+            <label class="form-label">{{ 'password_strength'|trans }}:</label>
+            <p id="strengthMessage"></p>
+            <div class="progress-password">
+                <div id="progressBar" class="progress-bar-password" style="width: 0%"></div>
+            </div>
         </div>
     </div>
 
     <div class="btn-form-group mt-3">
-        <button class="btn btn-next">{{ 'continue'|trans }}</button>
+        <button type="button" class="btn btn-next">{{ 'continue'|trans }}</button>
     </div>
 </div>

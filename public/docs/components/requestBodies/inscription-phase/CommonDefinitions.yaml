@@ -24,4 +24,6 @@ InscriptionPhaseBase:
         - 'active'
         - 'inactive'
         - 'suspended'
-
+    extraFields:
+      type: object
+      description: "Dados extras da inscrição"

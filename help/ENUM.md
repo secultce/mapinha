@@ -81,6 +81,163 @@ Enumera os possíveis estados de uma inscrição em uma oportunidade.
 | `INACTIVE`  | `2`   | Representa uma inscrição inativa.  |
 | `SUSPENDED` | `3`   | Representa uma inscrição suspensa. |
 
+
+### RegionEnum
+
+#### Descrição
+Enumera as regiões geográficas do sistema.
+
+#### Valores
+
+| Constante      | Valor         | Descrição                     |
+|----------------|---------------|-------------------------------|
+| `NORTE`        | `Norte`       | Representa a região Norte.    |
+| `NORDESTE`     | `Nordeste`    | Representa a região Nordeste. |
+| `SUDESTE`      | `Sudeste`     | Representa a região Sudeste.  |
+| `SUL`          | `Sul`         | Representa a região Sul.      |
+| `CENTRO_OESTE` | `Centro-Oeste`| Representa a região Centro-Oeste. |
+
+
+### OrganizationTypeEnum
+
+#### Descrição
+Enumera os tipos de organizações no sistema.
+
+#### Valores
+
+| Constante   | Valor       | Descrição                     |
+|-------------|-------------|-------------------------------|
+| `UNDEFINED` | `Undefined` | Tipo de organização indefinido. |
+| `MUNICIPIO` | `Municipio` | Representa um município.      |
+| `EMPRESA`   | `Empresa`   | Representa uma empresa.       |
+| `ENTIDADE`  | `Entidade`  | Representa uma entidade.      |
+| `OSC`       | `OSC`       | Representa uma organização da sociedade civil. |
+
+---
+
+### SocialNetworkEnum
+
+#### Descrição
+Enumera as redes sociais disponíveis no sistema.
+
+#### Valores
+
+| Constante   | Valor       | Descrição                     |
+|-------------|-------------|-------------------------------|
+| `FACEBOOK`  | `facebook`  | Rede social Facebook.         |
+| `INSTAGRAM` | `instagram` | Rede social Instagram.        |
+| `LINKEDIN`  | `linkedin`  | Rede social LinkedIn.         |
+| `PINTEREST` | `pinterest` | Rede social Pinterest.        |
+| `SPOTIFY`   | `spotify`   | Plataforma Spotify.           |
+| `VIMEO`     | `vimeo`     | Plataforma Vimeo.             |
+| `TIKTOK`    | `tiktok`    | Rede social TikTok.           |
+| `X`         | `x`         | Rede social X (antigo Twitter). |
+| `YOUTUBE`   | `youtube`   | Plataforma YouTube.           |
+
+---
+
+### UserRolesEnum
+
+#### Descrição
+Enumera os papéis de usuário no sistema.
+
+#### Valores
+
+| Constante           | Valor           | Descrição                     |
+|---------------------|-----------------|-------------------------------|
+| `ROLE_ADMIN`        | `ROLE_ADMIN`    | Representa um administrador.  |
+| `ROLE_MANAGER`      | `ROLE_MANAGER`  | Representa um gerente.        |
+| `ROLE_COMPANY`      | `ROLE_COMPANY`  | Representa uma empresa.       |
+| `ROLE_MUNICIPALITY` | `ROLE_MUNICIPALITY` | Representa um município.  |
+| `ROLE_USER`         | `ROLE_USER`     | Representa um usuário comum.  |
+
+---
+
+### AccessibilityInfoEnum
+
+#### Descrição
+Enumera as informações de acessibilidade.
+
+#### Valores
+
+| Constante       | Valor | Descrição                     |
+|-----------------|-------|-------------------------------|
+| `YES`           | `1`   | Acessibilidade disponível.    |
+| `NO`            | `2`   | Acessibilidade indisponível.  |
+| `NOT_INFORMED`  | `3`   | Acessibilidade não informada. |
+
+---
+
+### AccountEventTypeEnum
+
+#### Descrição
+Enumera os tipos de eventos relacionados à conta.
+
+#### Valores
+
+| Constante    | Valor | Descrição                     |
+|--------------|-------|-------------------------------|
+| `ACTIVATION` | `1`   | Evento de ativação de conta.  |
+| `RECOVERY`   | `2`   | Evento de recuperação de conta. |
+
+---
+
+### CompanyFrameworkEnum
+
+#### Descrição
+Enumera os tipos de estrutura de empresas.
+
+#### Valores
+
+| Constante   | Valor                              | Descrição                     |
+|-------------|------------------------------------|-------------------------------|
+| `PROFIT`    | `Organização com fins lucarativos` | Empresa com fins lucrativos.  |
+| `NO_PROFIT` | `Organização sem fins lucarativos` | Empresa sem fins lucrativos.  |
+
+---
+
+### EventFormatEnum
+
+#### Descrição
+Enumera os tipos de eventos.
+
+#### Valores
+
+| Constante   | Valor | Descrição                     |
+|-------------|-------|-------------------------------|
+| `IN_PERSON` | `1`   | Evento presencial.            |
+| `ONLINE`    | `2`   | Evento online.                |
+| `HYBRID`    | `3`   | Evento híbrido.               |
+
+---
+
+### FlashMessageTypeEnum
+
+#### Descrição
+Enumera os tipos de mensagens de *flash*.
+
+#### Valores
+
+| Constante   | Valor     | Descrição                     |
+|-------------|-----------|-------------------------------|
+| `SUCCESS`   | `success` | Mensagem de sucesso.          |
+| `ERROR`     | `error`   | Mensagem de erro.             |
+
+---
+
+### UserStatusEnum
+
+#### Descrição
+Enumera os status de usuário no sistema.
+
+#### Valores
+
+| Constante              | Valor               | Descrição                     |
+|------------------------|---------------------|-------------------------------|
+| `AWAITING_CONFIRMATION`| `AwaitingConfirmation` | Usuário aguardando confirmação. |
+| `ACTIVE`               | `Active`           | Usuário ativo.                |
+| `BLOCKED`              | `Blocked`          | Usuário bloqueado.            |
+
 ## Boas práticas
 
 ### Use os valores das Enums diretamente

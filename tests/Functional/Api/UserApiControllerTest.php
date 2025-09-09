@@ -7,7 +7,8 @@ namespace App\Tests\Functional\Api;
 use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\UserFixtures;
 use App\Entity\User;
-use App\Tests\AbstractWebTestCase;
+use App\Enum\UserStatusEnum;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\UserTestFixtures;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserApiControllerTest extends AbstractWebTestCase
+class UserApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/users';
 
@@ -49,7 +50,12 @@ class UserApiControllerTest extends AbstractWebTestCase
             'lastname' => $requestBody['lastname'],
             'socialName' => null,
             'image' => null,
-            'agents' => $user->getAgents()->getValues(),
+            'agents' => [
+                [
+                    'id' => $user->getAgents()->first()->getId()->toRfc4122(),
+                ],
+            ],
+            'status' => UserStatusEnum::ACTIVE->value,
             'createdAt' => $user->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -76,7 +82,12 @@ class UserApiControllerTest extends AbstractWebTestCase
             'lastname' => $requestBody['lastname'],
             'socialName' => $requestBody['socialName'],
             'image' => $user->getImage(),
-            'agents' => $user->getAgents()->getValues(),
+            'agents' => [
+                [
+                    'id' => $user->getAgents()->first()->getId()->toRfc4122(),
+                ],
+            ],
+            'status' => UserStatusEnum::ACTIVE->value,
             'createdAt' => $user->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -146,6 +157,7 @@ class UserApiControllerTest extends AbstractWebTestCase
             'agents' => [
                 ['id' => AgentFixtures::AGENT_ID_5],
             ],
+            'status' => UserStatusEnum::ACTIVE->value,
             'createdAt' => $user->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $user->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'deletedAt' => null,
@@ -183,6 +195,7 @@ class UserApiControllerTest extends AbstractWebTestCase
             'agents' => [
                 ['id' => AgentFixtures::AGENT_ID_5],
             ],
+            'status' => UserStatusEnum::ACTIVE->value,
             'createdAt' => $userUpdated->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $userUpdated->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'deletedAt' => null,
@@ -275,7 +288,7 @@ class UserApiControllerTest extends AbstractWebTestCase
             'password too weak' => [
                 'requestBody' => array_merge($requestBody, ['password' => '123456']),
                 'expectedErrors' => [
-                    ['field' => 'password', 'message' => 'The password strength is too low. Please use a stronger password.'],
+                    ['field' => 'password', 'message' => 'password.too_weak'],
                 ],
             ],
         ];

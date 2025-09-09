@@ -7,10 +7,12 @@ info:
     - Agentes
     - Áreas de atividade
     - Espaços
+    - Estados
     - Eventos
     - Faqs
     - Fases
     - Iniciativas
+    - Linguagem cultural
     - Oportunidades
     - Organizações
     - Selos
@@ -40,12 +42,16 @@ tags:
     description: Endpoints relacionados às áreas de atividade
   - name: Espaços
     description: Endpoints relacionados aos espaços
+  - name: Estados
+    description: Endpoints relacionados aos estados
   - name: Eventos
     description: Endpoints relacionados aos eventos
   - name: Atividade do evento
     description: Endpoints relacionados as atividades dos eventos
   - name: Iniciativas
     description: Endpoints relacionados às iniciativas
+  - name: Inscrição no evento
+    description: Endpoints relacionados as inscrições no evento
   - name: Inscrição na oportunidade
     description: Endpoints relacionados as inscrições na oportunidade
   - name: Inscrição na fase
@@ -54,6 +60,8 @@ tags:
     description: Endpoints relacionados às faqs
   - name: Fases
     description: Endpoints relacionados às fases
+  - name: Linguagem cultural
+    description: Endpoints relacionados a linguagem cultural
   - name: Oportunidades
     description: Endpoints relacionados às oportunidades
   - name: Organizações
@@ -79,6 +87,10 @@ paths:
     $ref: './components/paths/architectural-accessibility/Collection.yaml'
   /architectural-accessibilities/{id}:
     $ref: './components/paths/architectural-accessibility/Item.yaml'
+  /cultural-languages:
+    $ref: './components/paths/cultural-language/Collection.yaml'
+  /cultural-languages/{id}:
+    $ref: './components/paths/cultural-language/Item.yaml'
   /events:
     $ref: './components/paths/event/Collection.yaml'
   /events/{id}:
@@ -87,6 +99,10 @@ paths:
     $ref: './components/paths/event-activity/Collection.yaml'
   /events/{event}/activities/{activity}:
     $ref: './components/paths/event-activity/Item.yaml'
+  /events/{event}/inscriptions:
+    $ref: './components/paths/inscription-event/Collection.yaml'
+  /events/{event}/inscriptions/{inscription}:
+    $ref: './components/paths/inscription-event/Item.yaml'
   /events/{id}/images:
     $ref: './components/paths/event/UpdateImage.yaml'
   /faqs:
@@ -139,6 +155,10 @@ paths:
     $ref: './components/paths/space-type/Collection.yaml'
   /space-types/{id}:
     $ref: './components/paths/space-type/Item.yaml'
+  /states:
+    $ref: './components/paths/state/Collection.yaml'
+  /states/{id}/cities:
+    $ref: './components/paths/state/Cities.yaml'
   /tags:
     $ref: './components/paths/tag/Collection.yaml'
   /tags/{id}:
@@ -155,12 +175,18 @@ components:
       $ref: './components/schemas/agent.yaml'
     ArchitecturalAccessibility:
       $ref: './components/schemas/architectural-accessibility.yaml'
+    City:
+      $ref: './components/schemas/city.yaml'
+    CulturalLanguage:
+      $ref: './components/schemas/cultural-language.yaml'
     Event:
       $ref: './components/schemas/event.yaml'
     Faq:
       $ref: './components/schemas/faq.yaml'
     Initiative:
       $ref: './components/schemas/initiative.yaml'
+    InscriptionEvent:
+      $ref: './components/schemas/inscription-event.yaml'
     InscriptionOpportunity:
       $ref: './components/schemas/inscription-opportunity.yaml'
     InscriptionPhase:
@@ -177,6 +203,8 @@ components:
       $ref: './components/schemas/space.yaml'
     SpaceType:
       $ref: './components/schemas/space-type.yaml'
+    State:
+      $ref: './components/schemas/state.yaml'
     Tag:
       $ref: './components/schemas/tag.yaml'
     User:

@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Enum\UserRolesEnum;
 use App\Exception\EntityManagerAndEntityClassNotSetException;
+use App\Exception\NoEntitiesProvidedForExportException;
 use App\Exception\ValidatorException;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -39,6 +42,10 @@ abstract readonly class AbstractEntityService
 
     public function getUserParams(): array
     {
+        if (null !== $this->security->getUser() && $this->security->getUser()->isRole(UserRolesEnum::ROLE_ADMIN)) {
+            return [];
+        }
+
         $params = self::DEFAULT_FILTERS;
 
         if (null !== $this->security->getUser()) {
@@ -97,7 +104,7 @@ abstract readonly class AbstractEntityService
         ]);
     }
 
-    public function validateInput(array $data, string $dtoClass, string $group): array
+    public function validateInput(array $data, string $dtoClass, string $group = 'Default'): array
     {
         $dto = $this->denormalizeDto($data, $dtoClass);
         $violations = $this->validator->validate($dto, groups: $group);
@@ -106,5 +113,29 @@ abstract readonly class AbstractEntityService
         }
 
         return $data;
+    }
+
+    public function generateCsv(array $entities, string $filename, ?string $type): StreamedResponse
+    {
+        if (empty($entities)) {
+            throw new NoEntitiesProvidedForExportException();
+        }
+
+        $response = new StreamedResponse(function () use ($entities, $type): void {
+            $handle = fopen('php://output', 'w+');
+
+            fputcsv($handle, $this->getCsvHeaders($type));
+
+            foreach ($entities as $entity) {
+                fputcsv($handle, $this->getCsvRow($entity, $type));
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', "attachment; filename=\"$filename\"");
+
+        return $response;
     }
 }

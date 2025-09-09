@@ -21,7 +21,7 @@
 <script>
     document.querySelectorAll('#pills-tab .nav-link').forEach(tab => {
         tab.addEventListener('click', function() {
-            document.querySelectorAll('.tab-pane').forEach(pane => {
+            document.querySelectorAll('#pills-tabContent > .tab-pane').forEach(pane => {
                 pane.classList.remove('show', 'active');
             });
             const target = document.querySelector(this.getAttribute('href'));

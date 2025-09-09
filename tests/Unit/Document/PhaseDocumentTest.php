@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\PhaseTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use Datetime;
 
-class PhaseDocumentTest extends AbstractWebTestCase
+class PhaseDocumentTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromPhaseDocumentShouldBeSuccessful(): void
     {

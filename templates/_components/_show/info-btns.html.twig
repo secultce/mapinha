@@ -1,6 +1,15 @@
-<button type="button" class="btn btn-outline-success btn-outline__entity-details fw-bold py-2 px-4">
+<button type="button" class="btn btn-outline-success btn-outline__entity-details fw-bold p-2 ms-2">
     <i class="material-icons fs-4 me-2">share</i> {{ 'share'|trans }}
 </button>
-<button type="button" class="btn btn-primary fw-bold p-2 ms-3">
+<button type="button" class="btn btn-outline-success btn-outline__entity-details fw-bold p-2 ms-2">
     <i class="material-icons fs-4 me-2">messenger</i> {{ 'send_message'|trans }}
 </button>
+{% if actions is defined %}
+    {% for action in actions %}
+        <form method="post" action="{{ action.path }}" class="d-inline">
+            <button type="submit" class="btn btn-primary fw-bold p-2 ms-2">
+                <i class="material-icons fs-4 me-2">{{ action.icon }}</i> {{ action.key|trans }}
+            </button>
+        </form>
+    {% endfor %}
+{% endif %}

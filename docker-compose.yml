@@ -65,20 +65,35 @@ services:
 
   cypress:
     container_name: aurora-cypress
-    image: cypress/included:13.10.0
+    image: cypress/included:14.4.0
+    user: "${CYPRESS_USER:-${UID:-1000}:${GID:-1000}}"
     profiles:
       - tests
     environment:
       - CYPRESS_BASE_URL=http://nginx
-      - :80
+      - DISPLAY=${DISPLAY}
+      - CYPRESS_MODE=${CYPRESS_MODE:-run}
     depends_on:
       - nginx
       - php
     entrypoint: [ '/bin/sh', '-c' ]
-    command: ['npm install && cypress run']
+    command: ['npm install && cypress $$CYPRESS_MODE']
     volumes:
       - .:/cy
+      - /tmp/.X11-unix:/tmp/.X11-unix
     working_dir: /cy
+    networks:
+      - aurora_network
+
+  mailer:
+    container_name: aurora-mailer
+    image: axllent/mailpit
+    ports:
+      - '1025'
+      - '32770:8025'
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
     networks:
       - aurora_network
 

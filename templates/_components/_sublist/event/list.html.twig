@@ -1,0 +1,5 @@
+{% for event in events %}
+    {% include 'event/_partials/tabs/tab-list-card.html.twig' with {'event': event } %}
+{% else %}
+    <p class="text-center text-muted mt-4">{{ 'no_events_available' | trans }}</p>
+{% endfor %}

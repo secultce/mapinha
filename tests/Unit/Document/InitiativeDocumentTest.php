@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\InitiativeTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use Symfony\Component\Uid\Uuid;
 
-class InitiativeDocumentTest extends AbstractWebTestCase
+class InitiativeDocumentTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromInitiativeDocumentShouldBeSuccessful(): void
     {

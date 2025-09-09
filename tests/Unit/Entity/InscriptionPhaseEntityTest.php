@@ -8,12 +8,12 @@ use App\Entity\Agent;
 use App\Entity\InscriptionPhase;
 use App\Entity\Phase;
 use App\Helper\DateFormatHelper;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
-final class InscriptionPhaseEntityTest extends AbstractWebTestCase
+final class InscriptionPhaseEntityTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromInscriptionPhaseEntityShouldBeSuccessful(): void
     {
@@ -52,8 +52,10 @@ final class InscriptionPhaseEntityTest extends AbstractWebTestCase
         $this->assertEquals([
             'id' => $id->toRfc4122(),
             'agent' => $agentId,
+            'organization' => null,
             'phase' => $phaseId,
             'status' => $status,
+            'extraFields' => null,
             'createdAt' => $createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $updatedAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $deletedAt->format(DateFormatHelper::DEFAULT_FORMAT),

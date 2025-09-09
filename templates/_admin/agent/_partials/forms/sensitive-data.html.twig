@@ -1,0 +1,125 @@
+<div class="edit-entity">
+    <h6 class="fw-bold mb-4">
+        {{ 'view.agent_edit.profile_data' | trans }}
+        <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill" ></span>
+    </h6>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label for="birthday">{{ 'birth_date'|trans }}</label>
+            <input type="date" class="form-control" id="birthday" name="birthday"
+                   placeholder="{{ 'birthday'|trans }}">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="birthday_public" id="birthday_public">
+                <label class="form-check-label" for="birthday_public">{{ 'show_public'|trans }}</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="gender">{{ 'gender'|trans }}</label>
+            <select class="form-select">
+                <option value="">{{ 'select'|trans }}</option>
+            </select>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="gender_public" id="gender_public">
+                <label class="form-check-label" for="gender_public">{{ 'show_public'|trans }}</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="sexual_orientation">{{ 'sexual_orientation'|trans }}</label>
+            <select class="form-select">
+                <option value="">{{ 'select'|trans }}</option>
+            </select>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="sexual_orientation_public" id="sexual_orientation_public">
+                <label class="form-check-label" for="sexual_orientation_public">{{ 'show_public'|trans }}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <label for="race">{{ 'race'|trans }}</label>
+            <select class="form-select">
+                <option value="">{{ 'select'|trans }}</option>
+            </select>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="race_public" id="race_public">
+                <label class="form-check-label" for="race_public">{{ 'show_public'|trans }}</label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="education">{{ 'education'|trans }}</label>
+            <select class="form-select">
+                <option value="">{{ 'select'|trans }}</option>
+            </select>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="education_public" id="education_public">
+                <label class="form-check-label" for="education_public">{{ 'show_public'|trans }}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <p class="fw-bold mb-1">{{ 'view.agent_edit.is_disabled' | trans }}</p>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="is_disabled" name="is_disabled" value="1">
+            <label class="form-check-label" for="is_disabled">{{ 'yes'|trans }}</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="not_is_disabled" name="is_disabled" value="0">
+            <label class="form-check-label" for="not_is_disabled">{{ 'no'|trans }}</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="disabled_public" id="disabled_public">
+            <label class="form-check-label" for="disabled_public">{{ 'show_public'|trans }}</label>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <p class="fw-bold mb-1">{{ 'view.agent_edit.is_indigenous' | trans }}</p>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="is_indigenous" name="is_indigenous" value="1">
+            <label class="form-check-label" for="is_indigenous">{{ 'yes'|trans }}</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="not_is_indigenous" name="is_indigenous" value="0">
+            <label class="form-check-label" for="not_is_indigenous">{{ 'no'|trans }}</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="indigenous_public" id="indigenous_public">
+            <label class="form-check-label" for="indigenous_public">{{ 'show_public'|trans }}</label>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <p class="fw-bold mb-1">{{ 'view.agent_edit.is_quilombola' | trans }}</p>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="is_quilombola" name="is_quilombola" value="1">
+            <label class="form-check-label" for="is_quilombola">{{ 'yes'|trans }}</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="not_is_quilombola" name="is_quilombola" value="0">
+            <label class="form-check-label" for="not_is_quilombola">{{ 'no'|trans }}</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="quilombola_public" id="quilombola_public">
+            <label class="form-check-label" for="quilombola_public">{{ 'show_public'|trans }}</label>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <p class="fw-bold mb-1">{{ 'view.agent_edit.is_traditional_people' | trans }}</p>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="is_traditional_people" name="is_traditional_people" value="1">
+            <label class="form-check-label" for="is_traditional_people">{{ 'yes'|trans }}</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="not_is_traditional_people" name="is_traditional_people" value="0">
+            <label class="form-check-label" for="not_is_traditional_people">{{ 'no'|trans }}</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="traditional_people_public" id="traditional_people_public">
+            <label class="form-check-label" for="traditional_people_public">{{ 'show_public'|trans }}</label>
+        </div>
+    </div>
+</div>

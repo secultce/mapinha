@@ -1,0 +1,85 @@
+get:
+  parameters:
+    - $ref: '../../parameters/path/id.yaml'
+    - in: path
+      name: 'event'
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: O identificador do evento
+  tags:
+    - Inscrição no evento
+  summary: Recupera uma única inscrição no evento
+  responses:
+    '200':
+      description: Inscrição no evento encontrada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/inscription-event/InscriptionEventGetItemResponse.yaml'
+    '404':
+      description: Inscrição no evento não encontrada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/inscription-event/InscriptionEventNotFound.yaml'
+
+patch:
+  parameters:
+    - $ref: '../../parameters/path/id.yaml'
+    - in: path
+      name: 'event'
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: O identificador do evento
+  tags:
+    - Inscrição no evento
+  summary: Atualiza um única inscrição no evento
+  requestBody:
+    description: Evento
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../requestBodies/inscription-event/InscriptionEventPatchItemRequest.yaml'
+  responses:
+    '200':
+      description: Inscrição no evento atualizada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/inscription-event/InscriptionEventPatchItemResponse.yaml'
+    '400':
+      description: Dados inválidos, inscrição no evento não atualizada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/InvalidResponse.yaml'
+
+delete:
+  parameters:
+    - $ref: '../../parameters/path/id.yaml'
+    - in: path
+      name: 'event'
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: O identificador do evento
+  tags:
+    - Inscrição no evento
+  summary: Remove uma única inscrição no evento
+  responses:
+    '204':
+      description: Não possui conteúdo de resposta
+      content:
+          application/json: {}
+    '404':
+      description: Inscrição no evento não encontrada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/inscription-event/InscriptionEventNotFound.yaml'

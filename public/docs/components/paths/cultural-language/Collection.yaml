@@ -1,0 +1,32 @@
+get:
+  tags:
+    - Linguagem cultural
+  summary: Recupera uma lista de Línguas Culturais
+  responses:
+    '200':
+      description: Lista de linguagens culturais
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '../../responses/cultural-language/CulturalLanguageCollectionResponse.yaml'
+
+post:
+  tags:
+    - Linguagem cultural
+  summary: Cria uma nova linguagem cultural
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../requestBodies/cultural-language/CulturalLanguagePostItemRequest.yaml'
+  responses:
+    '201':
+      description: Linguagem cultural criada
+      content:
+        application/json:
+          schema:
+            $ref: '../../responses/cultural-language/CulturalLanguagePostItemResponse.yaml'

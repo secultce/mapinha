@@ -1,0 +1,16 @@
+<div class="modal fade" id="modalImageAuthorization" tabindex="-1" aria-labelledby="modalImageAuthorizationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalImageAuthorizationLabel">{{ env.aurora.terms.lgpd.title }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                {{ env.aurora.terms.image_authorization.text | raw }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

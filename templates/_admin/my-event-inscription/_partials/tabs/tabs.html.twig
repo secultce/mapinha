@@ -1,0 +1,14 @@
+<div class="management-tabs" >
+    {% set tabs = [
+        {
+            'id': 'happening-now',
+            'title': 'view.my_events.happening_now' | trans,
+        },
+        {
+            'id': 'past',
+            'title': 'view.my_events.past' | trans,
+        },
+    ] %}
+
+    {% include '_components/tabs/tab.html.twig' with { 'tabs': tabs } %}
+</div>

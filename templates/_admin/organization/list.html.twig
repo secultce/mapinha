@@ -14,8 +14,8 @@
                     <div class="card card-body shadow">
                         <div class="d-flex justify-content-between align-items-center">
                             <h2>{{ 'my_organizations'|trans }}</h2>
-                            <a href="{{  path('admin_organization_add') }}" class="btn btn-primary">
-                                {{ 'create' | trans }}
+                            <a href="{{ path('admin_organization_add') }}" class="btn btn-primary">
+                                {{ 'create'|trans }}
                             </a>
                         </div>
                         <hr>
@@ -24,6 +24,7 @@
                             <thead class="table-dark">
                             <tr>
                                 <th>{{ 'name'|trans }}</th>
+                                <th>{{ 'status'|trans }}</th>
                                 <th>{{ 'created_at'|trans }}</th>
                                 <th></th>
                                 <th></th>
@@ -33,14 +34,37 @@
                             <tbody>
                             {% for item in organizations %}
                                 <tr>
-                                    <td><a href="#">{{ item.name }}</a></td>
+                                    <td>
+                                        {% if item.deletedAt %}
+                                            <span class="text-secondary">{{ item.name }}</span>
+                                        {% else %}
+                                            <a href="{{ path('admin_organization_get', {id: item.id}) }}">{{ item.name }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.deletedAt %}
+                                            <span
+                                                    class="text-secondary"
+                                                    data-bs-toggle="tooltip"
+                                                    title="{{ item.deletedAt|date('d/m/Y H:i:s') }}"
+                                            >
+                                                    {{ 'status_trashed'|trans }}
+                                                </span>
+                                        {% else %}
+                                            <span class="text-success">
+                                                    {{ 'status_published'|trans }}
+                                                </span>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <a href="{{ path('admin_organization_timeline', {id: item.id}) }}" class="btn btn-outline-info btn-sm">{{ 'Timeline'|trans }}</a>
-                                        <a href="#" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
-                                        <button data-cy="remove-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm" onclick="confirmRemove(this)" data-href="{{ path('admin_organization_remove', {id: item.id}) }}" class="btn btn-outline-danger btn-sm">{{ 'delete'|trans }}</button>
+                                        <a href="{{ path('admin_organization_timeline', {id: item.id}) }}" class="btn btn-outline-primary btn-sm">{{ 'Timeline'|trans }}</a>
+                                        {% if not item.deletedAt %}
+                                            <a href="{{ path('admin_organization_edit', {id: item.id}) }}" data-cy="edit-btn" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
+                                            <button data-cy="remove-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm" onclick="confirmRemove(this)" data-href="{{ path('admin_organization_remove', {id: item.id}) }}" class="btn btn-outline-danger btn-sm">{{ 'delete'|trans }}</button>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

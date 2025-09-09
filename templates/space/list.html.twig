@@ -36,7 +36,7 @@
     </button>
 
     <section class="entity-wrapper">
-        {% include "space/_partials/side-filter.html.twig" %}
+        {% include 'space/_partials/side-filter.html.twig' %}
 
         <div class="entity-container">
             {% include 'space/_partials/tabs/content-tabs.html.twig' %}
@@ -45,5 +45,6 @@
 {% endblock %}
 
 {% block extra_javascripts %}
-    <script type="module" src="{{ asset('js/side-filter.js') }}"></script>
+    <script type="module" src="{{ asset('js/order-select.js') }}"></script>
+    <script type="module" src="{{ asset('js/_components/copy-id.js') }}"></script>
 {% endblock %}

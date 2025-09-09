@@ -5,20 +5,26 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\OrganizationDto;
+use App\Entity\Agent;
 use App\Entity\Organization;
+use App\Enum\OrganizationTypeEnum;
 use App\Exception\Organization\OrganizationResourceNotFoundException;
 use App\Exception\ValidatorException;
 use App\Repository\Interface\OrganizationRepositoryInterface;
+use App\Service\Interface\AgentServiceInterface;
 use App\Service\Interface\FileServiceInterface;
 use App\Service\Interface\OrganizationServiceInterface;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class OrganizationService extends AbstractEntityService implements OrganizationServiceInterface
 {
@@ -32,6 +38,9 @@ readonly class OrganizationService extends AbstractEntityService implements Orga
         private SerializerInterface $serializer,
         private ValidatorInterface $validator,
         private EntityManagerInterface $entityManager,
+        private AgentServiceInterface $agentService,
+        private UrlGeneratorInterface $urlGenerator,
+        private TranslatorInterface $translator,
     ) {
         parent::__construct(
             $this->security,
@@ -45,11 +54,15 @@ readonly class OrganizationService extends AbstractEntityService implements Orga
         );
     }
 
-    public function count(): int
+    public function count(?Agent $createdBy = null): int
     {
-        return $this->repository->count(
-            $this->getDefaultParams()
-        );
+        $criteria = $this->getDefaultParams();
+
+        if ($createdBy) {
+            $criteria['createdBy'] = $createdBy;
+        }
+
+        return $this->repository->count($criteria);
     }
 
     public function create(array $organization): Organization
@@ -156,12 +169,121 @@ readonly class OrganizationService extends AbstractEntityService implements Orga
             $uploadedFile
         );
 
-        $organization->setImage($this->fileService->urlOfImage($uploadedImage->getFilename()));
+        $relativePath = '/uploads'.$this->parameterBag->get(self::DIR_ORGANIZATION_PROFILE).'/'.$uploadedImage->getFilename();
+        $organization->setImage($relativePath);
 
         $organization->setUpdatedAt(new DateTime());
 
         $this->repository->save($organization);
 
         return $organization;
+    }
+
+    public function removeAgent(Uuid $agentId, Uuid $organizationId): void
+    {
+        $organization = $this->get($organizationId);
+        $agent = $this->agentService->get($agentId);
+
+        $organization->removeAgent($agent);
+        $this->repository->save($organization);
+    }
+
+    public function getCsvHeaders(?string $type): array
+    {
+        if ($type === OrganizationTypeEnum::MUNICIPIO->value) {
+            return [
+                'ID',
+                'Código da Cidade',
+                'Nome',
+                'Descrição',
+                'Região',
+                'Estado',
+                'Status do Termo de Adesão',
+                'Termo de Adesão',
+                'Versão do Termo de Adesão',
+                'Email',
+                'Telefone',
+                'Site',
+                'Experiência Habitacional',
+                'Possui PLHIS',
+                'Criado Por',
+                'Criado Em',
+            ];
+        }
+
+        return [
+            'Nome da Organização',
+            'Tipo',
+            'Equadramento',
+            'CNPJ',
+            'E-mail',
+            'Site',
+            'Telefone',
+            'Responsável',
+            'Criado em',
+            'Criado por',
+        ];
+    }
+
+    public function getCsvRow(object $entity, ?string $type): array
+    {
+        if (!$entity instanceof Organization) {
+            throw new InvalidArgumentException('Expected Organization entity.');
+        }
+
+        if ($type === OrganizationTypeEnum::MUNICIPIO->value) {
+            $extraFields = $entity->getExtraFields();
+
+            $formExists = isset($extraFields['form']);
+            $documentLink = $formExists
+                ? $this->urlGenerator->generate(
+                    'regmel_municipality_document_file',
+                    ['id' => $entity->getId()],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                )
+                : '';
+            $status = match ($extraFields['term_status'] ?? '') {
+                'awaiting' => $this->translator->trans('awaiting'),
+                'accepted' => $this->translator->trans('accepted'),
+                'rejected' => $this->translator->trans('rejected'),
+                default => $this->translator->trans('unknown'),
+            };
+
+            return [
+                $entity->getId(),
+                $extraFields['cityCode'] ?? '',
+                $entity->getName(),
+                $entity->getDescription(),
+                $extraFields['region'] ?? '',
+                $extraFields['state'] ?? '',
+                $status ?? '',
+                $documentLink,
+                $extraFields['term_version'] ?? '',
+                $extraFields['email'] ?? '',
+                $extraFields['telefone'] ?? '',
+                $extraFields['site'] ?? '',
+                isset($extraFields['hasHousingExperience'])
+                    ? ($extraFields['hasHousingExperience'] ? 'Sim' : 'Não')
+                    : '',
+                isset($extraFields['hasPlhis'])
+                    ? ($extraFields['hasPlhis'] ? 'Sim' : 'Não')
+                    : '',
+                $entity->getCreatedBy() ? $entity->getCreatedBy()->getName() : '-',
+                $entity->getCreatedAt()->format('d/m/Y H:i:s'),
+            ];
+        }
+
+        return [
+            $entity->getName(),
+            $entity->getExtraFields()['tipo'] ?? '',
+            $entity->getExtraFields()['framework'] ?? '',
+            $entity->getExtraFields()['cnpj'] ?? '',
+            $entity->getExtraFields()['email'] ?? '',
+            $entity->getExtraFields()['site'] ?? '',
+            $entity->getExtraFields()['telefone'] ?? '',
+            $entity->getOwner()->getName() ?? '',
+            $entity->getCreatedAt()->format('d/m/Y H:i:s'),
+            $entity->getCreatedBy() ? $entity->getCreatedBy()->getName() : '-',
+        ];
     }
 }

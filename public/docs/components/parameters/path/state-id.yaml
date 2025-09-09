@@ -1,0 +1,9 @@
+name: 'id'
+in: path
+schema:
+  type: string
+  format: uuid
+  example: '5ae1c5ab-bdc9-4659-9873-cb737df23a0a'
+required: true
+description: O identificador do objeto
+example: '5ae1c5ab-bdc9-4659-9873-cb737df23a0a'

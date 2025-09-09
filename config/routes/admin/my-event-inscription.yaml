@@ -1,0 +1,4 @@
+list:
+  path: /
+  controller: App\Controller\Web\Admin\MyInscriptionEventController::myInscriptions
+  methods: [GET]

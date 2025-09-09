@@ -161,7 +161,8 @@ readonly class OpportunityService extends AbstractEntityService implements Oppor
             $uploadedFile
         );
 
-        $opportunity->setImage($this->fileService->urlOfImage($uploadedImage->getFilename()));
+        $relativePath = '/uploads'.$this->parameterBag->get(self::DIR_OPPORTUNITY_PROFILE).'/'.$uploadedImage->getFilename();
+        $opportunity->setImage($relativePath);
 
         $opportunity->setUpdatedAt(new DateTime());
 

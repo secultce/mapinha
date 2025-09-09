@@ -7,14 +7,15 @@ namespace App\DocumentService;
 use App\Document\AuthTimeline;
 use App\DocumentService\Interface\AuthTimelineDocumentServiceInterface;
 use App\DocumentService\Interface\TimelineDocumentServiceInterface;
+use App\Service\Interface\UserServiceInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Component\Uid\Uuid;
 
 class AuthTimelineDocumentService extends AbstractTimelineDocumentService implements TimelineDocumentServiceInterface, AuthTimelineDocumentServiceInterface
 {
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, UserServiceInterface $userService)
     {
-        parent::__construct($documentManager, AuthTimeline::class);
+        parent::__construct($documentManager, AuthTimeline::class, $userService);
     }
 
     public function getTimelineLoginByUserId(Uuid $userId): array

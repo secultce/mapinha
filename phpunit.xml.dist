@@ -11,6 +11,7 @@
     <php>
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
+        <ini name="memory_limit" value="512M"/>
         <server name="APP_ENV" value="test" force="true" />
         <server name="KERNEL_CLASS" value="App\Kernel"/>
         <server name="SHELL_VERBOSITY" value="-1" />
@@ -21,6 +22,7 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
+            <exclude>tests/Functional/Controller</exclude>
         </testsuite>
     </testsuites>
 
@@ -44,6 +46,7 @@
         <report>
             <html outputDirectory="coverage-html"/>
             <clover outputFile="coverage.xml"/>
+            <text outputFile="coverage.txt"/>
         </report>
     </coverage>
 

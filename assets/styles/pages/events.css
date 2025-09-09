@@ -59,7 +59,7 @@
     color: var(--deep-teal);
 }
 
-.event-languages .language-link {
+.event-cultural-languages .language-link {
     color: var(--bg-initiative);
 }
 
@@ -74,7 +74,7 @@
     font-size: 1.2rem;
 }
 
-.event-languages .badge {
+.event-cultural-languages .badge {
     font-size: 0.75rem;
     font-weight: bold;
     border-radius: 1.25rem;

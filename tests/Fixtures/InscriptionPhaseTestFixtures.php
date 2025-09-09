@@ -17,6 +17,9 @@ class InscriptionPhaseTestFixtures implements TestFixtures
             'agent' => AgentFixtures::AGENT_ID_2,
             'phase' => PhaseFixtures::PHASE_ID_10,
             'status' => 'active',
+            'extraFields' => [
+                'keyTest' => 'valueTest',
+            ],
         ];
     }
 

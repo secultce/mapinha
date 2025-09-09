@@ -49,6 +49,9 @@ SpaceBase:
     isAccessible:
       type: boolean
       description: "Indica se o espaço é acessível"
+    isDraft:
+      type: boolean
+      description: "Indica se o espaço é um rascunho"
     address:
       type: object
       nullable: true

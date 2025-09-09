@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Entity\User;
+use App\Enum\UserStatusEnum;
+use App\Exception\AccountEvent\AccountNotActivatedException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -30,6 +33,11 @@ class AuthenticationApiController extends AbstractApiController
                     'The credentials you provided are invalid. Please try again.',
                 ],
             ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        /* @var $user User */
+        if (UserStatusEnum::AWAITING_CONFIRMATION->value === $user->getStatus()) {
+            throw new AccountNotActivatedException();
         }
 
         $token = $this->jwtManager->create($user);

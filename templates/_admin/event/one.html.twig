@@ -1,0 +1,219 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %}{{ 'control_panel'|trans }} - {{ 'events'|trans }} - {{ 'event'|trans }}{% endblock %}
+
+{% block content %}
+    <section class="d-flex">
+        {% include "_components/side-bar.html.twig" %}
+        {% include '_components/modal-confirm-remove.html.twig' %}
+
+        {% from '/_admin/event/_partials/macro/inscription-status-badge.twig' import statusBadge %}
+
+        <div class="management-content w-100 p-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-body shadow">
+                        <div class="d-flex justify-content-between">
+                            <h2>{{ 'event'|trans }} - {{ event.name }}</h2>
+                        </div>
+
+                        <hr>
+
+                        <ul class="nav nav-tabs" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <div class="d-flex align-items-center">
+                                    <a class="centered-icon-text nav-link active" id="pills-info-tab" data-bs-toggle="pill" href="#pills-info" role="tab" aria-controls="pills-info" aria-selected="true">
+                                        <i class="material-icons">description</i>
+                                        <span class="ms-2 font-title">{{ 'general_data'|trans }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <div class="d-flex align-items-center">
+                                    <a class="centered-icon-text nav-link" id="pills-inscriptions-tab" data-bs-toggle="pill" href="#pills-inscriptions" role="tab" aria-controls="pills-inscriptions" aria-selected="false">
+                                        <i class="material-icons">groups</i>
+                                        <span class="ms-2 font-title">{{ 'inscriptions'|trans }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <div class="d-flex align-items-center">
+                                    <a class="centered-icon-text nav-link" id="pills-activity-tab" data-bs-toggle="pill" href="#pills-activity" role="tab" aria-controls="pills-map" aria-selected="false">
+                                        <i class="material-icons">assignment</i>
+                                        <span class="ms-2 font-title">{{ 'activities'|trans }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <div class="d-flex align-items-center">
+                                    <a class="centered-icon-text nav-link" id="pills-timeline-tab" data-bs-toggle="pill" href="#pills-timeline" role="tab" aria-controls="pills-map" aria-selected="false">
+                                        <i class="material-icons">schedule</i>
+                                        <span class="ms-2 font-title">{{ 'timeline'|trans }}</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade active show" id="pills-info" role="tabpanel" aria-labelledby="pills-info-tab" tabindex="0">
+                                <div class="bd-callout">
+                                    <div class="row gap-2 mb-2">
+                                        <div>
+                                            <label data-cy="event-name" class="fw-bold">{{ 'name' | trans }}:</label> <span>{{ event.name }}</span>
+                                        </div>
+                                        <div>
+                                            <label data-cy="event-subtitle" class="fw-bold">{{ 'subtitle' | trans }}:</label>
+                                            <span>
+                                                {% if event.subtitle is not null %}
+                                                    {{ event.subtitle }}
+                                                {% else %}
+                                                    {{ 'not_informed' | trans }}
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <label data-cy="event-short-description" class="fw-bold">{{ 'short_description' | trans }}:</label>
+                                            <span>
+                                                {% if event.shortDescription is not null %}
+                                                    {{ event.shortDescription }}
+                                                {% else %}
+                                                    {{ 'not_informed' | trans }}
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <label data-cy="event-long-description" class="fw-bold">{{ 'long_description' | trans }}: </label>
+                                            <span>
+                                                {% if event.longDescription is not null %}
+                                                    {{ event.longDescription }}
+                                                {% else %}
+                                                    {{ 'not_informed' | trans }}
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row gap-2 mb-2">
+                                        <div class="col">
+                                            <label data-cy="event-cultural-languages" class="fw-bold">{{ 'cultural_languages' | trans }}: </label>
+                                            <span>
+                                                {% for culturalLanguage in event.culturalLanguages %}
+                                                    <span class="text__entity-details fw-bold">{{ culturalLanguage.name }}</span>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row gap-2 mb-2">
+                                        <div class="col">
+                                            <label data-cy="event-tags" class="fw-bold">Tags ({{ event.tags|length }}) <i class="material-icons text-primary fs-5 align-top">help</i></label>
+                                            <span>
+                                                {% for tag in event.tags %}
+                                                    <span class="text__entity-details fw-bold">{{ tag.name }}</span>
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row gap-2 mb-2">
+                                        <div>
+                                            <label class="fw-bold">Site: </label>
+                                            <span>
+                                                {% if event.site is not null %}
+                                                    <a class="text-decoration-none fw-bold" href="{{ event.site }}" target="_blank">{{ event.site }}</a>
+                                                {% else %}
+                                                    {{ 'not_informed' | trans }}
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <label class="fw-bold">{{ 'phone' | trans }}: </label>
+                                            <span>{{ event.phoneNumber }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade pt-3" id="pills-inscriptions" role="tabpanel" aria-labelledby="pills-inscriptions-tab" tabindex="0">
+                                <div class="d-flex justify-content-end">
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownExportInscriptions" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ 'download'|trans }}
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownExportInscriptions">
+                                            <li><a class="dropdown-item" href="{{ path('admin_event_inscription_download', {id: event.id, format: 'pdf'}) }}">PDF</a></li>
+                                            <li><a class="dropdown-item" href="{{ path('admin_event_inscription_download', {id: event.id, format: 'xls'}) }}">XLS</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <table class="js-grid table table-hover table-striped mt-3">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>{{ 'name'|trans }}</th>
+                                            <th>{{ 'status'|trans }}</th>
+                                            <th>{{ 'created_at'|trans }}</th>
+                                            <th>{{ 'actions'|trans }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for inscription in inscriptions %}
+                                        <tr>
+                                            <td>{{ inscription.agent.name }}</td>
+                                            <td>{{ statusBadge(inscription.status) }}</td>
+                                            <td>{{ inscription.createdAt.format('d/m/Y H:i:s') }}</td>
+                                            <td>
+                                                {% if inscription.status == constant('App\\Enum\\InscriptionEventStatusEnum::ACTIVE').value %}
+                                                    <button
+                                                            data-cy="suspend-inscription-{{ loop.index }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalRemoveConfirm"
+                                                            onclick="confirmRemove(this, '{{ 'suspend'|trans|escape('js') }}')"
+                                                            data-href="{{ path(
+                                                                'admin_event_suspend_inscription',
+                                                                {
+                                                                    id: event.id,
+                                                                    inscription: inscription.id
+                                                                }
+                                                            ) }}"
+                                                            class="btn btn-outline-danger btn-sm"
+                                                    >
+                                                        {{ 'suspend'|trans }}
+                                                    </button>
+                                                    <a
+                                                            data-cy="check-in-inscription-{{ loop.index }}"
+                                                            href="{{ path(
+                                                                'admin_event_check_in_inscription',
+                                                                {
+                                                                    id: event.id,
+                                                                    inscription: inscription.id
+                                                                }
+                                                            ) }}"
+                                                            class="btn btn-outline-success btn-sm"
+                                                    >
+                                                        {{ 'check_in'|trans }}
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade pt-3" id="pills-activity" role="tabpanel" aria-labelledby="pills-activity-tab" tabindex="0">
+                                <span>{{ 'activity'|trans }}</span>
+                            </div>
+                            <div class="tab-pane fade pt-3" id="pills-timeline" role="tabpanel" aria-labelledby="pills-timeline-tab" tabindex="0">
+                                <span>{{ 'timeline'|trans }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/modal-confirm-remove.js') }}"></script>
+    <script type="module" src="{{ asset('js/modal-timeline.js') }}"></script>
+    <script type="module" src="{{ asset('js/grid-init.js') }}"></script>
+{% endblock %}

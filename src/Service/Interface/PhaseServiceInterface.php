@@ -18,4 +18,6 @@ interface PhaseServiceInterface
     public function remove(Uuid $opportunity, Uuid $id): void;
 
     public function update(Uuid $opportunity, Uuid $identifier, array $phase): Phase;
+
+    public function isPhaseActive(Uuid $opportunityId): bool;
 }

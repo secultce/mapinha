@@ -8,7 +8,7 @@ use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\InscriptionOpportunityFixtures;
 use App\DataFixtures\Entity\OpportunityFixtures;
 use App\Entity\InscriptionOpportunity;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\InscriptionOpportunityTestFixtures;
 use App\Tests\Fixtures\OpportunityTestFixtures;
 use DateTimeInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
+class InscriptionOpportunityApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/opportunities/{opportunity}/inscriptions';
 
@@ -34,15 +34,16 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
 
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
-        $organization = $client->getContainer()->get(EntityManagerInterface::class)
+        $inscriptionOpportunity = $client->getContainer()->get(EntityManagerInterface::class)
             ->find(InscriptionOpportunity::class, $requestBody['id']);
 
         $this->assertResponseBodySame([
             'id' => $requestBody['id'],
             'agent' => ['id' => AgentFixtures::AGENT_ID_2],
+            'organization' => null,
             'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_10],
             'status' => 'active',
-            'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
+            'createdAt' => $inscriptionOpportunity->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
         ]);
@@ -117,6 +118,7 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
             [
                 'id' => InscriptionOpportunityFixtures::INSCRIPTION_OPPORTUNITY_ID_25,
                 'agent' => ['id' => AgentFixtures::AGENT_ID_11],
+                'organization' => null,
                 'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_2],
                 'status' => 'active',
                 'createdAt' => '2024-09-04T14:00:00+00:00',
@@ -126,6 +128,7 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
             [
                 'id' => InscriptionOpportunityFixtures::INSCRIPTION_OPPORTUNITY_ID_19,
                 'agent' => ['id' => AgentFixtures::AGENT_ID_6],
+                'organization' => null,
                 'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_2],
                 'status' => 'active',
                 'createdAt' => '2024-09-04T12:00:00+00:00',
@@ -135,6 +138,7 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
             [
                 'id' => InscriptionOpportunityFixtures::INSCRIPTION_OPPORTUNITY_ID_1,
                 'agent' => ['id' => AgentFixtures::AGENT_ID_1],
+                'organization' => null,
                 'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_2],
                 'status' => 'active',
                 'createdAt' => '2024-09-04T11:00:00+00:00',
@@ -144,6 +148,7 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
             [
                 'id' => InscriptionOpportunityFixtures::INSCRIPTION_OPPORTUNITY_ID_17,
                 'agent' => ['id' => AgentFixtures::AGENT_ID_5],
+                'organization' => null,
                 'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_2],
                 'status' => 'active',
                 'createdAt' => '2024-09-04T11:00:00+00:00',
@@ -177,6 +182,7 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
         $this->assertResponseBodySame([
             'id' => InscriptionOpportunityFixtures::INSCRIPTION_OPPORTUNITY_ID_6,
             'agent' => ['id' => AgentFixtures::AGENT_ID_2],
+            'organization' => null,
             'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_7],
             'status' => 'active',
             'createdAt' => '2024-09-12T11:00:00+00:00',
@@ -266,6 +272,7 @@ class InscriptionOpportunityApiControllerTest extends AbstractWebTestCase
         $this->assertResponseBodySame([
             'id' => InscriptionOpportunityFixtures::INSCRIPTION_OPPORTUNITY_ID_7,
             'agent' => ['id' => AgentFixtures::AGENT_ID_2],
+            'organization' => null,
             'opportunity' => ['id' => OpportunityFixtures::OPPORTUNITY_ID_8],
             'status' => 'active',
             'createdAt' => $opportunity->getCreatedAt()->format(DateTimeInterface::ATOM),

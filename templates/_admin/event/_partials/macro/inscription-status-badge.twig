@@ -1,0 +1,11 @@
+{% macro statusBadge(status) %}
+    {% if status == constant('App\\Enum\\InscriptionEventStatusEnum::ACTIVE').value %}
+        <span class="badge bg-primary">{{ 'active'|trans }}</span>
+    {% elseif status == constant('App\\Enum\\InscriptionEventStatusEnum::CANCELLED').value %}
+        <span class="badge bg-danger">{{ 'cancelled'|trans }}</span>
+    {% elseif status == constant('App\\Enum\\InscriptionEventStatusEnum::CONFIRMED').value %}
+        <span class="badge bg-success">{{ 'confirmed'|trans }}</span>
+    {% elseif status == constant('App\\Enum\\InscriptionEventStatusEnum::SUSPENDED').value %}
+        <span class="badge bg-warning text-black">{{ 'suspended'|trans }}</span>
+    {% endif %}
+{% endmacro %}

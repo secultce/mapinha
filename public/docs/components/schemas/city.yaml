@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: "Identificador da cidade"
+  name:
+    type: string
+    maxLength: 100
+    description: "Nome da Cidade"
+  state:
+    type: array
+    description: "Estado da cidade"
+  cityCode:
+    type: string
+    maxLength: 7
+    description: "Código da cidade"

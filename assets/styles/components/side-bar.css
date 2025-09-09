@@ -39,3 +39,8 @@
     line-height: 14.59px;
     text-align: left;
 }
+
+.text-primary {
+    color: var(--bs-primary);
+}
+

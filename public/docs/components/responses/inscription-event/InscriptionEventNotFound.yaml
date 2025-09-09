@@ -1,0 +1,11 @@
+type: object
+properties:
+  error_message:
+    type: string
+    default: "not_found"
+  error_details:
+    type: object
+    properties:
+      description:
+        type: string
+        default: "The requested InscriptionEvent was not found."

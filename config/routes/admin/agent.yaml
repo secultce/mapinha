@@ -17,3 +17,8 @@ timeline:
   path: /{id}/timeline
   controller: App\Controller\Web\Admin\AgentAdminController::timeline
   methods: ['GET']
+
+edit:
+  path: /{id}/editar
+  controller: App\Controller\Web\Admin\AgentAdminController::edit
+  methods: ['GET', 'POST']

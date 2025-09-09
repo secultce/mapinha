@@ -1,0 +1,19 @@
+<div class="modal fade" id="modalConfirmUser" tabindex="-1" aria-labelledby="modal-confirm-user-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modal-confirm-user-title">{{ 'confirm_user'|trans }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'view.user.message.confirm_question'|trans }}</p>
+                <p><strong> {{ 'user'|trans }}: </strong> <span id="user-name"></span></p>
+                <p><strong> {{ 'email'|trans }}: </strong> <span id="user-email"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel'|trans }}</button>
+                <a data-modal-button="confirm-link" href="#" class="btn btn-success">{{ 'confirm'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>

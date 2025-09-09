@@ -7,11 +7,11 @@ namespace App\Tests\Unit\Entity;
 use App\Entity\Event;
 use App\Entity\EventSchedule;
 use App\Helper\DateFormatHelper;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use Symfony\Component\Uid\Uuid;
 
-class EventScheduleTest extends AbstractWebTestCase
+class EventScheduleTest extends AbstractApiTestCase
 {
     public function testGetters(): void
     {

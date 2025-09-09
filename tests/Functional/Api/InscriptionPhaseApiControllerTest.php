@@ -8,7 +8,7 @@ use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\OpportunityFixtures;
 use App\DataFixtures\Entity\PhaseFixtures;
 use App\Entity\InscriptionPhase;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\InscriptionPhaseTestFixtures;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class InscriptionPhaseApiControllerTest extends AbstractWebTestCase
+class InscriptionPhaseApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/opportunities/{opportunity}/phases/{phase}/inscriptions';
 
@@ -39,8 +39,12 @@ class InscriptionPhaseApiControllerTest extends AbstractWebTestCase
         $this->assertResponseBodySame([
             'id' => $requestBody['id'],
             'agent' => ['id' => AgentFixtures::AGENT_ID_2],
+            'organization' => null,
             'phase' => ['id' => PhaseFixtures::PHASE_ID_10],
             'status' => 'active',
+            'extraFields' => [
+                'keyTest' => 'valueTest',
+            ],
             'createdAt' => $inscriptionPhase->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,

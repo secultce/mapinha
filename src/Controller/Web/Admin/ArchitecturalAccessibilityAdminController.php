@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller\Web\Admin;
 
-use App\Controller\Web\AbstractWebController;
-use App\Enum\FlashMessageTypeEnum;
+use App\Enum\UserRolesEnum;
 use App\Exception\ValidatorException;
 use App\Service\Interface\ArchitecturalAccessibilityServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ArchitecturalAccessibilityAdminController extends AbstractWebController
+class ArchitecturalAccessibilityAdminController extends AbstractAdminController
 {
-    public const VIEW_LIST = '_admin/architectural-accessibility/list.html.twig';
-    public const VIEW_ADD = '_admin/architectural-accessibility/create.html.twig';
-    public const VIEW_EDIT = '_admin/architectural-accessibility/edit.html.twig';
-
-    public const CREATE_FORM_ID = 'add-architectural-accessibility';
-    public const EDIT_FORM_ID = 'edit-architectural-accessibility';
+    private const string VIEW_LIST = 'architectural-accessibility/list.html.twig';
+    private const string VIEW_ADD = 'architectural-accessibility/create.html.twig';
+    private const string VIEW_EDIT = 'architectural-accessibility/edit.html.twig';
+    private const string CREATE_FORM_ID = 'add-architectural-accessibility';
+    private const string EDIT_FORM_ID = 'edit-architectural-accessibility';
 
     public function __construct(
         private ArchitecturalAccessibilityServiceInterface $architecturalAccessibilityService,
@@ -30,6 +28,7 @@ class ArchitecturalAccessibilityAdminController extends AbstractWebController
     ) {
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         $accessibilities = $this->architecturalAccessibilityService->list();
@@ -39,9 +38,10 @@ class ArchitecturalAccessibilityAdminController extends AbstractWebController
         ]);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function add(Request $request): Response
     {
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (false === $request->isMethod(Request::METHOD_POST)) {
             return $this->render(self::VIEW_ADD, [
                 'form_id' => self::CREATE_FORM_ID,
             ]);
@@ -49,45 +49,37 @@ class ArchitecturalAccessibilityAdminController extends AbstractWebController
 
         $this->validCsrfToken(self::CREATE_FORM_ID, $request);
 
-        $errors = [];
-
         try {
             $this->architecturalAccessibilityService->create([
                 'id' => Uuid::v4(),
                 'name' => $request->get('name'),
             ]);
 
-            $this->addFlash(
-                FlashMessageTypeEnum::SUCCESS->value,
-                $this->translator->trans('view.architectural_accessibility.message.created')
-            );
+            $this->addFlashSuccess($this->translator->trans('view.architectural_accessibility.message.created'));
+
+            return $this->redirectToRoute('admin_architectural_accessibility_list');
         } catch (ValidatorException $exception) {
             $errors = $exception->getConstraintViolationList();
-        } catch (Exception $exception) {
-            $errors = [$exception->getMessage()];
-        }
 
-        if (!empty($errors)) {
             return $this->render(self::VIEW_ADD, [
                 'errors' => $errors,
                 'form_id' => self::CREATE_FORM_ID,
             ]);
         }
-
-        return $this->redirectToRoute('admin_architectural_accessibility_list');
     }
 
-    public function edit(string $id, Request $request, ValidatorInterface $validator): Response
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    public function edit(Uuid $id, Request $request): Response
     {
         try {
-            $accessibility = $this->architecturalAccessibilityService->getOne(Uuid::fromString($id));
+            $accessibility = $this->architecturalAccessibilityService->getOne($id);
         } catch (Exception $exception) {
-            $this->addFlash(FlashMessageTypeEnum::ERROR->value, $exception->getMessage());
+            $this->addFlashError($exception->getMessage());
 
             return $this->redirectToRoute('admin_architectural_accessibility_list');
         }
 
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (Request::METHOD_POST !== $request->getMethod()) {
             return $this->render(self::VIEW_EDIT, [
                 'accessibility' => $accessibility,
                 'form_id' => self::EDIT_FORM_ID,
@@ -97,14 +89,11 @@ class ArchitecturalAccessibilityAdminController extends AbstractWebController
         $this->validCsrfToken(self::EDIT_FORM_ID, $request);
 
         try {
-            $this->architecturalAccessibilityService->update(Uuid::fromString($id), [
+            $this->architecturalAccessibilityService->update($id, [
                 'name' => $request->get('name'),
             ]);
 
-            $this->addFlash(
-                FlashMessageTypeEnum::SUCCESS->value,
-                $this->translator->trans('view.architectural_accessibility.message.updated')
-            );
+            $this->addFlashSuccess($this->translator->trans('view.architectural_accessibility.message.updated'));
 
             return $this->redirectToRoute('admin_architectural_accessibility_list');
         } catch (ValidatorException $exception) {
@@ -116,18 +105,12 @@ class ArchitecturalAccessibilityAdminController extends AbstractWebController
         }
     }
 
-    public function remove(string $id): Response
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    public function remove(?Uuid $id): Response
     {
-        try {
-            $this->architecturalAccessibilityService->remove(Uuid::fromString($id));
+        $this->architecturalAccessibilityService->remove($id);
 
-            $this->addFlash(
-                FlashMessageTypeEnum::SUCCESS->value,
-                $this->translator->trans('view.architectural_accessibility.message.deleted')
-            );
-        } catch (Exception $exception) {
-            $this->addFlash(FlashMessageTypeEnum::ERROR->value, $exception->getMessage());
-        }
+        $this->addFlashSuccess($this->translator->trans('view.architectural_accessibility.message.removed'));
 
         return $this->redirectToRoute('admin_architectural_accessibility_list');
     }

@@ -1,0 +1,133 @@
+<div class="modal fade" id="proposalDetails" tabindex="-1" aria-labelledby="proposalDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="proposalDetailsLabel">Proposta - <span id="proposal-name-title"></span></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="text-primary"> {{ 'information_location' | trans }}</h5>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'region'|trans}}</strong>
+                        </div>
+                        <p id="region-name"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'state'|trans}}</strong>
+                        </div>
+                        <p id="state-name"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'city'|trans}}</strong>
+                        </div>
+                        <p id="city-name"></p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h5 class="text-primary"> {{ 'proponent_information' | trans }}</h5>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'company'|trans}}</strong>
+                        </div>
+                        <p id="company-name"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'created_by'|trans}}</strong>
+                        </div>
+                        <p id="created-by"></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'date'|trans}}</strong>
+                        </div>
+                        <p id="created-at"></p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h5 class="text-primary"> {{ 'legal_information' | trans}} </h5>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'areas_intervention' | trans }}</strong>
+                        </div>
+                        <p id="proposal-name"></p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="mt-4 mb-2">
+                            <strong>A área é caracterizada como:</strong>
+                        </div>
+                        <p id="area-characteristic"></p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h5 class="text-primary"> {{ 'areas_information' | trans}} </h5>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'estimated_polygon' | trans }}</strong>
+                        </div>
+                        <p><span id="area-size"></span>  m²</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'number_households' | trans}}</strong>
+                        </div>
+                        <p id="quantity-houses"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'cost_household' | trans }}</strong>
+                        </div>
+                        <p id="price-per-household"></p>
+                    </div>
+                    <div class="col-md-6 align-items-end">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'global_proposal' | trans }}</strong>
+                        </div>
+                        <p id="total-price"></p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <h5 class="text-primary"> {{ 'download_archive' | trans }} </h5>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'csv.header.project_file' | trans }}</strong>
+                        </div>
+                        <div id="project-file">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mt-4 mb-2">
+                            <strong>{{ 'areas_polygon' | trans }}</strong>
+                        </div>
+                        <div id="map-file">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

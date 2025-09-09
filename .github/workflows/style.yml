@@ -16,10 +16,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Set up PHP
         uses: erkenes/php-cs-fixer-action@main
         with:
           args: '--dry-run --diff -vvv'
+
+      - name: Remove o .env file
+        run: rm .env
+
 
   phpcs:
     name: Run PHP_CodeSniffer
@@ -34,8 +41,11 @@ jobs:
           php-version: '8.4'
           tools: composer:v2
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist
+        run: composer install --ignore-platform-req=ext-mongodb --no-progress --no-suggest --prefer-dist
 
       - name: Install PHP_CodeSniffer
         run: composer global require "squizlabs/php_codesniffer=*"
@@ -48,3 +58,6 @@ jobs:
 
       - name: Run PHP_CodeSniffer
         run: ~/.composer/vendor/bin/phpcs -n
+
+      - name: Remove o .env file
+        run: rm .env

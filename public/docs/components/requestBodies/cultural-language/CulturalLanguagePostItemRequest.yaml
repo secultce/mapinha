@@ -1,0 +1,9 @@
+type: object
+allOf:
+  - type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Identificador da linguagem cultural
+  - $ref: './CommonDefinitions.yaml#/CulturalLanguageBase'

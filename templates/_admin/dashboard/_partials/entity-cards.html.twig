@@ -1,100 +1,32 @@
 <section class="row">
-    <div class="col-md-3">
-        <div class="card-dashboard" data-cy="agent-card-dashboard">
-            <div class="d-flex align-items-center">
-                <div class="bg-card-dashboard bg-agent">
-                    <i class="material-icons">group</i>
-                </div>
-                <span class="fw-bold fs-5">{{ "agents" | trans }}</span>
-            </div>
-            <div class="align-self-center d-flex flex-column align-items-center gap-0">
-                <span class="fw-bold fs-1">{{ totalAgents }}</span>
-                <span class="fw-bold">{{ "agents" | trans }}</span>
-            </div>
-            <a role="button" href="{{ path('admin_agent_create') }}" class="d-flex align-items-center justify-content-center">
-                <i class="material-icons">add</i>
-                <span class="fs-5 fw-bold">{{ "create" | trans }}</span>
-            </a>
-        </div>
-    </div>
+    {% for key, item in env.aurora.dashboard.cards %}
+        {% set hasAccess = false %}
 
-    <div class="col-md-3">
-        <div class="card-dashboard" data-cy="opportunity-card-dashboard">
-            <div class="d-flex align-items-center">
-                <div class="bg-card-dashboard bg-opportunity">
-                    <i class="iconify" data-icon="mdi:lightbulb-on"></i>
-                </div>
-                <span class="fw-bold fs-5">{{ "opportunities" | trans }}</span>
-            </div>
-            <div class="align-self-center d-flex flex-column align-items-center gap-0">
-                <span class="fw-bold fs-1">{{ totalOpportunities }}</span>
-                <span class="fw-bold">{{ "opportunities" | trans }}</span>
-            </div>
-            <a role="button" href="{{ path('admin_opportunity_create') }}" class="d-flex align-items-center justify-content-center">
-                <i class="material-icons">add</i>
-                <span class="fs-5 fw-bold">{{ "create" | trans }}</span>
-            </a>
-        </div>
-    </div>
+        {% for role in app.user.roles %}
+            {% if role in item.acl %}
+                {% set hasAccess = true %}
+            {% endif %}
+        {% endfor %}
 
-    {% if env.aurora.modules.events %}
-        <div class="col-md-3">
-            <div class="card-dashboard" data-cy="event-card-dashboard">
+        {% if hasAccess == true %}
+        <div class="col-lg-3 col-sm-5">
+            <div class="card-dashboard" data-cy="{{ key }}-card-dashboard">
                 <div class="d-flex align-items-center">
-                    <div class="bg-card-dashboard bg-event">
-                        <i class="material-icons">event</i>
+                    <div class="bg-card-dashboard" style="--bg-dashboard-color: {{ item.color }}">
+                        <i class="material-icons">{{ item.icon }}</i>
                     </div>
-                    <span class="fw-bold fs-5">{{ "events" | trans }}</span>
+                    <span class="fw-bold fs-5">{{ item.title | trans }}</span>
                 </div>
                 <div class="align-self-center d-flex flex-column align-items-center gap-0">
-                    <span class="fw-bold fs-1">{{ totalEvents }}</span>
-                    <span class="fw-bold">{{ "events" | trans }}</span>
+                    <span class="fw-bold fs-1">{{ totals[item.total_key] }}</span>
+                    <span class="fw-bold">{{ item.subtitle | trans }}</span>
                 </div>
-                <a role="button" href="{{ path('admin_event_create') }}" class="d-flex align-items-center justify-content-center">
-                    <i class="material-icons">add</i>
-                    <span class="fs-5 fw-bold">{{ "create" | trans }}</span>
+                <a role="button" href="{{ path(item.action.route) }}" class="d-flex align-items-center justify-content-center">
+                    <i class="material-icons">{{ item.action.text }}</i>
+                    <span class="fs-5 fw-bold">{{ item.action.text | trans }}</span>
                 </a>
             </div>
         </div>
-    {% endif %}
-
-    {% if env.aurora.modules.events %}
-        <div class="col-md-3">
-            <div class="card-dashboard" data-cy="space-card-dashboard">
-                <div class="d-flex align-items-center">
-                    <div class="bg-card-dashboard bg-space">
-                        <i class="material-icons">domain</i>
-                    </div>
-                    <span class="fw-bold fs-5">{{ "spaces" | trans }}</span>
-                </div>
-                <div class="align-self-center d-flex flex-column align-items-center gap-0">
-                    <span class="fw-bold fs-1">{{ totalSpaces }}</span>
-                    <span class="fw-bold">{{ "spaces" | trans }}</span>
-                </div>
-                <a role="button" href="{{ path('admin_space_create') }}" class="d-flex align-items-center justify-content-center">
-                    <i class="material-icons">add</i>
-                    <span class="fs-5 fw-bold">{{ "create" | trans }}</span>
-                </a>
-            </div>
-        </div>
-    {% endif %}
-
-    <div class="col-md-3">
-        <div class="card-dashboard" data-cy="initiative-card-dashboard">
-            <div class="d-flex align-items-center">
-                <div class="bg-card-dashboard bg-initiative">
-                    <i class="material-icons">article</i>
-                </div>
-                <span class="fw-bold fs-5">{{ "initiatives" | trans }}</span>
-            </div>
-            <div class="align-self-center d-flex flex-column align-items-center gap-0">
-                <span class="fw-bold fs-1">{{ totalInitiatives }}</span>
-                <span class="fw-bold">{{ "initiatives" | trans }}</span>
-            </div>
-            <a role="button" href="{{ path('admin_initiative_create') }}" class="d-flex align-items-center justify-content-center">
-                <i class="material-icons">add</i>
-                <span class="fs-5 fw-bold">{{ "create" | trans }}</span>
-            </a>
-        </div>
-    </div>
+        {% endif %}
+    {% endfor %}
 </section>

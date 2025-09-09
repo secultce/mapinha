@@ -22,6 +22,7 @@ class SpaceTestFixtures implements TestFixtures
             'parent' => SpaceFixtures::SPACE_ID_1,
             'maxCapacity' => 100,
             'isAccessible' => true,
+            'isDraft' => false,
         ];
     }
 

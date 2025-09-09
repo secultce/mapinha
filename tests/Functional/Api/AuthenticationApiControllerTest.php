@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Api;
 
 use App\DataFixtures\Entity\UserFixtures;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticationApiControllerTest extends AbstractWebTestCase
+class AuthenticationApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/login';
     private const string AGENT_URL = '/api/agents';
@@ -35,6 +35,28 @@ class AuthenticationApiControllerTest extends AbstractWebTestCase
 
         self::assertArrayHasKey('token', $responseArray);
         self::assertSame($requestBody['username'], $responseArray['user']);
+    }
+
+    public function testCannotLoginIfWaitingActivation(): void
+    {
+        $requestBody = [
+            'username' => 'abnercarvalho@example.com',
+            'password' => UserFixtures::DEFAULT_PASSWORD,
+        ];
+
+        $client = self::createClient();
+
+        $client->request(Request::METHOD_POST, self::BASE_URL, server: [
+            'HTTP_ACCEPT' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($requestBody));
+
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+
+        $responseArray = self::getCurrentResponseArray();
+
+        self::assertSame($responseArray['error_message'], 'error_general');
+        self::assertSame($responseArray['error_details']['description'], 'Your account is not activated, please contact the administrator or verify your email.');
     }
 
     public function testCannotLogin(): void

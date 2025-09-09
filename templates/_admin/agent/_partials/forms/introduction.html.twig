@@ -1,0 +1,103 @@
+<div class="entity-imgs">
+    <div class="banner">
+        <input class="banner-input" type="file" accept="image/*" />
+        <label for="banner-input" class="banner-label">
+            <span class="iconify entity-photo me-2" data-icon="tabler:camera-plus"></span>
+            {{ 'add_cover_image' | trans }}
+        </label>
+    </div>
+
+    <div class="profile-pic">
+        <label for="profile-input" class="profile-label">
+            <span class="iconify entity-photo" data-icon="tabler:camera-plus"></span>
+            <input id="profile-input" type="file" accept="image/*" />
+        </label>
+    </div>
+</div>
+
+<div class="edit-entity mt-5 pt-4">
+    <div>
+        <label for="name" class="required">
+            {{ 'profile_name' | trans }}
+        </label>
+        <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill" ></span>
+        <input type="text" class="form-control" id="name" name="name" value="{{ agent.name }}" placeholder="{{ 'profile_name' | trans }}" required>
+    </div>
+
+    <div class="mt-4">
+        {% include '_components/tags-selector.html.twig' with {
+            inputName: 'areas_of_expertise',
+            inputLabel: 'areas_of_expertise'|trans,
+            items: [],
+            tags: [],
+            required: false,
+            questionFill: true,
+        } %}
+    </div>
+
+    <div class="mt-4">
+        {% include '_components/tags-selector.html.twig' with {
+            inputName: 'roles_in_culture',
+            inputLabel: 'roles_in_culture'|trans,
+            items: [],
+            tags: [],
+            required: false,
+            questionFill: true,
+        } %}
+    </div>
+
+    <div class="mt-4">
+        {% include '_components/tags-selector.html.twig' with {
+            inputName: 'tags',
+            inputLabel: 'tags'|trans,
+            items: [],
+            tags: [],
+            required: false,
+            questionFill: true,
+        } %}
+    </div>
+
+    <div class="mt-4">
+        <label for="short-description">{{ 'short_description' | trans }}</label>
+        <textarea class="form-control" id="short-description" name="short_description" placeholder="{{ 'short_description' | trans }}" maxlength="400" required>{{ agent.shortBio }}</textarea>
+    </div>
+
+    <div class="mt-4">
+        <label for="long-description">{{ 'long_description' | trans }}</label>
+        <textarea class="form-control" id="long-description" name="long_description" placeholder="{{ 'long_description' | trans }}">{{ agent.longBio }}</textarea>
+    </div>
+
+    <div class="row mt-4">
+        <p class="mb-0 fw-bold">
+            {{ 'site' | trans }}
+        </p>
+        <div class="col-md-6">
+            <label class="form-text fw-normal" for="site">Link (URL)</label>
+            <input type="text" class="form-control" id="site" name="site" placeholder="https://www.site.com">
+        </div>
+        <div class="col-md-6">
+            <label class="form-text fw-normal" for="link_description">
+                {{ 'link_description' | trans }}
+            </label>
+            <input type="text" class="form-control" id="link_description" name="link_description" placeholder="{{ 'type_here' | trans }}">
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <label for="public_email">
+                {{ 'public_email' | trans }}
+            </label>
+            <input type="text" class="form-control" id="public_email" name="public_email" placeholder="email@email.com">
+        </div>
+        <div class="col-md-6">
+            <label for="public_phone">
+                {{ 'public_phone' | trans }} (com DDD)
+            </label>
+            <input type="text" class="form-control" id="public_phone" name="public_phone" placeholder="(00) 00000-0000">
+        </div>
+    </div>
+</div>
+{% block extra_javascripts %}
+    <script src="{{ asset('js/_components/tags-selector.js') }}"></script>
+{% endblock %}

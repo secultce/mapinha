@@ -1,0 +1,16 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: Identificador único da linguagem cultural.
+  name:
+    type: string
+    maxLength: 50
+    description: Nome da linguagem cultural.
+    example: 'Arte e Música'
+  description:
+    type: string
+    maxLength: 255
+    description: Descrição da linguagem cultural.
+    example: 'Pintura, escultura, literatura, dança, teatro, música e outras formas artísticas que comunicam ideias, histórias e sentimentos.'

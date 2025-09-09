@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Web\Admin;
 
+use App\Enum\UserRolesEnum;
 use App\Exception\ValidatorException;
 use App\Service\Interface\SpaceTypeServiceInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -26,6 +28,7 @@ class SpaceTypeAdminController extends AbstractAdminController
     ) {
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         $spaceTypes = $this->service->list();
@@ -35,6 +38,7 @@ class SpaceTypeAdminController extends AbstractAdminController
         ]);
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function create(Request $request): Response
     {
         if (false === $request->isMethod(Request::METHOD_POST)) {
@@ -68,6 +72,21 @@ class SpaceTypeAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_space_type_list');
     }
 
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    public function remove(string $id): Response
+    {
+        try {
+            $this->service->remove(Uuid::fromString($id));
+
+            $this->addFlashSuccess($this->translator->trans('space_type_deleted'));
+        } catch (Exception $exception) {
+            $this->addFlashError($exception->getMessage());
+        }
+
+        return $this->redirectToRoute('admin_space_type_list');
+    }
+
+    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function edit(Request $request, string $id): Response
     {
         try {

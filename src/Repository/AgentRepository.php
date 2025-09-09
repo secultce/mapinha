@@ -22,4 +22,19 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
 
         return $agent;
     }
+
+    public function getMainAgentByEmail(string $email): ?Agent
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        return $qb->select('a')
+            ->from(Agent::class, 'a')
+            ->innerJoin('a.user', 'u')
+            ->where('u.email = :email')
+            ->andWhere('a.main = true')
+            ->setParameter('email', $email)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

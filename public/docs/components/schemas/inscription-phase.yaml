@@ -28,6 +28,13 @@ properties:
       - 'active'
       - 'inactive'
       - 'suspended'
+  extraFields:
+    type: object
+    description: "Dados extras da inscrição"
+    example: {
+      "field1": "value1",
+      "field2": "value2"
+    }
   createdAt:
     $ref: '../common-types/date.yaml'
     description: "Data e hora da criação da inscrição na oportunidade"

@@ -9,6 +9,7 @@ use App\Entity\Space;
 use App\Validator\Constraints\Exists;
 use App\Validator\Constraints\Json;
 use App\Validator\Constraints\NotNull;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Image;
@@ -97,17 +98,20 @@ class SpaceDto
     public mixed $phoneNumber = null;
 
     #[Sequentially([
-        new NotBlank(groups: [self::CREATE]),
-        new NotNull(groups: [self::UPDATE]),
         new Type('integer', groups: [self::CREATE, self::UPDATE]),
-        new Range(min: 1, groups: [self::CREATE, self::UPDATE]),
+        new Range(min: 1, groups: [self::UPDATE]),
     ])]
     public mixed $maxCapacity;
 
     #[Sequentially([
-        new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
-        new Type('boolean', groups: [self::CREATE, self::UPDATE]),
+        new Type(Types::BOOLEAN, groups: [self::CREATE, self::UPDATE]),
     ])]
     public mixed $isAccessible;
+
+    #[Sequentially([
+        new NotNull(groups: [self::UPDATE]),
+        new Type(Types::BOOLEAN, groups: [self::CREATE, self::UPDATE]),
+    ])]
+    public mixed $isDraft = true;
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\SpaceTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 
-class SpaceDocumentTest extends AbstractWebTestCase
+class SpaceDocumentTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromSpaceDocumentShouldBeSuccessful(): void
     {

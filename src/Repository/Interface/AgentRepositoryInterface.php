@@ -9,4 +9,6 @@ use App\Entity\Agent;
 interface AgentRepositoryInterface
 {
     public function save(Agent $agent): Agent;
+
+    public function getMainAgentByEmail(string $email): ?Agent;
 }

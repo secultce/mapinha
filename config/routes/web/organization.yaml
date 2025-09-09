@@ -1,9 +1,14 @@
 list:
-  path: /organizacoes
+  path: /
   controller: App\Controller\Web\OrganizationWebController::list
   methods: ['GET']
 
 getOne:
-  path: /organizacoes/{id}
+  path: /{id}
   controller: App\Controller\Web\OrganizationWebController::getOne
   methods: ['GET']
+
+invite:
+  resource: 'invite.yaml'
+  prefix: /{id}/convites
+  name_prefix: invite_

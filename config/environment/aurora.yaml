@@ -1,5 +1,13 @@
 name: Aurora
 author: SECULT Ceará
+email:
+  address: suporteaurora@email.com
+  logo: /img/aurora-horizontal.png
+  rodape: ""
+  footer: >
+    Plataforma Aurora <br>
+    Este é um email automático, por favor não responda
+visit_repository: true
 logo:
   horizontal:
     path: img/aurora-horizontal.png
@@ -7,6 +15,18 @@ logo:
   vertical:
     path: img/aurora-horizontal.png
     width: 250
+register:
+  any: true
+terms:
+  lgpd:
+    title: title
+    text: texto lgpd
+  image_authorization:
+    title: title
+    text: texto imagem
+  privacy_policy:
+    title: title
+    text: texto policy
 modules:
   organizations: Organizações
   agents: Agentes
@@ -15,11 +35,146 @@ modules:
   spaces: Espaços
   initiatives: Iniciativas
 
+navbar:
+  web_home_homepage:
+    text: home
+    icon: home
+    color: "#224638"
+  web_opportunity_list:
+    text: opportunities
+    icon: lightbulb
+    color: "#E70DCB"
+  web_agent_list:
+    text: agents
+    icon: group
+    color: "#F59E00"
+  web_organization_list:
+    text: organizations
+    icon: corporate_fare
+    color: "#6A5ACD"
+  web_event_list:
+    text: events
+    icon: event
+    color: "#36B39E"
+  web_space_list:
+    text: spaces
+    icon: apartment
+    color: "#22A638"
+  web_initiative_list:
+    text: initiatives
+    icon: article
+    color: "#0074C1"
+
+dropdown:
+  control_panel:
+    title: "control_panel"
+    enabled: true
+    items:
+      - text: "control_panel"
+        icon: touch_app
+        route: "admin_dashboard"
+
+  notices_opportunities:
+    title: "footer.notices_opportunities"
+    enabled: true
+    items:
+      - text: "my_opportunities"
+        icon: lightbulb
+        route: "admin_opportunity_list"
+      - text: "my_subscriptions"
+        icon: assignment
+        route: "admin_registration_list"
+      - text: "my_reviews"
+        icon: grading
+        route: "admin_review_list"
+
+  management:
+    title: "management"
+    enabled: true
+    items:
+      - text: "my_agents"
+        icon: group
+        route: "admin_agent_list"
+      - text: "my_spaces"
+        icon: domain
+        route: "admin_space_list"
+      - text: "my_events"
+        icon: event
+        route: "admin_event_list"
+      - text: "my_initiatives"
+        icon: article
+        route: "admin_initiative_list"
+
+dashboard:
+  cards:
+    agents:
+      acl: [ROLE_USER]
+      title: Agentes
+      subtitle: Agentes
+      icon: group
+      color: "#F59E00"
+      action:
+        text: create
+        route: "admin_agent_create"
+      total_key: totalAgents
+    opportunities:
+      acl: [ROLE_USER]
+      title: Oportunidades
+      subtitle: Oportunidades
+      icon: lightbulb
+      color: "#E70DCB"
+      action:
+        text: create
+        route: "admin_opportunity_create"
+      total_key: totalOpportunities
+    organizations:
+      acl: [ROLE_USER]
+      title: Organizações
+      subtitle: Organizações
+      icon: corporate_fare
+      color: "#6A5ACD"
+      action:
+        text: create
+        route: "admin_organization_add"
+      total_key: totalOrganizations
+    events:
+      acl: [ROLE_USER]
+      title: Eventos
+      subtitle: Eventos
+      icon: event
+      color: "#36B39E"
+      action:
+        text: create
+        route: "admin_event_create"
+      total_key: totalEvents
+    spaces:
+      acl: [ROLE_USER]
+      title: Espaços
+      subtitle: Espaços
+      icon: apartment
+      color: "#22A638"
+      action:
+        text: create
+        route: "admin_space_create"
+      total_key: totalSpaces
+    initiatives:
+      acl: [ROLE_USER]
+      title: Iniciativas
+      subtitle: Iniciativas
+      icon: article
+      color: "#0074C1"
+      action:
+        text: create
+        route: "admin_initiative_create"
+      total_key: totalInitiatives
+  inscriptions_area: true
+
 sidebar:
   dashboard:
     title: menu
     items:
       admin_dashboard:
+        acl: ['ROLE_USER']
         icon: dashboard
         text: control_panel
 #        color: text-info
@@ -28,19 +183,31 @@ sidebar:
     title: my_opportunities
     items:
       admin_registration_list:
+        acl: ['ROLE_USER']
         icon: app_registration
         text: my_subscriptions
       admin_accountability_list:
+        acl: ['ROLE_USER']
         icon: payments
         text: accountability
+
+  my_events:
+    title: my_events
+    items:
+      admin_my_event_list:
+        acl: ['ROLE_USER']
+        icon: app_registration
+        text: my_subscriptions
 
   notice_opportunity:
     title: footer.notices_opportunities
     items:
       admin_opportunity_list:
+        acl: ['ROLE_USER']
         icon: diversity_2
         text: my_opportunities
       admin_review_list:
+        acl: ['ROLE_USER']
         icon: manage_search
         text: my_reviews
 
@@ -48,18 +215,23 @@ sidebar:
     title: management
     items:
       admin_agent_list:
+        acl: ['ROLE_USER']
         icon: people
         text: my_agents
       admin_event_list:
+        acl: ['ROLE_USER']
         icon: event
         text: my_events
       admin_space_list:
+        acl: ['ROLE_USER']
         icon: apartment
         text: my_spaces
       admin_initiative_list:
+        acl: ['ROLE_USER']
         icon: article
         text: my_initiatives
       admin_organization_list:
+        acl: ['ROLE_USER']
         icon: diversity_3
         text: my_organizations
 
@@ -67,32 +239,45 @@ sidebar:
     title: admin_options
     items:
       admin_seal_list:
+        acl: ['ROLE_USER']
         icon: bookmark
         text: seals
       admin_subsite_list:
+        acl: ['ROLE_USER']
         icon: account_tree
         text: subsites
       admin_user_list:
+        acl: ['ROLE_USER']
         icon: manage_accounts
         text: users
       admin_faq_list:
+        acl: ['ROLE_USER']
         icon: quiz
         text: faq
       admin_role_list:
+        acl: ['ROLE_USER']
         icon: newspaper
         text: functions
       admin_activity_area_list:
+        acl: ['ROLE_USER']
         icon: category
         text: area_of_activity
       admin_tag_list:
+        acl: ['ROLE_USER']
         icon: label
         text: tags
       admin_space_type_list:
+        acl: ['ROLE_USER']
         icon: room_preferences
         text: space_type
       admin_architectural_accessibility_list:
+        acl: ['ROLE_USER']
         icon: accessibility
         text: architectural_accessibility
+      admin_cultural_language_list:
+        acl: ['ROLE_USER']
+        icon: language
+        text: cultural_language
 
 homepage:
   sections:
@@ -101,10 +286,12 @@ homepage:
       title:
       subtitle:
       description:
-      background:
       image:
     register:
       enabled: true
+      color: "var(--bg-green)"
+    banner:
+      enabled: false
     opportunities:
       enabled: true
     modules:
@@ -117,4 +304,9 @@ homepage:
       color:
     contribute:
       enabled: true
+    footer:
+      discover: false
+      control_panel: false
+      help: true
+      social_network: true
 

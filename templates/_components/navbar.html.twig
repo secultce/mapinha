@@ -22,111 +22,91 @@
 
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-entities fs-5 flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link home" aria-current="page" href="{{ path('web_home_homepage') }}">
-                            <i class="material-icons navbar-icons">home</i>
-                            <p>{{ 'home'|trans }}</p>
-                        </a>
-                    </li>
-
-                    {% if (env.aurora.modules.opportunities != '' ) %}
+                    {% set current_route = app.request.attributes.get('_route')%}
+                    {% for route, item in env.aurora.navbar %}
+                        {% set activeClass = (current_route == route) ? 'active' : '' %}
                         <li class="nav-item">
-                            <a class="nav-link opportunity" aria-current="page" href="{{ path('web_opportunity_list') }}">
-                                <i class="material-icons navbar-icons">lightbulb</i>
-                                <p>{{env.aurora.modules.opportunities ?? 'opportunities'|trans }}</p>
+                            <a class="nav-link" style="--hover-color: {{ item.color }};" aria-current="page" href="{{ path(route) }}">
+                                <i class="material-icons navbar-icons {{ activeClass }}">{{ item.icon }}</i>
+                                <p class="{{ activeClass }}">{{ item.text | trans }}</p>
                             </a>
                         </li>
-                    {% endif %}
-
-                    {% if (env.aurora.modules.agents != '' ) %}
-                        <li class="nav-item">
-                            <a class="nav-link agent" aria-current="page" href="{{ path('web_agent_list') }}">
-                                <i class="material-icons navbar-icons">group</i>
-                                <p>{{ env.aurora.modules.agents ?? 'agents'|trans }}</p>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if (env.aurora.modules.organizations != '' ) %}
-                        <li class="nav-item">
-                            <a class="nav-link organization" aria-current="page" href="{{ path('web_organization_list') }}">
-                                <i class="material-icons navbar-icons">corporate_fare</i>
-                                <p>{{ env.aurora.modules.organizations ?? 'organizations'|trans }}</p>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if (env.aurora.modules.events != '' ) %}
-                        <li class="nav-item">
-                            <a class="nav-link event" aria-current="page" href="{{ path('web_event_list') }}">
-                                <i class="material-icons navbar-icons">event</i>
-                                <p>{{ env.aurora.modules.events ?? 'events'|trans }}</p>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if (env.aurora.modules.spaces != '' ) %}
-                        <li class="nav-item">
-                            <a class="nav-link space" aria-current="page" href="{{ path('web_space_list') }}">
-                                <i class="material-icons navbar-icons">domain</i>
-                                <p>{{ env.aurora.modules.spaces ?? 'spaces'|trans }}</p>
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if (env.aurora.modules.initiatives != '' ) %}
-                        <li class="nav-item">
-                            <a class="nav-link project" aria-current="page" href="{{ path('web_initiative_list') }}">
-                                <i class="material-icons navbar-icons">article</i>
-                                <p>{{ env.aurora.modules.initiatives ?? 'initiatives'|trans }}</p>
-                            </a>
-                        </li>
-                    {% endif %}
+                    {% endfor %}
                 </ul>
+
+                {% if app.user %}
+                <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown dropdown-notification">
+                        <button class="btn btn-light d-flex align-items-center position-relative gap-2" id="notificationDropdown">
+                            <span class="fw-semibold text-dark small">{{ 'notifications' | trans }}</span>
+                            <span class="d-flex align-items-center position-relative">
+                                    <span class="material-icons">notifications</span>
+                                    <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle p-1" style="font-size: 0.7rem;">2</span>
+                                </span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="notificationDropdown" style="min-width: 400px;">
+                            <li>
+                                <div class="dropdown-header">
+                                    <strong>{{ 'your_notifications' | trans }}</strong>
+                                </div>
+                                <div class="px-3 py-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Você <strong>aprovou</strong> o cadastro da empresa <strong>Empresa Teste AI</strong>.</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1 mb-1" style="line-height: 1;">
+                                        <span class="material-icons" style="font-size: 1rem;">help_outline</span>
+                                        <a href="#" class="text-decoration-underline small">{{ 'what_mean' | trans }}</a>
+                                    </div>
+                                    <small class="text-muted">Aprovado em 20/08/2024 às 09h00</small>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <div class="px-3 py-2">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>O município <strong>Recife</strong> atualizou seus dados cadastrais.</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1 mb-1" style="line-height: 1;">
+                                        <span class="material-icons" style="font-size: 1rem;">help_outline</span>
+                                        <a href="#" class="text-decoration-underline small">{{ 'view_changes' | trans }}</a>
+                                    </div>
+                                    <small class="text-muted">Atualizado em 17/07/2024 às 15h12</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
 
                 {% if app.user.name is defined %}
                     <div class="dropdown notifications-login">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton">
                             <span>{{ app.user.name|split(' ')|first }}</span>
-                            <img src="{{ asset(app.user.image ?? 'img/allan.png') }}" alt="{{ 'profile-picture'|trans }}" class="profile-picture">
+                            <img src="{{ asset(app.user.image ?? 'img/user.png') }}" alt="{{ 'profile-picture'|trans }}" class="profile-picture">
                         </button>
                         <div class="dropdown-menu dropdown-menu-end" id="customDropdown">
                             <div class="dropdown-content">
                                 <div class="menu-column w-100">
-                                    <div class="dropdown-header">{{ 'control_panel' | trans }}</div>
-                                    <a class="dropdown-item" href="{{ path('admin_dashboard') }}">
-                                        <i class="material-icons">touch_app</i> {{ 'control_panel' | trans }}
-                                    </a>
-                                    <div class="dropdown-header">{{ 'footer.notices_opportunities' | trans }}</div>
-                                    <a class="dropdown-item" href="{{ path('admin_opportunity_list') }}">
-                                        <i class="material-icons">lightbulb</i> {{ 'my_opportunities' | trans }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ path('admin_registration_list') }}">
-                                        <i class="material-icons">assignment</i> {{ 'my_subscriptions' | trans }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ path('admin_dashboard') }}">
-                                        <i class="material-icons">grading</i> {{ 'my_reviews' | trans }}
-                                    </a>
-                                    <div class="dropdown-header">{{ 'management' | trans }}</div>
-                                    <a class="dropdown-item" href="{{ path('admin_agent_list') }}">
-                                        <i class="material-icons">group</i> {{ 'my_agents' | trans }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ path('admin_space_list') }}">
-                                        <i class="material-icons">domain</i> {{ 'my_spaces' | trans }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ path('admin_event_list') }}">
-                                        <i class="material-icons">event</i> {{ 'my_events' | trans }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ path('admin_initiative_list') }}">
-                                        <i class="material-icons">article</i> {{ 'my_initiatives' | trans }}
-                                    </a>
+                                    {% for sectionKey, section in env.aurora.dropdown %}
+                                        {% if section.enabled and section.items is not empty %}
+                                            <h6 class="dropdown-header">{{ section.title | trans }}</h6>
+                                            {% for item in section.items %}
+                                                <a class="dropdown-item" href="{{ path(item.route) }}">
+                                                    <i class="material-icons">{{ item.icon }}</i>
+                                                    {{ item.text | trans }} 
+                                                </a>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
+
                                 <div class="menu-column w-100">
                                     <div class="dropdown-header">{{ 'other_options' | trans }}</div>
                                     <a class="dropdown-item" href="{{ path('admin_user_account_privacy', {id: app.user.id}) }}">
                                         <i class="material-icons">settings</i> {{ 'account_privacy' | trans }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ path('admin_dashboard') }}">
+                                    <a class="dropdown-item" href="{{ path('admin_user_edit_profile', {id: app.user.id}) }}">
                                         <i class="material-icons">person</i> {{ 'my_profile' | trans }}
                                     </a>
                                     <a class="dropdown-item text-danger" href="{{ path('_logout_web') }}">

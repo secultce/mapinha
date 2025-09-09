@@ -7,19 +7,20 @@ namespace App\Tests\Unit\Entity;
 use App\Entity\ActivityArea;
 use App\Entity\Agent;
 use App\Entity\ArchitecturalAccessibility;
+use App\Entity\EntityAssociation;
 use App\Entity\Space;
 use App\Entity\SpaceAddress;
 use App\Entity\SpaceType;
 use App\Entity\Tag;
 use App\Helper\DateFormatHelper;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Uid\Uuid;
 
-class SpaceTest extends AbstractWebTestCase
+class SpaceTest extends AbstractApiTestCase
 {
     public function testGettersAndSettersFromSpaceEntityShouldBeSuccessful(): void
     {
@@ -52,6 +53,10 @@ class SpaceTest extends AbstractWebTestCase
         $spaceType = new SpaceType();
         $spaceType->setId(Uuid::v4());
         $spaceType->setName('Espaço Cultural');
+
+        $entityAssociation = new EntityAssociation();
+        $entityAssociation->setId(Uuid::v4());
+        $entityAssociation->setSpace($space);
 
         $this->assertNull($space->getId());
         $this->assertNull($space->getName());
@@ -108,6 +113,7 @@ class SpaceTest extends AbstractWebTestCase
         $space->setPhoneNumber('+55 85 99999-9999');
         $space->setMaxCapacity(500);
         $space->setIsAccessible(true);
+        $space->setIsDraft(false);
 
         $space->setCreatedBy($agent);
         $space->setParent($spaceParent);
@@ -116,6 +122,7 @@ class SpaceTest extends AbstractWebTestCase
         $space->setTags($tags);
         $space->setAccessibilities($accessibilities);
         $space->setSpaceType($spaceType);
+        $space->setEntityAssociation($entityAssociation);
         $space->setCreatedAt($createdAt);
         $space->setUpdatedAt($updatedAt);
         $space->setDeletedAt($deletedAt);
@@ -131,7 +138,8 @@ class SpaceTest extends AbstractWebTestCase
         $this->assertEquals('contato@casadocantador.com.br', $space->getEmail());
         $this->assertEquals('+55 85 99999-9999', $space->getPhoneNumber());
         $this->assertEquals(500, $space->getMaxCapacity());
-        $this->assertTrue($space->getIsAccessible());
+        $this->assertTrue($space->isAccessible());
+        $this->assertFalse($space->isDraft());
 
         $this->assertCount(2, $space->getActivityAreas());
         $this->assertContains($activityArea1, $space->getActivityAreas());
@@ -157,6 +165,9 @@ class SpaceTest extends AbstractWebTestCase
 
         $this->assertEquals($spaceAddress, $space->getAddress());
         $this->assertInstanceOf(SpaceAddress::class, $space->getAddress());
+
+        $this->assertEquals($entityAssociation, $space->getEntityAssociation());
+        $this->assertInstanceOf(EntityAssociation::class, $space->getEntityAssociation());
 
         $this->assertEquals($tags, $space->getTags());
         $this->assertInstanceOf(Collection::class, $space->getTags());
@@ -189,17 +200,20 @@ class SpaceTest extends AbstractWebTestCase
             'phoneNumber' => '+55 85 99999-9999',
             'maxCapacity' => 500,
             'isAccessible' => true,
+            'isDraft' => false,
             'createdBy' => '95f91eb5-cb62-4a7b-b677-8486d2a0763a',
             'parent' => '8e3e976d-0fc0-443e-bdd2-2b4d83da004f',
             'address' => $spaceAddress->toArray(),
             'extraFields' => $extraField,
             'activityAreas' => array_map(fn (ActivityArea $area) => $area->toArray(), $space->getActivityAreas()->toArray()),
+            'entityAssociation' => $entityAssociation->toArray(),
             'tags' => array_map(fn (Tag $tag) => $tag->toArray(), $tags->toArray()),
             'accessibilities' => array_map(fn (ArchitecturalAccessibility $accessibility) => $accessibility->toArray(), $accessibilities->toArray()),
+            'spaceType' => $spaceType->toArray(),
+            'socialNetworks' => [],
             'createdAt' => $createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $updatedAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $deletedAt->format(DateFormatHelper::DEFAULT_FORMAT),
-            'spaceType' => $spaceType->toArray(),
         ], $space->toArray());
     }
 }

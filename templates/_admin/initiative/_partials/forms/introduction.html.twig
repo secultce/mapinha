@@ -17,7 +17,7 @@
 
 <div class="entity-introduction-data">
     <label for="name">
-        {{ 'name_initiative' | trans }}
+        <span class="required">{{ 'name_initiative' | trans }}</span>
         <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill"></span>
     </label>
     <input type="text"
@@ -29,7 +29,7 @@
     >
 
     <div>
-        <label for="initiative-type">{{ 'view.initiative.type_of' |trans }}</label>
+        <label for="initiative-type" class="required">{{ 'view.initiative.type_of' |trans }}</label>
         <select class="form-select" id="initiative-type" name="initiative_type">
             <option>Selecione</option>
         </select>
@@ -46,7 +46,7 @@
         </span>
     </div>
 
-    <label for="short-description">{{ 'short_description' | trans }}</label>
+    <label for="short-description" class="required">{{ 'short_description' | trans }}</label>
     <textarea class="form-control"
               id="short-description" name="short_description"
               placeholder="{{ 'short_description' | trans }}"

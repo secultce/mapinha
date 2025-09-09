@@ -19,6 +19,7 @@ direction BT
        varchar(100) social_name
        varchar(100) email
        varchar(255) password
+       varchar(20) status
        created_at  /* (DC2Type:datetime_immutable) */ timestamp(0)
        timestamp(0) updated_at
        timestamp(0) deleted_at
@@ -36,6 +37,22 @@ direction BT
        parent_id  /* (DC2Type:uuid) */ uuid
        created_by_id  /* (DC2Type:uuid) */ uuid
        varchar(100) name
+       json extra_fields
+       varchar(255) image
+       varchar(255) cover_image
+       varchar(255) subtitle
+       varchar(255) short_description
+       text long_description
+       smallint type
+       timestamp(0) end_date
+       varchar(255) site
+       varchar(20) phone_number
+       integer max_capacity
+       smallint accessible_audio
+       smallint accessible_libras
+       boolean free
+       jsonb social_networks
+       boolean draft
        created_at  /* (DC2Type:datetime_immutable) */ timestamp(0)
        timestamp(0) updated_at
        timestamp(0) deleted_at
@@ -111,6 +128,7 @@ direction BT
        created_by_id  /* (DC2Type:uuid) */ uuid
        varchar(100) name
        varchar(255) description
+       varchar(20) type
        created_at  /* (DC2Type:datetime_immutable) */ timestamp(0)
        timestamp(0) updated_at
        timestamp(0) deleted_at
@@ -121,19 +139,70 @@ direction BT
        agent_id  /* (DC2Type:uuid) */ uuid
     }
     class space {
-       varchar(100) name
-       created_by_id  /* (DC2Type:uuid) */ uuid
-       parent_id  /* (DC2Type:uuid) */ uuid
-       created_at  /* (DC2Type:datetime_immutable) */ timestamp(0)
-       timestamp(0) updated_at
-       timestamp(0) deleted_at
-       id  /* (DC2Type:uuid) */ uuid
+        varchar(100) name
+        varchar(255) image
+        varchar(255) short_description
+        text long_description
+        varchar(255) cover_image
+        varchar(255) site
+        varchar(255) email
+        varchar(20) phone_number
+        integer max_capacity
+        boolean is_accessible
+        social_networks json
+        extra_fields json
+        boolean is_draft
+        space_type_id /* (DC2Type:uuid) */ uuid
+        created_by_id  /* (DC2Type:uuid) */ uuid
+        parent_id  /* (DC2Type:uuid) */ uuid
+        created_at  /* (DC2Type:datetime_immutable) */ timestamp(0)
+        timestamp(0) updated_at
+        timestamp(0) deleted_at
+        id  /* (DC2Type:uuid) */ uuid
     }
     class phase_reviewers {
        phase_id  /* (DC2Type:uuid) */ uuid
        agent_id  /* (DC2Type:uuid) */ uuid
     }
     
+    class entity_association {
+        id  /* (DC2Type:uuid) */ uuid
+        agent_id  /* (DC2Type:uuid) */ uuid
+        event_id  /* (DC2Type:uuid) */ uuid
+        initiative_id  /* (DC2Type:uuid) */ uuid
+        opportunity_id  /* (DC2Type:uuid) */ uuid
+        organization_id  /* (DC2Type:uuid) */ uuid
+        space_id  /* (DC2Type:uuid) */ uuid
+        boolean with_agent
+        boolean with_event
+        boolean with_initiative
+        boolean with_opportunity
+        boolean with_organization
+        boolean with_space
+    }
+    class state {
+       uuid id
+       uuid capital_id
+       varchar(100) name
+       varchar(2) acronym
+       varchar(20) region
+    }
+    class city {
+       uuid id
+       uuid state_id
+       varchar(100) name
+       integer city_code
+    }
+    class cultural_function {
+        uuid id
+        varchar(20) name
+    }
+    class event_type {
+        uuid id
+        varchar(20) name
+    }
+
+    city --> state : state_id
     event  -->  agent : created_by_id
     event  -->  agent : agent_group_id
     event  -->  event : parent_id
@@ -153,6 +222,7 @@ direction BT
     organizations_agents  -->  organization : organization_id
     space  -->  agent : created_by_id
     space  -->  space : parent_id
+    state --> city : capital_id
     inscription_opportunity --> agent : agent_id
     inscription_opportunity --> opportunity : opportunity_id
     phase --> agent : created_by_id
@@ -163,6 +233,9 @@ direction BT
     inscription_phase --> phase : phase_id
     inscription_phase_review --> agent : reviewer_id
     inscription_phase_review --> inscription_phase : inscription_phase_id
+    agent_cultural_function --> agent : agent_id
+    agent_cultural_function --> cultural_function : cultural_function_id
+    event --> event_type : event_type_id
 ```
 > Esse diagrama serve como um diagrama de classes.
 

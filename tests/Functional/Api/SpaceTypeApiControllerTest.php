@@ -6,7 +6,7 @@ namespace App\Tests\Functional\Api;
 
 use App\DataFixtures\Entity\SpaceTypeFixtures;
 use App\Entity\SpaceType;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\SpaceTypeTestFixtures;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class SpaceTypeApiControllerTest extends AbstractWebTestCase
+class SpaceTypeApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/space-types';
 

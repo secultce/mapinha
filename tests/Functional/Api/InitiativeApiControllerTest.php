@@ -8,7 +8,7 @@ use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\InitiativeFixtures;
 use App\DataFixtures\Entity\SpaceFixtures;
 use App\Entity\Initiative;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use App\Tests\Fixtures\ImageTestFixtures;
 use App\Tests\Fixtures\InitiativeTestFixtures;
 use DateTimeInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 
-class InitiativeApiControllerTest extends AbstractWebTestCase
+class InitiativeApiControllerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/initiatives';
 
@@ -41,6 +41,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
             'space' => [
                 'id' => SpaceFixtures::SPACE_ID_4,
             ],
+            'organizationFrom' => null,
+            'organizationTo' => null,
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
@@ -68,6 +70,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
             'space' => [
                 'id' => SpaceFixtures::SPACE_ID_4,
             ],
+            'organizationFrom' => null,
+            'organizationTo' => null,
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],
@@ -146,6 +150,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
             'image' => null,
             'parent' => null,
             'space' => null,
+            'organizationFrom' => null,
+            'organizationTo' => null,
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'extraFields' => null,
             'createdAt' => $initiative->getCreatedAt()->format(DateTimeInterface::ATOM),
@@ -176,6 +182,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
                 'name' => 'Raízes e Tradições',
                 'image' => $initiative->getParent()->getImage(),
                 'space' => null,
+                'organizationFrom' => null,
+                'organizationTo' => null,
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
                 'extraFields' => [
                     'culturalLanguage' => 'Cultural',
@@ -192,6 +200,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
             'space' => [
                 'id' => $requestBody['space'],
             ],
+            'organizationFrom' => null,
+            'organizationTo' => null,
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'extraFields' => $requestBody['extraFields'],
             'createdAt' => $initiative->getCreatedAt()->format(DateTimeInterface::ATOM),
@@ -363,6 +373,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
                 'name' => 'Raízes e Tradições',
                 'image' => $initiative->getParent()->getImage(),
                 'space' => null,
+                'organizationFrom' => null,
+                'organizationTo' => null,
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
                 'extraFields' => [
                     'culturalLanguage' => 'Cultural',
@@ -379,6 +391,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
             'space' => [
                 'id' => SpaceFixtures::SPACE_ID_4,
             ],
+            'organizationFrom' => null,
+            'organizationTo' => null,
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'extraFields' => $requestBody['extraFields'],
             'createdAt' => $initiative->getCreatedAt()->format(DateTimeInterface::ATOM),
@@ -499,6 +513,8 @@ class InitiativeApiControllerTest extends AbstractWebTestCase
             'space' => [
                 'id' => SpaceFixtures::SPACE_ID_4,
             ],
+            'organizationFrom' => null,
+            'organizationTo' => null,
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_1,
             ],

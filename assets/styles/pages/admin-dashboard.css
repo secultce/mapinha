@@ -86,24 +86,8 @@
     justify-content: center;
 }
 
-.bg-card-dashboard.bg-agent {
-    background-color: var(--navlink-agent);
-}
-
-.bg-card-dashboard.bg-opportunity {
-    background-color: var(--navlink-opportunity);
-}
-
-.bg-card-dashboard.bg-initiative {
-    background-color: var(--navlink-initiative);
-}
-
-.bg-card-dashboard.bg-event {
-    background-color: var(--navlink-event);
-}
-
-.bg-card-dashboard.bg-space {
-    background-color: var(--navlink-space);
+.bg-card-dashboard {
+    background-color: var(--bg-dashboard-color);
 }
 
 .bg-card-dashboard i,

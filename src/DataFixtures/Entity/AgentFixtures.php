@@ -6,6 +6,7 @@ namespace App\DataFixtures\Entity;
 
 use App\Entity\Agent;
 use App\Entity\User;
+use App\Enum\SocialNetworkEnum;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +33,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
     public const array AGENTS = [
         [
             'id' => self::AGENT_ID_1,
-            'main' => false,
+            'main' => true,
             'name' => 'Feitoza',
             'image' => null,
             'shortBio' => 'Desenvolvedor e evangelista de Software',
@@ -41,15 +42,21 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'alessandro@example.com',
                 'instagram' => '@alessandro',
+                'cargo' => 'Desenvolvedor Backend',
+                'cpf' => '795.319.940-80',
             ],
             'user' => UserFixtures::USER_ID_1,
+            'socialNetworks' => [
+                SocialNetworkEnum::FACEBOOK->value => 'Alessandro.Feitoza',
+                SocialNetworkEnum::INSTAGRAM->value => 'alessandro_feitoza',
+            ],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
         ],
         [
             'id' => self::AGENT_ID_2,
-            'main' => false,
+            'main' => true,
             'name' => 'Henrique',
             'image' => null,
             'shortBio' => 'Desenvolvedor, pesquisador e evangelista cristão',
@@ -58,15 +65,20 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'henrique@example.com',
                 'instagram' => '@henrique',
+                'cargo' => 'Desenvolvedor Frontend',
+                'cpf' => '728.941.446-28',
             ],
             'user' => UserFixtures::USER_ID_2,
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'henriquelopeslima',
+            ],
             'createdAt' => '2024-07-11T10:49:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
         ],
         [
             'id' => self::AGENT_ID_3,
-            'main' => false,
+            'main' => true,
             'name' => 'Anna Kelly',
             'image' => null,
             'shortBio' => 'Desenvolvedora frontend e entusiasta de UX',
@@ -75,15 +87,20 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'anna@example.com',
                 'instagram' => '@anna',
+                'cargo' => 'Desenvolvedora Frontend',
+                'cpf' => '123.456.789-00',
             ],
             'user' => UserFixtures::USER_ID_3,
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'anamouraab',
+            ],
             'createdAt' => '2024-07-16T17:22:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
         ],
         [
             'id' => self::AGENT_ID_4,
-            'main' => false,
+            'main' => true,
             'name' => 'Sara Jennifer',
             'image' => null,
             'shortBio' => 'Engenheira de software e defensora de código aberto',
@@ -92,15 +109,20 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'sara@example.com',
                 'instagram' => '@sara',
+                'cargo' => 'Engenheira de Software',
+                'cpf' => '987.654.321-00',
             ],
             'user' => UserFixtures::USER_ID_4,
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'saracamil.o',
+            ],
             'createdAt' => '2024-07-17T15:12:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
         ],
         [
             'id' => self::AGENT_ID_5,
-            'main' => false,
+            'main' => true,
             'name' => 'Talyson',
             'image' => null,
             'shortBio' => 'Desenvolvedor backend e especialista em segurança',
@@ -109,15 +131,20 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'talyson@example.com',
                 'instagram' => '@talyson',
+                'cargo' => 'Desenvolvedor Backend',
+                'cpf' => '456.789.123-00',
             ],
             'user' => UserFixtures::USER_ID_5,
+            'socialNetworks' => [
+                SocialNetworkEnum::INSTAGRAM->value => 'talysonsoares_',
+            ],
             'createdAt' => '2024-07-22T16:20:00+00:00',
             'updatedAt' => null,
             'deletedAt' => null,
         ],
         [
             'id' => self::AGENT_ID_6,
-            'main' => false,
+            'main' => true,
             'name' => 'Raquel',
             'image' => null,
             'shortBio' => 'Produtora cultural e curadora de eventos',
@@ -126,6 +153,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'raquel@example.com',
                 'instagram' => '@raquel',
+                'cargo' => 'Produtora Cultural',
+                'cpf' => '321.654.987-00',
             ],
             'user' => UserFixtures::USER_ID_6,
             'createdAt' => '2024-08-10T11:26:00+00:00',
@@ -134,7 +163,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
         ],
         [
             'id' => self::AGENT_ID_7,
-            'main' => false,
+            'main' => true,
             'name' => 'Lucas',
             'image' => null,
             'shortBio' => 'Músico e produtor cultural',
@@ -143,6 +172,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'lucas@example.com',
                 'instagram' => '@lucas',
+                'cargo' => 'Músico',
+                'cpf' => '654.321.987-00',
             ],
             'user' => UserFixtures::USER_ID_7,
             'createdAt' => '2024-08-11T15:54:00+00:00',
@@ -151,7 +182,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
         ],
         [
             'id' => self::AGENT_ID_8,
-            'main' => false,
+            'main' => true,
             'name' => 'Maria',
             'image' => null,
             'shortBio' => 'Pesquisadora e escritora',
@@ -160,6 +191,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'maria@example.com',
                 'instagram' => '@maria',
+                'cargo' => 'Pesquisadora',
+                'cpf' => '789.123.456-00',
             ],
             'user' => UserFixtures::USER_ID_8,
             'createdAt' => '2024-08-12T14:24:00+00:00',
@@ -168,7 +201,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
         ],
         [
             'id' => self::AGENT_ID_9,
-            'main' => false,
+            'main' => true,
             'name' => 'Abner',
             'image' => null,
             'shortBio' => 'Cineasta e documentarista',
@@ -177,6 +210,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'abner@example.com',
                 'instagram' => '@abner',
+                'cargo' => 'Cineasta',
+                'cpf' => '159.753.486-00',
             ],
             'user' => UserFixtures::USER_ID_9,
             'createdAt' => '2024-08-13T20:25:00+00:00',
@@ -185,7 +220,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
         ],
         [
             'id' => self::AGENT_ID_10,
-            'main' => false,
+            'main' => true,
             'name' => 'Paulo',
             'image' => null,
             'shortBio' => 'Formado em teológia pela UFC',
@@ -194,6 +229,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'paulo@example.com',
                 'instagram' => '@paulo',
+                'cargo' => 'Teólogo',
+                'cpf' => '951.753.852-00',
             ],
             'user' => UserFixtures::USER_ID_10,
             'createdAt' => '2024-08-14T10:00:00+00:00',
@@ -202,6 +239,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
         ],
         [
             'id' => self::AGENT_ID_11,
+            'main' => false,
             'name' => 'Feitozo',
             'image' => null,
             'shortBio' => 'Capoeirista',
@@ -210,6 +248,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'feitozo.capoeira@example.com',
                 'instagram' => '@feitozo.capoeira',
+                'cargo' => 'Capoeirista',
+                'cpf' => '123.456.789-00',
             ],
             'user' => UserFixtures::USER_ID_10,
             'createdAt' => '2024-08-14T10:00:00+00:00',
@@ -221,7 +261,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
     public const array AGENTS_UPDATED = [
         [
             'id' => self::AGENT_ID_1,
-            'main' => false,
+            'main' => true,
             'name' => 'Alessandro',
             'image' => null,
             'shortBio' => 'Desenvolvedor e evangelista de Software',
@@ -230,6 +270,8 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             'extraFields' => [
                 'email' => 'alessandro@example.com',
                 'instagram' => '@alessandro',
+                'cargo' => 'Desenvolvedor Backend',
+                'cpf' => '795.319.940-80',
             ],
             'createdAt' => '2024-07-10T11:30:00+00:00',
             'updatedAt' => '2024-07-10T11:37:00+00:00',
@@ -275,7 +317,7 @@ final class AgentFixtures extends AbstractFixture implements DependentFixtureInt
             $agent = $this->serializer->denormalize($agentData, Agent::class);
 
             /** @var User $user */
-            $user = $this->getReference(sprintf('%s-%s', UserFixtures::USER_ID_PREFIX, $agentData['user']));
+            $user = $this->getReference(sprintf('%s-%s', UserFixtures::USER_ID_PREFIX, $agentData['user']), User::class);
             $agent->setUser($user);
 
             $this->manualLogin($user->getId()->toRfc4122());

@@ -5,6 +5,8 @@
 {% block content %}
     {% include '_components/modal-confirm-remove.html.twig' %}
 
+    {% include '_components/modal-confirm-toggle-publish.html.twig' %}
+
     <section class="d-flex">
         {% include "_components/side-bar.html.twig" %}
 
@@ -12,31 +14,83 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-body shadow">
-                        <h2>{{ 'my_events'|trans }}</h2>
+                        <div class="d-flex justify-content-between">
+                            <h2>{{ 'my_events'|trans }}</h2>
+                            <div>
+                                <a href="{{ path('admin_event_create') }}" class="btn btn-primary">
+                                    {{ 'create'|trans }}
+                                </a>
+                            </div>
+                        </div>
 
                         <hr>
 
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped" data-cy="table-event-list">
                             <thead class="table-dark">
                             <tr>
                                 <th>{{ 'name'|trans }}</th>
+                                <th>{{ 'status'|trans }}</th>
                                 <th>{{ 'created_at'|trans }}</th>
-                                <th></th>
                                 <th></th>
                                 <th>{{ 'actions'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for item in events %}
-                                <tr>
-                                    <td><a href="{{ path('web_event_show', {id: item.id}) }}">{{ item.name }}</a></td>
+                                <tr data-cy="{{ item.id }}">
+                                    <td data-cy="name-{{ item.name }}">
+                                        {% if item.deletedAt %}
+                                            <span class="text-secondary">{{ item.name }}</span>
+                                        {% else %}
+                                            <a href="{{ path('admin_event_get', {id: item.id}) }}">{{ item.name }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.deletedAt %}
+                                            <span class="badge bg-secondary" data-bs-toggle="tooltip" title="{{ item.deletedAt|date('d/m/Y H:i:s') }}">
+                                                    {{ 'status_trashed'|trans }}
+                                                </span>
+                                        {% elseif item.draft %}
+                                            <span class="badge bg-warning">
+                                                    {{ 'status_draft'|trans }}
+                                                </span>
+                                        {% else %}
+                                            <span class="badge bg-success">
+                                                    {{ 'status_published'|trans }}
+                                                </span>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ item.createdAt.format('d/m/Y H:i:s') }}</td>
                                     <td></td>
-                                    <td></td>
                                     <td>
-                                        <a href="{{ path('admin_event_timeline', {id: item.id}) }}" class="btn btn-outline-info btn-sm">{{ 'Timeline'|trans }}</a>
-                                        <a href="#" class="btn btn-outline-warning btn-sm">{{ 'edit'|trans }}</a>
-                                        <button data-cy="remove-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm" onclick="confirmRemove(this)" data-href="{{ path('admin_event_remove', {id: item.id}) }}" class="btn btn-outline-danger btn-sm">{{ 'delete'|trans }}</button>
+                                        <a href="{{ path('admin_event_timeline', {id: item.id}) }}" class="btn btn-outline-primary btn-sm">
+                                            {{ 'Timeline'|trans }}
+                                        </a>
+                                        {% if not item.deletedAt %}
+                                            <a
+                                                href="{{ path('admin_event_edit', {id: item.id}) }}"
+                                                class="btn btn-outline-warning btn-sm"
+                                                data-cy="edit-event-btn-{{ item.id }}">
+                                                {{ 'edit'|trans }}
+                                            </a>
+
+                                            <button
+                                                    data-cy="remove-{{ loop.index }}"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalRemoveConfirm"
+                                                    onclick="confirmRemove(this)"
+                                                    data-href="{{ path('admin_event_remove', {id: item.id}) }}"
+                                                    class="btn btn-outline-danger btn-sm"
+                                            >
+                                                {{ 'delete'|trans }}
+                                            </button>
+                                        {% if item.draft %}
+                                            <button data-cy="publish-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalTogglePublishConfirm" onclick="confirmTogglePublish(this)" data-href="{{ path('admin_event_toggle_publish', {id: item.id}) }}" class="btn btn-outline-info btn-sm">{{ 'publish'|trans }}</button>
+                                        {% else %}
+                                            <button data-cy="publish-{{ loop.index }}" data-bs-toggle="modal" data-bs-target="#modalTogglePublishConfirm" onclick="confirmTogglePublish(this)" data-href="{{ path('admin_event_toggle_publish', {id: item.id}) }}" class="btn btn-outline-warning btn-sm">{{ 'unpublish'|trans }}</button>
+                                        {% endif %}
+
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

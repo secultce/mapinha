@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Document;
 
 use App\Document\OrganizationTimeline;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use DateTime;
 
-class OrganizationTimelineDocumentTest extends AbstractWebTestCase
+class OrganizationTimelineDocumentTest extends AbstractApiTestCase
 {
     private const array DOCUMENT = [
         'id' => '4ca44efd-92c5-4a12-b1e0-4a3f71c67440',

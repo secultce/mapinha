@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Entity;
 
+use App\Entity\Event;
 use App\Entity\EventActivity;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -189,7 +190,7 @@ final class EventActivityFixtures extends AbstractFixture implements DependentFi
         /** @var EventActivity $eventActivity */
         $eventActivity = $this->serializer->denormalize($eventActivityData, EventActivity::class, context: $context);
 
-        $eventActivity->setEvent($this->getReference(sprintf('%s-%s', EventFixtures::EVENT_ID_PREFIX, $eventActivityData['event'])));
+        $eventActivity->setEvent($this->getReference(sprintf('%s-%s', EventFixtures::EVENT_ID_PREFIX, $eventActivityData['event']), Event::class));
 
         return $eventActivity;
     }

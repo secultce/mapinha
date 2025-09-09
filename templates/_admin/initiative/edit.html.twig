@@ -10,7 +10,7 @@
 
             <section class="entity-edit-content mt-4">
                 {% set asterisk = '<span class="text-danger">*</span>' %}
-                <span class="entity-mandatory-fields">{{ 'view.space-edit.mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
+                <span class="entity-mandatory-fields">{{ 'mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
 
                 {% set program_name = '<span class="text-primary fw-bold">Nome do programa</span>' %}
                 {% set oportunidade_nome = '<span class="text-primary fw-bold">Nome da oportunidade</span>' %}
@@ -20,7 +20,20 @@
 
                 {% include "_admin/initiative/_partials/forms/entity-edit-form.html.twig" %}
             </section>
-            
+
+            <div class="entity-edit-submit">
+                <div class="delete-archive">
+                    <button class="btn btn-outline-light">
+                        <i class="iconify fs-3" data-icon="mingcute:box-2-line"></i>
+                        {{ 'archive' | trans }}
+                    </button>
+                </div>
+                <div class="logout-submit">
+                    <button class="btn btn-outline-light">{{ 'logout' | trans }}</button>
+                    <button form="initiative-edit-form" type="submit" class="btn btn-light">{{ 'save' | trans}}</button>
+                </div>
+            </div>
+
             {% if error is defined and error %}
                 <div class="alert alert-danger mt-3">
                     {{ error }}

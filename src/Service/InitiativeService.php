@@ -10,6 +10,7 @@ use App\Entity\Initiative;
 use App\Exception\Initiative\InitiativeResourceNotFoundException;
 use App\Exception\ValidatorException;
 use App\Repository\Interface\InitiativeRepositoryInterface;
+use App\Service\Interface\CityServiceInterface;
 use App\Service\Interface\FileServiceInterface;
 use App\Service\Interface\InitiativeServiceInterface;
 use DateTime;
@@ -33,6 +34,7 @@ readonly class InitiativeService extends AbstractEntityService implements Initia
         private SerializerInterface $serializer,
         private ValidatorInterface $validator,
         private EntityManagerInterface $entityManager,
+        private CityServiceInterface $cityService,
     ) {
         parent::__construct(
             $this->security,
@@ -163,5 +165,16 @@ readonly class InitiativeService extends AbstractEntityService implements Initia
         $this->repository->save($initiative);
 
         return $initiative;
+    }
+
+    public function listFiltered(?string $region, ?string $state, ?string $cityId, ?string $status): array
+    {
+        $cityName = null;
+
+        if ($cityId && $state) {
+            $cityName = $this->cityService->get($cityId)->getName().'-'.$state;
+        }
+
+        return $this->repository->findByFilters($region, $state, $cityName, $status);
     }
 }

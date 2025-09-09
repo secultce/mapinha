@@ -1,0 +1,9 @@
+list:
+  path: /
+  controller: App\Controller\Api\StateApiController::list
+  methods: ['GET']
+
+listCitiesByState:
+  path: /{state}/cities
+  controller: App\Controller\Api\StateApiController::listCitiesByState
+  methods: ['GET']

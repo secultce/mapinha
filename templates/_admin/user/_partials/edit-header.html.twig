@@ -1,0 +1,9 @@
+<section class="entity-edit-header">
+    {% include '_components/breadcrumb.html.twig' with {
+        items: [
+            {text: 'dashboard'|trans, path: path('admin_dashboard')},
+            {text: 'account_privacy'|trans, path: path('admin_user_account_privacy', {id: user.id})},
+        ]
+    } %}
+    <h1 class="fs-3 fs- fw-bold"> {{ 'user_edit_data' | trans }} </h1>
+</section>

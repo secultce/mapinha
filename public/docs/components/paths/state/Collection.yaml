@@ -1,0 +1,14 @@
+get:
+  tags:
+    - Estados
+  summary: Recupera uma lista de estados
+  responses:
+    '200':
+      description: Lista de estados
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              allOf:
+                - $ref: '../../responses/state/StateCollectionResponse.yaml'

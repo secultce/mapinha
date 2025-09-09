@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Enum\AccessibilityInfoEnum;
-use App\Enum\EventTypeEnum;
+use App\Enum\EventFormatEnum;
+use App\Enum\SocialNetworkEnum;
 use App\Helper\DateFormatHelper;
 use App\Repository\EventRepository;
+use App\Service\ExporterInscriptions\ExportableSourceInterface;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,11 +21,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
-class Event extends AbstractEntity
+class Event extends AbstractEntity implements ExportableSourceInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME)]
-    #[Groups(['event.get', 'opportunity.get', 'event-activity.get'])]
+    #[Groups(['event.get', 'opportunity.get', 'event-activity.get', 'inscription-event.get'])]
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 100)]
@@ -84,7 +86,16 @@ class Event extends AbstractEntity
 
     #[ORM\Column()]
     #[Groups(['event.get'])]
-    private int $type = EventTypeEnum::IN_PERSON->value;
+    private int $format = EventFormatEnum::IN_PERSON->value;
+
+    #[ORM\ManyToOne(targetEntity: EventType::class)]
+    #[ORM\JoinColumn(name: 'event_type_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[Groups(['event.get', 'event.get.item'])]
+    private ?EventType $eventType = null;
+
+    #[ORM\Column]
+    #[Groups(['event.get'])]
+    private DateTime $startDate;
 
     #[ORM\Column]
     #[Groups(['event.get'])]
@@ -124,6 +135,21 @@ class Event extends AbstractEntity
     #[Groups(['event.get'])]
     private bool $free = true;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Groups(['event.get', 'event.get.item'])]
+    private bool $draft = true;
+
+    #[ORM\ManyToMany(targetEntity: CulturalLanguage::class)]
+    #[ORM\JoinTable(name: 'event_cultural_languages')]
+    #[Groups(['event.get', 'event.get.item'])]
+    private Collection $culturalLanguages;
+
+    /**
+     * @var array<string, string>
+     */
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $socialNetworks = [];
+
     #[ORM\Column]
     #[Groups(['event.get'])]
     private DateTimeImmutable $createdAt;
@@ -145,9 +171,11 @@ class Event extends AbstractEntity
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->startDate = new DateTime();
         $this->eventActivities = new ArrayCollection();
         $this->activityAreas = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->culturalLanguages = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -280,14 +308,34 @@ class Event extends AbstractEntity
         $this->longDescription = $longDescription;
     }
 
-    public function getType(): int
+    public function getFormat(): int
     {
-        return $this->type;
+        return $this->format;
     }
 
-    public function setType(int $type): void
+    public function setFormat(int $format): void
     {
-        $this->type = $type;
+        $this->format = $format;
+    }
+
+    public function getEventType(): ?EventType
+    {
+        return $this->eventType;
+    }
+
+    public function setEventType(?EventType $eventType): void
+    {
+        $this->eventType = $eventType;
+    }
+
+    public function getStartDate(): ?DateTime
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
     }
 
     public function getEndDate(): ?DateTime
@@ -312,7 +360,7 @@ class Event extends AbstractEntity
 
     public function addActivityArea(ActivityArea $activityArea): void
     {
-        if (false === $this->activityAreas->contains($activityArea)) {
+        if (true === $this->activityAreas->contains($activityArea)) {
             return;
         }
 
@@ -336,7 +384,7 @@ class Event extends AbstractEntity
 
     public function addTag(Tag $tag): void
     {
-        if (false === $this->tags->contains($tag)) {
+        if (true === $this->tags->contains($tag)) {
             return;
         }
 
@@ -368,12 +416,12 @@ class Event extends AbstractEntity
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getMaxCapacity(): int
+    public function getMaxCapacity(): ?int
     {
         return $this->maxCapacity;
     }
 
-    public function setMaxCapacity(int $maxCapacity): void
+    public function setMaxCapacity(?int $maxCapacity): void
     {
         $this->maxCapacity = $maxCapacity;
     }
@@ -406,6 +454,39 @@ class Event extends AbstractEntity
     public function setFree(bool $free): void
     {
         $this->free = $free;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->draft;
+    }
+
+    public function setDraft(bool $draft): void
+    {
+        $this->draft = $draft;
+    }
+
+    public function getSocialNetworks(): array
+    {
+        return $this->socialNetworks;
+    }
+
+    public function setSocialNetworks(array $socialNetworks): void
+    {
+        foreach ($socialNetworks as $key => $username) {
+            $socialNetworksEnum = SocialNetworkEnum::from($key);
+            $this->addSocialNetwork($socialNetworksEnum->value, $username);
+        }
+    }
+
+    public function addSocialNetwork(string $socialNetworksEnum, $username): void
+    {
+        $this->socialNetworks[$socialNetworksEnum] = $username;
+    }
+
+    public function removeSocialNetwork(SocialNetworkEnum $socialNetwork): void
+    {
+        unset($this->socialNetworks[$socialNetwork->name]);
     }
 
     public function getCreatedAt(): ?DateTimeImmutable
@@ -490,6 +571,28 @@ class Event extends AbstractEntity
         }
     }
 
+    public function getCulturalLanguages(): Collection
+    {
+        return $this->culturalLanguages;
+    }
+
+    public function setCulturalLanguages(Collection $culturalLanguages): void
+    {
+        $this->culturalLanguages = $culturalLanguages;
+    }
+
+    public function addCulturalLanguage(CulturalLanguage $culturalLanguage): void
+    {
+        if (!$this->culturalLanguages->contains($culturalLanguage)) {
+            $this->culturalLanguages->add($culturalLanguage);
+        }
+    }
+
+    public function removeCulturalLanguage(CulturalLanguage $culturalLanguage): void
+    {
+        $this->culturalLanguages->removeElement($culturalLanguage);
+    }
+
     public function toArray(): array
     {
         return [
@@ -504,19 +607,29 @@ class Event extends AbstractEntity
             'subtitle' => $this->subtitle,
             'shortDescription' => $this->shortDescription,
             'longDescription' => $this->longDescription,
-            'type' => $this->type,
+            'format' => $this->format,
+            'eventType' => $this->eventType?->toArray(),
+            'startDate' => $this->startDate?->format(DateFormatHelper::DEFAULT_FORMAT),
             'endDate' => $this->endDate?->format(DateFormatHelper::DEFAULT_FORMAT),
-            'activityAreas' => $this->activityAreas->toArray(),
-            'tags' => $this->tags->toArray(),
+            'activityAreas' => $this->activityAreas->map(fn ($activityArea) => $activityArea->toArray())->toArray(),
+            'tags' => $this->tags->map(fn ($tag) => $tag->toArray())->toArray(),
             'site' => $this->site,
             'phoneNumber' => $this->phoneNumber,
             'maxCapacity' => $this->maxCapacity,
             'accessibleAudio' => $this->accessibleAudio,
             'accessibleLibras' => $this->accessibleLibras,
             'free' => $this->free,
+            'draft' => $this->draft,
+            'culturalLanguages' => $this->culturalLanguages->map(fn ($culturalLanguage) => $culturalLanguage->toArray())->toArray(),
+            'socialNetworks' => $this->socialNetworks,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $this->updatedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $this->deletedAt?->format(DateFormatHelper::DEFAULT_FORMAT),
         ];
+    }
+
+    public function getExportSourceName(): string
+    {
+        return $this->getName();
     }
 }

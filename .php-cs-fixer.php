@@ -8,7 +8,7 @@ use PhpCsFixer\Finder;
 $finder = (new Finder())
     ->ignoreDotFiles(false)
     ->ignoreVCSIgnored(true)
-    ->exclude(['logs', 'var', 'vendor'])
+    ->exclude(['logs', 'var', 'vendor', 'cypress', 'node_modules'])
     ->in(__DIR__);
 
 return (new Config())

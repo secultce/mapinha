@@ -6,14 +6,14 @@ namespace App\Tests\Functional\EventListener\Audit;
 
 use App\Document\AuthTimeline;
 use App\Entity\User;
-use App\Tests\AbstractWebTestCase;
+use App\Tests\AbstractApiTestCase;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuditAuthFailureListenerTest extends AbstractWebTestCase
+class AuditAuthFailureListenerTest extends AbstractApiTestCase
 {
     private const string BASE_URL = '/api/login';
 

@@ -15,6 +15,13 @@ properties:
     maxLength: 100
     description: "Descrição da organização"
     example: "Organização tal"
+  type:
+    type: string
+    description: "Tipo da organização"
+    enum:
+      - "Municipio"
+      - "Empresa"
+    example: "Municipio"
   agents:
     type: array
     items:

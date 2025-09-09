@@ -15,11 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Start the aurora
         run: docker compose up -d --build
 
       - name: Install dependencies
-        run: docker compose exec --user root php composer install
+        run: docker compose exec --user root php composer install --ignore-platform-req=ext-mongodb
 
       - name: Generate public/private keys for use in your application.
         run: docker compose exec --user root php bin/console lexik:jwt:generate-keypair
@@ -40,7 +43,13 @@ jobs:
         run: docker compose exec php bin/console d:f:l -n --purge-exclusions=city --purge-exclusions=state
 
       - name: Start the PHPUnit
-        run: docker compose exec php bin/paratest --no-coverage
+        run: docker compose exec --user root php bin/paratest
+
+      - name: Check coverage
+        run: docker compose exec --user root php bin/console app:check-coverage
+
+      - name: Remove o .env file
+        run: rm .env
 
   cypress:
     name: Run Cypress
@@ -48,11 +57,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Start the aurora
         run: docker compose up -d --build
 
       - name: Install application dependencies
-        run: docker compose exec --user root php composer install
+        run: docker compose exec --user root php composer install --ignore-platform-req=ext-mongodb
 
       - name: Generate public/private keys for use in your application.
         run: docker compose exec --user root php bin/console lexik:jwt:generate-keypair
@@ -69,11 +81,14 @@ jobs:
       - name: Run migrations
         run: docker compose exec --user root php bin/console d:m:migrate -n
 
-      - name: Run fixtures
-        run: docker compose exec --user root php bin/console d:f:l -n --purge-exclusions=city --purge-exclusions=state
+      - name: Create folder assets/uploads
+        run: docker compose exec --user root php mkdir assets/uploads
 
       - name: Give permissions for assets/uploads
         run: docker compose exec --user root php chmod -R 777 assets/uploads
+
+      - name: Run fixtures
+        run: docker compose exec php bin/console d:f:l -n --purge-exclusions=city --purge-exclusions=state
 
       - name: Install frontend dependencies
         run: docker compose exec --user root php bin/console importmap:install
@@ -82,11 +97,14 @@ jobs:
         run: docker compose exec --user root php bin/console asset-map:compile
 
       - name: Run cypress
-        run: docker compose run --rm cypress
+        run: export CYPRESS_USER=root && docker compose run --rm cypress
 
-      - name: Upload cypress screenshots
+      - name: Upload Cypress screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: ./cypress/screenshots
+
+      - name: Remove o .env file
+        run: rm .env

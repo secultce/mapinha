@@ -1,0 +1,21 @@
+<div class="modal fade" id="modalTogglePublishConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalTitleConfirmTogglePublish"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ 'modal_confirm_toggle_publish.message'|trans }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel'|trans }}</button>
+                <a data-modal-button="confirm-link-toggle-publish" href="#" class="btn btn-danger">{{ 'confirm'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_javascripts %}
+    <script src="{{ asset('js/modal-confirm-toggle-publish.js') }}"></script>
+{% endblock %}

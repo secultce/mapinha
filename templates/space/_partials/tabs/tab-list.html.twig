@@ -8,7 +8,7 @@
         <div class="card-body row g-3 align-items-start">
 
             <div class="col-auto d-flex align-items-start">
-                <img src="{{ space.image ? asset(space.image) : asset('img/default.png') }}"
+                <img src="{{ space.image }}"
                      alt="{{ space.name }}" class="rounded-circle space-img">
             </div>
 
@@ -16,7 +16,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="space-card__title fw-bold m-0">{{ space.name ?? 'available_name' | trans }}</h5>
 
-                    <button class="btn btn-outline-primary btn-sm copy-id">
+                    <button class="btn btn-outline-primary btn-sm copy-id" data-id="{{ space.id }}">
                         {{ 'copy_id' | trans }}
                     </button>
                 </div>
@@ -80,5 +80,5 @@
         </div>
     </div>
 {% else %}
-    <p class="text-center text-muted mt-4">{{ 'no_spaces_available' | trans }}</p>
+    <p class="text-center text-muted mt-4">{{ 'view.space.no_spaces_found' | trans }}</p>
 {% endfor %}
