@@ -73,7 +73,6 @@ class AccountEventWebController extends AbstractWebController
         try {
             $this->accountEventService->sendResetPasswordEmail($email);
         } catch (UserResourceNotFoundException) {
-            return $this->redirectToRoute('web_home_homepage');
         }
 
         $this->addFlash('success', $this->translator->trans('view.authentication.forgot.link_sent_to_email'));
