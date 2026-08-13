@@ -23,12 +23,12 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 readonly class UserService extends AbstractEntityService implements UserServiceInterface
 {
     private const string DIR_USER_PROFILE = 'app.dir.user.profile';
+    public const string DIR_USER_COVER = 'app.dir.user.cover';
 
     public function __construct(
         private AgentServiceInterface $agentService,
@@ -74,6 +74,7 @@ readonly class UserService extends AbstractEntityService implements UserServiceI
 
             $userObj->addAgent($agent);
         } catch (Exception $exception) {
+            dd($exception->getMessage());
             $this->repository->rollback();
             throw $exception;
         }
@@ -128,34 +129,28 @@ readonly class UserService extends AbstractEntityService implements UserServiceI
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): User
     {
-        $user = $this->get($id);
-
-        $userDto = new UserDto();
-        $userDto->image = $uploadedFile;
-
-        $violations = $this->validator->validate($userDto, groups: [UserDto::UPDATE]);
-
-        if ($violations->count() > 0) {
-            throw new ValidatorException(violations: $violations);
-        }
-
-        if ($user->getImage()) {
-            $this->fileService->deleteFileByUrl($user->getImage());
-        }
-
-        $uploadedImage = $this->fileService->uploadImage(
-            $this->parameterBag->get(self::DIR_USER_PROFILE),
-            $uploadedFile
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: UserDto::class,
+            dtoProperty: 'profileImage',
+            directoryParam: self::DIR_USER_PROFILE,
+            getterMethod: 'getImage',
+            setterMethod: 'setImage'
         );
+    }
 
-        $relativePath = '/uploads'.$this->parameterBag->get(self::DIR_USER_PROFILE).'/'.$uploadedImage->getFilename();
-        $user->setImage($relativePath);
-
-        $user->setUpdatedAt(new DateTime());
-
-        $this->repository->save($user);
-
-        return $user;
+    public function updateCoverImage(Uuid $id, UploadedFile $uploadedFile): User
+    {
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: UserDto::class,
+            dtoProperty: 'coverImage',
+            directoryParam: self::DIR_USER_COVER,
+            getterMethod: 'getCoverImage',
+            setterMethod: 'setCoverImage'
+        );
     }
 
     public function authenticate(User $user, $password): bool

@@ -71,6 +71,11 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'updatedAt' => null,
             'deletedAt' => null,
             'spaceType' => SpaceTypeFixtures::SPACE_TYPE_ID_1,
+            'portfolio' => [
+                PhotoFixtures::PHOTO_ID_1,
+                PhotoFixtures::PHOTO_ID_2,
+                PhotoFixtures::PHOTO_ID_3,
+            ],
         ],
         [
             'id' => self::SPACE_ID_2,
@@ -112,6 +117,10 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'updatedAt' => null,
             'deletedAt' => null,
             'spaceType' => SpaceTypeFixtures::SPACE_TYPE_ID_1,
+            'portfolio' => [
+                PhotoFixtures::PHOTO_ID_4,
+                PhotoFixtures::PHOTO_ID_5,
+            ],
         ],
         [
             'id' => self::SPACE_ID_3,
@@ -154,6 +163,9 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             'updatedAt' => null,
             'deletedAt' => null,
             'spaceType' => SpaceTypeFixtures::SPACE_TYPE_ID_1,
+            'portfolio' => [
+                PhotoFixtures::PHOTO_ID_6,
+            ],
         ],
         [
             'id' => self::SPACE_ID_4,
@@ -497,6 +509,7 @@ final class SpaceFixtures extends AbstractFixture implements DependentFixtureInt
             ArchitecturalAccessibilityFixtures::class,
             TagFixtures::class,
             SpaceTypeFixtures::class,
+            PhotoFixtures::class,
         ];
     }
 

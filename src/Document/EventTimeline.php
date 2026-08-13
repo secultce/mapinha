@@ -15,7 +15,7 @@ class EventTimeline extends AbstractDocument
     private ?string $id = null;
 
     #[ODM\Field]
-    private string $userId;
+    private ?string $userId = null;
 
     #[ODM\Field]
     private string $resourceId;
@@ -51,7 +51,7 @@ class EventTimeline extends AbstractDocument
         $this->id = $id;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }

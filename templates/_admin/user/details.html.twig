@@ -1,0 +1,80 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %} {{ 'details' | trans }} - {{ user.name }}{% endblock %}
+
+{% block content %}
+    {% include '_components/modal-confirm-remove.html.twig' %}
+    <section class="d-flex">
+        {% include "_components/side-bar.html.twig" %}
+
+        <section class="account-privacy w-100 px-3">
+            <div class="d-flex align-items-center my-4">
+                <span class="iconify me-2" data-icon="bi:gear-fill" style="font-size: 2rem; color: #000;"></span>
+                <h2 class="fw-bold mb-0" style="font-size: 1.75rem;">{{ 'account_privacy' | trans }}</h2>
+            </div>
+
+            <div class="row align-items-center my-4">
+                <div class="col-1">
+                    <img src="{{ user.image ?? asset('img/user.png') }}" class="rounded-circle me-4" style="width: 120px; height: 120px;" alt="">
+                </div>
+                <div class="col-11 d-flex align-items-start">
+                    <div>
+                        <h4 class="fw-bold mb-0" style="font-size: 1.5rem;">{{ user.name }}</h4>
+                        <p class="text-muted mb-0" style="font-size: 1rem;">ID: {{ user.id }}</p>
+                        <p>Status:
+                            <strong class="{% if user.isActive %}text-success{% else %}text-danger{% endif %}">
+                                {{ "view.opportunity_admin.inscriptions.status.active" |trans }}
+                            </strong>
+                        </p>
+                    </div>
+                    <div class="ms-4">
+                        <p class="mb-1"><strong>{{ 'last_login' | trans }}</strong> {{ lastLogin|date('d/m/Y H:i') }}</p>
+                        <p class="mb-1"><strong>{{ 'date_created' | trans }}</strong> {{ user.createdAt|date('d/m/Y H:i') }}</p>
+                        <p class="mb-1"><strong>{{ 'last_updated' | trans }}</strong> {{ user.updatedAt|date('d/m/Y H:i') }}</p>
+                    </div>
+
+                    <div class="ms-5 b-1">
+                        <p class="mb-1"><strong>{{ 'roles' | trans }}:</strong></p>
+                        <ul>
+                            {% for role in user.roles %}
+                                <li>{{ role | trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="mb-3">{{ 'account_settings' | trans }}</h4>
+                    <hr>
+                    <p>
+                        <strong>{{ 'first_name' | trans }}:</strong> {{ user.firstname }}
+                    </p>
+                    <p>
+                        <strong>{{ 'lastname' | trans }}:</strong> {{ user.lastname }}
+                    </p>
+                    <p>
+                        <strong>{{ 'social_name' | trans }}:</strong> {{ user.socialName }}
+                    </p>
+                    <p>
+                        <strong>{{ 'email' | trans }}:</strong> {{ user.email }}
+                    </p>
+                    <div>
+                        <strong>{{ 'agents' | trans }}:</strong>
+
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                            {% for agent in agents %}
+                                <tr>
+                                    <td><a href="{{ path('web_agent_getOne', { 'id': agent.id }) }}">{{ agent.name }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}

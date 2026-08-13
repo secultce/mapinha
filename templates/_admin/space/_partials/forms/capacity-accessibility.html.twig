@@ -4,7 +4,12 @@
             <label class="form-label" for="people_capacity">{{ 'people_capacity' | trans }}</label>
             <input
                     id="people_capacity"
-                    type="text"
+                    name="capacity"
+                    min="0"
+                    step="1"
+                    value="{{ space.maxCapacity }}"
+                    required
+                    type="number"
                     class="form-control"
                     placeholder="{{ 'type_here' | trans }}"
             >
@@ -26,6 +31,7 @@
                         class="form-check-input"
                         type="radio"
                         name="architectural_accessibility_option"
+                        value="1"
                         id="yes"
                 >
                 <label class="form-check-label" for="yes">
@@ -38,6 +44,7 @@
                         type="radio"
                         name="architectural_accessibility_option"
                         id="no"
+                        value="0"
                         checked
                 >
                 <label class="form-check-label" for="no">

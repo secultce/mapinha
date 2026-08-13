@@ -1,10 +1,12 @@
 <div class="bg-white p-4 rounded shadow-sm mt-4">
     <div class="row">
         <div class="col-md">
+            {% if (phases_count != 0) %}
             <span class="d-flex justify-content-end align-items-center gap-0 fw-bold fs-6 text-dark">
                 <i class="material-icons text-success">{{ status_icon|default('check_circle') }}</i>
                 {{ status_text|default('Inscrições abertas') }}
             </span>
+            {% endif %}
         </div>
     </div>
     <div class="row align-items-start mt-3">
@@ -20,21 +22,27 @@
         </div>
     </div>
     <div class="row">
+        {% if (phases_count != 0) %}
         <div class="col">
-            <p class="text-danger fw-bold mt-4">{{ registration_period|default('Inscrições de 01/01/2024 até 31/01/2024 às 12:00') }}</p>
+            <p class="text-danger fw-bold mt-4">Inscrições de {{ phases[0].startDate.format('d/m/Y') }} até {{ phases[0].endDate.format('d/m/Y') }}</p>
             <p class="text-muted">{{ description|default('Descrição do evento ou oportunidade aqui.') }}</p>
         </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-12 col-sm-6">
-            <h6 class="fw-bold mt-4">{{ 'ÁREAS DE INTERESSE'|trans }} ({{ interest_areas_count|default(0) }}):</h6>
-            <p><span class="text-danger fw-bold">{{ interest_areas|default('Nenhuma área especificada') }}</span></p>
-            <h6 class="fw-bold">{{ 'TAGS'|trans }} ({{ tags_count|default(0) }}):</h6>
-            <p class="text-danger fw-bold">{{ tags|default('Nenhuma tag especificada') }}</p>
-            <h6 class="fw-bold">{{ 'SELOS'|trans }} ({{ badges_count|default(0) }}):</h6>
-            <div class="d-flex">
-                <div class="badge bg-secondary text-white rounded-pill px-2 py-1">{{ badges|default('+0') }}</div>
-            </div>
+            <h6 class="fw-bold mt-4">{{ 'social_media'|trans }} ({{ social_media_count|default(0) }}):</h6>
+            <p><span class="text-danger fw-bold">{{ social_medias|default('Nenhuma rede social especificada') }}</span></p>
+            <h6 class="fw-bold">{{ 'phases'|trans }} ({{ phases_count|default(0) }}):</h6>
+            {% if (phases_count != 0) %}
+            <p class="text-danger fw-bold">{{ opportunity.phases|map(p => p.name)|join(', ') }}</p>
+            {% else %}
+            <p class="text-danger fw-bold">Nenhuma fase especificada</p>
+            {% endif %}
+{#            <h6 class="fw-bold">{{ 'SELOS'|trans }} ({{ badges_count|default(0) }}):</h6>#}
+{#            <div class="d-flex">#}
+{#                <div class="badge bg-secondary text-white rounded-pill px-2 py-1">{{ badges|default('+0') }}</div>#}
+{#            </div>#}
         </div>
         <div class="col-12 col-sm-6 d-flex flex-column justify-content-end">
             <a data-cy="show-opportunity-btn" href="{{ link_url|default('#') }}" class="btn btn-primary mt-3 d-flex justify-content-center align-items-center">

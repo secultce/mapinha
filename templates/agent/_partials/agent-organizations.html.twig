@@ -1,23 +1,22 @@
 <div class="agent-organizations d-flex flex-column justify-content-between">
-    <div class="d-flex justify-content-between align-items-center">
-        <span class="fw-bold ">{{ 'view.agent_profile.organizations_of' | trans }} {{ agent.name }}</span>
-        <span class="d-flex align-items-center">
-            <a href="/" class="fw-bold text-decoration-none">{{ 'view_all' | trans }}</a>
-            <i class="material-icons">keyboard_arrow_right</i>
-        </span>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <span class="fw-bold fs-5">{{ 'view.agent_profile.organizations_of' | trans }} {{ agent.name }}</span>
     </div>
-    <div class="agent-organizations__content d-flex justify-content-between">
-        <a href="/" class="agent-organization">
-            <img src="{{ asset('img/home-agents.png') }}" alt="{{ 'view.agent_profile.organization_photo' | trans }}">
-            Anne Elisa Design
-        </a>
-        <a href="/" class="agent-organization">
-            <img src="{{ asset('img/home-agents.png') }}" alt="{{ 'view.agent_profile.organization_photo' | trans }}">
-            Designers do Hack
-        </a>
-        <a href="/" class="agent-organization">
-            <img src="{{ asset('img/home-agents.png') }}" alt="{{ 'view.agent_profile.organization_photo' | trans }}">
-            Coral Madrigal
-        </a>
+
+    <div class="row g-4">
+        {% for organization in agent.organizations %}
+
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <a href="{{ path('web_organization_getOne', {'id': organization.id}) }}" class="agent-organization">
+                    <img src="{{ asset(organization.image ?? 'img/default-image.png') }}" alt="{{ 'view.agent_profile.organization_photo' | trans }}">
+                    <span class="text-break">{{ organization.name }}</span>
+                </a>
+            </div>
+
+        {% else %}
+            <div class="col-12">
+                <p class="text-muted">{{ 'no_organizations' | trans }}</p>
+            </div>
+        {% endfor %}
     </div>
 </div>

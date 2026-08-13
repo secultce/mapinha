@@ -29,14 +29,16 @@ class OpportunityWebController extends AbstractWebController
         $totalOpportunities = count($opportunities);
 
         $days = $request->get('days', 7);
-        $recentOpportunities = $this->service->countRecentRecords($days);
+        $recentOpportunities = $this->service->countRecentOpportunities($days);
+        $openedOpportunities = $this->service->countOpenedOpportunities();
+        $finishedOpportunities = $this->service->countFinishedOpportunities();
 
         $dashboard = [
             'color' => '#009874',
             'items' => [
                 new CardItem(icon: 'description', quantity: $totalOpportunities, text: 'view.opportunity.quantity.total'),
-                new CardItem(icon: 'event_note', quantity: 10, text: 'view.opportunity.quantity.opened'),
-                new CardItem(icon: 'event_available', quantity: 20, text: 'view.opportunity.quantity.finished'),
+                new CardItem(icon: 'event_note', quantity: $openedOpportunities, text: 'view.opportunity.quantity.opened'),
+                new CardItem(icon: 'event_available', quantity: $finishedOpportunities, text: 'view.opportunity.quantity.finished'),
                 new CardItem(icon: 'today', quantity: $recentOpportunities, text: $this->translator->trans('view.opportunity.quantity.last_days', ['{days}' => $days])),
             ],
         ];

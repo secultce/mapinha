@@ -14,28 +14,28 @@
             </div>
 
             <div class="row align-items-center my-4">
-                <div class="col-1">
-                    <img src="{{ user.image ?? asset('img/user.png') }}" class="rounded-circle me-4" style="width: 120px; height: 120px;" alt="">
+                <div class="col-12 col-md-auto text-center text-md-start mb-3 mb-md-0">
+                    <img src="{{ user.image ?? asset('img/user.png') }}" class="rounded-circle mw-100" alt="{{ user.name }}">
                 </div>
-                <div class="col-11 d-flex align-items-start">
-                    <div>
+                <div class="col-12 col-md d-flex flex-column flex-md-row align-items-center align-items-md-start">
+                    <div class="text-center text-md-start mb-3 mb-md-0">
                         <h4 class="fw-bold mb-0" style="font-size: 1.5rem;">{{ user.name }}</h4>
                         <p class="text-muted mb-0" style="font-size: 1rem;">ID: {{ user.id }}</p>
-                        <p>Status:
+                        <p class="mb-0">Status:
                             <strong class="{% if user.isActive %}text-success{% else %}text-danger{% endif %}">
                                 {{ "view.opportunity_admin.inscriptions.status.active" |trans }}
                             </strong>
                         </p>
                     </div>
-                    <div class="ms-4">
+                    <div class="ms-md-4 text-center text-md-start mb-3 mb-md-0">
                         <p class="mb-1"><strong>{{ 'last_login' | trans }}</strong> {{ lastLogin|date('d/m/Y H:i') }}</p>
                         <p class="mb-1"><strong>{{ 'date_created' | trans }}</strong> {{ user.createdAt|date('d/m/Y H:i') }}</p>
                         <p class="mb-1"><strong>{{ 'last_updated' | trans }}</strong> {{ user.updatedAt|date('d/m/Y H:i') }}</p>
                     </div>
 
-                    <div class="ms-5 b-1">
+                    <div class="ms-md-5 b-1 text-center text-md-start">
                         <p class="mb-1"><strong>{{ 'roles' | trans }}:</strong></p>
-                        <ul>
+                        <ul class="list-unstyled">
                             {% for role in app.user.roles %}
                                 <li>{{ role | trans }}</li>
                             {% endfor %}
@@ -63,7 +63,7 @@
                     <p>
                         <strong>{{ 'agents' | trans }}:</strong>
 
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped table-responsive">
                             <tbody>
                             {% for agent in agents %}
                                 <tr>

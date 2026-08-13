@@ -45,7 +45,7 @@
                                 </span>
                         </button>
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="notificationDropdown" style="min-width: 400px;">
+                        <ul class="dropdown-menu dropdown-menu-end shadow mt-2 notification-menu-mobile" aria-labelledby="notificationDropdown">
                             <li>
                                 <div class="dropdown-header">
                                     <strong>{{ 'your_notifications' | trans }}</strong>
@@ -94,7 +94,7 @@
                                             {% for item in section.items %}
                                                 <a class="dropdown-item" href="{{ path(item.route) }}">
                                                     <i class="material-icons">{{ item.icon }}</i>
-                                                    {{ item.text | trans }} 
+                                                    {{ item.text | trans }}
                                                 </a>
                                             {% endfor %}
                                         {% endif %}

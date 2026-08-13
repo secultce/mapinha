@@ -1,42 +1,53 @@
 <div class="entity-banner">
-    <img src="{{ asset('img/banner.jpeg') }}" alt="{{ 'entity_banner' | trans    }}">
-    {% include '_components/breadcrumb.html.twig' with {
-        items: [
-            {text: 'home'|trans, path: path('web_home_homepage')},
-            {text: 'agents'|trans, path: path('web_agent_list')},
-            {text: name, path: path('web_agent_getOne', {'id': agent.id})}
-        ]
-    } %}
+    <img src="{{ asset(coverImage|default('img/banner.jpeg')) }}" alt="{{ 'entity_banner' | trans }}">
+    {% if breadcrumbs|default %}
+        {% include '_components/breadcrumb.html.twig' with {
+            items: breadcrumbs
+        } only %}
+    {% endif %}
 </div>
 
-<div class="entity-profile-bio">
-    <div class="d-flex justify-content-between align-items-end">
-        <div class="entity-photo d-flex align-items-end gap-4">
-            <img src="{{ asset(image ?? 'img/user.png') }}" alt="{{ 'photo' | trans }}">
-            <div class="d-flex align-items-end gap-3">
-                <h1 class="fs-2 mb-0 fw-bold">{{ name }}</h1>
-                <span class="entity-profile-label">
-                    <i class="material-icons">person</i>
-                    pessoa
-                </span>
+<div class="entity-profile-bio position-relative">
+    <div class="d-flex justify-content-between align-items-center align-items-lg-start">
+        <div class="entity-photo d-flex align-items-center align-items-lg-start gap-3 gap-lg-4 text-center text-lg-start">
+            <img src="{{ asset(image|default('img/user.png')) }}" alt="{{ 'photo' | trans }}">
+            <div class="d-flex flex-column d-lg-block align-items-center text-center text-lg-start mt-2 mt-lg-5 pt-lg-4 gap-2">
+                <h1 class="fs-2 mb-0 fw-bold d-lg-inline align-middle">{{ name }}</h1>
+                {% if label|default %}
+                    <span class="entity-profile-label d-lg-inline-flex align-middle ms-lg-3 mt-2 mt-lg-0 text-wrap">
+                        <i class="material-icons">{{ icon|default('person') }}</i>
+                        {{ label }}
+                    </span>
+                {% endif %}
+
+                {% if id|default %}
+                    <button
+                        class="btn btn-link btn-sm text-muted text-decoration-none copy-id
+                        d-lg-inline-flex align-items-center ms-lg-2 " data-id="{{ id }}"
+                        title="{{ 'copy_id' | trans }}"
+                    >
+                        <i class="material-icons fs-6 me-1">content_copy</i> Copiar ID
+                    </button>
+                {% endif %}
             </div>
         </div>
-        <div class="entity-profile-actions d-flex gap-4">
-            <button class="d-flex align-items-center text-nowrap">
-                <i class="material-icons">share</i>
-                {{ 'share' | trans }}
-            </button>
-            <button class="d-flex align-items-center text-nowrap">
-                <i class="material-icons">chat_bubble</i>
-                {{ 'send_message' | trans }}
-            </button>
+
+        {% if actions|default %}
+            <div class="entity-profile-actions d-flex flex-row gap-2 gap-lg-4 mt-4 mt-lg-5 pt-lg-4">
+                {% include actions with actionData|default({}) %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if longBio|default %}
+        <div class="entity-description mt-3 mt-lg-2">
+            <p>{{ longBio }}</p>
         </div>
-    </div>
-    <div class="entity-description">
-        <p>{{ longBio }}</p>
-    </div>
-    <div class="profile-tabs d-flex align-items-center justify-content-between">
-        {% include tabs %}
-        <span>{{ 'identification_number' | trans }}: {{ id }}</span>
+    {% endif %}
+
+    <div class="profile-tabs d-flex align-items-start align-items-lg-center gap-3 mt-4 mt-lg-2">
+        {% if tabs|default %}
+            {% include tabs %}
+        {% endif %}
     </div>
 </div>

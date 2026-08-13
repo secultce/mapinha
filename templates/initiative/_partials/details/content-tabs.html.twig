@@ -1,0 +1,24 @@
+{% set tabs = [
+    {
+        'id': 'generalData',
+        'content': include('initiative/_partials/details/general-data.html.twig')
+    },
+    {
+        'id': 'workPlan',
+        'content': include('initiative/_partials/details/work-plan.html.twig')
+    },
+    {
+        'id': 'events',
+        'content': include('initiative/_partials/details/events.html.twig')
+    },
+    {
+        'id': 'people',
+        'content': include('_layouts/_show/peoples.html.twig', { 'entity': initiative })
+    },
+    {
+        'id': 'connections',
+        'content': include('initiative/_partials/details/connections.html.twig')
+    }
+] %}
+
+{% include '_components/tabs/content-tabs.html.twig' with { 'tabs': tabs } %}

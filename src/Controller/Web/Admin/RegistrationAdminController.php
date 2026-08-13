@@ -16,7 +16,7 @@ class RegistrationAdminController extends AbstractAdminController
     {
     }
 
-    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    // #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         $inscriptions = $this->service->findUserInscriptionsWithDetails();
@@ -26,7 +26,7 @@ class RegistrationAdminController extends AbstractAdminController
         ]);
     }
 
-    #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    // #[IsGranted(UserRolesEnum::ROLE_ADMIN->value, statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function get(Uuid $id): Response
     {
         $inscription = $this->service->findInscriptionWithDetails($id);

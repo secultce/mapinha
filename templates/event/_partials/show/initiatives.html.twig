@@ -6,7 +6,11 @@
                     <div class="col">
                         <div class="clearfix">
                             <span class="d-flex align-items-center float-start mb-2">
-                                <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                                {% if event.initiative.image %}
+                                    <img src="{{ event.initiative.image }}" alt="{{ event.initiative.name }}" class="rounded-circle card-names-ellipse__entity-details" style="object-fit: cover;">
+                                {% else %}
+                                    <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                                {% endif %}
                                 <span><a data-cy="initiative-name" class="text-decoration-none fw-bold" href="{{ path('web_initiative_show', {'id': event.initiative.id }) }}">{{ event.initiative.name }}</a></span>
                                 <span data-cy="initiative-status" class="badge rounded-pill bs__bg-primary px-3 py-1">
                                     <i class="material-icons align-middle fs-5 me-1">event_note</i> {{ 'in_progress' | trans }}
@@ -28,25 +32,10 @@
                                     {{ event.initiative.extraFields.period.startDate|date('d/m/Y') }} {{ 'to'|trans }} {{ event.initiative.extraFields.period.endDate|date('d/m/Y') }}
                                 </span>
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-3">
                                 <i class="material-icons align-text-bottom fs-5 me-2">place</i>
                                 <label data-cy="initiative-location" class="fw-bold">{{ 'location' | trans }}:</label>
                                 <span>{{ event.initiative.space ? event.initiative.space.name : 'not_informed'|trans }}</span>
-                            </div>
-                            <div class="d-inline-flex align-items-center mb-2">
-                                <label data-cy="initiative-seals" class="fw-bold me-2">{{ 'seals' | trans }}:</label>
-                                <div class="d-inline-flex align-items-center me-sm-3">
-                                    <div class="rounded-circle initiative-seals__entity-details me-2"></div>
-                                    <span>
-                                        <a class="text-decoration-none fw-bold" href="#">Nome do selo</a>,
-                                    </span>
-                                </div>
-                                <div class="d-inline-flex align-items-center me-sm-3">
-                                    <div class="rounded-circle initiative-seals__entity-details me-2"></div>
-                                    <span>
-                                        <a class="text-decoration-none fw-bold" href="#">Nome do selo</a>
-                                    </span>
-                                </div>
                             </div>
                             <p data-cy="initiative-shortDescription">{{ event.initiative.extraFields.shortDescription ?? '' }}</p>
                         </div>

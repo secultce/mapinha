@@ -24,7 +24,7 @@ class EventTestFixtures implements TestFixtures
             'agentGroup' => AgentFixtures::AGENT_ID_1,
             'space' => SpaceFixtures::SPACE_ID_1,
             'initiative' => InitiativeFixtures::INITIATIVE_ID_1,
-            'type' => EventFormatEnum::HYBRID->value,
+            'format' => EventFormatEnum::HYBRID->value,
             'startDate' => '2025-01-16',
             'endDate' => '2025-04-01',
             'maxCapacity' => 5000,
@@ -38,7 +38,6 @@ class EventTestFixtures implements TestFixtures
             'extraFields' => [
                 'ageRating' => 'Free',
             ],
-            'coverImage' => 'coverimage.jpg',
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => 'Descrição curta',
             'longDescription' => 'Uma descrição mais longa',

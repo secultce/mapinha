@@ -6,86 +6,30 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/pages/initiatives.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/components/entity-header.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid px-0 bg-white shadow position-relative">
-        <img
-            class="w-100 object-fit-cover bg-white"
-            style="aspect-ratio: 5.65"
-            src="{{ opportunity.extraFields.coverImage ?? asset('img/entity-cover-image.png') }}"
-            alt="{{ 'opportunity'|trans }} | {{ 'cover_image'|trans }}"
-        >
+    <section class="entity-section">
+        {% include "_components/entity-header.html.twig" with {
+            name: opportunity.name,
+            id: opportunity.id,
+            image: opportunity.image ?? 'img/entity-image.png',
+            coverImage: opportunity.coverImage ?? 'img/entity-cover-image.png',
+            icon: 'lightbulb',
+            label: opportunity.extraFields.type,
+            longBio: opportunity.description,
+            actions: 'opportunity/_partials/details/actions.html.twig',
+            tabs: 'opportunity/_partials/details/tabs.html.twig',
+            breadcrumbs: [
+                {text: 'home'|trans, path: path('web_home_homepage')},
+                {text: 'opportunities'|trans, path: path('web_opportunity_list')},
+                {text: opportunity.name, path: path('web_opportunity_details', {id: opportunity.id})}
+            ]
+        } only %}
+    </section>
 
-        <div class="container">
-            <div class="breadcrumb pt-sm-4 breadcrumb__entity-details">
-                <a href="{{ path('web_home_homepage') }}">{{ 'home'|trans }}</a>
-                <a href="{{ path('web_opportunity_list') }}">{{ 'opportunities'|trans }}</a>
-                <a href="{{ path('web_opportunity_details', {id: opportunity.id}) }}">{{ opportunity.name }}</a>
-            </div>
-        </div>
-
-        <div class="container position-relative">
-            <div class="d-flex mb-3 entity-info-wrapper">
-                <img class="entity-image rounded-circle bg-white" src="{{ opportunity.image ?? asset('img/entity-image.png') }}" alt="{{ 'opportunity'|trans }} | {{ 'image'|trans }}">
-
-                <h2 class="name__entity-details fw-bold ms-2 mt-2 ms-sm-4 mt-sm-3">{{ opportunity.name }}</h2>
-
-                <div class="ms-auto mt-3 d-none d-xxl-inline">
-                    {% include "opportunity/_partials/details/_info-btns.html.twig" %}
-                </div>
-            </div>
-
-            <div class="mb-3 d-xxl-none">
-                {% include "opportunity/_partials/details/_info-btns.html.twig" %}
-            </div>
-
-            <p data-cy="short-description"></p>
-
-            <p class="text-secondary id__entity-details mb-xxl-0">{{ 'view.opportunity.id' | trans }}: {{ opportunity.id }}</p>
-
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="pill" href="#generalData">{{ 'general_data'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#workPlan">{{ 'work_plan'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#events">{{ 'events'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#people">{{ 'people'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#portfolio">{{ 'portfolio'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#seals">{{ 'seals'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#connections">{{ 'connections'|trans }}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="container py-4">
-        <div class="tab-content">
-            {% include "opportunity/_partials/details/general-data.html.twig" %}
-
-            {% include "opportunity/_partials/details/work-plan.html.twig" %}
-
-            {% include "opportunity/_partials/details/events.html.twig" %}
-
-            {% include "opportunity/_partials/details/peoples.html.twig" %}
-
-            {% include "opportunity/_partials/details/portfolio.html.twig" %}
-
-            {% include "opportunity/_partials/details/seals.html.twig" %}
-
-            {% include "opportunity/_partials/details/connections.html.twig" %}
-        </div>
-    </div>
+    <section class="profile-entity-wrapper">
+        {% include "opportunity/_partials/details/content-tabs.html.twig" %}
+    </section>
 {% endblock %}

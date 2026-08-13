@@ -8,29 +8,43 @@
         <div class="col-md-4">
             <label for="birthday">{{ 'birth_date'|trans }}</label>
             <input type="date" class="form-control" id="birthday" name="birthday"
+                   value="{{ (agent.extraFields['birthday'] is defined) ? agent.extraFields['birthday'] : '' }}"
                    placeholder="{{ 'birthday'|trans }}">
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="birthday_public" id="birthday_public">
+                <input type="checkbox" class="form-check-input" name="birthday_public" id="birthday_public"
+                       {% if agent.extraFields['birthday_public'] is defined and agent.extraFields['birthday_public'] %}checked{% endif %}>
                 <label class="form-check-label" for="birthday_public">{{ 'show_public'|trans }}</label>
             </div>
         </div>
         <div class="col-md-4">
             <label for="gender">{{ 'gender'|trans }}</label>
-            <select class="form-select">
+            <select class="form-select" id="gender" name="gender">
                 <option value="">{{ 'select'|trans }}</option>
+                {% for genderOption in genderOptions %}
+                    <option value="{{ genderOption }}" {% if agent.extraFields['gender'] is defined and agent.extraFields['gender'] == genderOption %}selected{% endif %}>
+                        {{ genderOption }}
+                    </option>
+                {% endfor %}
             </select>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="gender_public" id="gender_public">
+                <input type="checkbox" class="form-check-input" name="gender_public" id="gender_public"
+                       {% if agent.extraFields['gender_public'] is defined and agent.extraFields['gender_public'] %}checked{% endif %}>
                 <label class="form-check-label" for="gender_public">{{ 'show_public'|trans }}</label>
             </div>
         </div>
         <div class="col-md-4">
             <label for="sexual_orientation">{{ 'sexual_orientation'|trans }}</label>
-            <select class="form-select">
+            <select class="form-select" id="sexual_orientation" name="sexual_orientation">
                 <option value="">{{ 'select'|trans }}</option>
+                {% for sexualOrientationOption in sexualOrientationOptions %}
+                    <option value="{{ sexualOrientationOption }}" {% if agent.extraFields['sexual_orientation'] is defined and agent.extraFields['sexual_orientation'] == sexualOrientationOption %}selected{% endif %}>
+                        {{ sexualOrientationOption }}
+                    </option>
+                {% endfor %}
             </select>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="sexual_orientation_public" id="sexual_orientation_public">
+                <input type="checkbox" class="form-check-input" name="sexual_orientation_public" id="sexual_orientation_public"
+                       {% if agent.extraFields['sexual_orientation_public'] is defined and agent.extraFields['sexual_orientation_public'] %}checked{% endif %}>
                 <label class="form-check-label" for="sexual_orientation_public">{{ 'show_public'|trans }}</label>
             </div>
         </div>
@@ -39,21 +53,33 @@
     <div class="row mt-3">
         <div class="col-md-4">
             <label for="race">{{ 'race'|trans }}</label>
-            <select class="form-select">
+            <select class="form-select" id="race" name="race">
                 <option value="">{{ 'select'|trans }}</option>
+                {% for raceOption in raceOptions %}
+                    <option value="{{ raceOption }}" {% if agent.extraFields['race'] is defined and agent.extraFields['race'] == raceOption %}selected{% endif %}>
+                        {{ raceOption }}
+                    </option>
+                {% endfor %}
             </select>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="race_public" id="race_public">
+                <input type="checkbox" class="form-check-input" name="race_public" id="race_public"
+                       {% if agent.extraFields['race_public'] is defined and agent.extraFields['race_public'] %}checked{% endif %}>
                 <label class="form-check-label" for="race_public">{{ 'show_public'|trans }}</label>
             </div>
         </div>
         <div class="col-md-4">
             <label for="education">{{ 'education'|trans }}</label>
-            <select class="form-select">
+            <select class="form-select" id="education" name="education">
                 <option value="">{{ 'select'|trans }}</option>
+                {% for educationOption in educationOptions %}
+                    <option value="{{ educationOption }}" {% if agent.extraFields['education'] is defined and agent.extraFields['education'] == educationOption %}selected{% endif %}>
+                        {{ educationOption }}
+                    </option>
+                {% endfor %}
             </select>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="education_public" id="education_public">
+                <input type="checkbox" class="form-check-input" name="education_public" id="education_public"
+                       {% if agent.extraFields['education_public'] is defined and agent.extraFields['education_public'] %}checked{% endif %}>
                 <label class="form-check-label" for="education_public">{{ 'show_public'|trans }}</label>
             </div>
         </div>
@@ -62,15 +88,18 @@
     <div class="mt-4">
         <p class="fw-bold mb-1">{{ 'view.agent_edit.is_disabled' | trans }}</p>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="is_disabled" name="is_disabled" value="1">
+            <input type="radio" class="form-check-input" id="is_disabled" name="is_disabled" value="1"
+                   {% if agent.extraFields['is_disabled'] is defined and agent.extraFields['is_disabled'] %}checked{% endif %}>
             <label class="form-check-label" for="is_disabled">{{ 'yes'|trans }}</label>
         </div>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="not_is_disabled" name="is_disabled" value="0">
+            <input type="radio" class="form-check-input" id="not_is_disabled" name="is_disabled" value="0"
+                   {% if agent.extraFields is defined and agent.extraFields['is_disabled'] is defined and not agent.extraFields['is_disabled'] %}checked{% endif %}>
             <label class="form-check-label" for="not_is_disabled">{{ 'no'|trans }}</label>
         </div>
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="disabled_public" id="disabled_public">
+            <input type="checkbox" class="form-check-input" name="disabled_public" id="disabled_public"
+                   {% if agent.extraFields['disabled_public'] is defined and agent.extraFields['disabled_public'] %}checked{% endif %}>
             <label class="form-check-label" for="disabled_public">{{ 'show_public'|trans }}</label>
         </div>
     </div>
@@ -78,15 +107,18 @@
     <div class="mt-4">
         <p class="fw-bold mb-1">{{ 'view.agent_edit.is_indigenous' | trans }}</p>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="is_indigenous" name="is_indigenous" value="1">
+            <input type="radio" class="form-check-input" id="is_indigenous" name="is_indigenous" value="1"
+                   {% if agent.extraFields['is_indigenous'] is defined and agent.extraFields['is_indigenous'] %}checked{% endif %}>
             <label class="form-check-label" for="is_indigenous">{{ 'yes'|trans }}</label>
         </div>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="not_is_indigenous" name="is_indigenous" value="0">
+            <input type="radio" class="form-check-input" id="not_is_indigenous" name="is_indigenous" value="0"
+                   {% if agent.extraFields is defined and agent.extraFields['is_indigenous'] is defined and not agent.extraFields['is_indigenous'] %}checked{% endif %}>
             <label class="form-check-label" for="not_is_indigenous">{{ 'no'|trans }}</label>
         </div>
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="indigenous_public" id="indigenous_public">
+            <input type="checkbox" class="form-check-input" name="indigenous_public" id="indigenous_public"
+                   {% if agent.extraFields['indigenous_public'] is defined and agent.extraFields['indigenous_public'] %}checked{% endif %}>
             <label class="form-check-label" for="indigenous_public">{{ 'show_public'|trans }}</label>
         </div>
     </div>
@@ -94,15 +126,18 @@
     <div class="mt-4">
         <p class="fw-bold mb-1">{{ 'view.agent_edit.is_quilombola' | trans }}</p>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="is_quilombola" name="is_quilombola" value="1">
+            <input type="radio" class="form-check-input" id="is_quilombola" name="is_quilombola" value="1"
+                   {% if agent.extraFields['is_quilombola'] is defined and agent.extraFields['is_quilombola'] %}checked{% endif %}>
             <label class="form-check-label" for="is_quilombola">{{ 'yes'|trans }}</label>
         </div>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="not_is_quilombola" name="is_quilombola" value="0">
+            <input type="radio" class="form-check-input" id="not_is_quilombola" name="is_quilombola" value="0"
+                   {% if agent.extraFields is defined and agent.extraFields['is_quilombola'] is defined and not agent.extraFields['is_quilombola'] %}checked{% endif %}>
             <label class="form-check-label" for="not_is_quilombola">{{ 'no'|trans }}</label>
         </div>
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="quilombola_public" id="quilombola_public">
+            <input type="checkbox" class="form-check-input" name="quilombola_public" id="quilombola_public"
+                   {% if agent.extraFields['quilombola_public'] is defined and agent.extraFields['quilombola_public'] %}checked{% endif %}>
             <label class="form-check-label" for="quilombola_public">{{ 'show_public'|trans }}</label>
         </div>
     </div>
@@ -110,15 +145,18 @@
     <div class="mt-4">
         <p class="fw-bold mb-1">{{ 'view.agent_edit.is_traditional_people' | trans }}</p>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="is_traditional_people" name="is_traditional_people" value="1">
+            <input type="radio" class="form-check-input" id="is_traditional_people" name="is_traditional_people" value="1"
+                   {% if agent.extraFields['is_traditional_people'] is defined and agent.extraFields['is_traditional_people'] %}checked{% endif %}>
             <label class="form-check-label" for="is_traditional_people">{{ 'yes'|trans }}</label>
         </div>
         <div class="form-check form-check-inline">
-            <input type="radio" class="form-check-input" id="not_is_traditional_people" name="is_traditional_people" value="0">
+            <input type="radio" class="form-check-input" id="not_is_traditional_people" name="is_traditional_people" value="0"
+                   {% if agent.extraFields is defined and agent.extraFields['is_traditional_people'] is defined and not agent.extraFields['is_traditional_people'] %}checked{% endif %}>
             <label class="form-check-label" for="not_is_traditional_people">{{ 'no'|trans }}</label>
         </div>
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="traditional_people_public" id="traditional_people_public">
+            <input type="checkbox" class="form-check-input" name="traditional_people_public" id="traditional_people_public"
+                   {% if agent.extraFields['traditional_people_public'] is defined and agent.extraFields['traditional_people_public'] %}checked{% endif %}>
             <label class="form-check-label" for="traditional_people_public">{{ 'show_public'|trans }}</label>
         </div>
     </div>

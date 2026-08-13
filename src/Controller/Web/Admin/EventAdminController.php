@@ -6,10 +6,13 @@ namespace App\Controller\Web\Admin;
 
 use App\DocumentService\EventTimelineDocumentService;
 use App\Enum\EventFormatEnum;
+use App\Enum\SocialNetworkEnum;
 use App\Enum\UserRolesEnum;
+use App\Service\Interface\CityServiceInterface;
 use App\Service\Interface\CulturalLanguageServiceInterface;
 use App\Service\Interface\EventServiceInterface;
 use App\Service\Interface\InscriptionEventServiceInterface;
+use App\Service\Interface\StateServiceInterface;
 use App\Service\Interface\TagServiceInterface;
 use Exception;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -29,6 +32,8 @@ class EventAdminController extends AbstractAdminController
     public function __construct(
         private readonly EventServiceInterface $service,
         private readonly InscriptionEventServiceInterface $inscriptionService,
+        private readonly StateServiceInterface $stateService,
+        private readonly CityServiceInterface $cityService,
         private readonly TranslatorInterface $translator,
         private readonly EventTimelineDocumentService $documentService,
         private readonly Security $security,
@@ -110,19 +115,17 @@ class EventAdminController extends AbstractAdminController
 
         $name = $request->request->get('name');
         $description = $request->request->get('description');
-        $culturalLanguage = $request->get('culturalLanguage');
-        $type = (int) $request->request->get('type');
+        $culturalLanguages = $request->get('culturalLanguages', []);
+        $eventFormatType = (int) $request->request->get('eventFormatType', 1);
         $startDate = $request->request->get('startDate');
 
         $event = [
             'id' => Uuid::v4(),
             'name' => $name,
-            'description' => $description,
-            'extraFields' => [
-                'culturalLanguage' => $culturalLanguage,
-            ],
+            'shortDescription' => $description,
+            'culturalLanguages' => $culturalLanguages,
             'agentGroup' => null,
-            'type' => $type,
+            'format' => $eventFormatType,
             'startDate' => $startDate,
         ];
 
@@ -153,6 +156,16 @@ class EventAdminController extends AbstractAdminController
         }
 
         if (Request::METHOD_POST !== $request->getMethod()) {
+            $states = $this->stateService->list();
+
+            $cities = [];
+            if ($event->getAddress()) {
+                $filtersToCities = [
+                    'state' => $event->getAddress()->getCity()->getState()->getId(),
+                ];
+                $cities = $this->cityService->findBy($filtersToCities);
+            }
+
             $culturalLanguageItems = $this->culturalLanguageService->list();
             $tagItems = $this->tagService->list();
             $type = EventFormatEnum::cases();
@@ -161,6 +174,8 @@ class EventAdminController extends AbstractAdminController
                 'event' => $event,
                 'form_id' => self::EDIT_FORM_ID,
                 'culturalLanguageItems' => $culturalLanguageItems,
+                'states' => $states,
+                'cities' => $cities,
                 'tagItems' => $tagItems,
                 'typeItems' => $type,
             ]);
@@ -169,29 +184,64 @@ class EventAdminController extends AbstractAdminController
         $this->validCsrfToken(self::EDIT_FORM_ID, $request);
 
         $name = $request->request->get('name');
+        $subtitle = $request->request->get('subtitle');
         $description = $request->request->get('description');
+        $shortDescription = $request->request->get('short_description');
+        $longDescription = $request->request->get('long_description');
+        $site = $request->request->get('site');
         $ageRating = $request->request->get('age_rating') ?? null;
-        $type = (int) $request->request->get('type');
+        $format = (int) $request->request->get('format');
         $maxCapacity = (int) $request->request->get('max_capacity') ?? null;
         $culturalLanguages = $request->get('culturalLanguages') ?? [];
         $tags = $request->get('tags') ?? [];
 
+        $networks = [];
+        foreach (SocialNetworkEnum::getValues() as $network) {
+            if ('' !== $request->get("social_networks_{$network}")) {
+                $networks[$network] = $request->get("social_networks_{$network}");
+            }
+        }
+
         $dataToUpdate = [
             'name' => $name,
+            'subtitle' => $subtitle,
             'description' => $description,
+            'shortDescription' => $shortDescription,
+            'longDescription' => $longDescription,
+            'site' => $site,
             'extraFields' => [
-                'age_rating' => $ageRating,
+                'ageRating' => $ageRating,
             ],
             'agentGroup' => null,
-            'type' => $type,
+            'format' => $format,
             'maxCapacity' => $maxCapacity,
             'culturalLanguages' => $culturalLanguages,
+            'socialNetworks' => $networks,
             'tags' => $tags,
+            'addressData' => [
+                'id' => $event->getAddress()?->getId() ?? Uuid::v4(),
+                'owner' => $event->getId()->toRfc4122(),
+                'zipcode' => $request->request->get('address_cep'),
+                'street' => $request->request->get('address_street'),
+                'number' => $request->request->get('address_number'),
+                'neighborhood' => $request->request->get('address_neighborhood'),
+                'complement' => $request->request->get('address_complement'),
+                'state' => $request->request->get('address_state'),
+                'city' => $request->request->get('address_city'),
+            ],
             'updatedBy' => $this->security->getUser()->getAgents()->getValues()[0]->getId(),
         ];
 
         try {
             $this->service->update($id, $dataToUpdate);
+
+            if ($uploadedImage = $request->files->get('profileImage')) {
+                $this->service->updateImage($id, $uploadedImage);
+            }
+
+            if ($uploadedCover = $request->files->get('coverImage')) {
+                $this->service->updateCoverImage($id, $uploadedCover);
+            }
 
             $this->addFlashSuccess($this->translator->trans('view.event.message.updated'));
 
@@ -199,10 +249,22 @@ class EventAdminController extends AbstractAdminController
         } catch (TypeError|Exception $exception) {
             $this->addFlashError($exception->getMessage());
 
+            $states = $this->stateService->findBy();
+            $cities = $this->cityService->findBy();
+
+            $culturalLanguageItems = $this->culturalLanguageService->list();
+            $tagItems = $this->tagService->list();
+            $type = EventFormatEnum::cases();
+
             return $this->render('event/edit.html.twig', [
                 'event' => $event,
                 'error' => $exception->getMessage(),
                 'form_id' => self::EDIT_FORM_ID,
+                'culturalLanguageItems' => $culturalLanguageItems,
+                'states' => $states,
+                'cities' => $cities,
+                'tagItems' => $tagItems,
+                'typeItems' => $type,
             ]);
         }
     }

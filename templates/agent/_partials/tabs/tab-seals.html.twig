@@ -1,0 +1,39 @@
+<section class="agent-seals">
+    <div class="row g-3">
+        {% for seal in agent.seals %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-body shadow h-100">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="material-icons text-primary" style="font-size: 2rem;">verified</i>
+                        <h5 class="mb-0 fw-bold">{{ seal.name }}</h5>
+                    </div>
+                    <hr class="mt-0">
+                    <p class="d-flex align-items-center gap-2 mb-1">
+                        <i class="material-icons text-primary">description</i>
+                        <strong class="text-dark">{{ 'description' | trans }}:</strong>
+                        <span class="text-dark">{{ seal.description ?? ('not_informed' | trans) }}</span>
+                    </p>
+                    <p class="d-flex align-items-center gap-2 mb-1">
+                        <i class="material-icons text-primary">person</i>
+                        <strong class="text-dark">{{ 'created_by' | trans }}:</strong>
+                        <span class="text-dark">{{ seal.createdBy.name }}</span>
+                    </p>
+                    <p class="d-flex align-items-center gap-2 mb-1">
+                        <i class="material-icons text-primary">calendar_today</i>
+                        <strong class="text-dark">{{ 'created_at' | trans }}:</strong>
+                        <span class="text-dark">{{ seal.createdAt.format('d/m/Y') }}</span>
+                    </p>
+                    <p class="d-flex align-items-center gap-2 mb-1">
+                        <i class="material-icons text-primary">event</i>
+                        <strong class="text-dark">{{ 'validity' | trans }}:</strong>
+                        <span class="text-dark">{{ seal.expirationDate is defined and seal.expirationDate ? seal.expirationDate.format('d/m/Y') : ('not_informed' | trans) }}</span>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <p class="text-center text-muted">{{ 'no_seals' | trans }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>

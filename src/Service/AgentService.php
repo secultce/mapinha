@@ -7,6 +7,7 @@ namespace App\Service;
 use App\DTO\AgentDto;
 use App\Entity\Agent;
 use App\Entity\User;
+use App\Enum\UserRolesEnum;
 use App\Exception\Agent\AgentResourceNotFoundException;
 use App\Exception\Agent\CantRemoveUniqueAgentFromUserException;
 use App\Exception\ValidatorException;
@@ -14,6 +15,7 @@ use App\Repository\Interface\AgentRepositoryInterface;
 use App\Repository\Interface\OpportunityRepositoryInterface;
 use App\Service\Interface\AgentServiceInterface;
 use App\Service\Interface\FileServiceInterface;
+use App\Service\Interface\PhotoServiceInterface;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -26,6 +28,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 readonly class AgentService extends AbstractEntityService implements AgentServiceInterface
 {
     private const string DIR_AGENT_PROFILE = 'app.dir.agent.profile';
+    private const string DIR_AGENT_COVER = 'app.dir.agent.cover';
+    private const string DIR_AGENT_PORTFOLIO = 'app.dir.agent.portfolio';
 
     public function __construct(
         private AgentRepositoryInterface $repository,
@@ -36,6 +40,7 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
         private SerializerInterface $serializer,
         private ValidatorInterface $validator,
         private EntityManagerInterface $entityManager,
+        private PhotoServiceInterface $photoService,
     ) {
         parent::__construct(
             $this->security,
@@ -72,8 +77,14 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
     public function createFromUser(array $user, ?array $extraFields = null): Agent
     {
         $agent = $this->organizeDefaultAgentData($user);
-        $agent['extraFields'] = $extraFields;
+        $agent['extraFields'] = [...$extraFields ?? [], ...[
+            'phone' => $user['phone'] ?? '',
+        ]];
         $agent['main'] = true;
+
+        if (true === isset($user['cpf'])) {
+            $agent['fiscalCode'] = $user['cpf'];
+        }
         $agent = $this->validateInput($agent, AgentDto::class, AgentDto::CREATE);
 
         $agentObj = $this->serializer->denormalize($agent, Agent::class);
@@ -85,7 +96,10 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
     {
         $userParams = $this->getDefaultParams();
 
-        if (null !== $this->security->getUser()) {
+        if (
+            null !== $this->security->getUser()
+            && false === $this->security->getUser()->isRole(UserRolesEnum::ROLE_ADMIN)
+        ) {
             $user = $this->security->getUser();
             $userParams['user'] = $user;
         }
@@ -137,8 +151,8 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
         return [
             'id' => Uuid::v4()->toRfc4122(),
             'name' => "{$user['firstname']} {$user['lastname']}",
-            'shortBio' => 'Agente criado automaticamente',
-            'longBio' => 'Este agente foi criado automaticamente pelo sistema',
+            'shortBio' => '',
+            'longBio' => '',
             'culture' => false,
             'user' => $user['id'],
         ];
@@ -220,5 +234,53 @@ readonly class AgentService extends AbstractEntityService implements AgentServic
         $this->repository->save($agent);
 
         return $agent;
+    }
+
+    public function updateCoverImage(Uuid $id, UploadedFile $uploadedFile): Agent
+    {
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: AgentDto::class,
+            dtoProperty: 'coverImage',
+            directoryParam: self::DIR_AGENT_COVER,
+            getterMethod: 'getCoverImage',
+            setterMethod: 'setCoverImage',
+            validationGroups: [AgentDto::UPDATE]
+        );
+    }
+
+    public function addPortfolioImage(Agent $agent, UploadedFile $uploadedFile, ?string $description = null): Agent
+    {
+        $photo = $this->photoService->create($uploadedFile, self::DIR_AGENT_PORTFOLIO, $description);
+
+        $agent->addPortfolio($photo);
+        $agent->setUpdatedAt(new DateTime());
+
+        $this->entityManager->flush();
+
+        return $agent;
+    }
+
+    public function removePortfolioImage(Uuid $agentId, Uuid $photoId): Agent
+    {
+        $agent = $this->get($agentId);
+
+        $photo = $this->photoService->get($photoId);
+
+        if (null !== $photo) {
+            $agent->removePortfolio($photo);
+            $this->photoService->delete($photo);
+            $agent->setUpdatedAt(new DateTime());
+
+            $this->entityManager->flush();
+        }
+
+        return $agent;
+    }
+
+    public function getMainAgentByUser(Uuid $userId): ?Agent
+    {
+        return $this->repository->getMainAgentByUser($userId->toString());
     }
 }

@@ -1,0 +1,19 @@
+<div class="modal fade" id="{{ modalId|default('cropModal') }}" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ 'adjust'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="cropper-img-container">
+                    <img class="image-to-crop" src="" alt="Crop Preview" style="max-width: 100%; display: block;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel'|trans }}</button>
+                <button type="button" class="btn btn-primary crop-save-btn">{{ 'save'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

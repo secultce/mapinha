@@ -6,10 +6,32 @@
 </button>
 {% if actions is defined %}
     {% for action in actions %}
-        <form method="post" action="{{ action.path }}" class="d-inline">
-            <button type="submit" class="btn btn-primary fw-bold p-2 ms-2">
+        {% if action.disabled is defined and action.disabled %}
+            <span
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="{{ action.tooltip|trans({'{date}': action.date}) }}">
+                <button
+                    type="button"
+                    class="btn btn-primary fw-bold p-2 ms-2"
+                    disabled
+                >
+                    <i class="material-icons fs-4 me-2">{{ action.icon }}</i> {{ action.key|trans }}
+                </button>
+            </span>
+        {% elseif action.requiresConfirmation is defined and action.requiresConfirmation %}
+            <button
+                type="button"
+                class="btn btn-primary fw-bold p-2 ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#subscribeConfirmModal"
+            >
                 <i class="material-icons fs-4 me-2">{{ action.icon }}</i> {{ action.key|trans }}
             </button>
-        </form>
+        {% else %}
+            <a href="{{ action.path }}" class="btn btn-primary fw-bold p-2 ms-2">
+                <i class="material-icons fs-4 me-2">{{ action.icon }}</i> {{ action.key|trans }}
+            </a>
+        {% endif %}
     {% endfor %}
 {% endif %}

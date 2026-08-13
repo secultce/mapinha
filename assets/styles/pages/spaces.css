@@ -17,6 +17,7 @@
 .space-img {
     width: 3.75rem;
     height: 3.75rem;
+    border-radius: 50%;
     object-fit: cover;
 }
 
@@ -127,6 +128,10 @@
     padding: 6px 12px;
 }
 
+.responsive-icon {
+    font-size: 1.5rem;
+}
+
 @media (max-width: 768px) {
     .space-img {
         width: 4rem;
@@ -142,6 +147,10 @@
     .btn-primary {
         font-size: 0.8rem;
         padding: 5px 10px;
+    }
+
+    .responsive-icon {
+        font-size: 1.25rem;
     }
 }
 

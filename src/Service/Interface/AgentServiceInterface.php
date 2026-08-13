@@ -19,6 +19,8 @@ interface AgentServiceInterface
 
     public function getMainAgentByEmail(string $email): ?Agent;
 
+    public function getMainAgentByUser(Uuid $userId): ?Agent;
+
     public function findOneBy(array $params): ?Agent;
 
     public function findBy(array $params = []): array;
@@ -30,6 +32,12 @@ interface AgentServiceInterface
     public function update(Uuid $id, array $agent): Agent;
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Agent;
+
+    public function updateCoverImage(Uuid $id, UploadedFile $uploadedFile): Agent;
+
+    public function addPortfolioImage(Agent $agent, UploadedFile $uploadedFile, ?string $description = null): Agent;
+
+    public function removePortfolioImage(Uuid $agentId, Uuid $photoId): Agent;
 
     public function count(?User $user = null): int;
 }

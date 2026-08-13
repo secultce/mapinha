@@ -1,0 +1,41 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %}{{ space.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/spaces.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/components/entity-header.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <section class="entity-section">
+        {% include "_components/entity-header.html.twig" with {
+            name: space.name,
+            id: space.id,
+            image: space.image|default('img/default-image.png'),
+            coverImage: space.coverImage|default('img/banner-default-white.jpeg'),
+            icon: 'place',
+            label: space.spaceType.name|default('available_type'|trans),
+            longBio: space.longDescription,
+            actions: 'space/_partials/details-tabs/actions.html.twig',
+            tabs: 'space/_partials/details-tabs/details-tabs.html.twig',
+            breadcrumbs: [
+                {text: 'home'|trans, path: path('web_home_homepage')},
+                {text: 'spaces'|trans, path: path('web_space_list')},
+                {text: space.name, path: path('web_space_getOne', {id: space.id})}
+            ]
+        } only %}
+    </section>
+
+    <section class="profile-entity-wrapper">
+        {% include "space/_partials/details-tabs/content-tabs.html.twig" %}
+    </section>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+{% block extra_javascripts %}
+    <script type="module" src="{{ asset('js/_components/copy-id.js') }}"></script>
+{% endblock %}

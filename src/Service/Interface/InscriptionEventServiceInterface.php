@@ -24,4 +24,6 @@ interface InscriptionEventServiceInterface
     public function update(Uuid $event, Uuid $identifier, array $inscriptionEvent): InscriptionEvent;
 
     public function listMyInscriptions(): array;
+
+    public function getUserInscription(Uuid $eventId): ?InscriptionEvent;
 }

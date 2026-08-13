@@ -14,7 +14,7 @@ class AuthTimeline extends AbstractDocument
     private ?string $id = null;
 
     #[ODM\Field]
-    private string $userId;
+    private ?string $userId = null;
 
     #[ODM\Field]
     private int $priority;
@@ -41,7 +41,7 @@ class AuthTimeline extends AbstractDocument
         $this->id = $id;
     }
 
-    public function getUserId(): string
+    public function getUserId(): ?string
     {
         return $this->userId;
     }

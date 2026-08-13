@@ -27,3 +27,8 @@ toggle_publish:
   path: /{id}/toggle-publish
   controller: App\Controller\Web\Admin\SpaceAdminController::togglePublish
   methods: ['GET']
+
+remove_portfolio_photo:
+  path: /{id}/portfolio/{photoId}/remove
+  controller: App\Controller\Web\Admin\SpaceAdminController::removePortfolioPhoto
+  methods: ['GET']

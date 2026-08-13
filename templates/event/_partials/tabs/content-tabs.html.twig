@@ -2,18 +2,6 @@
     {
         'id': 'list',
         'content': include('event/_partials/tabs/tab-list.html.twig')
-    },
-    {
-        'id': 'calendar',
-        'content': include('event/_partials/tabs/tab-calendar.html.twig')
-    },
-    {
-        'id': 'map',
-        'content': include('event/_partials/tabs/tab-map.html.twig')
-    },
-    {
-        'id': 'indicators',
-        'content': include('event/_partials/tabs/tab-indicators.html.twig')
     }
 ] %}
 {% include '_components/tabs/content-tabs.html.twig' with { 'tabs': tabs } %}

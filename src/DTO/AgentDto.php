@@ -35,11 +35,18 @@ class AgentDto
     ])]
     public mixed $name;
 
+    #[Sequentially([
+        new Length(min: 11, max: 30, groups: [self::CREATE, self::UPDATE]),
+    ])]
+    public mixed $fiscalCode;
+
     #[Image(maxSize: (2000000), mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::CREATE, self::UPDATE])]
     public ?File $image = null;
 
+    #[Image(maxSize: (2000000), mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::UPDATE])]
+    public ?File $coverImage = null;
+
     #[Sequentially([
-        new NotBlank(groups: [self::CREATE]),
         new NotNull(groups: [self::UPDATE]),
         new Type('string', groups: [self::CREATE, self::UPDATE]),
         new Length(max: 100, groups: [self::CREATE, self::UPDATE]),

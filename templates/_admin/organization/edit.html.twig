@@ -14,20 +14,6 @@
             {% include "_admin/organization/_partials/organization-edit-header.html.twig" %}
 
             <section class="entity-edit-content mt-4">
-                <div class="manage-people d-flex flex-column shadow-sm mb-4">
-                    <span class="fw-bold fs-6">Pessoas ({{ agents|length }})</span>
-                    {% for agent in agents %}
-                    <div class="people mt-3 d-flex align-items-center gap-1">
-                        <img src="{{ agent.image }}" alt="">
-                        <span class="fw-bold fs-6 text-primary">{{ agent.name }}</span>
-                    </div>
-                    {% endfor %}
-                    <button class="align-self-center btn btn-md btn-primary mt-4 fw-bold px-5 py-2">{{ 'view.organization.manage_people'|trans|lower }}</button>
-                </div>
-
-                {% set asterisk = '<span class="text-danger">*</span>' %}
-                <span class="entity-mandatory-fields">{{ 'mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
-
                 {% include "_admin/organization/_partials/forms/entity-edit-form.html.twig" %}
             </section>
 
@@ -39,10 +25,13 @@
                     </button>
                 </div>
                 <div class="logout-submit">
-                    <button class="btn btn-outline-light">{{ 'logout' | trans }}</button>
+                    <a href="{{ path('admin_organization_list') }}" class="btn btn-outline-light">{{ 'logout' | trans }}</a href"{{ path('admin_organization_list') }}>
                     <button form="organization-edit-form" type="submit" class="btn btn-light">{{ 'save' | trans}}</button>
                 </div>
             </div>
         </div>
     </section>
+{% endblock %}
+{% block extra_javascripts %}
+    <script src="{{ asset('js/image-validation.js') }}"></script>
 {% endblock %}

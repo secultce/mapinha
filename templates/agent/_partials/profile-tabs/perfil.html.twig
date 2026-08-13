@@ -1,19 +1,134 @@
 {% include "agent/_partials/agent-organizations.html.twig" %}
 
 <div class="perfil-tabs border-bottom mt-4">
-    {% include "agent/_partials/profile-tabs/perfil-tabs/perfil-tabs.html.twig" %}
+    <ul class="nav nav-pills justify-content-md-start pill-tabs" id="perfil-subtabs" role="tablist">
+        <li class="nav-item mb-md-1 me-md-3" role="presentation">
+            <a class="centered-icon-text nav-link active" id="subtab-public-tab" data-bs-toggle="pill" href="#subtab-public" role="tab" aria-controls="subtab-public" aria-selected="true">
+                {{ 'public' | trans }}
+            </a>
+        </li>
+        <li class="nav-item mb-md-1 me-md-3" role="presentation">
+            <a class="centered-icon-text nav-link text-nowrap" id="subtab-personaldata-tab" data-bs-toggle="pill" href="#subtab-personaldata" role="tab" aria-controls="subtab-personaldata" aria-selected="false">
+                {{ 'personal_data' | trans }}
+            </a>
+        </li>
+        <li class="nav-item mb-md-1 me-md-3" role="presentation">
+            <a class="centered-icon-text nav-link" id="subtab-address-tab" data-bs-toggle="pill" href="#subtab-address" role="tab" aria-controls="subtab-address" aria-selected="false">
+                {{ 'address' | trans }}
+            </a>
+        </li>
+        <li class="nav-item mb-md-1 me-md-3" role="presentation">
+            <a class="centered-icon-text nav-link" id="subtab-administration-tab" data-bs-toggle="pill" href="#subtab-administration" role="tab" aria-controls="subtab-administration" aria-selected="false">
+                {{ 'administration' | trans }}
+            </a>
+        </li>
+    </ul>
 </div>
 
-<section class="mt-4 agent-perfil">
-    {% include "agent/_partials/agent-introduction.html.twig" %}
-
-    {% include "agent/_partials/agent-social-media.html.twig" %}
-
-    {% include "agent/_partials/agent-connections.html.twig" %}
-
-    <div class="agent-profile-actions">
-        <button class="left-button ">{{ 'view.agent_profile.profile_change_history' | trans }}</button>
-        <button class="right-button">{{ 'view.agent_profile.report' | trans }}</button>
+<div class="tab-content mt-4" id="perfil-subtabs-content">
+    <div class="tab-pane fade show active" id="subtab-public" role="tabpanel" aria-labelledby="subtab-public-tab">
+        <section class="agent-perfil">
+            {% include "agent/_partials/agent-introduction.html.twig" %}
+        </section>
     </div>
 
-</section>
+    <div class="tab-pane fade" id="subtab-personaldata" role="tabpanel" aria-labelledby="subtab-personaldata-tab">
+        <section class="card card-body shadow">
+            <h3>{{ 'personal_data' | trans }}</h3>
+            <hr>
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <i class="material-icons text-primary fs-5 mt-1">person</i>
+                <div class="text-dark">
+                    <strong class="d-none d-md-inline">{{ 'name' | trans }}:</strong>
+                    <span class="visually-hidden d-md-none">{{ 'name' | trans }}:</span>
+
+                    <span class="text-break">{{ agent.name }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 mb-3">
+                <i class="material-icons text-primary fs-5 mt-1">badge</i>
+                <div class="text-dark">
+                    <strong class="d-none d-md-inline">{{ 'short_description' | trans }}:</strong>
+                    <span class="visually-hidden d-md-none">{{ 'short_description' | trans }}:</span>
+
+                    <span class="text-break">{{ agent.shortBio ?? ('not_informed' | trans) }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 mb-1"> <i class="material-icons text-primary fs-5 mt-1">email</i>
+                <div class="text-dark">
+                    <strong class="d-none d-md-inline">Email:</strong>
+                    <span class="visually-hidden d-md-none">Email:</span>
+
+                    <span class="text-break">{{ agent.user.email ?? ('not_informed' | trans) }}</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="tab-pane fade" id="subtab-address" role="tabpanel" aria-labelledby="subtab-address-tab">
+        <section class="card card-body shadow">
+            <h3>{{ 'address' | trans }}</h3>
+            <hr>
+            {% for address in agent.addresses %}
+                <div class="mb-3">
+                    <div class="d-flex align-items-start gap-3">
+                        <i class="material-icons text-primary fs-5 mt-1">location_on</i>
+                        <div class="text-dark">
+                            <strong class="d-none d-md-inline">{{ 'address' | trans }}:</strong>
+                            <span class="visually-hidden d-md-none">{{ 'address' | trans }}:</span>
+
+                            <span class="text-break">{{ address.getCompleteAddress() }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-muted">{{ 'available_address' | trans }}</p>
+            {% endfor %}
+        </section>
+    </div>
+
+    <div class="tab-pane fade" id="subtab-administration" role="tabpanel" aria-labelledby="subtab-administration-tab">
+        <section class="card card-body shadow">
+            <h3>{{ 'administration' | trans }}</h3>
+            <hr>
+            <p class="d-flex align-items-center gap-2 mb-1">
+                <i class="material-icons text-primary">calendar_today</i>
+                <strong class="text-dark">{{ 'created_at' | trans }}:</strong>
+                <span class="text-dark">{{ agent.createdAt.format('d/m/Y') }}</span>
+            </p>
+            {% if agent.updatedAt %}
+                <p class="d-flex align-items-center gap-2 mb-1">
+                    <i class="material-icons text-primary">update</i>
+                    <strong class="text-dark">{{ 'updated_at' | trans }}:</strong>
+                    <span class="text-dark">{{ agent.updatedAt.format('d/m/Y') }}</span>
+                </p>
+            {% endif %}
+        </section>
+    </div>
+</div>
+
+{% include "agent/_partials/agent-social-media.html.twig" %}
+
+<script>
+    document.querySelectorAll('#perfil-subtabs .nav-link').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('#perfil-subtabs .nav-link').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('#perfil-subtabs-content > .tab-pane').forEach(pane => {
+                pane.classList.remove('show', 'active');
+            });
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.classList.add('show', 'active');
+            }
+        });
+    });
+</script>
+
+<div class="agent-profile-actions d-flex flex-column flex-md-row justify-content-between gap-3 mt-4 mt-md-5">
+    <button class="left-button">{{ 'view.agent_profile.profile_change_history' | trans }}</button>
+    <button class="right-button">{{ 'view.agent_profile.report' | trans }}</button>
+</div>

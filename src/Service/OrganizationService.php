@@ -9,7 +9,6 @@ use App\Entity\Agent;
 use App\Entity\Organization;
 use App\Enum\OrganizationTypeEnum;
 use App\Exception\Organization\OrganizationResourceNotFoundException;
-use App\Exception\ValidatorException;
 use App\Repository\Interface\OrganizationRepositoryInterface;
 use App\Service\Interface\AgentServiceInterface;
 use App\Service\Interface\FileServiceInterface;
@@ -29,6 +28,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 readonly class OrganizationService extends AbstractEntityService implements OrganizationServiceInterface
 {
     private const string DIR_ORGANIZATION_PROFILE = 'app.dir.organization.profile';
+    private const string DIR_ORGANIZATION_COVER = 'app.dir.organization.cover';
 
     public function __construct(
         private FileServiceInterface $fileService,
@@ -149,34 +149,30 @@ readonly class OrganizationService extends AbstractEntityService implements Orga
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Organization
     {
-        $organization = $this->get($id);
-
-        $organizationDto = new OrganizationDto();
-        $organizationDto->image = $uploadedFile;
-
-        $violations = $this->validator->validate($organizationDto, groups: [OrganizationDto::UPDATE]);
-
-        if ($violations->count() > 0) {
-            throw new ValidatorException(violations: $violations);
-        }
-
-        if ($organization->getImage()) {
-            $this->fileService->deleteFileByUrl($organization->getImage());
-        }
-
-        $uploadedImage = $this->fileService->uploadImage(
-            $this->parameterBag->get(self::DIR_ORGANIZATION_PROFILE),
-            $uploadedFile
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: OrganizationDto::class,
+            dtoProperty: 'image',
+            directoryParam: self::DIR_ORGANIZATION_PROFILE,
+            getterMethod: 'getImage',
+            setterMethod: 'setImage',
+            validationGroups: [OrganizationDto::UPDATE]
         );
+    }
 
-        $relativePath = '/uploads'.$this->parameterBag->get(self::DIR_ORGANIZATION_PROFILE).'/'.$uploadedImage->getFilename();
-        $organization->setImage($relativePath);
-
-        $organization->setUpdatedAt(new DateTime());
-
-        $this->repository->save($organization);
-
-        return $organization;
+    public function updateCoverImage(Uuid $id, UploadedFile $uploadedFile): Organization
+    {
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: OrganizationDto::class,
+            dtoProperty: 'coverImage',
+            directoryParam: self::DIR_ORGANIZATION_COVER,
+            getterMethod: 'getCoverImage',
+            setterMethod: 'setCoverImage',
+            validationGroups: [OrganizationDto::UPDATE]
+        );
     }
 
     public function removeAgent(Uuid $agentId, Uuid $organizationId): void

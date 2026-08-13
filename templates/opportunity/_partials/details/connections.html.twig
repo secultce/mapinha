@@ -3,51 +3,56 @@
         <div class="card-body py-4">
             <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'connections'|trans }}</h5>
 
+            {% if opportunity.space %}
             <div class="py-2">
                 <div class="clearfix">
-                    <h6 data-cy="entity-connection" class="fw-bold mb-3 float-start">{{ 'opportunities'|trans }}</h6>
+                    <h6 data-cy="entity-connection" class="fw-bold mb-3 float-start">{{ 'spaces'|trans }}</h6>
                     <span class="float-end fw-semibold">
-                        <a class="text-decoration-none" href="#">{{ 'see_all'|trans }} <i class="material-icons align-top fs-4 me-1">arrow_forward</i></a>
+                        <a class="text-decoration-none" href="{{ path('web_space_getOne', {id: opportunity.space.id}) }}">{{ 'see_all'|trans }} <i class="material-icons align-top fs-4 me-1">arrow_forward</i></a>
                     </span>
                 </div>
                 <div class="row">
                     <div class="col mb-3">
-                        <span class="d-flex align-items-center fw-bold">
-                            <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                            <span><a class="text-decoration-none" href="#">Nome da oportunidade</a></span>
-                        </span>
-                    </div>
-                    <div class="col mb-3">
-                        <span class="d-flex align-items-center fw-bold">
-                            <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                            <span><a class="text-decoration-none" href="#">Nome da oportunidade</a></span>
-                        </span>
-                    </div>
-                    <div class="col mb-3">
-                        <span class="d-flex align-items-center fw-bold">
-                            <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                            <span><a class="text-decoration-none" href="#">Nome da oportunidade</a></span>
+                        <span class="d-flex align-items-center fw-bold gap-2">
+                            {% if opportunity.space.image %}
+                                <img class="rounded-circle" src="{{ asset(opportunity.space.image) }}" alt="{{ opportunity.space.name }}" style="width: 32px; height: 32px; object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                            {% endif %}
+                            <a class="text-decoration-none" href="{{ path('web_space_getOne', {id: opportunity.space.id}) }}">{{ opportunity.space.name }}</a>
                         </span>
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="py-2">
-                <div class="clearfix">
-                    <h6 data-cy="entity-connection" class="fw-bold mb-3 float-start">{{ 'events'|trans }}</h6>
-                    <span class="float-end fw-semibold">
-                        <a class="text-decoration-none" href="#">{{ 'see_all'|trans }} <i class="material-icons align-top fs-4 me-1">arrow_forward</i></a>
-                    </span>
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <span class="d-flex align-items-center fw-bold">
-                            <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                            <span><a class="text-decoration-none" href="#">Nome do evento</a></span>
+            {% endif %}
+
+            {% if opportunity.initiative %}
+                {% if opportunity.space %}<hr>{% endif %}
+                <div class="py-2">
+                    <div class="clearfix">
+                        <h6 data-cy="entity-connection" class="fw-bold mb-3 float-start">{{ 'initiatives'|trans }}</h6>
+                        <span class="float-end fw-semibold">
+                            <a class="text-decoration-none" href="{{ path('web_initiative_show', {id: opportunity.initiative.id}) }}">{{ 'see_all'|trans }} <i class="material-icons align-top fs-4 me-1">arrow_forward</i></a>
                         </span>
                     </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <span class="d-flex align-items-center fw-bold gap-2">
+                                {% if opportunity.initiative.image %}
+                                    <img class="rounded-circle" src="{{ asset(opportunity.initiative.image) }}" alt="{{ opportunity.initiative.name }}" style="width: 32px; height: 32px; object-fit: cover;">
+                                {% else %}
+                                    <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                                {% endif %}
+                                <a class="text-decoration-none" href="{{ path('web_initiative_show', {id: opportunity.initiative.id}) }}">{{ opportunity.initiative.name }}</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+
+            {% if not opportunity.space and not opportunity.initiative %}
+                <p class="text-muted">{{ 'not_informed'|trans }}</p>
+            {% endif %}
         </div>
     </div>
 </div>

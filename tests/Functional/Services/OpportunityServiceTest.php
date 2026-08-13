@@ -36,11 +36,11 @@ class OpportunityServiceTest extends AbstractApiTestCase
         $coverImage = ImageTestFixtures::getImageValid();
 
         $opportunity = $this->entityManager->getRepository(Opportunity::class)->find('d1068a81-c006-4358-8846-a95ef252c881');
-        $this->assertNull($opportunity->getExtraFields()['coverImage'] ?? null);
+        $this->assertNull($opportunity->getCoverImage() ?? null);
         $this->assertNull($opportunity->getUpdatedAt());
 
         $this->service->updateCoverImage($opportunity->getId(), $coverImage);
-        $this->assertNotNull($opportunity->getExtraFields()['coverImage']);
+        $this->assertNotNull($opportunity->getCoverImage());
         $this->assertNotNull($opportunity->getUpdatedAt());
     }
 
@@ -52,14 +52,14 @@ class OpportunityServiceTest extends AbstractApiTestCase
             ->getRepository(Opportunity::class)
             ->find('d1068a81-c006-4358-8846-a95ef252c881');
 
-        $this->assertNull($opportunity->getExtraFields()['coverImage'] ?? null);
+        $this->assertNull($opportunity->getCoverImage() ?? null);
         $this->assertNull($opportunity->getUpdatedAt());
 
         $this->expectException(ValidatorException::class);
 
         $this->service->updateCoverImage($opportunity->getId(), $coverImage);
 
-        $this->assertNull($opportunity->getExtraFields()['coverImage'] ?? null);
+        $this->assertNull($opportunity->getCoverImage() ?? null);
         $this->assertNull($opportunity->getUpdatedAt());
     }
 }

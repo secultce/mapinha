@@ -1,17 +1,18 @@
 <div class="entity-dashboard row">
     {% for item in dashboard.items %}
-        <div class="col">
-            <div class="card dashboard-card shadow-sm">
+        <div class="col-12 col-md-6 col-lg-3 mb-3 px-0 px-md-3 {% if loop.first %}ps-lg-0{% endif %} {% if loop.last %}pe-lg-0{% endif %}">
+            <div class="card dashboard-card shadow-sm h-100">
                 <div class="d-flex justify-content-between align-items-start">
                     <h2 class="quantity">{{ item.quantity }}</h2>
                     <span class="material-icons" style="color: {{ dashboard.color }};">
-                    {{ item.icon }}
-                </span>
+                        {{ item.icon }}
+                    </span>
                 </div>
                 <div class="content">
                     <span class="text">{{ item.text | trans }}</span>
                 </div>
             </div>
+
         </div>
     {% endfor %}
 </div>

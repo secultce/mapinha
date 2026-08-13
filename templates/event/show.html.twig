@@ -1,4 +1,4 @@
-{% extends "_layouts/blank.html.twig" %}
+{% extends "_layouts/blank-not-logged.html.twig" %}
 
 {% block title %}
     {{ 'event'|trans }} | {{ event.name }}
@@ -15,10 +15,6 @@
         'title': 'general_data'
     },
     {
-        'id': 'seals',
-        'title': 'seals'
-    },
-    {
         'id': 'people',
         'title': 'people'
     },
@@ -32,13 +28,36 @@
     }
 ] %}
 
-{% set actions = [
-    {
-        'icon': 'person',
-        'key': 'subscribe',
-        'path': path('admin_event_inscription_create', {id: event.id})
-    }
-] %}
+{% set actions = [] %}
+{% if app.user %}
+    {% if userInscription %}
+        {% set actions = [
+            {
+                'icon': 'check',
+                'key': 'subscribed',
+                'disabled': true,
+                'tooltip': 'subscribed_since',
+                'date': userInscription.createdAt|date('d/m/Y')
+            }
+        ] %}
+    {% else %}
+        {% set actions = [
+            {
+                'icon': 'person',
+                'key': 'subscribe',
+                'requiresConfirmation': true
+            }
+        ] %}
+    {% endif %}
+{% else %}
+    {% set actions = [
+        {
+            'icon': 'person',
+            'key': 'subscribe',
+            'path': path('web_auth_login')
+        }
+    ] %}
+{% endif %}
 
 {% block content %}
     {% include '_layouts/_show/header.html.twig' with {
@@ -52,13 +71,31 @@
         <div class="tab-content">
             {% include "event/_partials/show/general-data.html.twig" %}
 
-            {% include "_layouts/_show/seals.html.twig" %}
-
             {% include '_layouts/_show/peoples.html.twig' with { 'entity': event } %}
 
             {% include "event/_partials/show/initiatives.html.twig" %}
 
             {% include "event/_partials/show/evidences.html.twig" %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="subscribeConfirmModal" tabindex="-1" aria-labelledby="subscribeConfirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="subscribeConfirmModalLabel">{{ 'subscribe_confirmation_title'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ 'subscribe_confirmation_message'|trans }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'cancel'|trans }}</button>
+                    <form method="post" id="subscribeConfirmForm" action="{{ path('admin_event_inscription_create', {id: event.id}) }}">
+                        <button type="submit" class="btn btn-primary">{{ 'subscribe'|trans }}</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

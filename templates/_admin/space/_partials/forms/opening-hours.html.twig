@@ -1,34 +1,44 @@
-<div class="container-fluid opening-hours p-0" id="opening-hours-container">
-    <div class="row g-2 g-md-3 align-items-end opening-hours-row">
-        <div class="col-md-4">
-            <label class="form-label">{{ 'week_days' | trans }}</label>
-            <select class="form-select week_days">
-                <option value="" disabled selected>{{ 'select' | trans }}</option>
-            </select>
-        </div>
+<div class="container-fluid opening-hours p-0"
+     id="opening-hours-container"
+     data-initial-data="{{ space.extraFields is defined ? (space.extraFields|json_encode) : '{}' }}">
 
-        <div class="col-md-3">
-            <label class="form-label">{{ 'opens_at' | trans }}</label>
-            <input type="time" class="form-control opens_at" placeholder="00:00">
-        </div>
+    <input type="hidden" id="opening-hours-json" name="opening_hours" value="">
 
-        <div class="col-md-3">
-            <label class="form-label">{{ 'closes_at' | trans }}</label>
-            <div class="d-flex align-items-center">
-                <input type="time" class="form-control closes_at me-2" placeholder="00:00">
-                <a href="#" class="remove-opening-hours text-danger d-flex align-items-center">
-                    <i class="iconify fs-4" data-icon="mdi:trash-can-outline"></i>
-                </a>
-            </div>
-        </div>
+    <div id="opening-hours-list" class="border-bottom pb-4">
     </div>
 
     <div class="row mt-4">
         <div class="col">
-            <a href="#" class="text-primary fw-bold text-decoration-none" id="add-opening-hours">
+            <a class="text-primary fw-bold text-decoration-none" id="add-opening-hours-btn">
                 <i class="iconify fs-3" data-icon="gridicons:add"></i>
                 {{ 'add_opening_hours' | trans }}
             </a>
         </div>
     </div>
+
+    <template id="opening-hours-row-template">
+        <div class="row g-3 align-items-end opening-hours-row">
+            <div class="col-md-3">
+                <label class="form-label small text-muted text-uppercase fw-bold">{{ 'week_days' | trans }}</label>
+                <select class="form-select field-day" required></select>
+            </div>
+
+            <div class="col-md-1">
+                <label class="form-label small text-muted text-uppercase fw-bold">{{ 'opens_at' | trans }}</label>
+                <input type="time" class="form-control field-open" required>
+            </div>
+
+            <div class="col-md-1">
+                <label class="form-label small text-muted text-uppercase fw-bold">{{ 'closes_at' | trans }}</label>
+                <input type="time" class="form-control field-close" required>
+            </div>
+            <div class="col-md-1">
+                <div class="d-flex align-items-center">
+                    <a class="remove-opening-hours text-danger d-flex align-items-center btn-remove-row">
+                        <i class="iconify fs-4" data-icon="mdi:trash-can-outline"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </template>
 </div>

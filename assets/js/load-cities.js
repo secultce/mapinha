@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
         citySelect.refreshOptions(false);
     });
 
-    const initialState = stateSelect.getValue();
-    if (initialState) {
-        stateSelect.trigger('change', initialState);
-    }
+    // const initialState = stateSelect.getValue();
+    // if (initialState) {
+    //     stateSelect.trigger('change', initialState);
+    // }
 });

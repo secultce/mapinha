@@ -10,17 +10,17 @@ enum EducationEnum: string
 {
     use EnumTrait;
 
-    case NOT_LITERATE = 'Not literate';
-    case ELEMENTARY_INCOMPLETE = 'Incomplete Elementary School';
-    case ELEMENTARY_COMPLETE = 'Complete Elementary School';
-    case HIGH_SCHOOL_INCOMPLETE = 'Incomplete High School';
-    case HIGH_SCHOOL_COMPLETE = 'Complete High School';
-    case COLLEGE_INCOMPLETE = 'Incomplete College';
-    case COLLEGE_COMPLETE = 'Complete College';
-    case POSTGRADUATE = 'Postgraduate (lato sensu)';
-    case MASTER = 'Master (stricto sensu)';
-    case DOCTORATE = 'Doctorate (stricto sensu)';
-    case POST_DOCTORATE = 'Post-doctorate';
-    case OTHER = 'Other';
-    case PREFER_NOT_TO_DISCLOSE = 'Prefer not to disclose';
+    case NOT_LITERATE = 'Não alfabetizado';
+    case ELEMENTARY_INCOMPLETE = 'Fundamental incompleto';
+    case ELEMENTARY_COMPLETE = 'Fundamental completo';
+    case HIGH_SCHOOL_INCOMPLETE = 'Médio incompleto';
+    case HIGH_SCHOOL_COMPLETE = 'Médio completo';
+    case COLLEGE_INCOMPLETE = 'Superior incompleto';
+    case COLLEGE_COMPLETE = 'Superior completo';
+    case POSTGRADUATE = 'Pós-graduação (lato sensu)';
+    case MASTER = 'Mestrado (stricto sensu)';
+    case DOCTORATE = 'Doutorado (stricto sensu)';
+    case POST_DOCTORATE = 'Pós-doutorado';
+    case OTHER = 'Outro';
+    case PREFER_NOT_TO_DISCLOSE = 'Prefere não informar';
 }

@@ -1,80 +1,185 @@
 <div class="tab-pane container active" id="generalData">
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'introduction' | trans }}</h5>
+    <section class="card card-body mt-4">
+        <h3>{{ 'introduction' | trans }}</h3>
+        <hr>
 
-            <div class="row">
-                <div class="col">
-                    <label data-cy="event-cultural-languages" class="fw-bold mb-2">{{ 'cultural_languages' | trans }}</label>
-                    <p>
-                        <span class="text__entity-details fw-bold">Exposição</span>,
-                        <span class="text__entity-details fw-bold">Festival</span>,
-                        <span class="text__entity-details fw-bold">Musical</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <label class="fw-bold mb-2">Tags (3) <i class="material-icons text-primary fs-5 align-top">help</i></label>
-                    <p>
-                        <span class="text__entity-details fw-bold">DESIGN</span>,
-                        <span class="text__entity-details fw-bold">ACESSIBILIDADE</span>,
-                        <span class="text__entity-details fw-bold">DESIGNINCLUSIVO</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <label data-cy="event-description" class="fw-bold mb-2">{{ 'description' | trans }}</label>
-                    <p>
-                        {% if event.extraFields.longDescription is defined %}
-                            {{ event.extraFields.longDescription }}
-                            <span class="text-primary fw-bold d-block">({{ 'see_more' | trans }})</span>
-                        {% else %}
-                            {{ 'not_informed' | trans }}
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <label class="fw-bold mb-2">Site</label>
-                    <p><a class="text-decoration-none fw-bold" href="#" target="_blank">Site do evento</a></p>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <label class="fw-bold mb-2">{{ 'phone' | trans }}</label>
-                    <p>(00) 12345-6789</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            {% include "_components/_show/social-media.html.twig" %}
-        </div>
-    </div>
-
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'other_information' | trans }}</h5>
-
-            <hr class="mb-4">
-
-            <h6 class="fw-bold mb-4">{{ 'local' | trans }}</h6>
-            <span class="d-flex align-items-center fw-bold">
-                <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                {% if event.space %}
-                    <span data-cy="event-location"><a class="text-decoration-none" href="#">{{ event.space.name }}</a></span>
+        <p class="d-flex align-items-center gap-2 mb-3" data-cy="event-cultural-languages">
+            <i class="material-icons text-primary">translate</i>
+            <strong>{{ 'cultural_languages' | trans }}:</strong>
+            <span>
+                {% if event.culturalLanguages is not empty %}
+                    {% for culturalLanguage in event.culturalLanguages %}
+                        <span class="fw-bold">{{ culturalLanguage.name }}</span>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
                 {% else %}
                     {{ 'not_informed' | trans }}
                 {% endif %}
             </span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">event</i>
+            <strong>{{ 'start_date' | trans }}:</strong>
+            <span>{{ event.startDate ? event.startDate|date('d/m/Y H:i') : ('not_informed' | trans) }}</span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">event_available</i>
+            <strong>{{ 'end_date' | trans }}:</strong>
+            <span>{{ event.endDate ? event.endDate|date('d/m/Y H:i') : ('not_informed' | trans) }}</span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">devices</i>
+            <strong>{{ 'type' | trans }}:</strong>
+            <span>
+                {% if event.format == 1 %}
+                    {{ 'event_format_types.IN_PERSON' | trans }}
+                {% elseif event.format == 2 %}
+                    {{ 'event_format_types.ONLINE' | trans }}
+                {% elseif event.format == 3 %}
+                    {{ 'event_format_types.HYBRID' | trans }}
+                {% else %}
+                    {{ 'not_informed' | trans }}
+                {% endif %}
+            </span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">group</i>
+            <strong>{{ 'max_capacity' | trans }}:</strong>
+            <span>{{ event.maxCapacity ?? ('not_informed' | trans) }}</span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">attach_money</i>
+            <strong>{{ 'free' | trans }}:</strong>
+            <span>{{ event.free ? ('yes' | trans) : ('no' | trans) }}</span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">work</i>
+            <strong>{{ 'areas_of_expertise' | trans }} ({{ event.activityAreas|length }}):</strong>
+            <span class="fw-bold">
+                {% for area in event.activityAreas %}
+                    {{ area.name }}{% if not loop.last %}, {% endif %}
+                {% else %}
+                    {{ 'not_informed' | trans }}
+                {% endfor %}
+            </span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">hearing</i>
+            <strong>{{ 'audio_description' | trans }}:</strong>
+            <span>
+                {% if event.accessibleAudio == 1 %}
+                    {{ 'yes' | trans }}
+                {% elseif event.accessibleAudio == 2 %}
+                    {{ 'no' | trans }}
+                {% else %}
+                    {{ 'not_informed' | trans }}
+                {% endif %}
+            </span>
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">sign_language</i>
+            <strong>{{ 'libras' | trans }}:</strong>
+            <span>
+                {% if event.accessibleLibras == 1 %}
+                    {{ 'yes' | trans }}
+                {% elseif event.accessibleLibras == 2 %}
+                    {{ 'no' | trans }}
+                {% else %}
+                    {{ 'not_informed' | trans }}
+                {% endif %}
+            </span>
+        </p>
+
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary">label</i>
+            <strong>Tags ({{ event.tags|length }}):</strong>
+            <div class="d-flex flex-wrap gap-2 ms-1">
+                {% if event.tags is not empty %}
+                    {% for tag in event.tags %}
+                        <span class="seal-entity px-3 py-1" data-cy="event-tag">{{ tag.name }}</span>
+                    {% endfor %}
+                {% else %}
+                    <span>{{ 'not_informed' | trans }}</span>
+                {% endif %}
+            </div>
         </div>
-    </div>
+
+        <p class="d-flex align-items-start gap-2 mb-3" data-cy="event-description">
+            <i class="material-icons text-primary">description</i>
+            <span>
+                <strong>{{ 'description' | trans }}:</strong><br>
+                {{ event.longDescription ?? ('not_informed' | trans) }}
+            </span>
+        </p>
+    </section>
+
+    <section class="card card-body mt-4">
+        <h3>Redes Sociais</h3>
+        <hr>
+        <div class="d-flex gap-3 mt-2">
+            {% for network, value in event.socialNetworks %}
+                {% if value != '' %}
+                <div class="social-media-wrapper">
+                    <div class="social-media">
+                        <div class="social-link">
+                            <span class="iconify" data-icon="ph:{{ network }}-logo-light" style="font-size: 1.9rem;"></span>
+                            <a href="https://www.{{ network }}.com/{{ value }}" target="_blank" class="text-decoration-none fw-bold">
+                                {{ network }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="card card-body mt-4">
+        <h3>{{ 'contact' | trans }}</h3>
+        <hr>
+
+        <p class="d-flex align-items-center gap-2 mb-1">
+            <i class="material-icons text-primary">language</i>
+            <strong>Site:</strong>
+            {% if event.site %}
+                <a class="text-decoration-none fw-bold" href="{{ event.site }}" target="_blank">{{ event.site }}</a>
+            {% else %}
+                <span>{{ 'not_informed' | trans }}</span>
+            {% endif %}
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-1">
+            <i class="material-icons text-primary">phone</i>
+            <strong>{{ 'phone' | trans }}:</strong>
+            <span>{{ event.phoneNumber ?? ('not_informed' | trans) }}</span>
+        </p>
+    </section>
+
+    <section class="card card-body mt-4 mb-5">
+        <h3>{{ 'local' | trans }}</h3>
+        <hr>
+
+        <span class="d-flex align-items-center gap-2 fw-bold">
+            {% if event.space %}
+                {% if event.space.image %}
+                    <img src="{{ event.space.image }}" alt="{{ event.space.name }}" class="rounded-circle card-names-ellipse__entity-details" style="object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                {% endif %}
+                <span data-cy="event-location"><a class="text-decoration-none" href="#">{{ event.space.name }}</a></span>
+            {% else %}
+                <i class="material-icons text-primary">location_on</i>
+                <span>{{ 'not_informed' | trans }}</span>
+            {% endif %}
+        </span>
+    </section>
 
     {% include "_components/_show/report-btns.html.twig" %}
 </div>

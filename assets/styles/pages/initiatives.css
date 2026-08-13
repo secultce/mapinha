@@ -2,46 +2,19 @@
     background-color: var(--card-bg-color);
     border: 1px solid var(--mid-gray);
     border-radius: 0.4375rem;
-    padding: 0.9375rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 0.625rem;
     box-shadow: 0 2px 10px var(--box-shadow-color, rgba(0, 0, 0, 0.1));
 }
 
-.initiative-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.3125rem;
-}
-
-.initiative-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.initiative-name {
+.initiative-card__title {
     font-family: var(--font-open-sans);
     color: var(--btn-publish-custom-color);
-    margin-top: 0.825rem;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: bold;
 }
 
-.initiative-card-body {
-    padding: 10px 0;
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-left: 81px;
-}
-
-.initiative-info {
-    flex-grow: 1;
+.initiative-card__type {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
 }
 
 .text-initiative {
@@ -50,121 +23,28 @@
 
 .bg-initiative {
     color: var(--white-color);
-    background-color: var(--navlink-initiative);
+    background-color: var(--bs-primary);
     font-family: var(--font-open-sans);
     padding: 0.25rem 0.625rem;
     border-radius: 0.9375rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.initiative-id {
-    font-family: var(--font-open-sans);
-    font-size: 0.9rem;
-    margin-top: 5px;
-}
-
-.initiative-type {
-    margin-left: auto;
-}
-
-.initiative-description {
-    font-family: var(--font-open-sans);
-    color: var(--color-subtitle-gray);
-    margin-bottom: 10px;
-}
-
-.initiative-seals {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-}
-
-.initiative-date, .initiative-location {
-    color: var(--main-font-color);
-    display: flex;
-    align-items: center;
-}
-
-.initiative-date i, .initiative-location i {
-    font-size: 1.5rem;
-    margin-right: 5px;
-}
-
-.initiative-seals__entity-details {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: var(--bg-color-images);
-}
-
-.seal-initiative {
-    font-weight: bold;
-    font-size: 0.8125rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.seal-initiative::before {
-    content: '';
-    display: inline-block;
-    width: 0.9375rem;
-    height: 0.9375rem;
-    border-radius: 50%;
-    background-color: var(--bg-color-images);
 }
 
 .initiative-img {
     width: 4.125rem;
     height: 4.125rem;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 @media (max-width: 768px) {
-    .initiative-info {
-        flex-direction: column-reverse;
-        max-width: 8rem;
-        height: 6rem;
-        justify-content: start;
-        gap: 0.625rem;
-    }
-
     .initiative-img {
         width: 3.4375rem;
         height: 3.4375rem;
-        border-radius: 50%;
     }
 
-    .bg-initiative {
-        width: 8rem;
-        justify-self: start;
-        text-wrap: nowrap;
-        font-size: 0.7rem;
-    }
-
-    .initiative-id {
-        padding-left: 0.625rem;
-        text-wrap: wrap;
-    }
-
-    .initiative-card-body {
-        margin-left: 0;
-    }
-
-    .initiative-seals {
-        gap: 0.3rem;
-        align-items: start;
-        flex-direction: column;
-        margin-bottom: 1rem;
-    }
-
-    .initiative-name {
+    .initiative-card__title {
         font-size: 1rem;
-        margin: 0;
     }
 }

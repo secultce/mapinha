@@ -50,6 +50,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[Groups(['user.get'])]
     private ?string $image = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $coverImage = null;
+
     #[ORM\OneToMany(targetEntity: Agent::class, mappedBy: 'user')]
     #[Groups(['user.get'])]
     private Collection $agents;
@@ -59,7 +62,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private string $status = UserStatusEnum::AWAITING_CONFIRMATION->value;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = [];
+    private array $roles = ['ROLE_USER'];
 
     #[ORM\Column]
     #[Groups(['user.get'])]
@@ -152,6 +155,16 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     public function setImage(?string $image): void
     {
         $this->image = $image;
+    }
+
+    public function getCoverImage(): ?string
+    {
+        return $this->coverImage;
+    }
+
+    public function setCoverImage(?string $coverImage): void
+    {
+        $this->coverImage = $coverImage;
     }
 
     public function getAgents(): Collection

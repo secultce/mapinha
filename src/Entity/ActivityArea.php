@@ -15,11 +15,21 @@ class ActivityArea
 {
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME)]
-    #[Groups(['space.get', 'space.get.item', 'activity-area.get', 'activity-area.get.item', 'event.get', 'event.get.item'])]
+    #[Groups([
+        'space.get', 'space.get.item',
+        'activity-area.get', 'activity-area.get.item',
+        'event.get', 'event.get.item',
+        'organization.get', 'organization.get.item',
+    ])]
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 20)]
-    #[Groups(['space.get', 'space.get.item', 'activity-area.get', 'activity-area.get.item', 'event.get', 'event.get.item'])]
+    #[Groups([
+        'space.get', 'space.get.item',
+        'activity-area.get', 'activity-area.get.item',
+        'event.get', 'event.get.item',
+        'organization.get', 'organization.get.item',
+    ])]
     private ?string $name = null;
 
     public function getId(): ?Uuid

@@ -1,31 +1,45 @@
+{% set socialNetworks = entity.socialNetworks ?? [] %}
+
 <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'social_media' | trans }}</h5>
 
 <div class="row">
     <div class="col mb-2">
         <label class="fw-bold mb-2">Instagram</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">photo_camera</i>
+            {% if socialNetworks.instagram is defined and socialNetworks.instagram %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.instagram }}" target="_blank">{{ socialNetworks.instagram | replace({'https://instagram.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
     <div class="col mb-2">
         <label class="fw-bold mb-2">X ({{ 'old' | trans }} Twitter)</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">tag</i>
+            {% if socialNetworks.x is defined and socialNetworks.x %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.x }}" target="_blank">{{ socialNetworks.x | replace({'https://x.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
     <div class="col mb-2">
         <label class="fw-bold mb-2">Facebook</label>
         <p class="d-flex">
             <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            {% if socialNetworks.facebook is defined and socialNetworks.facebook %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.facebook }}" target="_blank">{{ socialNetworks.facebook | replace({'https://facebook.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
 </div>
@@ -33,28 +47,40 @@
     <div class="col mb-2">
         <label class="fw-bold mb-2">Vimeo</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">videocam</i>
+            {% if socialNetworks.vimeo is defined and socialNetworks.vimeo %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.vimeo }}" target="_blank">{{ socialNetworks.vimeo | replace({'https://vimeo.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
     <div class="col mb-2">
         <label class="fw-bold mb-2">YouTube</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">smart_display</i>
+            {% if socialNetworks.youtube is defined and socialNetworks.youtube %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.youtube }}" target="_blank">{{ socialNetworks.youtube | replace({'https://youtube.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
     <div class="col mb-2">
         <label class="fw-bold mb-2">Linkedin</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">business_center</i>
+            {% if socialNetworks.linkedin is defined and socialNetworks.linkedin %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.linkedin }}" target="_blank">{{ socialNetworks.linkedin | replace({'https://linkedin.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
 </div>
@@ -62,28 +88,40 @@
     <div class="col mb-2">
         <label class="fw-bold mb-2">Spotify</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">music_note</i>
+            {% if socialNetworks.spotify is defined and socialNetworks.spotify %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.spotify }}" target="_blank">{{ socialNetworks.spotify | replace({'https://spotify.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
     <div class="col mb-2">
         <label class="fw-bold mb-2">Pinterest</label>
         <p class="d-flex">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">push_pin</i>
+            {% if socialNetworks.pinterest is defined and socialNetworks.pinterest %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.pinterest }}" target="_blank">{{ socialNetworks.pinterest | replace({'https://pinterest.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
     <div class="col mb-2">
-        <label class="fw-bold mb-2">Tiktok</label>
+        <label class="fw-bold mb-2">TikTok</label>
         <p class="d-flex m-0">
-            <i class="material-icons fs-4 me-1">facebook</i>
-            <span class="align-top fw-bold">
-                <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-            </span>
+            <i class="material-icons fs-4 me-1">play_circle</i>
+            {% if socialNetworks.tiktok is defined and socialNetworks.tiktok %}
+                <span class="align-top fw-bold">
+                    <a class="text-decoration-none" href="{{ socialNetworks.tiktok }}" target="_blank">{{ socialNetworks.tiktok | replace({'https://tiktok.com/': ''}) }}</a>
+                </span>
+            {% else %}
+                {{ 'does_not_have' | trans }}
+            {% endif %}
         </p>
     </div>
 </div>

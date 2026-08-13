@@ -1,164 +1,126 @@
-import {
-    FRIDAY,
-    MONDAY,
-    SATURDAY,
-    SELECT_DAY,
-    SUNDAY,
-    THURSDAY,
-    trans,
-    TUESDAY,
-    WEDNESDAY
-} from "../../translator.js";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, trans, TUESDAY, WEDNESDAY} from "../../translator.js";
 
-document.addEventListener('DOMContentLoaded', function() {
+class OpeningHoursManager {
+    constructor() {
+        this.daysOptions = [
+            { value: 'sunday', label: trans(SUNDAY) },
+            { value: 'monday', label: trans(MONDAY) },
+            { value: 'tuesday', label: trans(TUESDAY) },
+            { value: 'wednesday', label: trans(WEDNESDAY) },
+            { value: 'thursday', label: trans(THURSDAY) },
+            { value: 'friday', label: trans(FRIDAY) },
+            { value: 'saturday', label: trans(SATURDAY) }
+        ];
 
-    const daysOfWeek = [
-        { value: 'sunday',    label: trans(SUNDAY)    },
-        { value: 'monday',    label: trans(MONDAY)    },
-        { value: 'tuesday',   label: trans(TUESDAY)   },
-        { value: 'wednesday', label: trans(WEDNESDAY) },
-        { value: 'thursday',  label: trans(THURSDAY)  },
-        { value: 'friday',    label: trans(FRIDAY)    },
-        { value: 'saturday',  label: trans(SATURDAY)  }
-    ];
+        this.refs = {
+            container: document.getElementById('opening-hours-container'),
+            list: document.getElementById('opening-hours-list'),
+            hiddenInput: document.getElementById('opening-hours-json'),
+            addBtn: document.getElementById('add-opening-hours-btn'),
+            template: document.getElementById('opening-hours-row-template')
+        };
 
-    function getUsedDays() {
-        const used = [];
-        document.querySelectorAll('select.week_days').forEach(select => {
-            if (select.value) {
-                used.push(select.value);
-            }
-        });
-        return used;
+        if (!this.refs.container) return;
+
+        this.init();
     }
 
-    function populateDropdown(selectElement, usedDays = [], currentValue = '') {
-        selectElement.innerHTML = '';
+    init() {
+        this._bindEvents();
+        this._loadInitialData();
+    }
 
-        // Option default
-        const defaultOption = document.createElement('option');
-        defaultOption.value = '';
-        defaultOption.disabled = true;
-        if (!currentValue) {
-            defaultOption.selected = true;
-        }
-        defaultOption.textContent = trans(SELECT_DAY);
-        selectElement.appendChild(defaultOption);
+    _bindEvents() {
+        this.refs.addBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this._addRow();
+        });
 
-        daysOfWeek.forEach(day => {
-            if (usedDays.includes(day.value) && day.value !== currentValue) {
-                return;
+        this.refs.list.addEventListener('click', (e) => {
+            const removeBtn = e.target.closest('.btn-remove-row');
+            if (removeBtn) {
+                e.preventDefault();
+                removeBtn.closest('.opening-hours-row').remove();
+                this._syncData();
             }
+        });
+
+        this.refs.list.addEventListener('input', (e) => {
+            if (e.target.matches('select, input')) {
+                this._syncData();
+            }
+        });
+    }
+
+    _loadInitialData() {
+        try {
+            const rawData = this.refs.container.dataset.initialData;
+            const data = rawData ? JSON.parse(rawData) : {};
+
+            if (data.openingHours && typeof data.openingHours === 'object') {
+                Object.entries(data.openingHours).forEach(([day, slots]) => {
+                    slots.forEach(slot => {
+                        this._addRow({ day, open: slot.open, close: slot.close });
+                    });
+                });
+            } else {
+                this._addRow();
+            }
+        } catch (error) {
+            console.error('Erro ao carregar dados iniciais:', error);
+            this._addRow();
+        }
+    }
+
+    _addRow(data = null) {
+        const clone = this.refs.template.content.cloneNode(true);
+        const row = clone.querySelector('.opening-hours-row');
+
+        const select = row.querySelector('.field-day');
+        this._populateDaySelect(select, data?.day);
+
+        if (data) {
+            row.querySelector('.field-open').value = data.open || '';
+            row.querySelector('.field-close').value = data.close || '';
+        }
+
+        this.refs.list.appendChild(row);
+        this._syncData();
+    }
+
+    _populateDaySelect(selectElement, selectedValue = null) {
+        this.daysOptions.forEach(day => {
             const option = document.createElement('option');
             option.value = day.value;
             option.textContent = day.label;
-            if (day.value === currentValue) {
+            if (day.value === selectedValue) {
                 option.selected = true;
             }
             selectElement.appendChild(option);
         });
     }
 
-    function updateAllSelects() {
-        const usedDays = getUsedDays();
-        const allSelects = document.querySelectorAll('select.week_days');
+    _syncData() {
+        const rows = this.refs.list.querySelectorAll('.opening-hours-row');
+        const openingHours = {};
 
-        allSelects.forEach(select => {
-            const currentValue = select.value;
-            populateDropdown(select, usedDays, currentValue);
+        rows.forEach(row => {
+            const day = row.querySelector('.field-day').value;
+            const open = row.querySelector('.field-open').value;
+            const close = row.querySelector('.field-close').value;
+
+            if (day && open && close) {
+                if (!openingHours[day]) {
+                    openingHours[day] = [];
+                }
+                openingHours[day].push({ open, close });
+            }
         });
+
+        this.refs.hiddenInput.value = JSON.stringify(openingHours);
     }
+}
 
-    function addRemoveButton(row) {
-        const existingRemove = row.querySelector('.remove-opening-hours');
-        if (existingRemove) {
-            existingRemove.remove();
-        }
-
-        const removeButton = document.createElement('a');
-        removeButton.href = "#";
-        removeButton.classList.add('remove-opening-hours', 'text-danger', 'ms-2');
-        removeButton.innerHTML = '<i class="iconify fs-4" data-icon="mdi:trash-can-outline"></i>';
-
-        removeButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            row.remove();
-
-            updateAllSelects();
-        });
-
-        let removeCol = row.querySelector('.remove-col');
-        if (!removeCol) {
-            removeCol = document.createElement('div');
-            removeCol.classList.add('col-md-2', 'd-flex', 'remove-col');
-            row.appendChild(removeCol);
-        }
-        removeCol.innerHTML = '';
-        removeCol.appendChild(removeButton);
-    }
-
-    document.querySelectorAll('select.week_days').forEach(select => {
-
-        populateDropdown(select);
-
-        select.addEventListener('change', function() {
-            updateAllSelects();
-        });
-    });
-
-    const addButton = document.getElementById('add-opening-hours');
-    const container = document.getElementById('opening-hours-container');
-    const templateRow = document.querySelector('.opening-hours-row');
-
-    if (addButton && container && templateRow) {
-        addButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const newRow = templateRow.cloneNode(true);
-            newRow.classList.add('dynamic-row');
-
-            const newSelect = newRow.querySelector('select.week_days');
-            if (newSelect) {
-                newSelect.value = '';
-            }
-            const opensInput = newRow.querySelector('.opens_at');
-            if (opensInput) {
-                opensInput.value = '';
-            }
-            const closesInput = newRow.querySelector('.closes_at');
-            if (closesInput) {
-                closesInput.value = '';
-            }
-
-            addRemoveButton(newRow);
-
-            const addButtonRow = addButton.closest('.row.mt-4');
-            container.insertBefore(newRow, addButtonRow);
-
-            populateDropdown(newSelect);
-
-            newSelect.addEventListener('change', function() {
-                updateAllSelects();
-            });
-
-            updateAllSelects();
-        });
-    }
-
-    document.querySelectorAll('.opening-hours-row').forEach(row => {
-        addRemoveButton(row);
-    });
-
-    container.addEventListener('click', function(event) {
-        if (event.target.closest('.remove-opening-hours')) {
-            event.preventDefault();
-            const rowToRemove = event.target.closest('.opening-hours-row');
-            if (rowToRemove) {
-                rowToRemove.remove();
-                updateAllSelects();
-            }
-        }
-    });
-
-    updateAllSelects();
+document.addEventListener('DOMContentLoaded', () => {
+    new OpeningHoursManager();
 });

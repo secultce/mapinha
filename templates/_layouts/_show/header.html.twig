@@ -1,7 +1,7 @@
 <div class="container-fluid px-0 bg-white shadow position-relative">
     <img
         class="img-fluid w-100"
-        src="{{ entity.extraFields.coverImage is defined and entity.extraFields.coverImage ? entity.extraFields.coverImage : asset('img/entity-cover-image.png') }}"
+        src="{{ entity.coverImage is defined and entity.coverImage is not null ? asset(entity.coverImage) : asset('img/entity-cover-image.png') }}"
         alt="{{ 'entityName'|trans }} | {{ 'cover_image'|trans }}"
     >
 
@@ -33,7 +33,7 @@
         </div>
 
         <p data-cy="short-description">
-            {{ entity.extraFields.shortDescription is defined ? entity.extraFields.shortDescription : '' }}
+            {{ entity.shortDescription ?? '' }}
         </p>
 
         <p class="text-secondary id__entity-details mb-xxl-0">{{ "view.#{ entityName }.id"|trans }}: {{ entity.id }}</p>

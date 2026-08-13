@@ -1,100 +1,20 @@
-<section class="space-social-media">
-    <span class="fw-bold">Redes Sociais</span>
-    <div class="d-flex gap-3 mt-4">
-        <div class="social-media-wrapper">
-            <div class="social-media">
-                <span class="fw-bold">Instagram</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="ph:instagram-logo-light" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
+<section class="card card-body mt-4">
+    <h3>Redes Sociais</h3>
+    <hr>
+    <div class="d-flex gap-3 mt-2">
+        {% for network, value in space.socialNetworks %}
+            {% if value != '' %}
+            <div class="social-media-wrapper">
+                <div class="social-media">
+                    <div class="social-link">
+                        <span class="iconify" data-icon="ph:{{ network }}-logo-light" style="font-size: 1.9rem;"></span>
+                        <a href="https://www.{{ network }}.com/{{ value }}" target="_blank" class="text-decoration-none fw-bold">
+                            {{ network }}
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Vimeo</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="hugeicons:vimeo" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Spotify</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="iconoir:spotify" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="social-media-wrapper">
-            <div class="social-media">
-                <span class="fw-bold">X</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="ri:twitter-x-line" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Youtube</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="iconoir:youtube" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Pinterest</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="iconoir:pinterest" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="social-media-wrapper">
-            <div class="social-media">
-                <span class="fw-bold">Facebook</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="streamline:facebook-1" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Linkedin</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="teenyicons:linkedin-outline" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Tiktok</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="proicons:tiktok" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        {{ space.name }}
-                    </a>
-                </div>
-            </div>
-        </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </section>

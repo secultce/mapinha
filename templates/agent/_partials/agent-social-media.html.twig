@@ -1,100 +1,24 @@
-<section class="agent-social-media">
-    <span class="social-media-title">Redes Sociais</span>
-    <div class="d-flex gap-3 mt-4">
-        <div class="social-media-wrapper">
-            <div class="social-media">
-                <span class="fw-bold">Instagram</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="ph:instagram-logo-light" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
+<section class="card card-body mt-4 shadow-sm"> <h3>{{ 'social_media' | trans }}</h3>
+    <hr>
+    <div class="row g-3 mt-1">
+        {% if agent.socialNetworks is empty %}
+            <div class="col-12">
+                <p class="text-muted mb-0">{{ 'not_informed' | trans }}</p>
             </div>
+        {% endif %}
 
-            <div class="social-media">
-                <span class="fw-bold">Vimeo</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="hugeicons:vimeo" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
+        {% for network, value in agent.socialNetworks %}
+            {% if value != '' %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="social-media">
+                    <div class="social-link d-flex align-items-center gap-2"> <span class="iconify text-primary" data-icon="ph:{{ network }}-logo-light" style="font-size: 1.9rem;"></span>
+                        <a href="https://www.{{ network }}.com/{{ value }}" target="_blank" class="text-decoration-none fw-bold text-dark text-break">
+                            {{ network }}
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Spotify</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="iconoir:spotify" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="social-media-wrapper">
-            <div class="social-media">
-                <span class="fw-bold">X</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="ri:twitter-x-line" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Youtube</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="iconoir:youtube" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Pinterest</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="iconoir:pinterest" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="social-media-wrapper">
-            <div class="social-media">
-                <span class="fw-bold">Facebook</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="streamline:facebook-1" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Linkedin</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="teenyicons:linkedin-outline" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-
-            <div class="social-media">
-                <span class="fw-bold">Tiktok</span>
-                <div class="social-link">
-                    <span class="iconify" data-icon="proicons:tiktok" style="font-size: 1.9rem;"></span>
-                    <a href="https://www.instagram.com" target="_blank" class="text-decoration-none fw-bold">
-                        Anne Elisa
-                    </a>
-                </div>
-            </div>
-        </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </section>

@@ -16,7 +16,7 @@ class City extends AbstractEntity
 {
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME)]
-    #[Groups(['city.get', 'state.get', 'address.get.item'])]
+    #[Groups(['city.get', 'state.get', 'address.get.item', 'space.get'])]
     private Uuid $id;
 
     #[ORM\Column(length: 100)]

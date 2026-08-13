@@ -12,6 +12,7 @@ use App\Entity\Space;
 use App\Validator\Constraints\Exists;
 use App\Validator\Constraints\Json;
 use App\Validator\Constraints\NotNull;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -35,9 +36,6 @@ class OpportunityDto
         new Length(min: 2, max: 100, groups: [self::CREATE, self::UPDATE]),
     ])]
     public mixed $name;
-
-    #[Sequentially([new Image(maxSize: 2000000, mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::CREATE, self::UPDATE])])]
-    public mixed $image = null;
 
     #[Sequentially([
         new Uuid(groups: [self::CREATE, self::UPDATE]),
@@ -73,4 +71,10 @@ class OpportunityDto
 
     #[Sequentially([new Json(groups: [self::CREATE, self::UPDATE])])]
     public mixed $extraFields;
+
+    #[Image(maxSize: (2000000), mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::CREATE, self::UPDATE])]
+    public ?File $profileImage = null;
+
+    #[Image(maxSize: (2000000), mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::UPDATE])]
+    public ?File $coverImage = null;
 }

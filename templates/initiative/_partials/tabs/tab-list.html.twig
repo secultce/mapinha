@@ -4,72 +4,79 @@
 </div>
 
 {% for initiative in initiatives %}
-    <div class="mw-100 initiative-card">
-        <div class="initiative-card-header">
-            <div class="d-flex mt-1 mb-3 align-items-center gap-2">
-                <img src="{{ asset('img/img.png') }}" alt="{{ 'photo' | trans }}" class="initiative-img">
-                <h5 class="initiative-name">{{ initiative.name }}</h5>
+    <div class="card initiative-card mt-3 p-3 shadow-sm">
+        <div class="card-body p-0 row g-3 align-items-start">
+
+            <div class="col-12 col-md-auto text-center text-md-start">
+                <img src="{{ initiative.image ?? asset('img/img.png') }}"
+                     alt="{{ initiative.name }}"
+                     class="rounded-circle initiative-img object-fit-cover"
+                     style="width: 60px; height: 60px;">
             </div>
-            <div class="initiative-info">
-                <span class="bg-initiative">
-                    <i class="material-icons fs-4 me-2">event</i> {{ 'in_progress' | trans }}
-                </span>
-                <div class="initiative-id">
-                    ID: <span title="{{ initiative.id }}">{{ initiative.id|split('-')|first }}...</span>
+
+            <div class="col d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                    <h5 class="initiative-card__title fw-bold m-0 lh-sm">{{ initiative.name }}</h5>
+
+                    <span class="badge bg-initiative flex-shrink-0">
+                        {% if initiative.extraFields.status is defined %}
+                            {{ initiative.extraFields.status | trans }}
+                        {% else %}
+                            {{ 'in_progress' | trans }}
+                        {% endif %}
+                    </span>
+                </div>
+
+                <p class="initiative-card__type text-muted small mb-3">
+                    <span class="visually-hidden">{{ 'type' | trans|default('Tipo') }}: </span>
+                    {{ initiative.extraFields.culturalLanguage is defined ? initiative.extraFields.culturalLanguage : ('not_informed' | trans) }}
+                </p>
+
+                <p class="d-flex align-items-center gap-2 mb-1">
+                    <i class="material-icons text-primary fs-5" aria-hidden="true">calendar_month</i>
+                    <span class="visually-hidden">{{ 'period' | trans }}: </span>
+                    <strong class="text-dark d-none d-md-inline" aria-hidden="true">{{ 'period' | trans }}:</strong>
+                    <span>
+                        {% if initiative.extraFields.period is defined %}
+                            {{ initiative.extraFields.period.startDate | date('d/m/Y') }} {{ 'to' | trans }} {{ initiative.extraFields.period.endDate | date('d/m/Y') }}
+                        {% else %}
+                            {{ 'not_informed' | trans }}
+                        {% endif %}
+                    </span>
+                </p>
+
+                <p class="d-flex align-items-center gap-2 mb-1">
+                    <i class="material-icons text-primary fs-5" aria-hidden="true">location_on</i>
+                    <span class="visually-hidden">{{ 'location' | trans }}: </span>
+                    <strong class="text-dark d-none d-md-inline" aria-hidden="true">{{ 'location' | trans }}:</strong>
+                    <span>
+                        {% if initiative.space %}
+                            {{ initiative.space.name }}
+                        {% else %}
+                            {{ 'not_informed' | trans }}
+                        {% endif %}
+                    </span>
+                </p>
+
+                <p class="d-flex align-items-start gap-2 mb-3">
+                    <i class="material-icons text-primary fs-5" aria-hidden="true">description</i>
+                    <span class="visually-hidden">{{ 'description' | trans|default('Descrição') }}: </span>
+                    <span class="text-dark lh-sm">
+                        {{ initiative.extraFields.shortDescription is defined ? initiative.extraFields.shortDescription : ('not_informed' | trans) }}
+                    </span>
+                </p>
+
+                <div class="mt-auto d-flex justify-content-end">
+                    <a href="{{ path('web_initiative_show', {id: initiative.id}) }}" class="btn btn-primary btn-sm btn-mobile-100 mt-2 mt-md-0">
+                        {{ 'view.initiative.access' | trans }}
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <div class="initiative-card-body">
-            <p>
-                <strong>{{ 'type'| trans }}:</strong>
-                {% if initiative.extraFields.culturalLanguage is defined %}
-                    <span class="text-initiative fw-semibold">{{ initiative.extraFields.culturalLanguage }}</span>
-                {% else %}
-                    {{ 'not_informed' | trans }}
-                {% endif %}
-            </p>
-
-            <p class="initiative-date fw-bold">
-                <i class="material-icons">calendar_month</i>
-                {{ 'period'| trans }}:
-                {% if initiative.extraFields.period is defined %}
-                    {{ initiative.extraFields.period.startDate | date('d/m/Y') }} {{ 'to' | trans }} {{ initiative.extraFields.period.endDate | date('d/m/Y') }}
-                {% else %}
-                    {{ 'not_informed' | trans }}
-                {% endif %}
-            </p>
-
-            <p class="initiative-location">
-                <i class="material-icons">location_on</i>
-               <strong class="me-1">{{ 'location'| trans }}:</strong>
-                {% if initiative.space %}
-                    <span class="location-name fw-bold">{{ initiative.space.name }}</span>
-                {% else %}
-                    {{ 'not_informed' | trans }}
-                {% endif %}
-            </p>
-
-            <div class="initiative-seals">
-                <strong>{{ 'seals'| trans }}:</strong>
-                <p class="seal-initiative">Nome do selo</p>
-                <p class="seal-initiative">Nome do selo</p>
-                <p class="seal-initiative">Nome do selo</p>
-            </div>
-
-            <p class="initiative-description">
-                {% if initiative.extraFields.shortDescription is defined %}
-                    {{ initiative.extraFields.shortDescription }}
-                {% else %}
-                    {{ 'not_informed' | trans }}
-                {% endif %}
-            </p>
-
-            <div class="text-center text-xl-end mt-3">
-                <a href="{{ path('web_initiative_show', {id: initiative.id}) }}" class="btn btn-primary list-page__access-btn">{{ 'view.initiative.access' | trans }}</a>
-            </div>
         </div>
     </div>
+{% else %}
+    <p class="text-center text-muted mt-4">{{ 'view.initiative.no_initiatives_found' | trans }}</p>
 {% endfor %}
 
 {% if initiatives|length > 0 %}

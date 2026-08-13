@@ -44,4 +44,13 @@
     .breadcrumb {
         width: var(--WIDTH_DEFAULT_MOBILE);
     }
+
+    .entity-banner .breadcrumb {
+        margin-left: 1rem !important;
+    }
+
+    .entity-photo img {
+        max-width: 7.5rem;
+        height: auto;
+    }
 }

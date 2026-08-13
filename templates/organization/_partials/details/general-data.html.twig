@@ -1,0 +1,100 @@
+<section class="card card-body shadow">
+    <h3>Sobre a Organização</h3>
+    <hr>
+    <p class="pt-2">Esta organização é administrada por
+        <a href="{{ path("web_agent_getOne", {"id": owner.id}) }}" target="_blank" class="text-decoration-none fw-bold">{{ owner.name }}</a>
+    </p>
+    <p>
+        <em>{{ 'created_at' | trans }} </em> <strong>{{ organization.createdAt.format('d/m/Y') }}</strong>
+    </p>
+</section>
+
+<section class="mt-4">
+    <section class="card card-body shadow">
+        <h3>Mais informações</h3>
+        <hr>
+
+        {% if organization.extraFields is not null and organization.extraFields['cnpj'] is defined and organization.extraFields['cnpj'] is not empty %}
+            <p class="d-flex align-items-center gap-2 mb-1">
+                <i class="material-icons text-primary">badge</i>
+                <strong class="text-dark">CNPJ:</strong>
+                <span class="text-dark">{{ organization.extraFields['cnpj'] }}</span>
+            </p>
+        {% endif %}
+
+        <p class="d-flex align-items-center gap-2 mb-1">
+            <i class="material-icons text-primary">work</i>
+            <strong class="text-dark visually-hidden">{{ 'areas_of_expertise' | trans }} ({{ organization.activityAreas|length }}):</strong>
+            <span class="fw-bold">
+                {% for area in organization.activityAreas %}
+                    {{ area.name }}{% if not loop.last %}, {% endif %}
+                {% else %}
+                    {{ 'no_areas' | trans }}
+                {% endfor %}
+            </span>
+        </p>
+    </section>
+
+    <section class="card card-body mt-4">
+        <h3>{{ 'social_media' | trans }}</h3>
+        <hr>
+        <div class="d-flex gap-3 mt-2">
+            {% for network, value in organization.socialNetworks %}
+                {% if value != '' %}
+                <div class="social-media-wrapper">
+                    <div class="social-media">
+                        <div class="social-link">
+                            <span class="iconify" data-icon="ph:{{ network }}-logo-light" style="font-size: 1.9rem;"></span>
+                            <a href="https://www.{{ network }}.com/{{ value }}" target="_blank" class="text-decoration-none fw-bold">
+                                {{ network }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="card card-body mt-4 shadow">
+        <h3>{{ 'contact' | trans }}</h3>
+        <hr>
+        <div class="mt-2">
+            <p class="d-flex align-items-center gap-2 mb-3">
+                <i class="material-icons text-primary responsive-icon">email</i>
+                <strong class="visually-hidden">Email:</strong>
+                {% if organization.extraFields.email|default('') %}
+                    <a href="mailto:{{ organization.extraFields.email }}" class="text-decoration-none text-dark fw-medium">
+                        {{ organization.extraFields.email }}
+                    </a>
+                {% else %}
+                    <span class="text-muted fst-italic">não informado</span>
+                {% endif %}
+            </p>
+
+            <p class="d-flex align-items-center gap-2 mb-3">
+                <i class="material-icons text-primary responsive-icon">language</i>
+                <strong class="visually-hidden">Site:</strong>
+                {% if organization.extraFields.site|default('') %}
+                    <a href="{{ organization.extraFields.site }}" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark fw-medium">
+                        {{ organization.extraFields.site }}
+                    </a>
+                {% else %}
+                    <span class="text-muted fst-italic">não informado</span>
+                {% endif %}
+            </p>
+
+            <p class="d-flex align-items-center gap-2 mb-2">
+                <i class="material-icons text-primary responsive-icon">phone</i>
+                <strong class="visually-hidden">Telefone:</strong>
+                {% if organization.extraFields.phone|default('') %}
+                    <a href="tel:{{ organization.extraFields.phone }}" class="text-decoration-none text-dark fw-medium">
+                        {{ organization.extraFields.phone }}
+                    </a>
+                {% else %}
+                    <span class="text-muted fst-italic">não informado</span>
+                {% endif %}
+            </p>
+        </div>
+    </section>
+</section>

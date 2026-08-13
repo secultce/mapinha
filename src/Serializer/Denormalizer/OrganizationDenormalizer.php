@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Serializer\Denormalizer;
 
+use App\Entity\ActivityArea;
 use App\Entity\Agent;
 use App\Entity\Organization;
 use App\Service\Interface\FileServiceInterface;
@@ -47,6 +48,15 @@ readonly class OrganizationDenormalizer implements DenormalizerInterface
 
         if (true === array_key_exists('agents', $data)) {
             $organization->setAgents(new ArrayCollection($agents));
+        }
+
+        $activityAreas = array_map(
+            fn (string $id) => $this->entityManager->getRepository(ActivityArea::class)->findOneBy(['id' => $id]),
+            $data['activityAreas'] ?? []
+        );
+
+        if (true === array_key_exists('activityAreas', $data)) {
+            $organization->setActivityAreas(new ArrayCollection($activityAreas));
         }
 
         if (true === array_key_exists('createdBy', $data)) {

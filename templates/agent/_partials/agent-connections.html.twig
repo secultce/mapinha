@@ -2,76 +2,38 @@
     <span class="connection-title">{{ 'connections' | trans }}</span>
 
     <div class="connections mt-4">
-        <div class="agent-initiative border-bottom">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <span class="fw-bold">{{ 'initiatives' | trans }}</span>
-                <span class="d-flex align-items-center">
-                    <a href="/" class="fw-bold text-decoration-none">{{ 'view_all' | trans }}</a>
-                    <i class="material-icons">keyboard_arrow_right</i>
-                </span>
-            </div>
-            <div class="content-wrapper d-flex justify-content-between">
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.initiative_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">IIV Congresso Estadual de Desenvolvimento</a>
-                </div>
-
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.initiative_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">III Festival de Coros de Brasília</a>
-                </div>
-
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.initiative_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">III Festival de Coros de Brasília</a>
-                </div>
-            </div>
-        </div>
-
         <div class="agent-spaces border-bottom">
             <div class="d-flex align-items-center justify-content-between mt-3 mb-3">
                 <span class="fw-bold">{{ 'spaces' | trans }}</span>
-                <span class="d-flex align-items-center">
-                    <a href="/" class="fw-bold text-decoration-none">{{ 'view_all' | trans }}</a>
-                    <i class="material-icons">keyboard_arrow_right</i>
-                </span>
             </div>
 
-            <div class="content-wrapper d-flex justify-content-between">
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.space_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">IIV Congresso Estadual de Desenvolvimento</a>
-                </div>
+            <div class="content-wrapper d-flex flex-wrap gap-3">
+                {% for space in spaces %}
+                    <div class="connection-content">
+                        <img src="{{ asset(space.image ?? 'img/default-image.png') }}" alt="{{ 'view.agent_profile.space_photo' | trans }}">
+                        <a href="{{ path('web_space_getOne', {'id': space.id}) }}" class="text-truncate" style="max-width: 300px;">{{ space.name }}</a>
+                    </div>
+                {% else %}
+                    <p class="text-muted">{{ 'no_spaces' | trans }}</p>
+                {% endfor %}
             </div>
-
         </div>
 
         <div class="agent-events">
             <div class="d-flex align-items-center justify-content-between mt-3 mb-3">
                 <span class="fw-bold">{{ 'events' | trans }}</span>
-                <span class="d-flex align-items-center">
-                    <a href="/" class="fw-bold text-decoration-none">{{ 'view_all' | trans }}</a>
-                    <i class="material-icons">keyboard_arrow_right</i>
-                </span>
             </div>
 
-            <div class="content-wrapper d-flex justify-content-between">
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.event_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">IIV Congresso Estadual de Desenvolvimento</a>
-                </div>
-
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.event_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">III Festival de Coros de Brasília</a>
-                </div>
-
-                <div class="connection-content">
-                    <img src="{{ asset('img/ada-lovelace.png') }}" alt="{{ 'view.agent_profile.event_photo' | trans }}">
-                    <a href="/" class="text-truncate" style="max-width: 300px;">III Festival de Coros de Brasília</a>
-                </div>
+            <div class="content-wrapper d-flex flex-wrap gap-3">
+                {% for event in events %}
+                    <div class="connection-content">
+                        <img src="{{ asset(event.image ?? 'img/default-image.png') }}" alt="{{ 'view.agent_profile.event_photo' | trans }}">
+                        <a href="{{ path('web_event_show', {'id': event.id}) }}" class="text-truncate" style="max-width: 300px;">{{ event.name }}</a>
+                    </div>
+                {% else %}
+                    <p class="text-muted">{{ 'no_events' | trans }}</p>
+                {% endfor %}
             </div>
         </div>
-
     </div>
 </section>

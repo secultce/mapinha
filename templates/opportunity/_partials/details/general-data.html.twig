@@ -1,4 +1,4 @@
-<div class="tab-pane container active" id="generalData">
+<div class="tab-pane container-fluid px-0 px-md-1 active" id="generalData">
     {% if opportunity.parent %}
         <div class="card shadow-sm mb-3 card__entity-details">
             <div class="card-body py-4">
@@ -12,198 +12,119 @@
         </div>
     {% endif %}
 
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'introduction' | trans }}</h5>
+    <section class="card card-body shadow-sm mb-3">
+        <h3>{{ 'introduction' | trans }}</h3>
+        <hr>
 
-            <div class="row">
-                <div class="col">
-                    <label class="fw-bold mb-2">{{ 'view.opportunity.type_of' | trans }}</label>
-                    <p class="text-opportunity">
-                        {{ opportunity.extraFields.type ?? 'not_informed' | trans }}
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <label class="fw-bold mb-2">{{ 'areas_of_expertise' | trans }}</label>
-                    <p>
-                        {% for areaOfExpertise in opportunity.extraFields.areasOfActivity %}
-                            <span class="text-opportunity">{{ areaOfExpertise }}</span>{{ loop.last ? '' : ',' }}
-                        {% else %}
-                            {{ 'not_informed' | trans }}
-                        {% endfor %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <label class="fw-bold mb-2">Tags (3) <i class="material-icons text-primary fs-5 align-top">help</i></label>
-                    <p>
-                        <span class="text-opportunity fw-bold">DESIGN</span>,
-                        <span class="text-opportunity fw-bold">ACESSIBILIDADE</span>,
-                        <span class="text-opportunity fw-bold">DESIGNINCLUSIVO</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <label class="fw-bold mb-2">{{ 'view.opportunity.period' | trans }}</label>
-                    <p>
-                        {% if opportunity.extraFields.period is defined %}
-                            {{ opportunity.extraFields.period.startDate | default('0') | date('d/m/Y') }} {{ 'to' | trans }} {{ opportunity.extraFields.period.endDate | default('0') | date('d/m/Y') }}
-                        {% else %}
-                            {{ 'not_informed' | trans }}
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <label class="fw-bold mb-2">{{ 'project_value' | trans }}</label>
-                    <p>R$ 000.000,00</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <label class="fw-bold mb-2">{{ 'description' | trans }}</label>
-                    <p>
-                        {% if opportunity.extraFields.longDescription is defined %}
-                            {{ opportunity.extraFields.longDescription }}
-                            <span class="text-primary fw-bold d-block">({{ 'see_more' | trans }})</span>
-                        {% else %}
-                            {{ 'not_informed' | trans }}
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <label class="fw-bold mb-2">Site</label>
-                    <p><a class="text-decoration-none fw-bold" href="#" target="_blank">Site da iniciativa</a></p>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <label class="fw-bold mb-2">{{ 'phone' | trans }}</label>
-                    <p>(00) 12345-6789</p>
-                </div>
+        <div class="row">
+            <div class="col">
+                <label class="fw-bold mb-2">{{ 'view.opportunity.type_of' | trans }}</label>
+                <p class="text-opportunity">
+                    {{ opportunity.extraFields.type ?? 'not_informed' | trans }}
+                </p>
             </div>
         </div>
-    </div>
 
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'social_media' | trans }}</h5>
-
-            <div class="row">
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Instagram</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">X ({{ 'old' | trans }} Twitter)</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Facebook</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Vimeo</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">YouTube</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Linkedin</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Spotify</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Pinterest</label>
-                    <p class="d-flex">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
-                <div class="col mb-2">
-                    <label class="fw-bold mb-2">Tiktok</label>
-                    <p class="d-flex m-0">
-                        <i class="material-icons fs-4 me-1">facebook</i>
-                        <span class="align-top fw-bold">
-                            <a class="text-decoration-none" href="#" target="_blank">nomedainiciativa</a>
-                        </span>
-                    </p>
-                </div>
+        <div class="row">
+            <div class="col">
+                <label class="fw-bold mb-2">{{ 'areas_of_expertise' | trans }}</label>
+                <p>
+                    {% for areaOfExpertise in opportunity.extraFields.areasOfActivity ?? [] %}
+                        <span class="text-opportunity">{{ areaOfExpertise }}</span>{{ loop.last ? '' : ',' }}
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endfor %}
+                </p>
             </div>
         </div>
-    </div>
 
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'other_information' | trans }}</h5>
+        <div class="row">
+            <div class="col">
+                <label class="fw-bold mb-2">Tags
+                    {% if opportunity.extraFields.tags is defined and opportunity.extraFields.tags is not empty %}
+                        ({{ opportunity.extraFields.tags|length }})
+                    {% endif %}
+                    <i class="material-icons text-primary fs-5 align-top">help</i>
+                </label>
+                <p>
+                    {% for tag in opportunity.extraFields.tags ?? [] %}
+                        <span class="text-opportunity fw-bold">{{ tag|upper }}</span>{{ loop.last ? '' : ',' }}
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
 
-            <hr class="mb-4">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <label class="fw-bold mb-2">{{ 'view.opportunity.period' | trans }}</label>
+                <p>
+                    {% if opportunity.extraFields.period is defined %}
+                        {{ opportunity.extraFields.period.startDate | default('0') | date('d/m/Y') }} {{ 'to' | trans }} {{ opportunity.extraFields.period.endDate | default('0') | date('d/m/Y') }}
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
 
-            <h6 class="fw-bold mb-4">{{ 'local' | trans }}</h6>
-            <span class="d-flex align-items-center fw-bold">
-                <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                {% if opportunity.space %}
-                    <span><a class="text-decoration-none" href="#">{{ opportunity.space.name }}</a></span>
-                {% else %}
-                    {{ 'not_informed' | trans }}
+        <div class="row">
+            <div class="col">
+                <label class="fw-bold mb-2">{{ 'description' | trans }}</label>
+                <p>
+                    {% if opportunity.extraFields.longDescription is defined %}
+                        {{ opportunity.extraFields.longDescription }}
+                        <span class="text-primary fw-bold d-block">({{ 'see_more' | trans }})</span>
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    {% if opportunity.socialNetworks is defined and opportunity.socialNetworks is not empty %}
+    <section class="card card-body shadow-sm mb-3">
+        <h3>{{ 'social_media' | trans }}</h3>
+        <hr>
+        <div class="d-flex gap-3 mt-2">
+            {% for network, value in opportunity.socialNetworks %}
+                {% if value != '' %}
+                <div class="social-media-wrapper">
+                    <div class="social-media">
+                        <div class="social-link">
+                            <span class="iconify" data-icon="ph:{{ network }}-logo-light" style="font-size: 1.9rem;"></span>
+                            <a href="https://www.{{ network }}.com/{{ value }}" target="_blank" class="text-decoration-none fw-bold">
+                                {{ network }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 {% endif %}
-            </span>
+            {% endfor %}
         </div>
-    </div>
+    </section>
+    {% endif %}
+
+    <section class="card card-body shadow-sm mb-3">
+        <h3>{{ 'other_information' | trans }}</h3>
+        <hr>
+
+        <h6 class="fw-bold mb-4">{{ 'local' | trans }}</h6>
+        {% if opportunity.space %}
+            <span class="d-flex align-items-center fw-bold gap-2">
+                {% if opportunity.space.image %}
+                    <img class="rounded-circle" src="{{ asset(opportunity.space.image) }}" alt="{{ opportunity.space.name }}" style="width: 32px; height: 32px; object-fit: cover;">
+                {% else %}
+                    <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                {% endif %}
+                <a class="text-decoration-none" href="{{ path('web_space_getOne', {id: opportunity.space.id}) }}">{{ opportunity.space.name }}</a>
+            </span>
+        {% else %}
+            {{ 'not_informed' | trans }}
+        {% endif %}
+    </section>
 
     <div class="clearfix">
         <button data-cy="change-history-btn" type="button" class="btn btn-outline-success fw-bold px-sm-5 py-sm-2 btn-outline__entity-details float-start">

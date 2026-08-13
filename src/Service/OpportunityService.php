@@ -8,7 +8,6 @@ use App\DTO\OpportunityDto;
 use App\Entity\Agent;
 use App\Entity\Opportunity;
 use App\Exception\Opportunity\OpportunityResourceNotFoundException;
-use App\Exception\ValidatorException;
 use App\Repository\Interface\OpportunityRepositoryInterface;
 use App\Service\Interface\FileServiceInterface;
 use App\Service\Interface\OpportunityServiceInterface;
@@ -24,6 +23,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 readonly class OpportunityService extends AbstractEntityService implements OpportunityServiceInterface
 {
     private const string DIR_OPPORTUNITY_PROFILE = 'app.dir.opportunity.profile';
+    private const string DIR_OPPORTUNITY_COVER = 'app.dir.opportunity.cover';
 
     public function __construct(
         private FileServiceInterface $fileService,
@@ -55,6 +55,23 @@ readonly class OpportunityService extends AbstractEntityService implements Oppor
         }
 
         return $this->repository->count($criteria);
+    }
+
+    public function countRecentOpportunities(int $days = 7): int
+    {
+        $startDate = new DateTime("-{$days} days");
+
+        return $this->repository->countRecentOpportunities($startDate);
+    }
+
+    public function countOpenedOpportunities(): int
+    {
+        return $this->repository->countOpenedOpportunities();
+    }
+
+    public function countFinishedOpportunities(): int
+    {
+        return $this->repository->countFinishedOpportunities();
     }
 
     public function create(array $opportunity): Opportunity
@@ -141,61 +158,29 @@ readonly class OpportunityService extends AbstractEntityService implements Oppor
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Opportunity
     {
-        $opportunity = $this->get($id);
-
-        $opportunityDto = new OpportunityDto();
-        $opportunityDto->image = $uploadedFile;
-
-        $violations = $this->validator->validate($opportunityDto, groups: [OpportunityDto::UPDATE]);
-
-        if ($violations->count() > 0) {
-            throw new ValidatorException(violations: $violations);
-        }
-
-        if ($opportunity->getImage()) {
-            $this->fileService->deleteFileByUrl($opportunity->getImage());
-        }
-
-        $uploadedImage = $this->fileService->uploadImage(
-            $this->parameterBag->get(self::DIR_OPPORTUNITY_PROFILE),
-            $uploadedFile
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: OpportunityDto::class,
+            dtoProperty: 'profileImage',
+            directoryParam: self::DIR_OPPORTUNITY_PROFILE,
+            getterMethod: 'getImage',
+            setterMethod: 'setImage',
+            validationGroups: [OpportunityDto::UPDATE]
         );
-
-        $relativePath = '/uploads'.$this->parameterBag->get(self::DIR_OPPORTUNITY_PROFILE).'/'.$uploadedImage->getFilename();
-        $opportunity->setImage($relativePath);
-
-        $opportunity->setUpdatedAt(new DateTime());
-
-        $this->repository->save($opportunity);
-
-        return $opportunity;
     }
 
-    public function updateCoverImage(Uuid $id, UploadedFile $coverImage): Opportunity
+    public function updateCoverImage(Uuid $id, UploadedFile $uploadedFile): Opportunity
     {
-        $opportunity = $this->get($id);
-
-        $opportunityDto = new OpportunityDto();
-        $opportunityDto->image = $coverImage;
-
-        $violations = $this->validator->validate($opportunityDto, groups: [OpportunityDto::UPDATE]);
-
-        if ($violations->count() > 0) {
-            throw new ValidatorException(violations: $violations);
-        }
-
-        $uploadedImage = $this->fileService->uploadImage(
-            $this->parameterBag->get('app.dir.opportunity.cover'),
-            $coverImage,
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: OpportunityDto::class,
+            dtoProperty: 'coverImage',
+            directoryParam: self::DIR_OPPORTUNITY_COVER,
+            getterMethod: 'getCoverImage',
+            setterMethod: 'setCoverImage',
+            validationGroups: [OpportunityDto::UPDATE]
         );
-
-        $extraFields = $opportunity->getExtraFields();
-        $extraFields['coverImage'] = $this->fileService->getFileUrl($uploadedImage->getPathname());
-        $opportunity->setUpdatedAt(new DateTime());
-        $opportunity->setExtraFields($extraFields);
-
-        $this->repository->save($opportunity);
-
-        return $opportunity;
     }
 }

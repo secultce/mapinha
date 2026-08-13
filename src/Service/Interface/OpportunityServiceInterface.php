@@ -23,6 +23,12 @@ interface OpportunityServiceInterface
 
     public function count(?Agent $createdBy = null): int;
 
+    public function countRecentOpportunities(int $days = 7): int;
+
+    public function countOpenedOpportunities(): int;
+
+    public function countFinishedOpportunities(): int;
+
     public function remove(Uuid $id): void;
 
     public function update(Uuid $id, array $opportunity): Opportunity;

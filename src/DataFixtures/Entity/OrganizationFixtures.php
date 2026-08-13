@@ -51,6 +51,9 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'phone' => '(85) 99999-0001',
                 'site' => 'https://www.phpcomrapadura.com.br',
             ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_8,
+            ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'phpcomrapadura',
             ],
@@ -78,6 +81,12 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'phone' => '(85) 99999-0002',
                 'site' => 'https://www.secult.ce.gov.br/',
             ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_3,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_4,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_5,
+            ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'secultceara',
             ],
@@ -103,6 +112,10 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'email' => 'secretaria@igrejaderussas.org.br',
                 'phone' => '(85) 99999-0003',
                 'site' => 'https://www.igrejaderussas.org.br',
+            ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_1,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
             ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'igrejaderussas',
@@ -130,6 +143,10 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'phone' => '(85) 99999-0004',
                 'site' => 'https://www.axezumbi.com.br',
             ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_4,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+            ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'capoeiraaxezumbi',
             ],
@@ -155,6 +172,9 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'email' => 'phpeste@example.com',
                 'phone' => '(85) 99999-0005',
                 'site' => 'https://www.phpeste.com.br',
+            ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_8,
             ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'grupoderapente',
@@ -182,6 +202,10 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'phone' => '(85) 99999-0006',
                 'site' => 'https://www.ongambientalce.org.br',
             ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_10,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_6,
+            ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'ongambientalce',
             ],
@@ -207,6 +231,11 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'email' => 'contato@foliacearense.com.brm',
                 'phone' => '(85) 99999-0007',
                 'site' => 'https://www.foliacearense.com.br',
+            ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_4,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_9,
             ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'foliacearense',
@@ -234,6 +263,9 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'phone' => '(85) 99999-0008',
                 'site' => 'https://filiados.cbsk.com.br/site/login',
             ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_4,
+            ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'fesk_skateboard',
             ],
@@ -260,6 +292,9 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'phone' => '(85) 99999-0009',
                 'site' => 'https://30praum.com.br/',
             ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+            ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => '30praum',
             ],
@@ -285,6 +320,10 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
                 'email' => 'acr@example.com',
                 'phone' => '(85) 99999-0010',
                 'site' => 'https://www.acr.com.br',
+            ],
+            'activityAreas' => [
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+                ActivityAreaFixtures::ACTIVITY_AREA_ID_3,
             ],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'acr_ce',
@@ -356,6 +395,7 @@ final class OrganizationFixtures extends AbstractFixture implements DependentFix
     {
         return [
             AgentFixtures::class,
+            ActivityAreaFixtures::class,
         ];
     }
 

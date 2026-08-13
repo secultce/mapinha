@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Api;
 
+use App\DataFixtures\Entity\ActivityAreaFixtures;
 use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\OrganizationFixtures;
 use App\Entity\Organization;
@@ -38,12 +39,15 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
             'description' => null,
+            'longDescription' => null,
             'type' => 'Empresa',
             'image' => null,
+            'coverImage' => null,
             'agents' => [],
             'owner' => ['id' => AgentFixtures::AGENT_ID_1],
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'extraFields' => null,
+            'activityAreas' => [],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -67,14 +71,17 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
             'description' => 'Test Organization',
+            'longDescription' => 'Long Description',
             'type' => 'Empresa',
             'image' => null,
+            'coverImage' => null,
             'agents' => array_map(fn ($id) => ['id' => $id], $requestBody['agents']),
             'owner' => ['id' => AgentFixtures::AGENT_ID_1],
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'extraFields' => [
                 'instagram' => '@organizationtest',
             ],
+            'activityAreas' => [],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -182,8 +189,10 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             'id' => OrganizationFixtures::ORGANIZATION_ID_1,
             'name' => $organization->getName(),
             'description' => $organization->getDescription(),
+            'longDescription' => $organization->getLongDescription(),
             'type' => $organization->getType(),
             'image' => $organization->getImage(),
+            'coverImage' => $organization->getCoverImage(),
             'agents' => [
                 [
                     'id' => AgentFixtures::AGENT_ID_1,
@@ -194,6 +203,12 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             ],
             'createdBy' => [
                 'id' => AgentFixtures::AGENT_ID_1,
+            ],
+            'activityAreas' => [
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_8,
+                    'name' => 'Design',
+                ],
             ],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $organization->getUpdatedAt()->format(DateTimeInterface::ATOM),
@@ -219,8 +234,10 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             'id' => OrganizationFixtures::ORGANIZATION_ID_3,
             'name' => $organization->getName(),
             'description' => $organization->getDescription(),
+            'longDescription' => $organization->getLongDescription(),
             'type' => $organization->getType(),
             'image' => $organization->getImage(),
+            'coverImage' => $organization->getCoverImage(),
             'agents' => [
                 [
                     'id' => AgentFixtures::AGENT_ID_3,
@@ -237,6 +254,16 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
                 'email' => 'secretaria@igrejaderussas.org.br',
                 'phone' => '(85) 99999-0003',
                 'site' => 'https://www.igrejaderussas.org.br',
+            ],
+            'activityAreas' => [
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_1,
+                    'name' => 'Artes Visuais',
+                ],
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+                    'name' => 'Música',
+                ],
             ],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
@@ -304,12 +331,24 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             'id' => OrganizationFixtures::ORGANIZATION_ID_4,
             'name' => $requestBody['name'],
             'description' => $requestBody['description'],
+            'longDescription' => $requestBody['longDescription'],
             'type' => 'Empresa',
             'image' => $organization->getImage(),
+            'coverImage' => $organization->getCoverImage(),
             'agents' => array_map(fn ($id) => ['id' => $id], $requestBody['agents']),
             'owner' => ['id' => AgentFixtures::AGENT_ID_1],
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
             'extraFields' => $requestBody['extraFields'],
+            'activityAreas' => [
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+                    'name' => 'Música',
+                ],
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_4,
+                    'name' => 'Dança',
+                ],
+            ],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $organization->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'deletedAt' => null,
@@ -435,8 +474,10 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
             'id' => OrganizationFixtures::ORGANIZATION_ID_10,
             'name' => $organization->getName(),
             'description' => $organization->getDescription(),
+            'longDescription' => $organization->getLongDescription(),
             'type' => $organization->getType(),
             'image' => $organization->getImage(),
+            'coverImage' => $organization->getCoverImage(),
             'agents' => [
                 [
                     'id' => AgentFixtures::AGENT_ID_1,
@@ -453,6 +494,16 @@ class OrganizationApiControllerTest extends AbstractApiTestCase
                 'email' => 'acr@example.com',
                 'phone' => '(85) 99999-0010',
                 'site' => 'https://www.acr.com.br',
+            ],
+            'activityAreas' => [
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_2,
+                    'name' => 'Música',
+                ],
+                [
+                    'id' => ActivityAreaFixtures::ACTIVITY_AREA_ID_3,
+                    'name' => 'Teatro',
+                ],
             ],
             'createdAt' => $organization->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $organization->getUpdatedAt()->format(DateTimeInterface::ATOM),

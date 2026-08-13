@@ -8,6 +8,7 @@ use App\Entity\Agent;
 use App\Validator\Constraints\Exists;
 use App\Validator\Constraints\Json;
 use App\Validator\Constraints\NotNull;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
@@ -33,9 +34,6 @@ class OrganizationDto
     ])]
     public mixed $name;
 
-    #[Sequentially([new Image(maxSize: 2000000, mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::CREATE, self::UPDATE])])]
-    public mixed $image = null;
-
     #[Sequentially([new Type('string'), new Length(max: 255)], groups: [self::CREATE, self::UPDATE])]
     public mixed $description;
 
@@ -45,6 +43,12 @@ class OrganizationDto
         new Exists(Agent::class, groups: [self::CREATE, self::UPDATE]),
     ])]
     public mixed $createdBy;
+
+    #[Sequentially([
+        new NotNull(),
+        new Uuid(),
+    ])]
+    public mixed $activityAreas;
 
     #[Sequentially([
         new NotNull(groups: [self::UPDATE]),
@@ -61,4 +65,10 @@ class OrganizationDto
 
     #[Sequentially([new Json(groups: [self::CREATE, self::UPDATE])])]
     public mixed $extraFields;
+
+    #[Image(maxSize: (2000000), mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::CREATE, self::UPDATE])]
+    public ?File $image = null;
+
+    #[Image(maxSize: (2000000), mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], groups: [self::UPDATE])]
+    public ?File $coverImage = null;
 }

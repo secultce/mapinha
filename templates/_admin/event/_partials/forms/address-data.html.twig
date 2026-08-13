@@ -1,0 +1,81 @@
+<section class="entity-address-data">
+    <div class="row g-1 g-md-3">
+        <div class="col-md-4">
+            <label for="cep" class="form-label">{{ 'cep' | trans }}</label>
+            <span class="text-danger">*</span>
+            <input value="{{ event.address.zipcode ?? '' }}" type="text" name="address_cep" class="form-control" id="cep" placeholder="{{ 'type_here' | trans }}" required>
+        </div>
+        <div class="col-md-8">
+            <label for="street" class="form-label">{{ 'street' | trans }}</label>
+            <span class="text-danger">*</span>
+            <input value="{{ event.address.street ?? '' }}" type="text" name="address_street" class="form-control" id="street" placeholder="{{ 'type_here' | trans }}" required>
+        </div>
+    </div>
+
+    <div class="row g-1 g-md-3 mt-1">
+        <div class="col-md-2">
+            <label for="number" class="form-label">{{ 'number_address' | trans}}</label>
+            <span class="text-danger">*</span>
+            <input value="{{ event.address.number ?? '' }}" disabled="{{ event.address and event.address.number == '' }}" type="text" name="address_number" class="form-control" id="number" placeholder="{{ 'type_here' | trans }}" required>
+        </div>
+        <div class="col-md-1 form-check align-items-end d-flex gap-2">
+            <input name="address_no_number" checked="{{ event.address and event.address.number != '' }}" class="form-check-input" type="checkbox" id="no_number" value="1">
+            <label class="form-check-label" for="no_number">
+                {{ 'no_number' | trans }}
+            </label>
+        </div>
+        <div class="col-md-3">
+            <label for="neighborhood" class="form-label">{{ 'neighborhood' | trans }}</label>
+            <span class="text-danger">*</span>
+            <input value="{{ event.address.neighborhood ?? '' }}" name="address_neighborhood" type="text" class="form-control" id="neighborhood" placeholder="{{ 'type_here' | trans }}" required>
+        </div>
+        <div class="col-md-6">
+            <label for="address_complement" class="form-label">{{ 'address_complement' | trans }}</label>
+            <input value="{{ event.address.complement ?? '' }}" type="text" name="address_complement" class="form-control" id="address_complement" placeholder="{{ 'type_here' | trans }}">
+        </div>
+        <div id="number-error-message" class="text-danger mt-2" style="display:none;"></div>
+    </div>
+
+    <div class="row g-1 g-md-3 mt-1">
+        <div class="col-md-6">
+            <label for="state" class="form-label">{{ 'state' | trans }}</label>
+            <select class="form-select" name="address_state" id="state" required>
+                {% if event.address and event.address.city %}
+                    <option value="{{ event.address.city.state.id }}" selected>{{ event.address.city.state.name }}</option>
+                {% else %}
+                    <option value="">{{ 'select' | trans }}</option>
+                {% endif %}
+                {% for state in states %}
+                    <option value="{{ state.id }}">{{ state.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="city" class="form-label">{{ 'municipality' | trans}}</label>
+            <select  name="address_city" class="form-select" id="city" required>
+                {% if event.address and event.address.city %}
+                    <option value="{{ event.address.city.id }}" selected>{{ event.address.city.name }}</option>
+                {% else %}
+                    <option value="">{{ 'select' | trans }}</option>
+                {% endif %}
+
+                {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row g-1 g-md-3 mt-3">
+        <div class="col-12">
+            <label class="form-label">{{ 'location' | trans }}</label>
+            <div class="ratio ratio-21x9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d75897.0345148201!2d-38.627535961048046!3d-3.704056341712097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c749006cf93087%3A0x203684bff0b2f209!2sEd.%20S.%20Pedro%20(marco%20hist%C3%B3rico%20demolido)!5e1!3m2!1spt-BR!2sbr!4v1739989008210!5m2!1spt-BR!2sbr"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,48 +1,50 @@
-<div class="item-card-home bg-white p-4 rounded shadow-sm mt-4">
-    <div class="row align-items-center">
-        <div class="col-md-3">
-            <img src="{{ image_url|default(asset('img/default-image.png')) }}"
-                 alt="{{ image_alt|default('Imagem não disponível') }}"
-                 class="rounded-circle img-fluid profile-image">
-        </div>
-        <div class="col-md-9 position-relative">
-            <div class="d-flex align-items-center justify-content-end">
-                <i class="material-icons text-success">{{ status_icon|default('public') }}</i>
-                <span>{{ 'spaces'|trans }}</span>
+<div class="card item-card-home border-0 shadow-sm h-100 w-100 rounded-3">
+    <div class="card-body p-4 d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="flex-shrink-0">
+                <img src="{{ asset(image_url ?? 'img/default-image.png') }}"
+                     alt="{{ image_alt|default('Imagem não disponível') }}"
+                     class="rounded-circle card-profile-img">
+            </div>
+            <div class="d-inline-flex align-items-center gap-1 text-muted text-end ms-3 mt-1">
+                <i class="material-icons text-success fs-5">{{ status_icon|default('public') }}</i>
+                <span class="fw-semibold small">{{ 'spaces'|trans }}</span>
             </div>
         </div>
-    </div>
 
-    <div class="row align-items-start mt-1">
-        <div class="d-flex justify-content-between align-items-start">
-            <h4 class="fw-bold">{{ title }}</h4>
-        </div>
-    </div>
+        <h4 class="fw-bold mb-3">{{ title }}</h4>
 
-    <p><span class="text-uppercase">{{ 'type'|trans }}:</span> <span class="text-green">{{ type }}</span></p>
-    <p><span class="text-uppercase">{{ 'where'|trans }}:</span> <span class="text-info">{{ location }}</span></p>
-    <p>{{ description }}</p>
+        <p class="mb-2">
+            <span class="text-uppercase text-muted">{{ 'type'|trans }}:</span>
+            <span class="text-success">{{ type }}</span>
+        </p>
+        <p class="mb-3">
+            <span class="text-uppercase text-muted">{{ 'where'|trans }}:</span>
+            <span class="text-info">{{ location }}</span>
+        </p>
 
-    <h6 class="fw-bold">{{ 'activity_area'|trans }} ({{ interest_areas_count }}):</h6>
-    <p class="fw-bold text-info">{{ interest_areas }}</p>
+        <p class="mb-4">{{ description }}</p>
 
-    <h6 class="fw-bold">{{ 'tags'|trans }} ({{ tags_count }}):</h6>
-    <p class="fw-bold text-info">{{ tags }}</p>
+        <h6 class="fw-bold mb-2">{{ 'activity_area'|trans }} ({{ interest_areas_count }}):</h6>
+        <p class="fw-bold text-info mb-3">{{ interest_areas }}</p>
 
-    <p><strong>Site:</strong>
-        {% if site != 'no_site'|trans %}
-            <a href="{{ site }}" target="_blank">{{ site }}</a>
-        {% else %}
-            {{ site }}
-        {% endif %}
-    </p>
+        <h6 class="fw-bold mb-2">{{ 'tags'|trans }} ({{ tags_count }}):</h6>
+        <p class="fw-bold text-info mb-4">{{ tags }}</p>
 
-    <div class="row mt-3">
-        <div class="col-md position-relative">
+        <p class="mb-4">
+            <span class="fw-bold text-muted">Site:</span>
+            {% if site != 'no_site'|trans %}
+                <a href="{{ site }}" target="_blank" class="text-decoration-none fw-semibold">{{ site }}</a>
+            {% else %}
+                <span class="text-muted">{{ site }}</span>
+            {% endif %}
+        </p>
+
+        <div class="d-grid mt-auto pt-3">
             <a href="{{ path('web_space_getOne', { id: space.id }) }}"
-               class="btn btn-primary d-flex align-items-center justify-content-center">
+               class="btn btn-primary d-flex align-items-center justify-content-center gap-2 py-2">
                 <span class="fw-bold">{{ 'check'|trans }}</span>
-                <i class="material-icons ms-3">arrow_forward</i>
+                <i class="material-icons">arrow_forward</i>
             </a>
         </div>
     </div>

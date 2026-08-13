@@ -81,10 +81,11 @@ class EventDto
     ])]
     public mixed $createdBy;
 
-    #[Sequentially([
-        new Type('string', groups: [self::CREATE, self::UPDATE]),
-        new Length(min: 2, max: 255, groups: [self::CREATE, self::UPDATE]),
-    ])]
+    #[Image(
+        maxSize: (2000000),
+        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+        groups: [self::CREATE, self::UPDATE]
+    )]
     public mixed $coverImage;
 
     #[Sequentially([
@@ -110,7 +111,7 @@ class EventDto
         new Type('integer', groups: [self::CREATE, self::UPDATE]),
         new Choice(callback: [EventFormatEnum::class, 'getValues'], groups: [self::CREATE, self::UPDATE]),
     ])]
-    public mixed $type;
+    public mixed $format;
 
     #[Sequentially([
         new NotBlank(groups: [self::CREATE]),
@@ -143,6 +144,9 @@ class EventDto
         new Length(min: 2, max: 255, groups: [self::CREATE, self::UPDATE]),
     ])]
     public mixed $site;
+
+    #[Sequentially([new Json(groups: [self::CREATE, self::UPDATE])])]
+    public mixed $socialNetworks;
 
     #[Sequentially([
         new Type('string', groups: [self::CREATE, self::UPDATE]),

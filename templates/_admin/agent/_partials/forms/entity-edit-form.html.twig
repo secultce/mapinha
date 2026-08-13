@@ -1,4 +1,4 @@
-<form id="agent-edit-form" method="POST" class="entity-edit-form">
+<form id="agent-edit-form" method="POST" enctype="multipart/form-data" class="entity-edit-form">
     <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
     <div class="accordion accordion-flush accordion-cards mt-4" id="accordionEditAgent">
         <div class="accordion-item">
@@ -77,6 +77,24 @@
                     <span class="responsive-size">{{ 'public_data_notice' | trans }}</span>
                     <hr>
                     {% include "_admin/agent/_partials/forms/social-media.html.twig" %}
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#panel-portfolio"
+                    aria-expanded="false"
+                    aria-controls="panel-portfolio">
+                    {{ 'portfolio' | trans }}
+                </button>
+            </h2>
+
+            <div id="panel-portfolio" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    {% include "_admin/agent/_partials/forms/portfolio.html.twig" %}
                 </div>
             </div>
         </div>

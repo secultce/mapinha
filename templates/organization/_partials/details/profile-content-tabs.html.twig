@@ -1,0 +1,7 @@
+{% set tabs = [
+    {
+        'id': 'dados-gerais',
+        'content': include('organization/_partials/details/general-data.html.twig')
+    }
+] %}
+{% include '_components/tabs/content-tabs.html.twig' with { 'tabs': tabs } %}

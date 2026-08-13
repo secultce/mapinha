@@ -23,6 +23,21 @@ class InitiativeRepository extends AbstractRepository implements InitiativeRepos
         return $initiative;
     }
 
+    public function countByStatus(string $status): int
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $result = $connection->createQueryBuilder()
+            ->select('COUNT(*)')
+            ->from('initiative', 'i')
+            ->where("i.extra_fields->>'status' = :status")
+            ->andWhere('i.deleted_at IS NULL')
+            ->setParameter('status', $status)
+            ->executeQuery()
+            ->fetchOne();
+
+        return (int) $result;
+    }
+
     public function findByFilters(?string $region, ?string $state, ?string $cityName, ?string $status): array
     {
         $connection = $this->getEntityManager()->getConnection();

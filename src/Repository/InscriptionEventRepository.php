@@ -58,6 +58,21 @@ final class InscriptionEventRepository extends AbstractRepository implements Ins
             ->getOneOrNullResult();
     }
 
+    public function findInscriptionByAgentAndEvent(string $agentId, string $eventId): ?InscriptionEvent
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        return $qb->select('ie')
+            ->from(InscriptionEvent::class, 'ie')
+            ->where('ie.agent = :agentId')
+            ->andWhere('ie.event = :eventId')
+            ->setParameter('agentId', $agentId)
+            ->setParameter('eventId', $eventId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function save(InscriptionEvent $inscriptionEvent): InscriptionEvent
     {
         $this->getEntityManager()->persist($inscriptionEvent);

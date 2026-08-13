@@ -6,6 +6,7 @@ namespace App\Controller\Web;
 
 use App\Service\Interface\AgentServiceInterface;
 use App\Service\Interface\EventServiceInterface;
+use App\Service\Interface\SpaceServiceInterface;
 use App\ValueObject\DashboardCardItemValueObject as CardItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ class AgentWebController extends AbstractWebController
         public readonly AgentServiceInterface $service,
         private readonly TranslatorInterface $translator,
         private readonly EventServiceInterface $eventService,
+        private readonly SpaceServiceInterface $spaceService,
     ) {
     }
 
@@ -36,9 +38,7 @@ class AgentWebController extends AbstractWebController
         $dashboard = [
             'color' => '#D0A020',
             'items' => [
-                new CardItem(icon: 'description', quantity: $totalAgents, text: 'view.agent.quantity.total'),
-                new CardItem(icon: 'person', quantity: 30, text: 'view.agent.quantity.culture'),
-                new CardItem(icon: 'block', quantity: 20, text: 'view.agent.quantity.inactive'),
+                new CardItem(icon: 'person', quantity: $totalAgents, text: 'view.agent.quantity.total'),
                 new CardItem(icon: 'today', quantity: $recentAgents, text: $this->translator->trans('view.agent.quantity.last_days', ['{days}' => $days])),
             ],
         ];
@@ -54,10 +54,12 @@ class AgentWebController extends AbstractWebController
     {
         $agent = $this->service->get($id);
         $events = $this->eventService->findByAgent($agent->getId()->toRfc4122());
+        $spaces = $this->spaceService->findBy(['createdBy' => $agent]);
 
-        return $this->render('agent/one.html.twig', [
+        return $this->render('agent/details.html.twig', [
             'agent' => $agent,
             'events' => $events,
+            'spaces' => $spaces,
         ]);
     }
 }

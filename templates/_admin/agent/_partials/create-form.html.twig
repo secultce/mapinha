@@ -149,39 +149,93 @@
 
                 <div class="agent-address">
                     <h3 class="fw-bold">{{ "address" | trans}}</h3>
-                    <div class="d-flex flex-column gap-md-4 flex-md-row">
-                        <div class="agent-input-form agent-cep mt-2">
-                            <label for="postal-code">{{ "postal_code" | trans}}</label>
-                            <input id="postal-code" name="postal_code" type="text" />
+                    
+                    <div class="row g-1 g-md-3">
+                        <div class="col-md-4">
+                            <div class="agent-input-form">
+                                <label for="cep" class="form-label">{{ "postal_code" | trans}}</label>
+                                <input id="cep" name="postal_code" type="text" class="form-control" placeholder="{{ 'type_here' | trans }}" />
+                                <div id="cep-error-message" class="text-danger mt-2" style="display:none;"></div>
+                            </div>
                         </div>
-
-                        <div class="agent-input-form mt-2">
-                            <label for="street">{{ "street" | trans}}</label>
-                            <input id="street" name="street" type="text" />
-                        </div>
-                    </div>
-
-                    <div class="d-flex gap-2 gap-md-4">
-                        <div class="agent-input-form agent-house-number">
-                            <label for="number">{{ "number_address" | trans}}</label>
-                            <input id="number" name="number" type="text" />
-                        </div>
-
-                        <div class="agent-input-form neighborhood">
-                            <label for="neighborhood">{{ "neighborhood" | trans}}</label>
-                            <input id="neighborhood" name="neighborhood" type="text" />
+                        <div class="col-md-8">
+                            <div class="agent-input-form">
+                                <label for="street" class="form-label">{{ "street" | trans}}</label>
+                                <input id="street" name="street" type="text" class="form-control" placeholder="{{ 'type_here' | trans }}" />
+                            </div>
                         </div>
                     </div>
 
-                    <div class="agent-input-form">
-                        <label for="complement-or-reference_point">{{ "view.agent_create.complement_or_reference_point" | trans}}</label>
-                        <input id="complement-or-reference_point" name="complement_or_reference_point" type="text" />
+                    <div class="row g-1 g-md-3 mt-1">
+                        <div class="col-md-2">
+                            <div class="agent-input-form">
+                                <label for="number" class="form-label">{{ "number_address" | trans}}</label>
+                                <input id="number" name="number" type="text" class="form-control" placeholder="{{ 'type_here' | trans }}" />
+                            </div>
+                        </div>
+                        <div class="col-md-1 form-check align-items-end d-flex gap-2">
+                            <input name="address_no_number" class="form-check-input" type="checkbox" id="no_number" value="1">
+                            <label class="form-check-label" for="no_number">
+                                {{ 'no_number' | trans }}
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="agent-input-form">
+                                <label for="neighborhood" class="form-label">{{ "neighborhood" | trans}}</label>
+                                <input id="neighborhood" name="neighborhood" type="text" class="form-control" placeholder="{{ 'type_here' | trans }}" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="agent-input-form">
+                                <label for="address_complement" class="form-label">{{ "view.agent_create.complement_or_reference_point" | trans}}</label>
+                                <input id="address_complement" name="complement_or_reference_point" type="text" class="form-control" placeholder="{{ 'type_here' | trans }}" />
+                            </div>
+                        </div>
+                        <div id="number-error-message" class="text-danger mt-2" style="display:none;"></div>
                     </div>
 
-                    <div class="agent-public-location">
+                    <div class="row">
+                        <div class="col">
+                            <div class="agent-input-form">
+                                <label for="state" class="form-label">{{ 'state' | trans }}</label>
+                                <select class="form-select" name="address_state" id="state">
+                                    <option value="">{{ 'select' | trans }}</option>
+                                    {% for state in states %}
+                                        <option value="{{ state.id }}">{{ state.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="agent-input-form">
+                                <label for="city" class="form-label">{{ 'municipality' | trans}}</label>
+                                <select name="address_city" class="form-select" id="city">
+                                    <option value="">{{ 'select' | trans }}</option>
+                                    {% for city in cities ?? [] %}
+                                        <option value="{{ city.id }}">{{ city.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-1 g-md-3 mt-3">
+                        <div class="col-12">
+                            <label class="form-label">{{ 'location' | trans }}</label>
+                            <div class="ratio ratio-21x9">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d75897.0345148201!2d-38.627535961048046!3d-3.704056341712097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c749006cf93087%3A0x203684bff0b2f209!2sEd.%20S.%20Pedro%20(marco%20hist%C3%B3rico%20demolido)!5e1!3m2!1spt-BR!2sbr!4v1739989008210!5m2!1spt-BR!2sbr"
+                                        allowfullscreen=""
+                                        loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="agent-public-location mt-3">
                         <div class="d-flex align-items-center">
-                            <input id="public-location" type="checkbox" />
-                            <label class="fw-bold small" for="public-location">{{ "view.agent_create.public_location" | trans}}</label>
+                            <input id="public-location" name="public_location" type="checkbox" class="form-check-input me-2" />
+                            <label class="fw-bold small form-check-label" for="public-location">{{ "view.agent_create.public_location" | trans}}</label>
                         </div>
                         <p class="fw-bold small">{{ "view.agent_create.public_location_info" | trans}}</p>
                     </div>

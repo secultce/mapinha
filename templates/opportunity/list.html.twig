@@ -2,6 +2,11 @@
 
 {% block title %} {{ 'opportunities'|trans}} {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/opportunities.css') }}">
+{% endblock %}
+
 {% block content %}
     {% include '_components/modal-confirm-action.html.twig' with { message: 'view.opportunity.modal_confirm_registration'|trans } %}
     {% include "_components/snackbar.html.twig" %}

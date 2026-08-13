@@ -167,6 +167,11 @@ readonly class InitiativeService extends AbstractEntityService implements Initia
         return $initiative;
     }
 
+    public function countByStatus(string $status): int
+    {
+        return $this->repository->countByStatus($status);
+    }
+
     public function listFiltered(?string $region, ?string $state, ?string $cityId, ?string $status): array
     {
         $cityName = null;

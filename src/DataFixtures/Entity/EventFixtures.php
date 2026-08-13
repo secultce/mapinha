@@ -568,6 +568,11 @@ final class EventFixtures extends AbstractFixture implements DependentFixtureInt
                 $eventData['image'] = $file;
             }
 
+            if (null !== $eventData['coverImage']) {
+                $file = $this->fileService->uploadImage($this->parameterBag->get('app.dir.event.cover'), ImageFixtures::getCoverImage());
+                $eventData['coverImage'] = $file;
+            }
+
             $event = $this->mountEvent($eventData);
 
             $this->setReference(sprintf('%s-%s', self::EVENT_ID_PREFIX, $eventData['id']), $event);

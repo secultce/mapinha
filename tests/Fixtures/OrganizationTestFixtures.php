@@ -25,6 +25,7 @@ class OrganizationTestFixtures implements TestFixtures
     {
         return array_merge(self::partial(), [
             'description' => 'Test Organization',
+            'longDescription' => 'Long Description',
             'agents' => [
                 AgentFixtures::AGENT_ID_1,
                 AgentFixtures::AGENT_ID_2,

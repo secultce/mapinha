@@ -12,6 +12,8 @@
         {% include "_components/side-bar.html.twig" %}
         <div class="entity-edit">
             {% include "_admin/space/_partials/space-edit-header.html.twig" %}
+            {% include '_components/modal-confirm-remove.html.twig' %}
+
             <section class="entity-edit-content mt-4">
                 {% set asterisk = '<span class="text-danger">*</span>' %}
                 <span class="entity-mandatory-fields">{{ 'mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
@@ -31,7 +33,7 @@
                     </button>
                 </div>
                 <div class="logout-submit">
-                    <button class="btn btn-outline-light">{{ 'logout' | trans }}</button>
+                    <a class="btn btn-outline-light" href="{{ path('admin_space_list') }}">{{ 'logout' | trans }}</a>
                     <button form="space-edit-form" type="submit" class="btn btn-light">{{ 'save' | trans}}</button>
                 </div>
             </div>
@@ -51,4 +53,6 @@
     <script type="module" src="{{ asset('js/viacep-integration.js') }}"></script>
     <script type="module" src="{{ asset('js/space/opening-hours.js') }}"></script>
     <script type="module" src="{{ asset('js/_components/forms/space-accessibility.js') }}"></script>
+    <script src="{{ asset('js/image-validation.js') }}"></script>
+    <script src="{{ asset('js/modal-confirm-remove.js') }}"></script>
 {% endblock %}

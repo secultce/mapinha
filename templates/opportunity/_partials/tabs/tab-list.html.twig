@@ -4,77 +4,123 @@
 </div>
 
 {% for opportunity in opportunities %}
-    <div class="opportunity-card p-3 border rounded">
-        <div class="opportunity-card-header">
-            <div class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-end">
-                <div class="d-flex align-items-center gap-2">
-                    ID: <span class="fw-bold">45456</span>
-                </div>
-                <div class="d-flex flex-row-reverse flex-md-row align-items-center gap-2 ms-2">
-                    <i class="material-icons text-primary">check_circle</i>
-                    <span class="">{{ 'opened_registrations'|trans }}</span>
-                </div>
+    <div class="card opportunity-card mt-3 p-2 p-md-3">
+        <div class="card-body row g-3 align-items-start m-0 p-0">
+            <div class="col-12 col-md-auto d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
+                <img src="{{ opportunity.image ? asset(opportunity.image) : asset('img/default-image.png') }}"
+                     alt="{{ opportunity.name }}"
+                     class="rounded-circle opportunity-img"
+                >
             </div>
+            <div class="col-12 col-md d-flex flex-column">
+                <div class="row g-0 align-items-center mb-3 mb-md-0">
+                    <div class="col-12 col-md order-1">
+                        <h5 class="opportunity-card__title fw-bold m-0">{{ opportunity.name ?? 'available_name' | trans }}</h5>
+                    </div>
 
-            <div class="d-flex flex-column flex-sm-row align-items-center mt-2 mb-3">
-                <img src="{{ opportunity.image }}" alt="Foto da oportunidade" class="rounded-circle">
-                <span class="fw-bold ps-md-3 text-center text-sm-start">{{ opportunity.name }}</span>
-            </div>
-        </div>
+                    <div class="col-12 col-md-auto ms-md-auto order-3 order-md-2 d-flex flex-wrap align-items-center gap-2 mt-3 mt-md-0">
+                        <i class="material-icons text-primary">check_circle</i>
+                        <span>{{ 'opened_registrations' | trans }}</span>
+                        <button class="btn btn-outline-primary btn-sm copy-id" data-id="{{ opportunity.id }}">
+                            {{ 'copy_id' | trans }}
+                        </button>
+                    </div>
 
-        <div class="d-flex flex-column flex-md-row justify-content-between">
-            <div class="opportunity-card-content">
-                <div class="fw-bold mb-2">
-                    {{ 'type'|trans }}: <span class="text-danger me-3">TESTE</span>
-                    {{ 'linked_with'|trans }}:
-                    <a class="text-primary fw-bold text-decoration-none" href="#">Associação dos Pescadores</a>
+                    <div class="col-12 order-2 order-md-3 mt-1 mt-md-1">
+                        <p class="opportunity-card__type m-0">
+                            {% if opportunity.extraFields.type is defined and opportunity.extraFields.type is not null %}
+                                {{ opportunity.extraFields.type }}
+                            {% else %}
+                                {{ 'available_type' | trans }}
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
-                <p class="text-orange fw-bold">
-                    Inscrições de 01/01/2001 à 31/01/2001
-                </p>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                </p>
-                <div class="additional-info mb-2">
-                    <span class="fw-bold text-uppercase">{{ 'areas_of_interest'|trans }}:</span>
-                    <br>
-                    <span class="text-orange">Pesca, Antropologia, Ciências Ocultas</span>
-                </div>
-                <div class="additional-info mb-2">
-                    <span class="fw-bold">TAGS:</span>
-                    <br>
-                    <span class="text-orange">Pesca, Antropologia, Ciências Ocultas</span>
-                </div>
-                <div class="additional-info">
-                    <span class="fw-bold text-uppercase">{{ 'seals'|trans }}:</span>
-                    <br>
-                    <div class="stamp-square mt-1"></div>
-                </div>
-            </div>
 
-            <div class="d-flex flex-column justify-content-end mt-3 mt-md-0">
-                {% if app.user %}
-                    <button
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalActionConfirm"
-                            onclick="confirmAction(this)"
-                            data-href="{{ path('admin_opportunity_subscribe', {id: opportunity.id}) }}"
-                            class="btn btn-outline-primary btn-lg mb-2 w-100"
-                    >
-                        {{ 'subscribe'|trans }}
-                    </button>
-                {% else %}
-                    <a href="{{ path('web_auth_login') }}" class="btn btn-outline-primary btn-lg mb-2 w-100">
-                        {{ 'subscribe'|trans }}
-                    </a>
+                {% if opportunity.space or opportunity.initiative or opportunity.event %}
+                    <p class="d-flex align-items-center gap-2 mb-3 mb-md-1">
+                        <i class="material-icons text-primary">link</i>
+                        <span class="fw-bold text-dark">
+                            {{ 'linked_with' | trans }}:
+                            {% if opportunity.space %}
+                            <a class="text-primary text-decoration-none" href="{{ path('web_space_getOne', {id: opportunity.space.id}) }}">{{ opportunity.space.name }}</a>
+                            {% elseif opportunity.initiative %}
+                            <a class="text-primary text-decoration-none" href="{{ path('web_initiative_show', {id: opportunity.initiative.id}) }}">{{ opportunity.initiative.name }}</a>
+                            {% elseif opportunity.event %}
+                            <a class="text-primary text-decoration-none" href="{{ path('web_event_show', {id: opportunity.event.id}) }}">{{ opportunity.event.name }}</a>
+                            {% endif %}
+                        </span>
+                    </p>
                 {% endif %}
 
-                <a href="{{ path('web_opportunity_details', {id: opportunity.id}) }}" class="btn btn-primary list-page__access-btn w-100">
-                    {{ 'view.opportunity.access' | trans }}
-                </a>
+                {% if opportunity.extraFields.period is defined and opportunity.extraFields.period is not null %}
+                    <p class="d-flex align-items-center gap-2 mb-3 mb-md-1">
+                        <i class="material-icons text-primary">event</i>
+                        <span class="text-dark">
+                            {{ 'from' | trans }} {{ opportunity.extraFields.period.startDate|date('d/m/Y') }}
+                            {{ 'to' | trans }} {{ opportunity.extraFields.period.endDate|date('d/m/Y') }}
+                        </span>
+                    </p>
+                {% endif %}
+
+                <p class="d-flex align-items-center gap-2 mb-3 mb-md-1">
+                    <i class="material-icons text-primary d-none d-md-block">description</i>
+                    <span class="text-dark">
+                        {{ opportunity.description|default('available_description' | trans)|slice(0, 150) }}{% if (opportunity.description|default(''))|length > 150 %}...{% endif %}
+                    </span>
+                </p>
+
+                <p class="d-flex align-items-center gap-2 mb-3 mb-md-1 flex-wrap flex-md-nowrap">
+                    <i class="material-icons text-primary d-none d-md-block">work</i>
+                    <strong class="text-dark">{{ 'areas_of_interest' | trans }} ({{ opportunity.extraFields.areasOfActivity is defined ? opportunity.extraFields.areasOfActivity|length : 0 }}):</strong>
+                    <span class="fw-bold opportunity-card__areas">
+                        {% if opportunity.extraFields.areasOfActivity is defined and opportunity.extraFields.areasOfActivity is not empty %}
+                            {{ opportunity.extraFields.areasOfActivity|join(', ') }}
+                        {% else %}
+                            {{ 'no_areas' | trans }}
+                        {% endif %}
+                    </span>
+                </p>
+
+                <div class="entity-seals mt-3 mt-md-2 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 gap-md-0">
+                    <div class="d-flex flex-wrap gap-2">
+                        {% if opportunity.extraFields.tags is defined and opportunity.extraFields.tags is not empty %}
+                            <strong class="text-dark d-flex align-items-center">{{ 'tags' | trans }}:</strong>
+                            {% for tag in opportunity.extraFields.tags %}
+                                <span class="seal-entity px-3 py-1">{{ tag }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 align-self-center align-self-md-center ms-md-auto justify-content-center">
+                        {% if app.user %}
+                            <button
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalActionConfirm"
+                                    onclick="confirmAction(this)"
+                                    data-href="{{ path('admin_opportunity_subscribe', {id: opportunity.id}) }}"
+                                    class="btn btn-outline-primary btn-sm"
+                            >
+                                {{ 'subscribe' | trans }}
+                            </button>
+                        {% else %}
+                            <a href="{{ path('web_auth_login') }}" class="btn btn-outline-primary btn-sm">
+                                {{ 'subscribe' | trans }}
+                            </a>
+                        {% endif %}
+
+                        <a href="{{ path('web_opportunity_details', {id: opportunity.id}) }}" class="btn btn-primary btn-sm">
+                            {{ 'view.opportunity.access' | trans }}
+                        </a>
+                    </div>
+                </div>
+
             </div>
+
         </div>
     </div>
+{% else %}
+    <p class="text-center text-muted mt-4">{{ 'view.opportunity.no_opportunities_found' | trans }}</p>
 {% endfor %}
 
 {% if opportunities|length > 0 %}

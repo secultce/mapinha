@@ -1,0 +1,113 @@
+{% if initiative.parent %}
+    <div class="card shadow-sm mb-3 card__entity-details">
+        <div class="card-body py-4">
+            <p class="my-3">
+                {{ 'view.initiative.linked_parent' | trans }}
+                <a class="text-decoration-none fw-bold" href="{{ path('web_initiative_show', {id: initiative.parent.id }) }}">
+                    {{ initiative.parent.name }}
+                </a>.
+            </p>
+        </div>
+    </div>
+{% endif %}
+
+<div class="card shadow-sm mb-3 card__entity-details">
+    <div class="card-body py-4">
+        <h3 class="mb-3 fw-bold">{{ 'introduction' | trans }}</h3>
+        <hr class="mb-4">
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="fw-bold mb-2">{{ 'view.initiative.type_of' | trans }}</label>
+                <p class="text-initiative fw-bold">
+                    {% if initiative.extraFields.culturalLanguage is defined and initiative.extraFields.culturalLanguage %}
+                        {{ initiative.extraFields.culturalLanguage }}
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 col-sm-6">
+                <label class="fw-bold mb-2">{{ 'view.initiative.period' | trans }}</label>
+                <p>
+                    {% if initiative.extraFields.period is defined and initiative.extraFields.period.startDate is defined %}
+                        {{ initiative.extraFields.period.startDate | date('d/m/Y') }} {{ 'to' | trans }} {{ initiative.extraFields.period.endDate | date('d/m/Y') }}
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="fw-bold mb-2">{{ 'description' | trans }}</label>
+                <p>
+                    {% if initiative.extraFields.shortDescription is defined and initiative.extraFields.shortDescription %}
+                        {{ initiative.extraFields.shortDescription }}
+                    {% else %}
+                        {{ 'not_informed' | trans }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-3 card__entity-details">
+    <div class="card-body py-4">
+        <h3 class="mb-3 fw-bold">{{ 'social_media' | trans }}</h3>
+        <hr class="mb-4">
+        <div class="d-flex gap-3 flex-wrap">
+            {% set socialNetworks = initiative.socialNetworks ?? [] %}
+            {% set hasSocialNetworks = false %}
+            {% for network, value in socialNetworks %}
+                {% if value != '' %}
+                    {% set hasSocialNetworks = true %}
+                    <div class="social-media-wrapper">
+                        <div class="social-link d-flex align-items-center gap-1">
+                            <span class="iconify" data-icon="ph:{{ network }}-logo-light" style="font-size: 1.9rem;"></span>
+                            <a href="{{ value }}" target="_blank" class="text-decoration-none fw-bold">{{ network }}</a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% if not hasSocialNetworks %}
+                <p>{{ 'does_not_have' | trans }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-3 card__entity-details">
+    <div class="card-body py-4">
+        <h3 class="mb-3 fw-bold">{{ 'other_information' | trans }}</h3>
+        <hr class="mb-4">
+
+        <h6 class="fw-bold mb-3">{{ 'local' | trans }}</h6>
+        {% if initiative.space %}
+            <div class="d-flex align-items-center gap-3 mb-3">
+                {% if initiative.space.image %}
+                    <img
+                        src="{{ asset(initiative.space.image) }}"
+                        alt="{{ initiative.space.name }}"
+                        class="rounded-circle"
+                        style="width: 3rem; height: 3rem; object-fit: cover;"
+                    >
+                {% else %}
+                    <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                {% endif %}
+                <a class="text-decoration-none fw-bold" href="{{ path('web_space_getOne', {id: initiative.space.id}) }}">
+                    {{ initiative.space.name }}
+                </a>
+            </div>
+        {% else %}
+            <p>{{ 'not_informed' | trans }}</p>
+        {% endif %}
+    </div>
+</div>
+
+{% include "_components/_show/report-btns.html.twig" %}

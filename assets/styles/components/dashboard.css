@@ -1,10 +1,6 @@
 .entity-dashboard {
-    display: flex;
-    justify-content: center;
-    gap: 0.15rem;
     width: var(--WIDTH_DEFAULT);
     margin: 0 auto;
-    --bs-gutter-x: 0 !important;
 }
 
 .dashboard-card {

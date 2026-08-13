@@ -1,26 +1,67 @@
 <div class="mb-3 mt-0 permissions">
     <label class="form-label">
-        {{ 'allow_free_linking' | trans}}
+        {{ 'allow_free_linking' | trans }}
         <span class="iconify entity-edit-icon me-2" data-icon="material-symbols:info-rounded"></span>
     </label>
 
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="people">
-        <label class="form-check-label fw-bold" for="people">{{ 'people' | trans }}</label>
+        <input class="form-check-input"
+               type="checkbox"
+               id="association_with_agent"
+               name="association_with_agent"
+               value="1"
+               {% if space.entityAssociation and space.entityAssociation.withAgent %}checked{% endif %}>
+        <label class="form-check-label fw-bold" for="association_with_agent">{{ 'people' | trans }}</label>
     </div>
 
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="organizations">
-        <label class="form-check-label fw-bold" for="organizations">{{ 'organizations' | trans  }}</label>
+        <input class="form-check-input"
+               type="checkbox"
+               id="association_with_event"
+               name="association_with_event"
+               value="1"
+               {% if space.entityAssociation and space.entityAssociation.withEvent %}checked{% endif %}>
+        <label class="form-check-label fw-bold" for="association_with_event">{{ 'events' | trans }}</label>
     </div>
 
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="events">
-        <label class="form-check-label fw-bold" for="events">{{ 'events' | trans }}</label>
+        <input class="form-check-input"
+               type="checkbox"
+               id="association_with_initiative"
+               name="association_with_initiative"
+               value="1"
+               {% if space.entityAssociation and space.entityAssociation.withInitiative %}checked{% endif %}>
+        <label class="form-check-label fw-bold" for="association_with_initiative">{{ 'initiatives' | trans }}</label>
     </div>
 
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="spaces">
-        <label class="form-check-label fw-bold" for="spaces">{{ 'spaces' | trans }}</label>
+        <input class="form-check-input"
+               type="checkbox"
+               id="association_with_opportunity"
+               name="association_with_opportunity"
+               value="1"
+               {% if space.entityAssociation and space.entityAssociation.withOpportunity %}checked{% endif %}>
+        <label class="form-check-label fw-bold" for="association_with_opportunity">{{ 'opportunities' | trans }}</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input"
+               type="checkbox"
+               id="association_with_organization"
+               name="association_with_organization"
+               value="1"
+               {% if space.entityAssociation and space.entityAssociation.withOrganization %}checked{% endif %}>
+        <label class="form-check-label fw-bold"
+               for="association_with_organization">{{ 'organizations' | trans }}</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input"
+               type="checkbox"
+               id="association_with_space"
+               name="association_with_space"
+               value="1"
+               {% if space.entityAssociation and space.entityAssociation.withSpace %}checked{% endif %}>
+        <label class="form-check-label fw-bold" for="association_with_space">{{ 'spaces' | trans }}</label>
     </div>
 </div>

@@ -310,6 +310,11 @@ body {
     display: flex;
     width: var(--WIDTH_DEFAULT);
     margin-left: 13rem;
+    margin-top: 3rem;
+}
+
+.profile-entity-wrapper {
+    margin: 1.563rem 8.2rem;
 }
 
 .entry-fee, .participants {
@@ -665,10 +670,20 @@ img.card-images__entity-details {
     margin-bottom: 1.875rem;
 }
 
+.banner-img-container {
+    max-height: 31.25rem;
+}
+.banner-img-container img {
+    max-width: 100%;
+}
+
 .banner {
     width: 100%;
-    height: 12.5rem;
+    height: 16rem;
     position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 
 .banner-label {
@@ -871,7 +886,8 @@ img.card-images__entity-details {
     gap: 0.625rem;
 }
 
-.entity-edit-submit button {
+.entity-edit-submit button,
+.entity-edit-submit a {
     font-weight: bold;
     border: 2px solid;
     width: 10rem;
@@ -1025,6 +1041,27 @@ img.card-images__entity-details {
     box-shadow: none;
 }
 
+.input-no-focus:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.btn-filter-custom {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.card-profile-img {
+    width: 4.375rem;
+    height: 4.375rem;
+    object-fit: cover;
+}
+
+.space-img-wrapper {
+    width: 5rem;
+    height: 5rem;
+}
+
 @media (min-width: 1400px) {
     .name__entity-details {
         max-width: 755px;
@@ -1103,6 +1140,7 @@ img.card-images__entity-details {
     .entity-page-tabs {
         position: relative;
         margin-left: 1.2rem;
+        margin-top: 0;
         align-items: center;
         white-space: nowrap;
         width: var(--WIDTH_DEFAULT_MOBILE);
@@ -1112,6 +1150,10 @@ img.card-images__entity-details {
 
     .entity-page-tabs p {
         padding-top: 0.8rem;
+    }
+
+    .profile-entity-wrapper {
+        margin: 1.5rem 1rem !important;
     }
 
     .pill-tabs {
@@ -1220,6 +1262,24 @@ img.card-images__entity-details {
     .entity-edit-submit div {
         justify-content: space-between;
     }
+
+    .space-btn-mobile {
+        width: 100% !important;
+    .tag-entity {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        gap: 0.3rem;
+    }
+
+    .tag-entity::before {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+
+    .btn-mobile-100 {
+        width: 100% !important;
+        padding: 0.8rem 0 !important;
+    }
 }
 
 @media (max-width: 576px) {
@@ -1277,4 +1337,21 @@ button.gridjs-sort {
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+/* Clipboard functionality styles */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-pointer:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.user-select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

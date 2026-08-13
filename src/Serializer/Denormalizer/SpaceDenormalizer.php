@@ -7,6 +7,7 @@ namespace App\Serializer\Denormalizer;
 use App\Entity\ActivityArea;
 use App\Entity\Agent;
 use App\Entity\ArchitecturalAccessibility;
+use App\Entity\Photo;
 use App\Entity\Space;
 use App\Entity\SpaceType;
 use App\Entity\Tag;
@@ -84,6 +85,15 @@ readonly class SpaceDenormalizer implements DenormalizerInterface
         if (true === array_key_exists('spaceType', $data)) {
             $spaceType = $this->entityManager->getRepository(SpaceType::class)->find($data['spaceType']);
             $space->setSpaceType($spaceType);
+        }
+
+        $portfolio = array_map(
+            fn (string $id) => $this->entityManager->find(Photo::class, $id),
+            $data['portfolio'] ?? []
+        );
+
+        if (true === array_key_exists('portfolio', $data)) {
+            $space->setPortfolio(new ArrayCollection($portfolio));
         }
 
         return $space;

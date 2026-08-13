@@ -107,6 +107,11 @@ class Space extends AbstractEntity
     #[Groups(['space.get', 'space.get.item'])]
     private Collection $accessibilities;
 
+    #[ORM\ManyToMany(targetEntity: Photo::class)]
+    #[ORM\JoinTable(name: 'space_photo')]
+    #[Groups('space.get.item')]
+    private Collection $portfolio;
+
     /**
      * @var array<string, string>
      */
@@ -136,6 +141,7 @@ class Space extends AbstractEntity
         $this->createdAt = new DateTimeImmutable();
         $this->activityAreas = new ArrayCollection();
         $this->accessibilities = new ArrayCollection();
+        $this->portfolio = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -364,6 +370,28 @@ class Space extends AbstractEntity
         $this->accessibilities->removeElement($accessibility);
     }
 
+    public function getPortfolio(): Collection
+    {
+        return $this->portfolio;
+    }
+
+    public function setPortfolio(Collection $portfolio): void
+    {
+        $this->portfolio = $portfolio;
+    }
+
+    public function addPortfolio(Photo $photo): void
+    {
+        if (!$this->portfolio->contains($photo)) {
+            $this->portfolio->add($photo);
+        }
+    }
+
+    public function removePortfolio(Photo $photo): void
+    {
+        $this->portfolio->removeElement($photo);
+    }
+
     public function getEntityAssociation(): ?EntityAssociation
     {
         return $this->entityAssociation;
@@ -460,6 +488,7 @@ class Space extends AbstractEntity
             'entityAssociation' => $this->entityAssociation?->toArray(),
             'tags' => $this->tags->map(fn (Tag $tag) => $tag->toArray())->toArray(),
             'accessibilities' => $this->accessibilities->map(fn (ArchitecturalAccessibility $accessibility) => $accessibility->toArray())->toArray(),
+            'portfolio' => $this->portfolio->map(fn (Photo $photo) => $photo->toArray())->toArray(),
             'spaceType' => $this->spaceType?->toArray(),
             'socialNetworks' => $this->socialNetworks,
             'createdAt' => $this->createdAt->format(DateFormatHelper::DEFAULT_FORMAT),

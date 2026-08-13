@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Web;
 
+use App\Entity\Space;
 use App\Service\Interface\ActivityAreaServiceInterface;
 use App\Service\Interface\AgentServiceInterface;
 use App\Service\Interface\ArchitecturalAccessibilityServiceInterface;
@@ -43,18 +44,20 @@ class SpaceWebController extends AbstractWebController
 
         $parsedFilters = $this->getOrderParam($requestFilters);
 
+        $parsedFilters['filters']['isDraft'] = 0;
         $spaces = $this->service->list(params: $parsedFilters['filters'], order: $parsedFilters['order']);
         $totalSpaces = count($spaces);
 
         $days = $request->get('days', 7);
         $recentSpaces = $this->service->countRecentRecords($days);
 
+        $totalSpacesAccessible = array_filter($spaces, fn (Space $item) => $item->isAccessible());
+
         $dashboard = [
             'color' => '#088140',
             'items' => [
                 new CardItem(icon: 'description', quantity: $totalSpaces, text: 'view.space.quantity.total'),
-                new CardItem(icon: 'event_note', quantity: 10, text: 'view.space.quantity.opened'),
-                new CardItem(icon: 'event_available', quantity: 20, text: 'view.space.quantity.finished'),
+                new CardItem(icon: 'accessible', quantity: count($totalSpacesAccessible), text: 'view.space.quantity.accessible'),
                 new CardItem(icon: 'today', quantity: $recentSpaces, text: $this->translator->trans('view.space.quantity.last_days', ['{days}' => $days])),
             ],
         ];
@@ -89,7 +92,7 @@ class SpaceWebController extends AbstractWebController
         $owner = $this->agentService->get($space->getCreatedBy()->getId());
         $events = $this->eventService->findBy(['space' => $space]);
 
-        return $this->render('space/one.html.twig', [
+        return $this->render('space/details.html.twig', [
             'space' => $space,
             'owner' => $owner,
             'events' => $events,

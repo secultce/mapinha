@@ -41,6 +41,7 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
+            'description' => null,
             'image' => null,
             'parent' => null,
             'space' => null,
@@ -71,10 +72,12 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
+            'description' => null,
             'image' => null,
             'parent' => [
                 'id' => OpportunityFixtures::OPPORTUNITY_ID_1,
                 'name' => 'Inscrição para o Concurso de Cordelistas - Festival de Literatura Nordestina',
+                'description' => 'Aberto edital para inscrições no concurso de cordelistas que ocorrerá durante o Festival de Literatura Nordestina.',
                 'image' => $opportunity->getParent()->getImage(),
                 'parent' => null,
                 'space' => ['id' => SpaceFixtures::SPACE_ID_1],
@@ -251,6 +254,7 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
         $this->assertJsonContains([
             'id' => OpportunityFixtures::OPPORTUNITY_ID_10,
             'name' => 'Edital para Seleção de Artistas de Rua - Circuito Cultural Nordestino',
+            'description' => 'Artistas de rua podem se inscrever para participar do Circuito Cultural Nordestino, promovendo a cultura popular.',
             'image' => null,
             'parent' => null,
             'space' => ['id' => SpaceFixtures::SPACE_ID_10],
@@ -280,6 +284,7 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => OpportunityFixtures::OPPORTUNITY_ID_3,
             'name' => 'Credenciamento de Quadrilhas Juninas - São João do Nordeste',
+            'description' => 'Edital de credenciamento para quadrilhas juninas interessadas em participar do São João do Nordeste.',
             'image' => $opportunity->getImage(),
             'parent' => null,
             'space' => [
@@ -387,10 +392,12 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => OpportunityFixtures::OPPORTUNITY_ID_4,
             'name' => $requestBody['name'],
+            'description' => 'Concurso de danças folclóricas aberto para inscrições, integrando o Encontro Nordestino de Cultura.',
             'image' => $opportunity->getImage(),
             'parent' => [
                 'id' => OpportunityFixtures::OPPORTUNITY_ID_1,
                 'name' => 'Inscrição para o Concurso de Cordelistas - Festival de Literatura Nordestina',
+                'description' => 'Aberto edital para inscrições no concurso de cordelistas que ocorrerá durante o Festival de Literatura Nordestina.',
                 'image' => $opportunity->getParent()->getImage(),
                 'parent' => null,
                 'space' => ['id' => SpaceFixtures::SPACE_ID_1],
@@ -569,6 +576,7 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => OpportunityFixtures::OPPORTUNITY_ID_9,
             'name' => 'Chamada para Oficinas de Teatro de Rua - Encontro de Artes Cênicas Nordestinas',
+            'description' => 'Teatralistas podem se inscrever para ministrar oficinas de teatro de rua no Encontro de Artes Cênicas.',
             'image' => $opportunity->getImage(),
             'parent' => null,
             'space' => ['id' => SpaceFixtures::SPACE_ID_9],
@@ -629,14 +637,14 @@ class OpportunityApiControllerTest extends AbstractApiTestCase
                 'requestBody' => $requestBody,
                 'file' => ImageTestFixtures::getGif(),
                 'expectedErrors' => [
-                    ['field' => 'image', 'message' => 'The mime type of the file is invalid ("image/gif"). Allowed mime types are "image/png", "image/jpg", "image/jpeg".'],
+                    ['field' => 'profileImage', 'message' => 'The mime type of the file is invalid ("image/gif"). Allowed mime types are "image/png", "image/jpg", "image/jpeg".'],
                 ],
             ],
             'image size' => [
                 'requestBody' => $requestBody,
                 'file' => ImageTestFixtures::getImageMoreThan2mb(),
                 'expectedErrors' => [
-                    ['field' => 'image', 'message' => 'The file is too large (2.5 MB). Allowed maximum size is 2 MB.'],
+                    ['field' => 'profileImage', 'message' => 'The file is too large (2.5 MB). Allowed maximum size is 2 MB.'],
                 ],
             ],
         ];

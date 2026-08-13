@@ -1,16 +1,21 @@
 <div class="entity-imgs">
-    <div class="banner">
-        <input class="banner-input" type="file" accept="image/*" />
+    <div id="banner-preview-box" class="banner" {% if organization.coverImage %}style="background-image: url('{{ asset(organization.coverImage) }}')"{% endif %}>
+        <input type="file" name="coverImage" class="banner-input js-cropper-input" id="banner-input" accept="image/*"
+               data-modal-id="modalBannerCrop"
+               data-preview="#banner-preview-box"
+               data-aspect-ratio="{{ 1920/356 }}"
+        />
+
         <label for="banner-input" class="banner-label">
-            <span class="iconify entity-photo me-2" data-icon="tabler:camera-plus"></span>
+            <span class="iconify entity-edit-icon me-2" data-icon="tabler:camera-plus"></span>
             {{ 'add_cover_image' | trans }}
         </label>
     </div>
 
     <div class="profile-pic">
         <label for="profile-input" class="profile-label">
-            <span class="iconify entity-photo" data-icon="tabler:camera-plus"></span>
-            <input id="profile-input" type="file" accept="image/*" />
+            <img id="profile-img" src="{{ organization.image }}" alt="{{ 'photo' | trans }}" class="profile-label">
+            <input id="profile-input" type="file" accept="image/*" name="profileImage" />
         </label>
     </div>
 </div>
@@ -28,15 +33,15 @@
            required
     >
 
-    <div class="entity-input-tags mb-2">
-        <label>
-            {{ 'area_of_activity'|trans }}
-            <span class="iconify entity-edit-icon me-2" data-icon="ri:question-fill"></span>
-        </label>
-        <span class="d-flex align-items-center fw-bold gap-3">
-            {{ 'add_new' | trans|lower }}
-            <span class="iconify fs-5" data-icon="material-symbols:add"></span>
-        </span>
+    <div class="my-2">
+        {% include '_components/tags-selector.html.twig' with {
+            inputName: 'activityAreas',
+            inputLabel: 'areas_of_expertise'|trans,
+            items: activityAreaItems|map(area => { 'label': area.name, 'value': area.id }),
+            tags: organization.activityAreas ? organization.activityAreas|map(area => { 'label': area.name, 'value': area.id }) : [],
+            required: false,
+            questionFill: true,
+        } %}
     </div>
 
     <div class="entity-input-tags">
@@ -68,7 +73,7 @@
         placeholder="{{ 'long_description' | trans }}"
         required
     >
-        {{- organization.description | default('') -}}
+        {{- organization.longDescription | default('') -}}
     </textarea>
 
 
@@ -85,7 +90,14 @@
         </div>
         <div class="flex-grow-1">
             <label for="link-description">{{ 'link_description' | trans }}:</label>
-            <input type="text" id="link-description" name="link_description" class="form-control" placeholder="Digite">
+            <input
+                type="text"
+                id="link-description"
+                name="link_description"
+                class="form-control"
+                placeholder="Digite"
+                value="{{ organization.extraFields.link_description | default('') }}"
+            >
         </div>
     </div>
     <div class="d-flex flex-wrap gap-1 gap-md-3 mt-1 mt-md-3">
@@ -111,3 +123,10 @@
         </div>
     </div>
 </div>
+
+{% include '_components/banner-cropper.html.twig' with {'modalId': 'modalBannerCrop'} %}
+
+{% block extra_javascripts %}
+    <script src="{{ asset('js/_components/tags-selector.js') }}"></script>
+    <script src="{{ asset('js/banner-cropper.js') }}"></script>
+{% endblock %}

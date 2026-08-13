@@ -1,0 +1,36 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %}
+    {{ 'initiative'|trans }} | {{ initiative.name }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/initiatives.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/components/entity-header.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="entity-section">
+        {% include "_components/entity-header.html.twig" with {
+            id: initiative.id,
+            name: initiative.name,
+            image: initiative.image ?? 'img/entity-image.png',
+            coverImage: initiative.coverImage ?? 'img/entity-cover-image.png',
+            icon: 'lightbulb',
+            label: initiative.extraFields.culturalLanguage,
+            longBio: initiative.extraFields.shortDescription,
+            actions: 'initiative/_partials/details/actions.html.twig',
+            tabs: 'initiative/_partials/details/tabs.html.twig',
+            breadcrumbs: [
+                {text: 'home'|trans, path: path('web_home_homepage')},
+                {text: 'initiatives'|trans, path: path('web_initiative_list')},
+                {text: initiative.name, path: path('web_initiative_show', {id: initiative.id})}
+            ]
+        } only %}
+    </section>
+
+    <section class="profile-entity-wrapper">
+        {% include "initiative/_partials/details/content-tabs.html.twig" %}
+    </section>
+{% endblock %}

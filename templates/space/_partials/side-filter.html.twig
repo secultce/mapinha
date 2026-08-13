@@ -1,3 +1,10 @@
+{% set nameFilter = app.request.get('name') %}
+{% set spaceTypeFilter = app.request.get('spaceType') %}
+{% set accessibilityFilter = app.request.get('accessibilities') %}
+{% set activityAreaFilter = app.request.get('activityAreas') %}
+{% set tagFilter = app.request.get('tags') %}
+{% set stateFilter = app.request.get('state') %}
+
 <form id="filter-sidebar" class="sidebar" method="GET" action="">
     <div class="close-filter">
         <span class="d-flex gap-3">
@@ -8,7 +15,7 @@
     </div>
 
     <div class="filter-fields">
-        <div class="mb-2 d-flex align-items-center gap-2">
+        <div class="d-none mb-2 d-flex align-items-center gap-2">
             <input type="checkbox" id="official-spaces" name="official-spaces" value="official-spaces">
             <label for="official-spaces" class="fw-bold">{{ 'official_spaces' | trans }}</label>
             <span class="iconify text-primary" data-icon="oui:check-in-circle-filled"></span>
@@ -16,7 +23,7 @@
 
         <div class="form-group">
             <label for="space-name" class="filter-label">{{ 'name_space' | trans }}</label>
-            <input type="text" class="filter-form" id="space-name" name="name" placeholder={{ 'enter_space' | trans }}>
+            <input type="text" class="filter-form" id="space-name" name="name" placeholder={{ 'enter_space' | trans }} value="{{ nameFilter }}">
         </div>
 
         <div class="form-group">
@@ -24,7 +31,7 @@
             <select class="filter-form" id="spaceType" name="spaceType">
                 <option value="">{{ 'select' | trans }}</option>
                 {% for spaceType in spaceTypes %}
-                    <option value="{{ spaceType.id }}">{{ spaceType.name }}</option>
+                    <option value="{{ spaceType.id }}" {% if spaceTypeFilter == spaceType.id %}selected{% endif %}>{{ spaceType.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -34,7 +41,7 @@
             <select class="filter-form" id="accessibilities" name="accessibilities">
                 <option value="">{{ 'everybody' | trans }}</option>
                 {% for accessibility in architecturalAccessibility %}
-                    <option value="{{ accessibility.id }}">{{ accessibility.name }}</option>
+                    <option value="{{ accessibility.id }}" {% if accessibilityFilter == accessibility.id %}selected{% endif %}>{{ accessibility.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -44,7 +51,7 @@
             <select class="filter-form" id="activityAreas" name="activityAreas">
                 <option value="">{{ 'everybody' | trans }}</option>
                 {% for activityArea in activityAreas %}
-                    <option value="{{ activityArea.id }}">{{ activityArea.name }}</option>
+                    <option value="{{ activityArea.id }}" {% if activityAreaFilter == activityArea.id %}selected{% endif %}>{{ activityArea.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -54,7 +61,7 @@
             <select class="filter-form" id="tags" name="tags">
                 <option value="">{{ 'select' | trans }}</option>
                 {% for tag in tags %}
-                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    <option value="{{ tag.id }}" {% if tagFilter == tag.id %}selected{% endif %}>{{ tag.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -64,7 +71,7 @@
             <select class="filter-form" id="state" name="state">
                 <option value="">{{ 'select' | trans }}</option>
                 {% for state in states %}
-                    <option value="{{ state.id }}">{{ state.name }}</option>
+                    <option value="{{ state.id }}" {% if stateFilter == state.id %}selected{% endif %}>{{ state.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -85,5 +92,5 @@
 
 {% block extra_javascripts %}
     <script type="module" src="{{ asset('js/side-filter.js') }}"></script>
-    <script type="module" src="{{ asset('js/load-cities.js') }}"></script>
+    <script type="module" src="{{ asset('js/side-filter-load-cities.js') }}"></script>
 {% endblock %}

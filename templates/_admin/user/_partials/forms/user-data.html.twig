@@ -1,6 +1,11 @@
 <div class="entity-imgs">
-    <div class="banner">
-        <input class="banner-input" id="banner-input" type="file" accept="image/*" />
+    <div id="banner-preview-box" class="banner" {% if user.coverImage %}style="background-image: url('{{ asset(user.coverImage) }}')"{% endif %}>
+        <input type="file" name="coverImage" class="banner-input js-cropper-input" id="banner-input" accept="image/*"
+               data-modal-id="modalBannerCrop"
+               data-preview="#banner-preview-box"
+               data-aspect-ratio="{{ 1920/356 }}"
+        />
+
         <label for="banner-input" class="banner-label">
             <span class="iconify entity-edit-icon me-2" data-icon="tabler:camera-plus"></span>
             {{ 'add_cover_image' | trans }}
@@ -16,12 +21,11 @@
 </div>
 
 <div class="entity-introduction-data">
-
     <div id="image-error"></div>
 
     <label for="firstname">
         {{ 'first_name' | trans }}
-        <span class="text-dange r">*</span>
+        <span class="text-danger">*</span>
     </label>
     <input type="text"
            class="form-control"
@@ -32,7 +36,7 @@
     >
     <label for="lastname">
         {{ 'lastname' | trans }}
-         <span class="text-danger">*</span>
+        <span class="text-danger">*</span>
     </label>
     <input type="text"
            class="form-control"
@@ -52,7 +56,7 @@
     >
     <label for="email">
         {{ 'email' | trans }}
-         <span class="text-danger">*</span>
+        <span class="text-danger">*</span>
     </label>
     <input type="email"
            class="form-control"
@@ -64,9 +68,11 @@
     <label for="password">
         {{ 'password' | trans }}
     </label>
-    <input type="password"
-           class="form-control"
-           id="password" name="password"
-           placeholder="{{ 'password' | trans }}"
-    >
+    <input type="password" class="form-control" id="password" name="password" placeholder="{{ 'password' | trans }}">
 </div>
+
+{% include '_components/banner-cropper.html.twig' with {'modalId': 'modalBannerCrop'} %}
+
+{% block extra_javascripts %}
+    <script src="{{ asset('js/banner-cropper.js') }}"></script>
+{% endblock %}

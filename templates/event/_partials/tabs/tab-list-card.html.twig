@@ -1,89 +1,105 @@
-<div class="card event-card mt-3 p-3">
-    <div class="card-body row g-3 align-items-start">
+<div class="card event-card mt-3 p-3 shadow-sm">
+    <div class="card-body p-0 row g-3 align-items-start">
 
-        <div class="col-auto d-flex align-items-start">
+        <div class="col-12 col-md-auto text-center text-md-start">
             <img src="{{ event.image ? asset(event.image) : asset('img/home-events.png') }}"
-                    alt="{{ event.name }}" class="rounded-circle event-img">
+                 alt="{{ event.name }}"
+                 class="rounded-circle event-img object-fit-cover"
+                 style="width: 60px; height: 60px;">
         </div>
 
         <div class="col d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="event-name fw-bold m-0">{{ event.name }}</h5>
-
-                <button class="btn btn-outline-primary btn-sm copy-id" data-id="{{ event.id }}">
-                    {{ 'copy_id' | trans }}
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                <h5 class="event-name fw-bold m-0 lh-sm">{{ event.name }}</h5>
+                <button class="btn btn-outline-primary btn-sm copy-id flex-shrink-0" data-id="{{ event.id }}" title="{{ 'copy_id' | trans }}">
+                    <i class="material-icons d-md-none align-middle" style="font-size: 16px;" aria-hidden="true">content_copy</i>
+                    <span class="d-none d-md-inline" aria-hidden="true">{{ 'copy_id' | trans }}</span>
+                    <span class="visually-hidden d-md-none">{{ 'copy_id' | trans }}</span>
                 </button>
             </div>
-            <p class="text-dark mb-2">{{ event.subtitle ?? 'no_subtitle' | trans }}</p>
+            <p class="text-muted small mb-3">{{ event.subtitle ?? 'no_subtitle' | trans }}</p>
 
             <p class="d-flex align-items-center gap-2 mb-1">
-                <i class="material-icons text-primary">event</i>
+                <i class="material-icons text-primary fs-6" aria-hidden="true">event</i>
                 <strong class="text-dark">
+                    <span class="visually-hidden">{{ 'date' | trans|default('Data') }}: </span>
                     {% set timezone = 'America/Sao_Paulo' %}
 
                     {% if event.startDate %}
 
                         {% if event.endDate is null or event.startDate|date('d-m-Y', timezone) == event.endDate|date('d-m-Y', timezone) %}
                             {{ event.startDate|date('d/m/Y - H:i', timezone) }}
-
                         {% else %}
                             {% set startDateFormatted = event.startDate|date('d/m/Y', timezone) %}
                             {% set endDateFormatted = event.endDate|date('d/m/Y', timezone) %}
 
                             {{ startDateFormatted }} {{ 'to'|trans }} {{ endDateFormatted }}
                         {% endif %}
-
                     {% else %}
                         {{ 'view.event.not_set_datetime'|trans }}
                     {% endif %}
                 </strong>
             </p>
 
-            <p class="d-flex align-items-center gap-2 mb-1">
-                <i class="material-icons text-primary">location_on</i>
-                <span class="fw-bold text-dark">{{ event.space ? event.space.name : 'event.card.location' | trans }}</span>
+            <p class="d-flex align-items-center gap-2 mb-3">
+                <i class="material-icons text-primary fs-6" aria-hidden="true">location_on</i>
+                <span class="visually-hidden">{{ 'location' | trans|default('Local') }}: </span>
+                <span class="fw-bold text-dark">{{ event.space ? event.space.name : event.card.location | trans }}</span>
             </p>
 
-            <p class="event-cultural-languages d-flex align-items-center gap-2">
-                <i class="material-icons text-primary">language</i>
-                <strong class="text-dark">{{ 'cultural_language' | trans }}:</strong>
+            <hr class="text-muted mt-0 opacity-25">
+
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                <i class="material-icons text-primary" style="font-size: 1.2rem;" aria-hidden="true">language</i>
+
+                <span class="visually-hidden">{{ 'cultural_language' | trans }}:</span>
+                <strong class="text-dark d-none d-md-inline" aria-hidden="true">{{ 'cultural_language' | trans }}:</strong>
+
                 {% for culturalLanguages in event.culturalLanguages %}
-                    <span class="badge bg-light text-dark px-3 py-2">{{ culturalLanguages.name }}</span>
+                    <span class="badge bg-light text-dark border px-3 py-2">{{ culturalLanguages.name }}</span>
                 {% else %}
-                    <span class="text-primary">{{ 'no_cultural_languages' | trans }}</span>
+                    <span class="text-muted fst-italic">{{ 'no_cultural_languages' | trans }}</span>
                 {% endfor %}
-            </p>
+            </div>
 
-            <div class="event-details d-flex flex-wrap gap-3">
-                <p class="d-flex align-items-center gap-2 mb-0">
-                    <i class="material-icons text-primary">monetization_on</i>
-                    <strong class="text-dark">{{ 'entry_fee' | trans }}:</strong>
+            <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                <p class="d-flex align-items-center gap-1 mb-0">
+                    <i class="material-icons text-primary fs-6" aria-hidden="true">monetization_on</i>
+
+                    <span class="visually-hidden">{{ 'entry_fee' | trans }}:</span>
+                    <strong class="text-dark d-none d-md-inline" aria-hidden="true">{{ 'entry_fee' | trans }}:</strong>
+
                     <span class="text-dark">{{ event.free ? 'free' | trans : 'paid' | trans }}</span>
                 </p>
+                <p class="d-flex align-items-center gap-1 mb-0">
+                    <i class="material-icons text-primary fs-6" aria-hidden="true">people</i>
 
-                <p class="d-flex align-items-center gap-2 mb-0">
-                    <i class="material-icons text-primary">people</i>
-                    <strong class="text-dark">{{ 'participants' | trans }}:</strong>
+                    <span class="visually-hidden">{{ 'participants' | trans }}:</span>
+                    <strong class="text-dark d-none d-md-inline" aria-hidden="true">{{ 'participants' | trans }}:</strong>
+
                     <span class="text-dark">{{ event.maxCapacity ?? 'participants' | trans }}</span>
                 </p>
             </div>
 
-            <div class="entity-tags mt-2 d-flex justify-content-between align-items-center">
-                <div class="d-flex flex-wrap gap-2">
-                    <strong class="text-dark">{{ 'tags' | trans }}:</strong>
+            <div class="entity-tags mt-auto d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div class="d-flex flex-wrap align-items-center gap-2 flex-grow-1">
+
+                    <span class="visually-hidden">{{ 'tags' | trans }}:</span>
+                    <strong class="text-dark d-none d-md-inline" aria-hidden="true">{{ 'tags' | trans }}:</strong>
+                    <i class="material-icons text-primary d-md-none fs-6" aria-hidden="true">local_offer</i>
+
                     {% for tag in event.tags %}
-                        <span class="tag-entity px-3 py-1">{{ tag.name }}</span>
+                        <span class="tag-entity">{{ tag.name }}</span>
                     {% else %}
-                        <span class="tag-entity px-3 py-1">{{ 'no_tags' | trans }}</span>
+                        <span class="tag-entity bg-secondary">{{ 'no_tags' | trans }}</span>
                     {% endfor %}
                 </div>
 
-                <a href="{{ path('web_event_show', {id: event.id}) }}" class="btn btn-primary btn-sm">
+                <a href="{{ path('web_event_show', {id: event.id}) }}" class="btn btn-primary btn-sm btn-mobile-100">
                     {{ 'view.event.access' | trans }}
                 </a>
             </div>
 
         </div>
-
     </div>
 </div>

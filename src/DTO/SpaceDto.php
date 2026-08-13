@@ -42,7 +42,7 @@ class SpaceDto
         mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'],
         groups: [self::CREATE, self::UPDATE]
     )]
-    public ?File $image = null;
+    public ?File $profileImage = null;
 
     #[Sequentially([
         new NotBlank(groups: [self::CREATE]),

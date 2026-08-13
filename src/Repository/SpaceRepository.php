@@ -107,8 +107,8 @@ class SpaceRepository extends AbstractRepository implements SpaceRepositoryInter
             ],
             'state' => [
                 'join' => [
-                    ['s.address', 'a'],
-                    ['a.city', 'c'],
+                    ['s.address', 'address'],
+                    ['address.city', 'c'],
                     ['c.state', 'ast'],
                 ],
                 'condition' => fn ($qb, $value) => $qb->andWhere('ast.id = :stateId')->setParameter('stateId', $value),

@@ -22,3 +22,8 @@ edit:
   path: /{id}/editar
   controller: App\Controller\Web\Admin\AgentAdminController::edit
   methods: ['GET', 'POST']
+
+remove_portfolio_photo:
+  path: /{id}/portfolio/{photoId}/remove
+  controller: App\Controller\Web\Admin\AgentAdminController::removePortfolioPhoto
+  methods: ['GET']

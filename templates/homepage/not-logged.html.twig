@@ -41,28 +41,20 @@
     </div>
 {% endif %}
 
-{% if env.aurora.homepage.sections.register.enabled == "true" %}
+{% if env.aurora.homepage.sections.register.enabled == "true" and not app.user %}
     <div class=" text-white py-5" style="background-color: {{ env.aurora.homepage.sections.register.color }}">
         <div class="container pb-5">
             <div class="row text-start">
                 <div class="col-md-12">
-                    {% if not app.user %}
-                        <h1 class="fw-bold mt-4">{{ 'create_account'|trans }}</h1>
-
-                        <p class="lead mt-3">{{ 'view.homepage.registration_info'|trans }}</p>
-
-                        <div>
-                            <a href="{{ path('web_auth_register') }}"
-                               class="col-sm-3 mx-auto btn btn-light btn-lg text-secondary icon-link justify-content-between mt-5">
-                                <h4 class="fw-bold mt-2 text-uppercase">{{ 'register'|trans }}</h4>
-                                <span class="material-icons fs-2">arrow_forward</span>
-                            </a>
-                        </div>
-                    {% else %}
-                        <div>
-                            {{ 'login_registration'|trans }}
-                        </div>
-                    {% endif %}
+                    <h1 class="fw-bold mt-4">{{ 'create_account'|trans }}</h1>
+                    <p class="lead mt-3">{{ 'view.homepage.registration_info'|trans }}</p>
+                    <div>
+                        <a href="{{ path('web_auth_register') }}"
+                           class="col-sm-3 mx-auto btn btn-light btn-lg text-secondary icon-link justify-content-between mt-5">
+                            <h4 class="fw-bold mt-2 text-uppercase">{{ 'register'|trans }}</h4>
+                            <span class="material-icons fs-2">arrow_forward</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,35 +65,32 @@
     <section class="bg-rose text-dark py-5">
         <div class="container pb-5">
             <div class="row text-start">
-                <div class="col-md-12 d-flex align-items-center justify-content-between">
-                    <div>
-                        <h1 class="fw-bold mt-4">{{ 'view.homepage.check_opportunities'|trans }}</h1>
-                        <p class="lead mt-3">{{ 'view.homepage.discover_open_notice'|trans }}</p>
-                    </div>
-
-                    <div class="col-4 col-sm-3 text-end mt-4">
-                        <button id="btn-carousel-homepage" class="btn btn-light text-primary rounded-circle me-md-2" type="button" data-bs-target="#opportunitiesCarousel" data-bs-slide="prev">
-                            <i class="material-icons">chevron_left</i>
-                        </button>
-                        <button id="btn-carousel-homepage" class="btn btn-light text-primary rounded-circle" type="button" data-bs-target="#opportunitiesCarousel" data-bs-slide="next">
-                            <i class="material-icons">chevron_right</i>
-                        </button>
-                    </div>
+                <div class="col-md-12">
+                    <h1 class="fw-bold mt-4">{{ 'view.homepage.check_opportunities'|trans }}</h1>
+                    <p class="lead mt-3">{{ 'view.homepage.discover_open_notice'|trans }}</p>
                 </div>
 
-                <div class="d-flex justify-content-center align-items-center mt-4">
-                    <div class="d-flex align-items-center">
-                        <div class="input-group me-3">
-                            <input type="text" class="form-control border-0 rounded-start-pill" placeholder="Buscar" aria-label="Buscar">
-                            <div class="input-group-append">
-                                <button class="btn bg-white text-dark border-0 rounded-end-pill">
-                                    <i class="material-icons">search</i>
-                                </button>
-                            </div>
+                <div class="row mt-3 gy-3 pe-0 align-items-center">
+                    <div class="col-12 col-md-auto flex-grow-1" style="max-width: 400px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-0 rounded-start-pill ps-4 input-no-focus" placeholder="Buscar" aria-label="Buscar">
+                            <button class="btn bg-white text-dark border-0 rounded-end-pill px-3" type="button">
+                                <i class="material-icons">search</i>
+                            </button>
                         </div>
-                        <button class="btn btn-light text-primary d-flex align-items-center me-3 rounded-pill">
-                            <i class="material-icons me-1">filter_alt</i> Filtrar
+                    </div>
+                    <div class="col-12 col-md d-flex justify-content-between align-items-center">
+                        <button class="btn btn-light text-primary d-flex align-items-center justify-content-center gap-1 rounded-pill btn-filter-custom" type="button">
+                            <i class="material-icons" style="font-size: 1.2rem;">filter_alt</i> Filtrar
                         </button>
+                        <div class="text-end text-nowrap">
+                            <button class="btn btn-light text-primary rounded-circle me-2 btn-carousel-custom" type="button" data-bs-target="#opportunitiesCarousel" data-bs-slide="prev" aria-label="Anterior">
+                                <i class="material-icons">chevron_left</i>
+                            </button>
+                            <button class="btn btn-light text-primary rounded-circle btn-carousel-custom" type="button" data-bs-target="#opportunitiesCarousel" data-bs-slide="next" aria-label="Próximo">
+                                <i class="material-icons">chevron_right</i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,17 +102,16 @@
                             {% include "_components/opportunity-card-home.html.twig" with {
                                 'status_icon': 'check_circle',
                                 'status_text': 'Inscrições abertas',
-                                'image_url': asset('img/img.png'),
-                                'image_alt': 'Mostra de Cinema Independente',
+                                'image_url': asset(opportunity.image ?? 'img/img.png'),
+                                'image_alt': opportunity.name ?? 'Sem imagem',
                                 'title': opportunity.name,
-                                'registration_period': 'Inscrições de 15/09/2024 até 30/09/2024 às 18:00',
-                                'description': 'Uma vitrine para cineastas independentes exibirem seus filmes e documentários. O evento contará com debates, workshops e prêmios para as melhores produções.',
-                                'interest_areas_count': 2,
-                                'interest_areas': 'Cinema, Produção Independente',
-                                'tags_count': 3,
-                                'tags': 'Cinema, Independente, Mostra 2024',
-                                'badges_count': 1,
-                                'badges': '+1',
+                                'phases': opportunity.phases,
+                                'description': opportunity.description,
+                                'social_medias_count': opportunity.socialNetworks.count ?? 0,
+                                'social_medias': opportunity.socialNetworks|map(s => s),
+                                'phases_count': opportunity.phases.count,
+                                'badges_count': 0,
+                                'badges': '0',
                                 'link_url': path('web_opportunity_details', {id: opportunity.id}),
                             } %}
                         </div>
@@ -184,7 +172,7 @@
                 {% include "_components/intro-card.html.twig" with {
                     'urlImg': asset('img/home-projects.png'),
                     'entity': env.aurora.modules.iniatives ?? 'initiatives'|trans,
-                    'entityColor': 'var(--navlink-project)',
+                    'entityColor': 'var(--navlink-initiative)',
                     'textEntity': 'view.homepage.find_initiatives'|trans,
                     'path': path('web_initiative_list')
                 } %}
@@ -194,7 +182,7 @@
                 {% include "_components/intro-card.html.twig" with {
                     'urlImg': asset('img/home-contribua.png'),
                     'entity': env.aurora.modules.organizations ?? 'initiatives'|trans,
-                    'entityColor': 'var(--navlink-project)',
+                    'entityColor': 'var(--navlink-organization)',
                     'textEntity': 'view.homepage.find_initiatives'|trans,
                     'path': path('web_initiative_list')
                 } %}
@@ -229,9 +217,9 @@
                         'icon': 'person',
                         'status_text': agent.status_text ?? 'Individual',
                         'image_url': asset('img/user.png'),
-                        'image_alt': 'Imagem não disponível',
+                        'image_alt': agent.name ?? 'Sem foto',
                         'name': agent.name ?? 'Sem nome',
-                        'areas_of_expertise_count': 3,
+                        'areas_of_expertise_count': 0,
                         'areas_of_expertise': 'Música, Cultura Popular, Tradições Locais',
                         'seals_count': 2,
                         'seals': '+2',
@@ -241,18 +229,16 @@
                 {% set events_content = events|map(
                     event => include('homepage/_partials/cards/item-event.html.twig', {
                         'status_icon': 'event',
-                        'image_url': asset('img/user.png'),
-                        'image_alt': 'Imagem não disponível',
+                        'image_url': event.image ? asset(event.image) : asset('img/home-events.png'),
+                        'image_alt': event.name ??' Imagem não disponível',
                         'title': event.name ?? 'Sem título',
-                        'date': '11 de julho às 18:00',
-                        'location': 'Complexo Estação das Artes - R. Dr. João Moreira, 540 - Centro, Fortaleza - CE, 60030-000',
-                        'description': 'Sem descrição',
-                        'interest_areas_count': 3,
-                        'interest_areas': 'Música, Cultura Popular, Tradições Locais',
-                        'tags_count': 4,
-                        'tags': 'Festival, Música, Cultura, Edição 2024',
-                        'seals_count': 2,
-                        'seals': '+2',
+                        'date': event.endDate ? event.startDate|date('d/m/Y') ~ ' até ' ~ event.endDate|date('d/m/Y') : event.startDate|date('d/m/Y') ~ ' - ' ~ event.startDate|date('H:i'),
+                        'location': event.space ? event.space.name : 'Sem local informado',
+                        'description': event.shortDescription ?? 'Sem descrição disponível',
+                        'interest_areas_count': event.activityAreas|length,
+                        'interest_areas': event.activityAreas|map(a => a.name)|join(', '),
+                        'tags_count': event.tags|length,
+                        'tags': event.tags|map(a => a.name)|join(', '),
                     })
                 ) %}
 
@@ -261,7 +247,7 @@
                         'status_icon': 'check_circle',
                         'status_text': initiative.status_text ?? 'Iniciativa',
                         'image_url': asset('img/user.png'),
-                        'image_alt': 'Imagem não disponível',
+                        'image_alt': initiative.name ?? 'Imagem não disponível',
                         'title': initiative.name ?? 'Sem título',
                         'type': 'CICLO',
                         'registration_period': 'Sem período de inscrição',
@@ -277,25 +263,24 @@
                     opportunity => include('homepage/_partials/cards/item-opportunity.html.twig', {
                         'status_icon': 'visibility',
                         'status_text': 'Oportunidades',
-                        'image_url': asset('img/user.png'),
-                        'image_alt': 'Imagem não disponível',
-                        'title': opportunity.name ?? 'Sem título',
-                        'registration_period': 'Inscrições de 10/08/2024 até 20/08/2024 às 23:59',
-                        'location': 'Complexo Estação das Artes - R. Dr. João Moreira, 540 - Centro, Fortaleza - CE, 60030-000',
-                        'description': 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...',
-                        'interest_areas_count': 3,
-                        'interest_areas': 'Música, Cultura Popular, Tradições Locais',
-                        'tags_count': 4,
-                        'tags': 'Festival, Música, Cultura, Edição 2024',
-                        'seals_count': 2,
-                        'seals': '+2',
+                        'image_url': asset(opportunity.image ?? 'img/img.png'),
+                        'image_alt': opportunity.name ?? 'Sem imagem',
+                        'title': opportunity.name,
+                        'phases': opportunity.phases,
+                        'description': opportunity.description,
+                        'social_medias_count': opportunity.socialNetworks.count ?? 0,
+                        'social_medias': opportunity.socialNetworks|map(s => s),
+                        'phases_count': opportunity.phases.count,
+                        'badges_count': 0,
+                        'badges': '0',
+                        'link_url': path('web_opportunity_details', {id: opportunity.id}),
                     })
                 ) %}
 
                 {% set spaces_content = spaces|map(space =>
                     include('homepage/_partials/cards/item-space.html.twig', {
                         'space': space,
-                        'image_url': space.image ?: asset('img/default-image.png'),
+                        'image_url': space.image,
                         'image_alt':  'no_image' | trans ,
                         'title': space.name ?? 'no_titlçe' | trans,
                         'type': space.spaceType ? space.spaceType.name : 'no_type' | trans ,
@@ -377,12 +362,13 @@
     <section id="" class="contribute-maps text-white py-5">
         <div class="container pb-5">
             <div class="row text-start">
-                <div class="col-md-auto">
+                <div class="col-12 col-md-8">
                     <h1 class="fw-bold mt-4">{{ 'view.homepage.contribute_aurora'|trans }}</h1>
                     <p class="lead mt-3">{{ 'view.homepage.add_events'|trans }}</p>
-                    <a href="https://github.com/secultce/aurora" class="col-5 mx-auto btn btn-light btn-lg text-red-dark icon-link justify-content-between mt-5">
-                        <h4 class="fw-bold mt-2 text-uppercase">{{ 'start_now'|trans }}</h4>
-                        <span class="material-icons fs-2">arrow_forward</span>
+
+                    <a href="https://github.com/secultce/aurora" class="btn btn-light btn-lg text-red-dark d-inline-flex align-items-center gap-2 px-4 py-3 mt-4 shadow-sm text-decoration-none">
+                        <span class="fw-bold text-uppercase fs-5">{{ 'start_now'|trans }}</span>
+                        <span class="material-icons">arrow_forward</span>
                     </a>
                 </div>
             </div>
@@ -391,15 +377,19 @@
 {% endif %}
 
 {% if env.aurora.homepage.sections.maps.enabled == "true" %}
-    <section class="{{ env.aurora.homepage.sections.maps.background ?? 'bg-body' }} {{ env.aurora.homepage.sections.maps.color ?? 'text-light' }} py-5">
+    <section class="{{ env.aurora.homepage.sections.maps.background ?? 'bg-body' }} {{ env.aurora.homepage.sections.maps.color ?? 'text-dark' }} py-5">
         <div class="container pb-5">
             <div class="row text-start">
-                <div class="col-md-auto">
+
+                <div class="col-12">
                     <h1 class="fw-bold mt-4">{{ 'locate_yourself'|trans }}</h1>
                     <p class="lead mt-3">{{ 'view.homepage.find_nearby'|trans }}</p>
                 </div>
-                <div class="google-maps col-md-12 mt-5">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19678.79535967018!2d-38.537474138432515!3d-3.727265727545027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1spt-BR!2sbr!4v1724612249783!5m2!1spt-BR!2sbr" width="100%" height="389" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                <div class="col-12 mt-4">
+                    <div class="ratio ratio-21x9 rounded-3 shadow-sm overflow-hidden">
+                        <iframe src="https://maps.google.com/maps?q=Fortaleza&t=&z=13&ie=UTF8&iwloc=&output=embed" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                 </div>
             </div>
         </div>

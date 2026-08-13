@@ -13,6 +13,10 @@ interface EventServiceInterface
 {
     public function count(?Agent $createdBy = null): int;
 
+    public function countOpenedEvents(): int;
+
+    public function countFinishedEvents(): int;
+
     public function create(array $event): Event;
 
     public function findBy(array $params = []): array;

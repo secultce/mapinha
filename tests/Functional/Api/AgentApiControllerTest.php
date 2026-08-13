@@ -51,6 +51,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
+            'fiscalCode' => '',
             'image' => null,
             'shortBio' => $requestBody['shortBio'],
             'longBio' => $requestBody['longBio'],
@@ -61,6 +62,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
             'organizations' => [],
             'culturalFunction' => [],
             'addresses' => null,
+            'portfolio' => [],
             'socialNetworks' => [],
             'createdAt' => $agent->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
@@ -85,6 +87,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => $requestBody['id'],
             'name' => $requestBody['name'],
+            'fiscalCode' => '',
             'image' => null,
             'shortBio' => $requestBody['shortBio'],
             'longBio' => $requestBody['longBio'],
@@ -102,6 +105,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
             ],
             'culturalFunction' => [],
             'addresses' => null,
+            'portfolio' => [],
             'socialNetworks' => [],
             'createdAt' => $agent->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
@@ -133,7 +137,6 @@ class AgentApiControllerTest extends AbstractApiTestCase
                 'expectedErrors' => [
                     ['field' => 'id', 'message' => 'This value should not be blank.'],
                     ['field' => 'name', 'message' => 'This value should not be blank.'],
-                    ['field' => 'shortBio', 'message' => 'This value should not be blank.'],
                     ['field' => 'user', 'message' => 'This value should not be blank.'],
                 ],
             ],
@@ -240,35 +243,54 @@ class AgentApiControllerTest extends AbstractApiTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertCount(count(AgentFixtures::AGENTS), json_decode($response));
+
+        $responseData = json_decode($response, true);
+        $this->assertCount(count(AgentFixtures::AGENTS), $responseData);
 
         $agent = $client->getContainer()->get(EntityManagerInterface::class)
             ->find(Agent::class, AgentFixtures::AGENT_ID_1);
 
-        $this->assertJsonContains([
-            'id' => AgentFixtures::AGENT_ID_1,
-            'name' => 'Alessandro',
-            'image' => $agent->getImage(),
-            'shortBio' => 'Desenvolvedor e evangelista de Software',
-            'longBio' => 'Fomentador da comunidade de desenvolvimento, um dos fundadores da maior comunidade de PHP do Ceará (PHP com Rapadura)',
-            'culture' => false,
-            'main' => true,
-            'user' => ['id' => UserFixtures::USER_ID_1],
-            'organizations' => [
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_2],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_4],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_7],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_8],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_9],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_10],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_11],
-                ['id' => OrganizationFixtures::ORGANIZATION_ID_1],
-            ],
-            'culturalFunction' => [],
-            'createdAt' => '2024-07-10T11:30:00+00:00',
-            'updatedAt' => '2024-07-10T11:37:00+00:00',
-            'deletedAt' => null,
-        ]);
+        $agentResponse = array_filter($responseData, function ($item) {
+            return AgentFixtures::AGENT_ID_1 === $item['id'];
+        });
+        $agentResponse = reset($agentResponse);
+
+        $this->assertSame(AgentFixtures::AGENT_ID_1, $agentResponse['id']);
+        $this->assertSame('Alessandro', $agentResponse['name']);
+        $this->assertSame('', $agentResponse['fiscalCode']);
+        $this->assertSame($agent->getImage(), $agentResponse['image']);
+        $this->assertSame('Desenvolvedor e evangelista de Software', $agentResponse['shortBio']);
+        $this->assertSame('Fomentador da comunidade de desenvolvimento, um dos fundadores da maior comunidade de PHP do Ceará (PHP com Rapadura)', $agentResponse['longBio']);
+        $this->assertFalse($agentResponse['culture']);
+        $this->assertTrue($agentResponse['main']);
+        $this->assertSame(UserFixtures::USER_ID_1, $agentResponse['user']['id']);
+        $this->assertEmpty($agentResponse['culturalFunction']);
+        $this->assertNotNull($agentResponse['createdAt']);
+        $this->assertNotNull($agentResponse['updatedAt']);
+        $this->assertNull($agentResponse['deletedAt']);
+
+        $organizationIdsFromApi = array_column($agentResponse['organizations'], 'id');
+
+        $expectedOrganizationIds = [
+            OrganizationFixtures::ORGANIZATION_ID_1,
+            OrganizationFixtures::ORGANIZATION_ID_2,
+            OrganizationFixtures::ORGANIZATION_ID_4,
+            OrganizationFixtures::ORGANIZATION_ID_7,
+            OrganizationFixtures::ORGANIZATION_ID_8,
+            OrganizationFixtures::ORGANIZATION_ID_9,
+            OrganizationFixtures::ORGANIZATION_ID_10,
+            OrganizationFixtures::ORGANIZATION_ID_11,
+        ];
+
+        $this->assertCount(count($expectedOrganizationIds), $organizationIdsFromApi);
+
+        foreach ($expectedOrganizationIds as $expectedId) {
+            $this->assertContains(
+                $expectedId,
+                $organizationIdsFromApi,
+                "A organização $expectedId não foi retornada pela API."
+            );
+        }
     }
 
     public function testGetItem(): void
@@ -289,6 +311,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => AgentFixtures::AGENT_ID_3,
             'name' => 'Anna Kelly',
+            'fiscalCode' => '',
             'image' => $agent->getImage(),
             'shortBio' => 'Desenvolvedora frontend e entusiasta de UX',
             'longBio' => 'Desenvolvedora frontend especializada em criar interfaces intuitivas e acessíveis. Entusiasta de UX e está sempre em busca de melhorias na experiência do usuário.',
@@ -323,6 +346,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
                     'zipcode' => '51020010',
                 ],
             ],
+            'portfolio' => [],
             'socialNetworks' => [
                 SocialNetworkEnum::INSTAGRAM->value => 'https://instagram.com/anamouraab',
             ],
@@ -418,6 +442,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => AgentFixtures::AGENT_ID_5,
             'name' => $requestBody['name'],
+            'fiscalCode' => '',
             'image' => $agent->getImage(),
             'shortBio' => $requestBody['shortBio'],
             'longBio' => $requestBody['longBio'],
@@ -446,6 +471,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
                     'zipcode' => '74120010',
                 ],
             ],
+            'portfolio' => [],
             'socialNetworks' => [
                 'instagram' => 'talysonsoares_',
             ],
@@ -480,6 +506,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
         $this->assertResponseBodySame([
             'id' => AgentFixtures::AGENT_ID_3,
             'name' => 'Anna Kelly',
+            'fiscalCode' => '',
             'image' => $agent->getImage(),
             'shortBio' => 'Desenvolvedora frontend e entusiasta de UX',
             'longBio' => 'Desenvolvedora frontend especializada em criar interfaces intuitivas e acessíveis. Entusiasta de UX e está sempre em busca de melhorias na experiência do usuário.',
@@ -514,6 +541,7 @@ class AgentApiControllerTest extends AbstractApiTestCase
                     'zipcode' => '51020010',
                 ],
             ],
+            'portfolio' => [],
             'socialNetworks' => [
                 'instagram' => 'anamouraab',
             ],

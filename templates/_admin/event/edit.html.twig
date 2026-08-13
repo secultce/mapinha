@@ -40,3 +40,11 @@
         </div>
     </section>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="module" src="{{ asset('js/load-cities.js') }}"></script>
+    <script type="module" src="{{ asset('js/viacep-integration.js') }}"></script>
+    <script src="{{ asset('js/image-validation.js') }}"></script>
+    <script src="{{ asset('js/modal-confirm-remove.js') }}"></script>
+{% endblock %}

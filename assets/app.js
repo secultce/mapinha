@@ -10,6 +10,7 @@ import './styles/components/side-bar.css';
 import './styles/components/title.css';
 import './styles/components/form-step.css';
 import './js/modal-confirm-remove.js';
+import './js/_components/copy-id.js';
 
 import './js/navbar-dropdown.js';
 import '@iconify/iconify';

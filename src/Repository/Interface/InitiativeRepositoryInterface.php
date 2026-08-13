@@ -9,4 +9,6 @@ use App\Entity\Initiative;
 interface InitiativeRepositoryInterface
 {
     public function save(Initiative $initiative): Initiative;
+
+    public function countByStatus(string $status): int;
 }

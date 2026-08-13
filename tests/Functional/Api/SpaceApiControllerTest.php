@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Api;
 use App\DataFixtures\Entity\ActivityAreaFixtures;
 use App\DataFixtures\Entity\AgentFixtures;
 use App\DataFixtures\Entity\ArchitecturalAccessibilityFixtures;
+use App\DataFixtures\Entity\PhotoFixtures;
 use App\DataFixtures\Entity\SpaceFixtures;
 use App\DataFixtures\Entity\TagFixtures;
 use App\Entity\Space;
@@ -84,7 +85,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'number' => '540',
                     'neighborhood' => 'Centro',
                     'complement' => 'Complexo Estação das Artes',
-                    'city' => [],
+                    'city' => [
+                        'id' => '97847c18-ac1c-4a00-93d4-b4a3e72a262c',
+                    ],
                     'zipcode' => '60030000',
                 ],
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
@@ -139,6 +142,32 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                         'description' => 'Sinalização tátil para orientação de pessoas com deficiência visual',
                     ],
                 ],
+                'portfolio' => [
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_1,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_1),
+                        'description' => 'Fachada principal do espaço cultural',
+                        'createdAt' => '2024-07-10T11:30:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_2,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_2),
+                        'description' => 'Auditório com capacidade para 200 pessoas',
+                        'createdAt' => '2024-07-10T11:35:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_3,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_3),
+                        'description' => 'Galeria de arte contemporânea',
+                        'createdAt' => '2024-07-11T10:00:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                ],
                 'createdAt' => '2024-07-10T11:30:00+00:00',
                 'updatedAt' => '2024-07-10T12:20:00+00:00',
                 'deletedAt' => null,
@@ -148,6 +177,7 @@ class SpaceApiControllerTest extends AbstractApiTestCase
             'activityAreas' => [],
             'tags' => [],
             'accessibilities' => [],
+            'portfolio' => [],
             'createdAt' => $space->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -203,7 +233,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'number' => '540',
                     'neighborhood' => 'Centro',
                     'complement' => 'Complexo Estação das Artes',
-                    'city' => [],
+                    'city' => [
+                        'id' => '97847c18-ac1c-4a00-93d4-b4a3e72a262c',
+                    ],
                     'zipcode' => '60030000',
                 ],
                 'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
@@ -258,6 +290,32 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                         'description' => 'Sinalização tátil para orientação de pessoas com deficiência visual',
                     ],
                 ],
+                'portfolio' => [
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_1,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_1),
+                        'description' => 'Fachada principal do espaço cultural',
+                        'createdAt' => '2024-07-10T11:30:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_2,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_2),
+                        'description' => 'Auditório com capacidade para 200 pessoas',
+                        'createdAt' => '2024-07-10T11:35:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_3,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_3),
+                        'description' => 'Galeria de arte contemporânea',
+                        'createdAt' => '2024-07-11T10:00:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                ],
                 'createdAt' => '2024-07-10T11:30:00+00:00',
                 'updatedAt' => '2024-07-10T12:20:00+00:00',
                 'deletedAt' => null,
@@ -281,6 +339,7 @@ class SpaceApiControllerTest extends AbstractApiTestCase
             ],
             'tags' => [],
             'accessibilities' => [],
+            'portfolio' => [],
             'createdAt' => $space->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
             'deletedAt' => null,
@@ -460,7 +519,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                 'number' => '540',
                 'neighborhood' => 'Centro',
                 'complement' => 'Complexo Estação das Artes',
-                'city' => [],
+                'city' => [
+                    'id' => '97847c18-ac1c-4a00-93d4-b4a3e72a262c',
+                ],
                 'zipcode' => '60030000',
             ],
             'createdBy' => [
@@ -553,7 +614,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                 'number' => '5',
                 'neighborhood' => 'Asa Sul',
                 'complement' => 'Bloco A',
-                'city' => [],
+                'city' => [
+                    'id' => 'f6005001-9abf-4295-8ab5-572d54ec1ba0',
+                ],
                 'zipcode' => '70330000',
             ],
             'createdBy' => [
@@ -578,7 +641,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'number' => '250',
                     'neighborhood' => 'Centro',
                     'complement' => 'Apto 202',
-                    'city' => [],
+                    'city' => [
+                        'id' => '60e37453-19a2-4ff8-bed7-f08e28d14f78',
+                    ],
                     'zipcode' => '65010000',
                 ],
                 'createdBy' => [
@@ -624,6 +689,24 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                         'id' => ArchitecturalAccessibilityFixtures::ARCHITECTURAL_ACCESSIBILITY_ID_4,
                         'name' => 'Banheiros adaptados',
                         'description' => 'Banheiros com adaptações para pessoas com deficiência',
+                    ],
+                ],
+                'portfolio' => [
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_4,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_4),
+                        'description' => 'Espaço para oficinas e workshops',
+                        'createdAt' => '2024-07-11T10:05:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_5,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_5),
+                        'description' => 'Área de convivência',
+                        'createdAt' => '2024-07-12T09:00:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
                     ],
                 ],
                 'createdAt' => '2024-07-11T10:49:00+00:00',
@@ -675,6 +758,16 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'id' => ArchitecturalAccessibilityFixtures::ARCHITECTURAL_ACCESSIBILITY_ID_9,
                     'name' => 'Sinalização tátil',
                     'description' => 'Sinalização tátil para orientação de pessoas com deficiência visual',
+                ],
+            ],
+            'portfolio' => [
+                [
+                    'id' => PhotoFixtures::PHOTO_ID_6,
+                    'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_6),
+                    'description' => 'Biblioteca com acervo local',
+                    'createdAt' => '2024-07-12T09:30:00+00:00',
+                    'updatedAt' => null,
+                    'deletedAt' => null,
                 ],
             ],
             'createdAt' => '2024-07-16T17:22:00+00:00',
@@ -764,7 +857,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                 'number' => '896',
                 'neighborhood' => 'Centro Histórico',
                 'complement' => 'de 0835 a 0999 - lado ímpar',
-                'city' => [],
+                'city' => [
+                    'id' => 'fb22ee01-1806-481f-af83-7deb980c89c3',
+                ],
                 'zipcode' => '90020005',
             ],
             'createdBy' => ['id' => AgentFixtures::AGENT_ID_1],
@@ -787,7 +882,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'number' => '540',
                     'neighborhood' => 'Centro',
                     'complement' => 'Complexo Estação das Artes',
-                    'city' => [],
+                    'city' => [
+                        'id' => '97847c18-ac1c-4a00-93d4-b4a3e72a262c',
+                    ],
                     'zipcode' => '60030000',
                 ],
                 'createdBy' => [
@@ -844,6 +941,32 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                         'description' => 'Sinalização tátil para orientação de pessoas com deficiência visual',
                     ],
                 ],
+                'portfolio' => [
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_1,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_1),
+                        'description' => 'Fachada principal do espaço cultural',
+                        'createdAt' => '2024-07-10T11:30:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_2,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_2),
+                        'description' => 'Auditório com capacidade para 200 pessoas',
+                        'createdAt' => '2024-07-10T11:35:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                    [
+                        'id' => PhotoFixtures::PHOTO_ID_3,
+                        'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_3),
+                        'description' => 'Galeria de arte contemporânea',
+                        'createdAt' => '2024-07-11T10:00:00+00:00',
+                        'updatedAt' => null,
+                        'deletedAt' => null,
+                    ],
+                ],
                 'createdAt' => '2024-07-10T11:30:00+00:00',
                 'updatedAt' => '2024-07-10T12:20:00+00:00',
                 'deletedAt' => null,
@@ -887,6 +1010,7 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'description' => 'Banheiros com adaptações para pessoas com deficiência',
                 ],
             ],
+            'portfolio' => [],
             'createdAt' => $space->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => $space->getUpdatedAt()->format(DateTimeInterface::ATOM),
             'deletedAt' => null,
@@ -935,7 +1059,9 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                 'number' => '540',
                 'neighborhood' => 'Centro',
                 'complement' => 'Complexo Estação das Artes',
-                'city' => [],
+                'city' => [
+                    'id' => '97847c18-ac1c-4a00-93d4-b4a3e72a262c',
+                ],
                 'zipcode' => '60030000',
             ],
             'createdBy' => [
@@ -991,6 +1117,32 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                     'id' => ArchitecturalAccessibilityFixtures::ARCHITECTURAL_ACCESSIBILITY_ID_9,
                     'name' => 'Sinalização tátil',
                     'description' => 'Sinalização tátil para orientação de pessoas com deficiência visual',
+                ],
+            ],
+            'portfolio' => [
+                [
+                    'id' => PhotoFixtures::PHOTO_ID_1,
+                    'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_1),
+                    'description' => 'Fachada principal do espaço cultural',
+                    'createdAt' => '2024-07-10T11:30:00+00:00',
+                    'updatedAt' => null,
+                    'deletedAt' => null,
+                ],
+                [
+                    'id' => PhotoFixtures::PHOTO_ID_2,
+                    'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_2),
+                    'description' => 'Auditório com capacidade para 200 pessoas',
+                    'createdAt' => '2024-07-10T11:35:00+00:00',
+                    'updatedAt' => null,
+                    'deletedAt' => null,
+                ],
+                [
+                    'id' => PhotoFixtures::PHOTO_ID_3,
+                    'image' => $this->findImage($client, PhotoFixtures::PHOTO_ID_3),
+                    'description' => 'Galeria de arte contemporânea',
+                    'createdAt' => '2024-07-11T10:00:00+00:00',
+                    'updatedAt' => null,
+                    'deletedAt' => null,
                 ],
             ],
             'createdAt' => $space->getCreatedAt()->format(DateTimeInterface::ATOM),
@@ -1174,16 +1326,36 @@ class SpaceApiControllerTest extends AbstractApiTestCase
                 'requestBody' => $requestBody,
                 'file' => ImageTestFixtures::getGif(),
                 'expectedErrors' => [
-                    ['field' => 'image', 'message' => 'The mime type of the file is invalid ("image/gif"). Allowed mime types are "image/png", "image/jpg", "image/jpeg".'],
+                    ['field' => 'profileImage', 'message' => 'The mime type of the file is invalid ("image/gif"). Allowed mime types are "image/png", "image/jpg", "image/jpeg".'],
                 ],
             ],
             'image size' => [
                 'requestBody' => $requestBody,
                 'file' => ImageTestFixtures::getImageMoreThan2mb(),
                 'expectedErrors' => [
-                    ['field' => 'image', 'message' => 'The file is too large (2.5 MB). Allowed maximum size is 2 MB.'],
+                    ['field' => 'profileImage', 'message' => 'The file is too large (2.5 MB). Allowed maximum size is 2 MB.'],
                 ],
             ],
         ];
+    }
+
+    private function findImage(mixed $client, string $photoId): string
+    {
+        $response = json_decode($client->getResponse()->getContent(), true);
+
+        $locations = [
+            $response['portfolio'] ?? [],
+            $response['parent']['portfolio'] ?? [],
+        ];
+
+        foreach ($locations as $portfolio) {
+            foreach ($portfolio as $item) {
+                if (($item['id'] ?? '') === $photoId) {
+                    return $item['image'];
+                }
+            }
+        }
+
+        return 'image not found';
     }
 }

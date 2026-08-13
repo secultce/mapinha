@@ -1,0 +1,41 @@
+<section class="card card-body mt-4 shadow">
+    <h3>Contato</h3>
+    <hr>
+    <div class="mt-2">
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary responsive-icon">email</i>
+            <strong class="visually-hidden">Email:</strong>
+            {% if space.email|default('') %}
+                <a href="mailto:{{ space.email }}" class="text-decoration-none text-dark fw-medium">
+                    {{ space.email }}
+                </a>
+            {% else %}
+                <span class="text-muted fst-italic">não informado</span>
+            {% endif %}
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-3">
+            <i class="material-icons text-primary responsive-icon">language</i>
+            <strong class="visually-hidden">Site:</strong>
+            {% if space.site|default('') %}
+                <a href="{{ space.site }}" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark fw-medium">
+                    {{ space.site }}
+                </a>
+            {% else %}
+                <span class="text-muted fst-italic">não informado</span>
+            {% endif %}
+        </p>
+
+        <p class="d-flex align-items-center gap-2 mb-2">
+            <i class="material-icons text-primary responsive-icon">phone</i>
+            <strong class="visually-hidden">Telefone:</strong>
+            {% if space.phoneNumber|default('') %}
+                <a href="tel:{{ space.phoneNumber }}" class="text-decoration-none text-dark fw-medium">
+                    {{ space.phoneNumber }}
+                </a>
+            {% else %}
+                <span class="text-muted fst-italic">não informado</span>
+            {% endif %}
+        </p>
+    </div>
+</section>

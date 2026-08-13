@@ -214,6 +214,7 @@ class SpaceTest extends AbstractApiTestCase
             'createdAt' => $createdAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'updatedAt' => $updatedAt->format(DateFormatHelper::DEFAULT_FORMAT),
             'deletedAt' => $deletedAt->format(DateFormatHelper::DEFAULT_FORMAT),
+            'portfolio' => [],
         ], $space->toArray());
     }
 }

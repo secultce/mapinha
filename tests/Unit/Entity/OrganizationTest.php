@@ -21,8 +21,10 @@ final class OrganizationTest extends AbstractApiTestCase
         $id = Uuid::v4();
         $name = 'PHP com RAPadura';
         $description = 'Comunidade de devs PHP do Estado do Ceará';
+        $longDescription = 'Comunidade de devs PHP do Estado do Ceará focada em disseminar a palavra do php';
         $type = 'EMPRESA';
         $image = 'phprapadura.jpg';
+        $coverImage = 'phprapadura.jpg';
         $createdAt = new DateTimeImmutable();
         $updatedAt = new DateTime();
         $deletedAt = new DateTime();
@@ -39,8 +41,10 @@ final class OrganizationTest extends AbstractApiTestCase
         $organization->setId($id);
         $organization->setName($name);
         $organization->setDescription($description);
+        $organization->setLongDescription($longDescription);
         $organization->setType($type);
         $organization->setImage($image);
+        $organization->setCoverImage($coverImage);
         $organization->setCreatedAt($createdAt);
         $organization->setUpdatedAt($updatedAt);
         $organization->setDeletedAt($deletedAt);
@@ -59,8 +63,10 @@ final class OrganizationTest extends AbstractApiTestCase
         $this->assertSame($id, $organization->getId());
         $this->assertSame($name, $organization->getName());
         $this->assertSame($description, $organization->getDescription());
+        $this->assertSame($longDescription, $organization->getLongDescription());
         $this->assertSame($type, $organization->getType());
         $this->assertSame($image, $organization->getImage());
+        $this->assertSame($coverImage, $organization->getCoverImage());
         $this->assertSame($createdAt, $organization->getCreatedAt());
         $this->assertSame($updatedAt, $organization->getUpdatedAt());
         $this->assertSame($deletedAt, $organization->getDeletedAt());

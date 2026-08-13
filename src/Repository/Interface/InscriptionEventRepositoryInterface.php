@@ -14,5 +14,7 @@ interface InscriptionEventRepositoryInterface
 
     public function findOneInscriptionEvent(string $inscriptionId, string $eventId): ?InscriptionEvent;
 
+    public function findInscriptionByAgentAndEvent(string $agentId, string $eventId): ?InscriptionEvent;
+
     public function save(InscriptionEvent $inscriptionEvent): InscriptionEvent;
 }

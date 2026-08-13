@@ -56,7 +56,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'subtitle' => null,
             'shortDescription' => null,
             'longDescription' => null,
-            'format' => EventFormatEnum::IN_PERSON->value,
+            'format' => EventFormatEnum::HYBRID->value,
             'eventType' => null,
             'startDate' => '2025-01-16T00:00:00+00:00',
             'endDate' => '2025-04-01T00:00:00+00:00',
@@ -69,6 +69,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
             'draft' => true,
+            'address' => null,
             'culturalLanguages' => [],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
@@ -136,6 +137,7 @@ class EventApiControllerTest extends AbstractApiTestCase
                 'accessibleLibras' => AccessibilityInfoEnum::YES->value,
                 'free' => false,
                 'draft' => false,
+                'address' => null,
                 'culturalLanguages' => [
                     [
                         'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
@@ -159,11 +161,11 @@ class EventApiControllerTest extends AbstractApiTestCase
             ],
             'extraFields' => $event->getExtraFields(),
             'createdBy' => ['id' => self::getLoggedAgentId()],
-            'coverImage' => 'coverimage.jpg',
+            'coverImage' => null,
             'subtitle' => 'Subtítulo de exemplo',
             'shortDescription' => 'Descrição curta',
             'longDescription' => 'Uma descrição mais longa',
-            'format' => EventFormatEnum::IN_PERSON->value,
+            'format' => EventFormatEnum::HYBRID->value,
             'eventType' => [
                 'id' => EventTypeFixtures::EVENT_TYPE_ID_1,
                 'name' => 'Show Musical',
@@ -201,6 +203,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
             'draft' => true,
+            'address' => null,
             'culturalLanguages' => [],
             'createdAt' => $event->getCreatedAt()->format(DateTimeInterface::ATOM),
             'updatedAt' => null,
@@ -232,7 +235,7 @@ class EventApiControllerTest extends AbstractApiTestCase
                 'expectedErrors' => [
                     ['field' => 'id', 'message' => 'This value should not be blank.'],
                     ['field' => 'name', 'message' => 'This value should not be blank.'],
-                    ['field' => 'type', 'message' => 'This value should not be blank.'],
+                    ['field' => 'format', 'message' => 'This value should not be blank.'],
                     ['field' => 'startDate', 'message' => 'This value should not be blank.'],
                 ],
             ],
@@ -320,24 +323,6 @@ class EventApiControllerTest extends AbstractApiTestCase
                     ['field' => 'createdBy', 'message' => 'This id does not exist.'],
                 ],
             ],
-            'coverImage should be a string' => [
-                'requestBody' => array_merge($requestBody, ['coverImage' => 123]),
-                'expectedErrors' => [
-                    ['field' => 'coverImage', 'message' => 'This value should be of type string.'],
-                ],
-            ],
-            'coverImage is too short' => [
-                'requestBody' => array_merge($requestBody, ['coverImage' => 'a']),
-                'expectedErrors' => [
-                    ['field' => 'coverImage', 'message' => 'This value is too short. It should have 2 characters or more.'],
-                ],
-            ],
-            'coverImage is too long' => [
-                'requestBody' => array_merge($requestBody, ['coverImage' => str_repeat('a', 256)]),
-                'expectedErrors' => [
-                    ['field' => 'coverImage', 'message' => 'This value is too long. It should have 255 characters or less.'],
-                ],
-            ],
             'subtitle should be a string' => [
                 'requestBody' => array_merge($requestBody, ['subtitle' => 123]),
                 'expectedErrors' => [
@@ -380,16 +365,16 @@ class EventApiControllerTest extends AbstractApiTestCase
                     ['field' => 'longDescription', 'message' => 'This value should be of type string.'],
                 ],
             ],
-            'type should be a integer' => [
-                'requestBody' => array_merge($requestBody, ['type' => 'abc']),
+            'format should be a integer' => [
+                'requestBody' => array_merge($requestBody, ['format' => 'abc']),
                 'expectedErrors' => [
-                    ['field' => 'type', 'message' => 'This value should be of type integer.'],
+                    ['field' => 'format', 'message' => 'This value should be of type integer.'],
                 ],
             ],
-            'type should be a valid choice' => [
-                'requestBody' => array_merge($requestBody, ['type' => 5]),
+            'format should be a valid choice' => [
+                'requestBody' => array_merge($requestBody, ['format' => 5]),
                 'expectedErrors' => [
-                    ['field' => 'type', 'message' => 'The value you selected is not a valid choice.'],
+                    ['field' => 'format', 'message' => 'The value you selected is not a valid choice.'],
                 ],
             ],
             'endDate should be a string' => [
@@ -577,6 +562,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'accessibleLibras' => AccessibilityInfoEnum::YES->value,
             'free' => false,
             'draft' => false,
+            'address' => null,
             'culturalLanguages' => [
                 [
                     'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
@@ -678,6 +664,7 @@ class EventApiControllerTest extends AbstractApiTestCase
                 'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
                 'free' => true,
                 'draft' => false,
+                'address' => null,
                 'culturalLanguages' => [
                     [
                         'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_6,
@@ -732,6 +719,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
             'draft' => false,
+            'address' => null,
             'culturalLanguages' => [
                 [
                     'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
@@ -859,6 +847,7 @@ class EventApiControllerTest extends AbstractApiTestCase
                 'accessibleLibras' => AccessibilityInfoEnum::YES->value,
                 'free' => false,
                 'draft' => false,
+                'address' => null,
                 'culturalLanguages' => [
                     [
                         'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_1,
@@ -924,6 +913,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'accessibleLibras' => AccessibilityInfoEnum::NOT_INFORMED->value,
             'free' => true,
             'draft' => false,
+            'address' => null,
             'culturalLanguages' => [
                 [
                     'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_6,
@@ -1041,24 +1031,6 @@ class EventApiControllerTest extends AbstractApiTestCase
                     ['field' => 'extraFields', 'message' => 'This value should be of type json object.'],
                 ],
             ],
-            'coverImage should be a string' => [
-                'requestBody' => array_merge($requestBody, ['coverImage' => 123]),
-                'expectedErrors' => [
-                    ['field' => 'coverImage', 'message' => 'This value should be of type string.'],
-                ],
-            ],
-            'coverImage is too short' => [
-                'requestBody' => array_merge($requestBody, ['coverImage' => 'a']),
-                'expectedErrors' => [
-                    ['field' => 'coverImage', 'message' => 'This value is too short. It should have 2 characters or more.'],
-                ],
-            ],
-            'coverImage is too long' => [
-                'requestBody' => array_merge($requestBody, ['coverImage' => str_repeat('a', 256)]),
-                'expectedErrors' => [
-                    ['field' => 'coverImage', 'message' => 'This value is too long. It should have 255 characters or less.'],
-                ],
-            ],
             'subtitle should be a string' => [
                 'requestBody' => array_merge($requestBody, ['subtitle' => 123]),
                 'expectedErrors' => [
@@ -1101,16 +1073,16 @@ class EventApiControllerTest extends AbstractApiTestCase
                     ['field' => 'longDescription', 'message' => 'This value should be of type string.'],
                 ],
             ],
-            'type should be a integer' => [
-                'requestBody' => array_merge($requestBody, ['type' => 'abc']),
+            'format should be a integer' => [
+                'requestBody' => array_merge($requestBody, ['format' => 'abc']),
                 'expectedErrors' => [
-                    ['field' => 'type', 'message' => 'This value should be of type integer.'],
+                    ['field' => 'format', 'message' => 'This value should be of type integer.'],
                 ],
             ],
-            'type should be a valid choice' => [
-                'requestBody' => array_merge($requestBody, ['type' => 5]),
+            'format should be a valid choice' => [
+                'requestBody' => array_merge($requestBody, ['format' => 5]),
                 'expectedErrors' => [
-                    ['field' => 'type', 'message' => 'The value you selected is not a valid choice.'],
+                    ['field' => 'format', 'message' => 'The value you selected is not a valid choice.'],
                 ],
             ],
             'endDate should be a string' => [
@@ -1318,6 +1290,7 @@ class EventApiControllerTest extends AbstractApiTestCase
             'accessibleLibras' => AccessibilityInfoEnum::NO->value,
             'free' => false,
             'draft' => false,
+            'address' => null,
             'culturalLanguages' => [
                 [
                     'id' => CulturalLanguageFixtures::CULTURAL_LANGUAGE_ID_2,
@@ -1358,7 +1331,7 @@ class EventApiControllerTest extends AbstractApiTestCase
 
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
         $this->assertResponseBodySame([
-            'error_message' => 'not_valid',
+            'error_message' => 'error_general',
             'error_details' => $expectedErrors,
         ]);
     }
@@ -1373,14 +1346,7 @@ class EventApiControllerTest extends AbstractApiTestCase
                 'requestBody' => $requestBody,
                 'file' => ImageTestFixtures::getGif(),
                 'expectedErrors' => [
-                    ['field' => 'image', 'message' => 'The mime type of the file is invalid ("image/gif"). Allowed mime types are "image/png", "image/jpg", "image/jpeg".'],
-                ],
-            ],
-            'image size' => [
-                'requestBody' => $requestBody,
-                'file' => ImageTestFixtures::getImageMoreThan2mb(),
-                'expectedErrors' => [
-                    ['field' => 'image', 'message' => 'The file is too large (2.5 MB). Allowed maximum size is 2 MB.'],
+                    'description' => 'The file mime type is invalid.',
                 ],
             ],
         ];

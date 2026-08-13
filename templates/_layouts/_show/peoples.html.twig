@@ -1,27 +1,25 @@
-<div class="tab-pane container fade" id="people">
-    <div class="card shadow-sm mb-3 card__entity-details">
-        <div class="card-body py-4">
-            <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'people'|trans }}</h5>
+<div class="card shadow-sm mb-3 card__entity-details">
+    <div class="card-body py-4">
+        <h5 class="mb-4 fw-bold card-title__entity-details">{{ 'people'|trans }}</h5>
 
-            <div class="py-2">
-                <div class="clearfix">
-                    <h6 class="fw-bold mb-3 float-start">{{ 'responsible_agent'|trans }}</h6>
-                </div>
-                <div class="row">
-                    <div class="col mb-3">
-                        <span class="d-flex align-items-center fw-bold">
-                            {% if entity.createdBy.image %}
-                                <img class="card-images__entity-details rounded-circle" src="{{ entity.createdBy.image }}" alt="{{ 'agent'|trans }} | {{ 'image'|trans }}">
-                            {% else %}
-                                <div class="rounded-circle card-names-ellipse__entity-details"></div>
-                            {% endif %}
-                            <span>
-                                <a data-cy="createdBy-name" class="text-decoration-none" href="{{ path('web_agent_getOne', {'id': entity.createdBy.id }) }}">
-                                    {{ entity.createdBy.name }}
-                                </a>
-                            </span>
+        <div class="py-2">
+            <div class="clearfix">
+                <h6 class="fw-bold mb-3 float-start">{{ 'responsible_agent'|trans }}</h6>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <span class="d-flex align-items-center fw-bold">
+                        {% if entity.createdBy.image %}
+                            <img class="card-images__entity-details rounded-circle" src="{{ entity.createdBy.image }}" alt="{{ 'agent'|trans }} | {{ 'image'|trans }}">
+                        {% else %}
+                            <div class="rounded-circle card-names-ellipse__entity-details"></div>
+                        {% endif %}
+                        <span>
+                            <a data-cy="createdBy-name" class="text-decoration-none" href="{{ path('web_agent_getOne', {'id': entity.createdBy.id }) }}">
+                                {{ entity.createdBy.name }}
+                            </a>
                         </span>
-                    </div>
+                    </span>
                 </div>
             </div>
         </div>

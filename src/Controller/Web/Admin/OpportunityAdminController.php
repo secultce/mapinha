@@ -65,10 +65,10 @@ class OpportunityAdminController extends AbstractAdminController
         return $data;
     }
 
-    #[IsGranted(new Expression('
-        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
-        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
-    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    //    #[IsGranted(new Expression('
+    //        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or
+    //        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    //    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function create(Request $request): Response
     {
         if ('POST' !== $request->getMethod()) {
@@ -92,14 +92,14 @@ class OpportunityAdminController extends AbstractAdminController
         $this->validCsrfToken(self::CREATE_FORM_ID, $request);
 
         $data = $request->request->all();
-        $files = $request->files->all();
+        unset($data['coverImage']);
 
         $data = $this->hidrate($data);
 
         try {
             $opportunity = $this->service->create($data);
-            if ($files['extraFields']['coverImage'] ?? null instanceof UploadedFile) {
-                $this->service->updateCoverImage($opportunity->getId(), $files['extraFields']['coverImage']);
+            if ($uploadedImage = $request->files->get('coverImage')) {
+                $this->service->updateCoverImage($opportunity->getId(), $uploadedImage);
             }
 
             $this->addFlash('success', $this->translator->trans('view.opportunity.message.created'));
@@ -116,10 +116,10 @@ class OpportunityAdminController extends AbstractAdminController
         return $this->redirectToRoute('admin_opportunity_list');
     }
 
-    #[IsGranted(new Expression('
-        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
-        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
-    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    // #[IsGranted(new Expression('
+    // is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or
+    // is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    // '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function list(): Response
     {
         $opportunities = $this->service->findBy();
@@ -196,10 +196,10 @@ class OpportunityAdminController extends AbstractAdminController
         ]);
     }
 
-    #[IsGranted(new Expression('
-        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or 
-        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
-    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
+    //    #[IsGranted(new Expression('
+    //        is_granted("'.UserRolesEnum::ROLE_ADMIN->value.'") or
+    //        is_granted("'.UserRolesEnum::ROLE_MANAGER->value.'")
+    //    '), statusCode: self::ACCESS_DENIED_RESPONSE_CODE)]
     public function get(Uuid $id): Response
     {
         $opportunity = $this->service->get($id);

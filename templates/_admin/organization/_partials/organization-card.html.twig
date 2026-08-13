@@ -9,15 +9,25 @@
         </div>
 
         <div class="mb-3">
-            <label for="areas" class="form-label">{{ 'areas_of_expertise' | trans }}</label>
-            <select class="form-select" id="areas" name="areas" required>
-                <option value="">{{ 'select' | trans }}</option>
+            <label for="type" class="form-label">{{ 'type' | trans }}</label>
+
+            <select name="type" id="type" class="form-select" required>
+                <option value="" selected disabled> -- Selecione -- </option>
+                {% for type in types %}
+                    <option value="{{ type }}">{{ type }}</option>
+                {% endfor %}
             </select>
         </div>
 
-        <div class="mb-3">
-            <label for="short_description" class="form-label">{{ 'short_description' | trans }}</label>
-            <textarea class="form-control" id="short_description" name="short_description" rows="3" maxlength="400" placeholder={{ 'short_description' | trans}} required></textarea>
+        <div class="my-2">
+            {% include '_components/tags-selector.html.twig' with {
+                inputName: 'activityAreas',
+                inputLabel: 'areas_of_expertise'|trans,
+                items: activityAreas|map(area => { 'label': area.name, 'value': area.id }),
+                tags: [],
+                required: false,
+                questionFill: true,
+            } %}
         </div>
 
         <div class="mb-3">
@@ -27,17 +37,17 @@
 
         <div class="mb-3">
             <label for="website" class="form-label">Site</label>
-            <input type="url" class="form-control" id="website" name="website" placeholder={{ 'type_here' | trans}}  required>
+            <input type="url" class="form-control" id="website" name="site" placeholder={{ 'type_here' | trans}}  required>
         </div>
 
         <div class="mb-3">
             <label for="public_email" class="form-label">E-mail</label>
-            <input type="email" class="form-control" id="public_email" name="public_email" placeholder={{ 'type_here' | trans}}  required>
+            <input type="email" class="form-control" id="public_email" name="email" placeholder={{ 'type_here' | trans}}  required>
         </div>
 
         <div class="mb-3">
             <label for="public_phone" class="form-label">{{ 'public_phone' | trans }}</label>
-            <input type="tel" class="form-control" id="public_phone" name="public_phone" placeholder={{ 'type_here' | trans}}  required>
+            <input type="tel" class="form-control" id="public_phone" name="phone" placeholder={{ 'type_here' | trans}}  required>
         </div>
 
         <div class="btn-form-group">
@@ -47,3 +57,7 @@
         </div>
     </form>
 </div>
+
+{% block extra_javascripts %}
+    <script src="{{ asset('js/_components/tags-selector.js') }}"></script>
+{% endblock %}

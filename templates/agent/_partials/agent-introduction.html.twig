@@ -1,33 +1,59 @@
-<section class="agent-public">
-    <span>{{ 'introduction' | trans }}</span>
-    <div class="d-flex flex-column">
-        <span class="fw-bold">{{ 'view.agent.areas_of_expertise' | trans }} (3)</span>
-        <span class="agent-public-info">DESIGN, ARTES VISUAIS, ARTES GRÁFICAS</span>
-    </div>
+<section class="card card-body shadow">
+    <h3>{{ 'introduction' | trans }}</h3>
+    <hr>
 
-    <div class="d-flex flex-column">
-        <span class="fw-bold">{{ 'view.agent_profile.roles_in_culture' | trans }} (1)</span>
-        <span class="agent-public-info">ASSISTENTE DE ARTISTA GRÁFICO</span>
-    </div>
+    <div class="d-flex align-items-start gap-3 mb-3">
+        <i class="material-icons text-primary fs-5 mt-1">location_on</i>
+        <div class="text-dark">
+            <strong class="d-none d-md-inline">{{ 'address' | trans }}:</strong>
+            <span class="visually-hidden d-md-none">{{ 'address' | trans }}:</span>
 
-    <div class="d-flex flex-column">
-        <span class="fw-bold">{{ 'tags' | trans}} (3)</span>
-        <span class="agent-public-info">Design, ACESSIBILIDADE, DESIGNINCLUSIVO</span>
-    </div>
-
-    <div class="profile-description">
-        <span class="fw-bold">{{ 'description' | trans }}</span>
-        <p class="description-agent-profile mt-2 w-80-m">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-    </div>
-
-    <div class="agent-profile-contact d-flex flex-column gap-3 flex-md-row">
-        <div class="agent-site d-flex flex-column w-50">
-            <span class="fw-bold mb-2">Site</span>
-            <a href="https://www.example.com" target="_blank" class="text-decoration-none fw-bold">Portólio Anne Elisa</a>
+            <span class="text-break">
+                {% if agent.addresses is not empty %}
+                    {{ agent.addresses|first.getCompleteAddress() }}
+                {% else %}
+                    {{ 'available_address' | trans }}
+                {% endif %}
+            </span>
         </div>
-        <div class=" d-flex flex-column w-50">
-            <span class="fw-bold mb-2">Telefone</span>
-            <span>(00) 12345-6789</span>
+    </div>
+
+    <div class="d-flex align-items-start gap-3 mb-3">
+        <i class="material-icons text-primary fs-5 mt-1">work</i>
+        <div class="text-dark">
+            <strong class="d-none d-md-inline">{{ 'view.agent_profile.roles_in_culture' | trans }} ({{ agent.culturalFunction|length }}):</strong>
+            <span class="visually-hidden d-md-none">{{ 'view.agent_profile.roles_in_culture' | trans }} ({{ agent.culturalFunction|length }}):</span>
+
+            <span class="text-break">
+                {% for func in agent.culturalFunction %}
+                    {{ func.name }}{% if not loop.last %}, {% endif %}
+                {% else %}
+                    {{ 'not_informed' | trans }}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-start gap-3 mb-3">
+        <i class="material-icons text-primary fs-5 mt-1">description</i>
+        <div class="text-dark">
+            <strong class="d-none d-md-inline">{{ 'description' | trans }}:</strong>
+            <span class="visually-hidden d-md-none">{{ 'description' | trans }}:</span>
+
+            <span class="text-break">{{ agent.longBio ?? ('not_informed' | trans) }}</span>
+        </div>
+    </div>
+
+    <div class="entity-seals mt-2">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <i class="material-icons text-primary fs-5 d-md-none">local_offer</i>
+            <strong class="text-dark d-none d-md-inline">{{ 'tags' | trans }}:</strong>
+            <span class="visually-hidden d-md-none">{{ 'tags' | trans }}:</span>
+            {% for tag in agent.extraFields.tags|default([]) %}
+                <span class="seal-entity px-3 py-1">{{ tag }}</span>
+            {% else %}
+                <span class="seal-entity px-3 py-1">{{ 'no_tags' | trans }}</span>
+            {% endfor %}
         </div>
     </div>
 </section>

@@ -1,33 +1,60 @@
-<section class="space-public">
-    <span class="fw-bold">{{ 'introduction' | trans }}</span>
-    <div class="d-flex flex-column">
-        <span class="fw-bold">{{ 'view.agent.areas_of_expertise' | trans }} (3)</span>
-        <span class="space-public-info">DESIGN, ARTES VISUAIS, ARTES GRÁFICAS</span>
-    </div>
+<section class="card card-body shadow">
+    <h3>Mais informações</h3>
+    <hr>
+    <p class="d-flex align-items-center gap-2 mb-2">
+        <i class="material-icons text-primary responsive-icon">location_on</i>
+        <strong class="visually-hidden">Endereço:</strong>
+        <span class="text-dark">
+            {% if space.address is defined and space.address is not empty %}
+                {{ space.address.getCompleteAddress()|default('') }}
+            {% else %}
+                {{ 'available_address' | trans }}
+            {% endif %}
+        </span>
+    </p>
 
-    <div class="d-flex flex-column">
-        <span class="fw-bold">{{ 'view.agent_profile.roles_in_culture' | trans }} (1)</span>
-        <span class="space-public-info">ASSISTENTE DE ARTISTA GRÁFICO</span>
-    </div>
+    <p class="d-flex align-items-center gap-2 mb-2">
+        <i class="material-icons text-primary responsive-icon">category</i>
+        <strong class="text-dark">{{ 'category' | trans }}:</strong>
+        <span class="text-dark">{{ space.shortDescription ?? 'available_description' | trans }}</span>
+    </p>
 
-    <div class="d-flex flex-column">
-        <span class="fw-bold">{{ 'tags' | trans}} (3)</span>
-        <span class="space-public-info">Design, ACESSIBILIDADE, DESIGNINCLUSIVO</span>
-    </div>
+    <p class="d-flex align-items-center gap-2 mb-2">
+        <i class="material-icons text-primary responsive-icon">group</i>
+        <strong class="text-dark">{{ 'Capacidade' | trans }}:</strong>
+        <span class="text-dark">{{ space.maxCapacity ?? 'available_description' | trans }}</span>
+    </p>
 
-    <div class="profile-description">
-        <span class="fw-bold">{{ 'description' | trans }}</span>
-        <p class="description-agent-profile mt-2 w-80-m">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
-    </div>
+    <p class="d-flex align-items-center gap-2 mb-2">
+        <i class="material-icons text-primary responsive-icon">work</i>
+        <strong class="visually-hidden">{{ 'areas_of_expertise' | trans }} ({{ space.activityAreas|length }}):</strong>
+        <span class="fw-bold space-card__areas text-dark">
+            {% for area in space.activityAreas %}
+                {{ area.name }}{% if not loop.last %}, {% endif %}
+            {% else %}
+                {{ 'no_areas' | trans }}
+            {% endfor %}
+        </span>
+    </p>
 
-    <div class="d-flex flex-column gap-3 flex-md-row">
-        <div class="d-flex flex-column w-50">
-            <span class="fw-bold mb-2">Site</span>
-            <a href="https://www.example.com" target="_blank" class="text-decoration-none fw-bold">Portólio Anne Elisa</a>
-        </div>
-        <div class=" d-flex flex-column w-50">
-            <span class="fw-bold mb-2">{{ "phone"|trans }}</span>
-            <span>(00) 12345-6789</span>
-        </div>
+    <p class="d-flex align-items-center gap-2 mb-2">
+        <i class="material-icons text-primary responsive-icon">accessibility_new</i>
+        <strong class="visually-hidden">{{ 'accessibility' | trans }}:</strong>
+        <span class="text-dark">
+            {% for acc in space.accessibilities %}
+                {{ acc.name }}{% if not loop.last %}, {% endif %}
+            {% else %}
+                {{ 'no_accessibility' | trans }}
+            {% endfor %}
+        </span>
+    </p>
+
+    <div class="entity-seals mt-3 d-flex flex-wrap align-items-center gap-2">
+        <strong class="text-dark">{{ 'tags' | trans }}:</strong>
+        {% for tag in space.tags %}
+            <span class="seal-entity px-3 py-1">{{ tag.name }}</span>
+        {% else %}
+            <span class="seal-entity px-3 py-1">{{ 'no_seals' | trans }}</span>
+        {% endfor %}
     </div>
 </section>

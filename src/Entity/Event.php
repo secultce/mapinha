@@ -139,6 +139,10 @@ class Event extends AbstractEntity implements ExportableSourceInterface
     #[Groups(['event.get', 'event.get.item'])]
     private bool $draft = true;
 
+    #[ORM\OneToOne(targetEntity: EventAddress::class, mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    #[Groups(['event.get', 'event.get.item'])]
+    private ?EventAddress $address = null;
+
     #[ORM\ManyToMany(targetEntity: CulturalLanguage::class)]
     #[ORM\JoinTable(name: 'event_cultural_languages')]
     #[Groups(['event.get', 'event.get.item'])]
@@ -464,6 +468,16 @@ class Event extends AbstractEntity implements ExportableSourceInterface
     public function setDraft(bool $draft): void
     {
         $this->draft = $draft;
+    }
+
+    public function getAddress(): ?EventAddress
+    {
+        return $this->address;
+    }
+
+    public function setAddress(EventAddress $address): void
+    {
+        $this->address = $address;
     }
 
     public function getSocialNetworks(): array

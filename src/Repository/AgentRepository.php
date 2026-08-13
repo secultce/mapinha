@@ -37,4 +37,19 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getMainAgentByUser(string $userId): ?Agent
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        return $qb->select('a')
+            ->from(Agent::class, 'a')
+            ->where('a.user = :userId')
+            ->andWhere('a.main = true')
+            ->andWhere('a.deletedAt IS NULL')
+            ->setParameter('userId', $userId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

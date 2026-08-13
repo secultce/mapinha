@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Web;
 
+use App\Service\Interface\AgentServiceInterface;
 use App\Service\Interface\OrganizationServiceInterface;
 use App\ValueObject\DashboardCardItemValueObject as CardItem;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,7 @@ class OrganizationWebController extends AbstractWebController
 {
     public function __construct(
         public readonly OrganizationServiceInterface $service,
+        private readonly AgentServiceInterface $agentService,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -50,9 +52,11 @@ class OrganizationWebController extends AbstractWebController
     public function getOne(Uuid $id): Response
     {
         $organization = $this->service->get($id);
+        $owner = $this->agentService->get($organization->getCreatedBy()->getId());
 
-        return $this->render('organization/one.html.twig', [
+        return $this->render('organization/details.html.twig', [
             'organization' => $organization,
+            'owner' => $owner,
         ]);
     }
 }

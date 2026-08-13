@@ -12,19 +12,19 @@ class EducationEnumTest extends TestCase
 {
     public function testEnumCasesHaveCorrectValues(): void
     {
-        $this->assertSame('Not literate', EducationEnum::NOT_LITERATE->value);
-        $this->assertSame('Incomplete Elementary School', EducationEnum::ELEMENTARY_INCOMPLETE->value);
-        $this->assertSame('Complete Elementary School', EducationEnum::ELEMENTARY_COMPLETE->value);
-        $this->assertSame('Incomplete High School', EducationEnum::HIGH_SCHOOL_INCOMPLETE->value);
-        $this->assertSame('Complete High School', EducationEnum::HIGH_SCHOOL_COMPLETE->value);
-        $this->assertSame('Incomplete College', EducationEnum::COLLEGE_INCOMPLETE->value);
-        $this->assertSame('Complete College', EducationEnum::COLLEGE_COMPLETE->value);
-        $this->assertSame('Postgraduate (lato sensu)', EducationEnum::POSTGRADUATE->value);
-        $this->assertSame('Master (stricto sensu)', EducationEnum::MASTER->value);
-        $this->assertSame('Doctorate (stricto sensu)', EducationEnum::DOCTORATE->value);
-        $this->assertSame('Post-doctorate', EducationEnum::POST_DOCTORATE->value);
-        $this->assertSame('Other', EducationEnum::OTHER->value);
-        $this->assertSame('Prefer not to disclose', EducationEnum::PREFER_NOT_TO_DISCLOSE->value);
+        $this->assertSame('Não alfabetizado', EducationEnum::NOT_LITERATE->value);
+        $this->assertSame('Fundamental incompleto', EducationEnum::ELEMENTARY_INCOMPLETE->value);
+        $this->assertSame('Fundamental completo', EducationEnum::ELEMENTARY_COMPLETE->value);
+        $this->assertSame('Médio incompleto', EducationEnum::HIGH_SCHOOL_INCOMPLETE->value);
+        $this->assertSame('Médio completo', EducationEnum::HIGH_SCHOOL_COMPLETE->value);
+        $this->assertSame('Superior incompleto', EducationEnum::COLLEGE_INCOMPLETE->value);
+        $this->assertSame('Superior completo', EducationEnum::COLLEGE_COMPLETE->value);
+        $this->assertSame('Pós-graduação (lato sensu)', EducationEnum::POSTGRADUATE->value);
+        $this->assertSame('Mestrado (stricto sensu)', EducationEnum::MASTER->value);
+        $this->assertSame('Doutorado (stricto sensu)', EducationEnum::DOCTORATE->value);
+        $this->assertSame('Pós-doutorado', EducationEnum::POST_DOCTORATE->value);
+        $this->assertSame('Outro', EducationEnum::OTHER->value);
+        $this->assertSame('Prefere não informar', EducationEnum::PREFER_NOT_TO_DISCLOSE->value);
     }
 
     public function testEnumTraitMethods(): void
@@ -50,19 +50,19 @@ class EducationEnumTest extends TestCase
         $values = EducationEnum::getValues();
 
         $this->assertIsArray($values);
-        $this->assertContains('Not literate', $values);
-        $this->assertContains('Incomplete Elementary School', $values);
-        $this->assertContains('Complete Elementary School', $values);
-        $this->assertContains('Incomplete High School', $values);
-        $this->assertContains('Complete High School', $values);
-        $this->assertContains('Incomplete College', $values);
-        $this->assertContains('Complete College', $values);
-        $this->assertContains('Postgraduate (lato sensu)', $values);
-        $this->assertContains('Master (stricto sensu)', $values);
-        $this->assertContains('Doctorate (stricto sensu)', $values);
-        $this->assertContains('Post-doctorate', $values);
-        $this->assertContains('Other', $values);
-        $this->assertContains('Prefer not to disclose', $values);
+        $this->assertContains('Não alfabetizado', $values);
+        $this->assertContains('Fundamental incompleto', $values);
+        $this->assertContains('Fundamental completo', $values);
+        $this->assertContains('Médio incompleto', $values);
+        $this->assertContains('Médio completo', $values);
+        $this->assertContains('Superior incompleto', $values);
+        $this->assertContains('Superior completo', $values);
+        $this->assertContains('Pós-graduação (lato sensu)', $values);
+        $this->assertContains('Mestrado (stricto sensu)', $values);
+        $this->assertContains('Doutorado (stricto sensu)', $values);
+        $this->assertContains('Pós-doutorado', $values);
+        $this->assertContains('Outro', $values);
+        $this->assertContains('Prefere não informar', $values);
         $this->assertCount(13, $values);
     }
 

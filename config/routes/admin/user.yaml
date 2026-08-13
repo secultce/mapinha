@@ -18,6 +18,11 @@ edit_profile:
   controller: App\Controller\Web\Admin\UserAdminController::editUserProfile
   methods: ['GET', 'POST']
 
+details:
+  path: /{id}
+  controller: App\Controller\Web\Admin\UserAdminController::details
+  methods: ['GET']
+
 create:
   path: /adicionar
   controller: App\Controller\Web\Admin\UserAdminController::create

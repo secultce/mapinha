@@ -1,0 +1,37 @@
+{% extends "_layouts/blank.html.twig" %}
+
+{% block title %}{{ agent.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/agents.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/components/entity-header.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="entity-section">
+        {% include "_components/entity-header.html.twig" with {
+            name: agent.name,
+            id: agent.id,
+            icon: 'person',
+            label: agent.shortBio,
+            longBio: agent.longBio,
+            image: agent.image,
+            coverImage: agent.user.coverImage,
+            actions: 'agent/_partials/actions.html.twig',
+            tabs: 'agent/_partials/profile-tabs/profile-tabs.html.twig',
+            breadcrumbs: [
+                {text: 'home'|trans, path: path('web_home_homepage')},
+                {text: 'agents'|trans, path: path('web_agent_list')},
+                {text: agent.name, path: path('web_agent_getOne', {'id': agent.id})}
+            ]
+        } only %}
+    </section>
+
+    <section class="profile-entity-wrapper">
+        {% include "agent/_partials/profile-tabs/content-tabs.html.twig" %}
+    </section>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

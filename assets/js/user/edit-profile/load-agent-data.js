@@ -12,8 +12,8 @@ function loadAgentData() {
             document.getElementById('name').value = data.name;
             document.getElementById('short-description').value = data.shortBio;
             document.getElementById('long-description').value = data.longBio;
-            document.getElementById('cargo').value = data.extraFields.cargo;
-            document.getElementById('cpf').value = data.extraFields.cpf;
+            document.getElementById('cargo').value = data.extraFields.cargo || '';
+            document.getElementById('cpf').value = data.fiscalCode || '';
         })
         .catch(error => console.error('Error:', error));
 }

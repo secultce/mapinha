@@ -1,3 +1,10 @@
-<section class="entity-owner">
-    <p class="px-4 pt-2">Este espaço pertence a <a href="{{ path("web_agent_getOne", {"id": owner.id}) }}" target="_blank" class="text-decoration-none fw-bold">{{ owner.name }}</a></p>
+<section class="card card-body shadow">
+    <h3>Sobre o Espaço</h3>
+    <hr>
+    <p class=" pt-2">Este espaço é administrado por
+        <a href="{{ path("web_agent_getOne", {"id": owner.id}) }}" target="_blank" class="text-decoration-none fw-bold">{{ owner.name }}</a>
+    </p>
+    <p>
+        <em>Criado em </em> <strong>{{ space.createdAt.format('d/m/Y') }}</strong>
+    </p>
 </section>

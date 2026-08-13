@@ -1,0 +1,101 @@
+<div class="portfolio-management">
+    {% if agent.portfolio is defined and agent.portfolio|length > 0 %}
+        <div class="mb-4">
+            <h6>{{ 'existing_photos'|trans }}</h6>
+            <div class="row g-3">
+                {% for photo in agent.portfolio %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card h-100">
+                            <img src="{{ asset(photo.image) }}"
+                                 class="card-img-top"
+                                 alt="{{ photo.description }}"
+                                 style="height: 150px; object-fit: cover;">
+                            <div class="card-body p-2">
+                                <div class="row justify-content-between align-items-center">
+                                    {% if photo.description %}
+                                    <div class="col-auto">
+                                        <small class="text-muted">{{ photo.description }}</small>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-auto">
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#modalRemoveConfirm"
+                                            onclick="confirmRemove(this)" data-href="{{ path('admin_agent_remove_portfolio_photo', {id: agent.id, photoId: photo.id}) }}"
+                                            class="btn btn-outline-danger btn-sm">
+                                            <span class="iconify" data-icon="mynaui:trash"></span>
+                                            {{ 'remove'|trans }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+    {% endif %}
+
+    <div class="add-photos-section">
+        <h6>{{ 'add_new_photos'|trans }}</h6>
+        <p class="text-muted small">{{ 'portfolio_upload_hint'|trans }}</p>
+
+        <div id="portfolio-upload-container">
+            <div class="portfolio-upload-item mb-3">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-6">
+                        <label class="form-label">{{ 'photo'|trans }}</label>
+                        <input type="file"
+                               name="portfolioImages[]"
+                               class="form-control"
+                               accept="image/png,image/jpeg,image/jpg">
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label">{{ 'description'|trans }} ({{ 'optional'|trans }})</label>
+                        <input type="text"
+                               name="portfolioDescriptions[]"
+                               class="form-control"
+                               placeholder="{{ 'photo_description_placeholder'|trans }}">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-outline-secondary btn-sm remove-portfolio-item" style="display: none;">
+                            <span class="iconify" data-icon="mynaui:trash"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="add-portfolio-item" class="btn btn-outline-primary btn-sm">
+            <span class="iconify" data-icon="tabler:plus"></span>
+            {{ 'add_another_photo'|trans }}
+        </button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('portfolio-upload-container');
+    const addButton = document.getElementById('add-portfolio-item');
+
+    if (addButton) {
+        addButton.addEventListener('click', function() {
+            const items = container.querySelectorAll('.portfolio-upload-item');
+            const newItem = items[0].cloneNode(true);
+
+            newItem.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+
+            const removeBtn = newItem.querySelector('.remove-portfolio-item');
+            if (removeBtn) {
+                removeBtn.style.display = 'block';
+                removeBtn.addEventListener('click', function() {
+                    newItem.remove();
+                });
+            }
+
+            container.appendChild(newItem);
+        });
+    }
+});
+</script>

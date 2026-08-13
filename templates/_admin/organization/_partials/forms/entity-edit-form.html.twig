@@ -1,4 +1,25 @@
-<form action="POST" id="organization-edit-form" class="entity-form-edit">
+<form method="POST" id="organization-edit-form" class="entity-form-edit" enctype="multipart/form-data">
+    <div class="manage-people d-flex flex-column shadow-sm mb-4">
+        <span class="fw-bold fs-6">Pessoas ({{ organizationAgents|length }})</span>
+
+        <div class="mt-3">
+            {% for agent in availableAgents %}
+
+                {% set isChecked = organizationAgents.contains(agent) ? 'checked' : '' %}
+
+                <div class="form-check mt-2 d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" name="agent_ids[]" value="{{ agent.id }}" id="agent_{{ agent.id }}" {{ isChecked }}>
+                    <label class="form-check-label d-flex align-items-center gap-2" for="agent_{{ agent.id }}">
+                        <span class="fw-bold fs-6 text-primary">{{ agent.name }}</span>
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% set asterisk = '<span class="text-danger">*</span>' %}
+    <span class="entity-mandatory-fields">{{ 'mandatory_fields'|trans({'asterisco': asterisk})|raw }}</span>
+
     <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
     <div class="accordion accordion-flush accordion-cards mt-4" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">

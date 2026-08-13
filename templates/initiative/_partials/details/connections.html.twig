@@ -1,0 +1,94 @@
+<div class="card shadow-sm mb-3 card__entity-details">
+    <div class="card-body py-4">
+        <h3 class="mb-3 fw-bold">{{ 'connections' | trans }}</h3>
+        <hr class="mb-4">
+
+        {% if initiative.space %}
+            <div class="mb-4">
+                <h6 class="fw-bold mb-3">{{ 'spaces' | trans }}</h6>
+                <div class="d-flex align-items-center fw-bold">
+                    {% if initiative.space.image %}
+                        <img
+                            src="{{ asset(initiative.space.image) }}"
+                            alt="{{ initiative.space.name }}"
+                            class="rounded-circle me-2"
+                            style="width: 2rem; height: 2rem; object-fit: cover;"
+                        >
+                    {% else %}
+                        <div class="rounded-circle card-names-ellipse__entity-details me-2"></div>
+                    {% endif %}
+                    <a class="text-decoration-none" href="{{ path('web_space_getOne', {id: initiative.space.id}) }}">
+                        {{ initiative.space.name }}
+                    </a>
+                </div>
+            </div>
+            <hr>
+        {% endif %}
+
+        {% if initiative.organizationFrom or initiative.organizationTo %}
+            <div class="mb-4">
+                <h6 class="fw-bold mb-3">{{ 'organizations' | trans }}</h6>
+                {% if initiative.organizationFrom %}
+                    <div class="d-flex align-items-center fw-bold mb-2">
+                        {% if initiative.organizationFrom.image %}
+                            <img
+                                src="{{ asset(initiative.organizationFrom.image) }}"
+                                alt="{{ initiative.organizationFrom.name }}"
+                                class="rounded-circle me-2"
+                                style="width: 2rem; height: 2rem; object-fit: cover;"
+                            >
+                        {% else %}
+                            <div class="rounded-circle card-names-ellipse__entity-details me-2"></div>
+                        {% endif %}
+                        <a class="text-decoration-none" href="{{ path('web_organization_getOne', {id: initiative.organizationFrom.id}) }}">
+                            {{ initiative.organizationFrom.name }}
+                        </a>
+                    </div>
+                {% endif %}
+                {% if initiative.organizationTo and initiative.organizationTo.id != initiative.organizationFrom.id %}
+                    <div class="d-flex align-items-center fw-bold mb-2">
+                        {% if initiative.organizationTo.image %}
+                            <img
+                                src="{{ asset(initiative.organizationTo.image) }}"
+                                alt="{{ initiative.organizationTo.name }}"
+                                class="rounded-circle me-2"
+                                style="width: 2rem; height: 2rem; object-fit: cover;"
+                            >
+                        {% else %}
+                            <div class="rounded-circle card-names-ellipse__entity-details me-2"></div>
+                        {% endif %}
+                        <a class="text-decoration-none" href="{{ path('web_organization_getOne', {id: initiative.organizationTo.id}) }}">
+                            {{ initiative.organizationTo.name }}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            <hr>
+        {% endif %}
+
+        {% if initiative.createdBy %}
+            <div class="mb-4">
+                <h6 class="fw-bold mb-3">{{ 'agents' | trans }}</h6>
+                <div class="d-flex align-items-center fw-bold">
+                    {% if initiative.createdBy.image %}
+                        <img
+                            src="{{ asset(initiative.createdBy.image) }}"
+                            alt="{{ initiative.createdBy.name }}"
+                            class="rounded-circle me-2"
+                            style="width: 2rem; height: 2rem; object-fit: cover;"
+                        >
+                    {% else %}
+                        <div class="rounded-circle card-names-ellipse__entity-details me-2"></div>
+                    {% endif %}
+                    <a class="text-decoration-none" href="{{ path('web_agent_getOne', {id: initiative.createdBy.id}) }}">
+                        {{ initiative.createdBy.name }}
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if not initiative.space and not initiative.organizationFrom and not initiative.organizationTo %}
+            <p class="text-muted">{{ 'no_connections' | trans }}</p>
+        {% endif %}
+    </div>
+</div>

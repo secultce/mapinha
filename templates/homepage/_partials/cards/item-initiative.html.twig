@@ -1,38 +1,37 @@
-<div class="item-card-home bg-white p-4 rounded shadow-sm mt-4">
-    <div class="row align-items-center">
-        <div class="col-md-3">
-            <img src="{{ image_url|default(asset('img/default-image.png')) }}" alt="{{ image_alt|default('initiative.image'|trans) }}" class="rounded-circle img-fluid profile-image">
+<div class="item-card-home bg-white p-4 rounded shadow-sm h-100">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div class="flex-shrink-0">
+            <img src="{{ image_url|default(asset('img/default-image.png')) }}"
+                 alt="{{ image_alt|default('initiative.image'|trans) }}"
+                 class="rounded-circle card-profile-img">
         </div>
-        <div class="col-md-9 position-relative">
-            <div class="d-flex align-items-center justify-content-end">
-                <i class="material-icons text-success">{{ status_icon|default('check_circle') }}</i>
-                <span>{{ status_text|default('opened_registrations'|trans) }}</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="row align-items-start mt-1">
-        <div class="d-flex justify-content-between align-items-start">
-            <h4 class="fw-bold">
-                {{ title|default('initiative.title'|trans) }}
-            </h4>
+        <div class="d-inline-flex align-items-center gap-1 text-muted text-end ms-3 mt-1">
+            <i class="material-icons text-success fs-5">{{ status_icon|default('check_circle') }}</i>
+            <span class="fw-semibold small">{{ status_text|default('opened_registrations'|trans) }}</span>
         </div>
     </div>
 
-    <p><span class="text-uppercase">{{ 'type'|trans }}:</span> <span class="text-green">{{ type }}</span></p>
-    <p><span class="text-uppercase">{{ 'period'|trans }}:</span> <span class="text-info">{{ registration_period }}</span></p>
+    <h4 class="fw-bold mb-3">{{ title|default('initiative.title'|trans) }}</h4>
 
-    <p>{{ description|default('description') }}</p>
+    <p class="mb-2">
+        <span class="text-uppercase text-muted">{{ 'type'|trans }}:</span>
+        <span class="text-success">{{ type }}</span>
+    </p>
 
-    <h6 class="fw-bold">{{ 'tags'|trans }} ({{ tags_count|default(0) }}):</h6>
-    <p class="fw-bold text-info">{{ tags }}</p>
+    <p class="mb-3">
+        <span class="text-uppercase text-muted">{{ 'period'|trans }}:</span>
+        <span class="text-info">{{ registration_period }}</span>
+    </p>
 
-    <div class="row mt-3">
-        <div class="col-md position-relative">
-            <a href="{{ path('web_initiative_show', { id: initiative.id }) }}" class="btn btn-primary d-flex align-items-center justify-content-center">
-                <span class="fw-bold">{{ 'check'|trans }}</span>
-                <i class="material-icons ms-3">arrow_forward</i>
-            </a>
-        </div>
+    <p class="mb-4">{{ description|default('description') }}</p>
+    <h6 class="fw-bold mb-2">{{ 'tags'|trans }} ({{ tags_count|default(0) }}):</h6>
+    <p class="fw-bold text-info mb-4">{{ tags }}</p>
+
+    <div class="d-grid mt-2">
+        <a href="{{ path('web_initiative_show', { id: initiative.id }) }}" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 py-2">
+            <span class="fw-bold">{{ 'check'|trans }}</span>
+            <i class="material-icons">arrow_forward</i>
+        </a>
     </div>
 </div>

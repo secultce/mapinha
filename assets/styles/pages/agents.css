@@ -25,103 +25,10 @@
     min-height: 100vh;
 }
 
-.entity-banner {
-    position: relative;
-}
-
-.entity-banner img {
-    height: 256px;
-    width: 100%;
-    object-fit: cover;
-}
-
-.entity-profile-bio {
-    padding-left: 8.5rem;
-    padding-right: 8.625rem;
-    margin-top: -3.75rem;
-    background: linear-gradient(to bottom, transparent 20%, white 80%);
-    box-shadow: 0 4px 8px 0 var(--box-shadow-color);
-}
-
-.entity-photo img {
-    width: 7.5rem;
-    height: 7.5rem;
-    border-radius: 50%;
-    border: 0.0625rem solid var(--dark-gray);
-    z-index: 1;
-}
-
-.entity-profile-bio .entity-profile-label {
-    width: 6.563rem;
-    height: 2rem;
-    border-radius: 45px;
-    background-color: var(--color-highlight);
-    font-size: 14px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 0.406rem 1rem;
-    line-height: 0;
-}
-
-.entity-profile-bio .entity-profile-label i {
-    font-size: 1.5rem;
-}
-
-.entity-profile-actions button {
-    width: 12.5rem;
-    height: 3rem;
-    border: none;
-    background-color: var(--deep-teal);
-    color: var(--white-color);
-    font-weight: 700;
-    border-radius: 8px;
-    padding: 0.75rem 0.656rem;
-}
-
-.entity-profile-actions button i {
-    font-size: 1.4rem;
-}
-
-.entity-profile-actions button:nth-child(2) i {
-    height: 17px;
-}
-
-.entity-profile-actions button:first-child {
-    background-color: var(--white-color);
-    color: var(--deep-teal);
-    border: 2px solid var(--deep-teal);
-    padding: 1rem 1rem;
-}
-
-.entity-profile-bio .entity-description {
-    margin-top: 12px;
-    max-width: 93.75rem;
-    max-height: 3.125rem;
-}
-
-.profile-tabs, .perfil-tabs {
-    margin-left: -15px;
-}
-
-.profile-tabs .entity-page-tabs, .perfil-tabs .entity-page-tabs{
-    margin: 0;
-    padding: 0;
-}
-
-.profile-tabs span {
-    color: var(--paleGray);
-}
-
-.profile-entity-wrapper {
-    margin: 1.563rem 8.2rem;
-}
-
 .profile-entity-wrapper .agent-organizations {
     background-color: var(--white-color);
-    height: 9.875rem;
-    border-radius: 4px;
+    height: auto;
+    border-radius: 0.25rem;
 }
 
 .agent-organizations {
@@ -129,15 +36,16 @@
     box-shadow: 0 4px 8px 0 var(--box-shadow-color);
 }
 
-.agent-organizations__content .agent-organization img {
+.agent-organization img {
     width: 2.5rem;
     height: 2.5rem;
+    min-width: 2.5rem;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .agent-organization {
-    width: 23.625rem;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -235,12 +143,6 @@
     margin-bottom: 0;
 }
 
-.agent-profile-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-}
-
 .agent-profile-actions button {
     border: 2px solid var(--deep-teal);
     height: 3rem;
@@ -317,4 +219,11 @@
         padding-right: 0;
         margin-right: 0;
     }
+
+    .agent-profile-actions button,
+    .agent-profile-actions button:first-child {
+        width: 100%;
+        min-width: 0;
+    }
+
 }

@@ -6,7 +6,7 @@
 {% for organization in organizations %}
     <div class="mw-100 opportunity-card">
         <div class="d-flex flex-column flex-md-row align-items-center gap-3">
-            <img src="{{ asset('img/home-agents.png') }}" alt="{{ 'photo' | trans }}" class="rounded-circle ms-0 ms-md-3">
+            <img src="{{ asset(organization.image ?? 'img/default-image.png') }}" alt="{{ 'photo' | trans }}" class="rounded-circle ms-0 ms-md-3">
             <div class="d-flex flex-column flex-md-row align-items-center gap-2">
                 <h5 class="organization-name text-start text-md-start">{{ organization.name }}</h5>
                 <span class="organization-type person">
@@ -16,7 +16,15 @@
         </div>
 
         <div class="d-flex flex-column gap-2 pt-3">
-            <p class="text-start ms-2 ms-md-3"><strong>{{ 'areas_of_expertise' | trans}} (1):</strong> <span class="organization-sub-area">DESENVOLVIMENTO</span></p>
+            <p class="text-start ms-2 ms-md-3"><strong>{{ 'areas_of_expertise' | trans}} ({{ organization.activityAreas|length }}):</strong>
+                <span class="organization-sub-area">
+                    {% for area in organization.activityAreas %}
+                        {{ area.name }}{% if not loop.last %}, {% endif %}
+                    {% else %}
+                        {{ 'no_areas' | trans }}
+                    {% endfor %}
+                </span>
+            </p>
             <p class="text-start ms-2 ms-md-3"><span class="fw-bold">{{ 'description'|trans }}: </span>{{ organization.description }}</p>
             <div class="organization-calendar gap-2 text-start">
                 <i class="material-icons">calendar_month</i>

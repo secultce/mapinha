@@ -7,14 +7,18 @@ namespace App\Service;
 use App\Enum\UserRolesEnum;
 use App\Exception\EntityManagerAndEntityClassNotSetException;
 use App\Exception\NoEntitiesProvidedForExportException;
+use App\Exception\ResourceNotFoundException;
 use App\Exception\ValidatorException;
 use App\Service\Interface\FileServiceInterface;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract readonly class AbstractEntityService
@@ -108,6 +112,7 @@ abstract readonly class AbstractEntityService
     {
         $dto = $this->denormalizeDto($data, $dtoClass);
         $violations = $this->validator->validate($dto, groups: $group);
+
         if ($violations->count() > 0) {
             throw new ValidatorException(violations: $violations);
         }
@@ -137,5 +142,58 @@ abstract readonly class AbstractEntityService
         $response->headers->set('Content-Disposition', "attachment; filename=\"$filename\"");
 
         return $response;
+    }
+
+    protected function processFileUpload(
+        Uuid $id,
+        UploadedFile $uploadedFile,
+        string $dtoClass,
+        string $dtoProperty,
+        string $directoryParam,
+        string $getterMethod,
+        string $setterMethod,
+        array $validationGroups = ['UPDATE']
+    ): object {
+        if (null === $this->entityClass) {
+            throw new EntityManagerAndEntityClassNotSetException();
+        }
+
+        $entity = $this->entityManager->getRepository($this->entityClass)->find($id);
+
+        if (!$entity) {
+            throw new ResourceNotFoundException();
+        }
+
+        $dto = new $dtoClass();
+        if (property_exists($dto, $dtoProperty)) {
+            $dto->$dtoProperty = $uploadedFile;
+        }
+
+        $violations = $this->validator->validateProperty($dto, $dtoProperty, $validationGroups);
+
+        if ($violations->count() > 0) {
+            throw new ValidatorException(violations: $violations);
+        }
+
+        $oldFile = $entity->$getterMethod();
+        if ($oldFile) {
+            $this->fileService->deleteFileByUrl($oldFile);
+        }
+
+        $uploadedImage = $this->fileService->uploadImage(
+            $this->parameterBag->get($directoryParam),
+            $uploadedFile
+        );
+
+        $relativePath = '/uploads'.$this->parameterBag->get($directoryParam).'/'.$uploadedImage->getFilename();
+        $entity->$setterMethod($relativePath);
+
+        if (method_exists($entity, 'setUpdatedAt')) {
+            $entity->setUpdatedAt(new DateTime());
+        }
+
+        $this->entityManager->flush();
+
+        return $entity;
     }
 }

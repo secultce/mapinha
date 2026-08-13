@@ -8,11 +8,13 @@ use App\DTO\SpaceDto;
 use App\DTO\SpaceFilterDto;
 use App\Entity\Agent;
 use App\Entity\Space;
+use App\Entity\SpaceAddress;
 use App\Enum\EntityEnum;
 use App\Exception\Space\SpaceResourceNotFoundException;
-use App\Exception\ValidatorException;
 use App\Repository\Interface\SpaceRepositoryInterface;
+use App\Service\Interface\CityServiceInterface;
 use App\Service\Interface\FileServiceInterface;
+use App\Service\Interface\PhotoServiceInterface;
 use App\Service\Interface\SpaceServiceInterface;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,15 +28,19 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 readonly class SpaceService extends AbstractEntityService implements SpaceServiceInterface
 {
     private const string DIR_SPACE_PROFILE = 'app.dir.space.profile';
+    private const string DIR_SPACE_COVER = 'app.dir.space.cover';
+    private const string DIR_SPACE_PORTFOLIO = 'app.dir.space.portfolio';
 
     public function __construct(
         private FileServiceInterface $fileService,
         private ParameterBagInterface $parameterBag,
         private SpaceRepositoryInterface $repository,
+        private CityServiceInterface $cityService,
         private Security $security,
         private SerializerInterface $serializer,
         private ValidatorInterface $validator,
         private EntityManagerInterface $entityManager,
+        private PhotoServiceInterface $photoService,
     ) {
         parent::__construct(
             $this->security,
@@ -100,6 +106,8 @@ readonly class SpaceService extends AbstractEntityService implements SpaceServic
 
     public function list(int $limit = 50, array $params = [], string $order = 'DESC'): array
     {
+        $params['isDraft'] = false;
+
         $filters = $this->validateInput($params, SpaceFilterDto::class);
 
         if (true === array_key_exists('associationWith', $params)) {
@@ -146,6 +154,23 @@ readonly class SpaceService extends AbstractEntityService implements SpaceServic
             'object_to_populate' => $spaceFromDB,
         ]);
 
+        $addressData = $space['addressData'] ?? null;
+
+        if (null !== $addressData) {
+            $address = $spaceFromDB->getAddress() ?? new SpaceAddress();
+            $city = $this->cityService->get($space['addressData']['city']);
+
+            $address->setZipcode($space['addressData']['zipcode']);
+            $address->setStreet($space['addressData']['street']);
+            $address->setNumber($space['addressData']['number'] ?? '');
+            $address->setNeighborhood($space['addressData']['neighborhood']);
+            $address->setComplement($space['addressData']['complement']);
+            $address->setCity($city);
+
+            $address->setOwner($spaceFromDB);
+            $spaceObj->setAddress($address);
+        }
+
         $spaceObj->setUpdatedAt(new DateTime());
 
         return $this->repository->save($spaceObj);
@@ -153,33 +178,30 @@ readonly class SpaceService extends AbstractEntityService implements SpaceServic
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Space
     {
-        $space = $this->get($id);
-
-        $spaceDto = new SpaceDto();
-        $spaceDto->image = $uploadedFile;
-
-        $violations = $this->validator->validate($spaceDto, groups: [SpaceDto::UPDATE]);
-
-        if ($violations->count() > 0) {
-            throw new ValidatorException(violations: $violations);
-        }
-
-        if ($space->getImage()) {
-            $this->fileService->deleteFileByUrl($space->getImage());
-        }
-
-        $uploadedImage = $this->fileService->uploadImage(
-            $this->parameterBag->get(self::DIR_SPACE_PROFILE),
-            $uploadedFile
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: SpaceDto::class,
+            dtoProperty: 'profileImage',
+            directoryParam: self::DIR_SPACE_PROFILE,
+            getterMethod: 'getImage',
+            setterMethod: 'setImage',
+            validationGroups: [SpaceDto::UPDATE]
         );
+    }
 
-        $space->setImage($this->fileService->urlOfImage($uploadedImage->getFilename()));
-
-        $space->setUpdatedAt(new DateTime());
-
-        $this->repository->save($space);
-
-        return $space;
+    public function updateCoverImage(Uuid $id, UploadedFile $uploadedFile): Space
+    {
+        return $this->processFileUpload(
+            id: $id,
+            uploadedFile: $uploadedFile,
+            dtoClass: SpaceDto::class,
+            dtoProperty: 'coverImage',
+            directoryParam: self::DIR_SPACE_COVER,
+            getterMethod: 'getCoverImage',
+            setterMethod: 'setCoverImage',
+            validationGroups: [SpaceDto::UPDATE]
+        );
     }
 
     public function togglePublish(Uuid $id): void
@@ -188,5 +210,34 @@ readonly class SpaceService extends AbstractEntityService implements SpaceServic
         $space->setIsDraft(!$space->isDraft());
 
         $this->repository->save($space);
+    }
+
+    public function addPortfolioImage(Space $space, UploadedFile $uploadedFile, ?string $description = null): Space
+    {
+        $photo = $this->photoService->create($uploadedFile, self::DIR_SPACE_PORTFOLIO, $description);
+
+        $space->addPortfolio($photo);
+        $space->setUpdatedAt(new DateTime());
+
+        $this->entityManager->flush();
+
+        return $space;
+    }
+
+    public function removePortfolioImage(Uuid $spaceId, Uuid $photoId): Space
+    {
+        $space = $this->get($spaceId);
+
+        $photo = $this->photoService->get($photoId);
+
+        if (null !== $photo) {
+            $space->removePortfolio($photo);
+            $this->photoService->delete($photo);
+            $space->setUpdatedAt(new DateTime());
+
+            $this->entityManager->flush();
+        }
+
+        return $space;
     }
 }

@@ -30,4 +30,8 @@ interface SpaceServiceInterface
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Space;
 
     public function togglePublish(Uuid $id): void;
+
+    public function addPortfolioImage(Space $space, UploadedFile $uploadedFile, ?string $description = null): Space;
+
+    public function removePortfolioImage(Uuid $spaceId, Uuid $photoId): Space;
 }

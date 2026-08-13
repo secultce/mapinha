@@ -34,6 +34,10 @@ class Organization extends AbstractEntity
     #[Groups('organization.get')]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups('organization.get')]
+    private ?string $longDescription = null;
+
     #[ORM\Column(type: 'string', nullable: false)]
     #[Groups('organization.get')]
     private string $type = OrganizationTypeEnum::UNDEFINED->value;
@@ -41,6 +45,10 @@ class Organization extends AbstractEntity
     #[ORM\Column(nullable: true)]
     #[Groups('organization.get')]
     private ?string $image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('organization.get')]
+    private ?string $coverImage = null;
 
     #[ORM\JoinTable(name: 'organizations_agents')]
     #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id')]
@@ -69,6 +77,11 @@ class Organization extends AbstractEntity
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $socialNetworks = [];
 
+    #[ORM\ManyToMany(targetEntity: ActivityArea::class, inversedBy: 'organizations', cascade: ['persist'])]
+    #[ORM\JoinTable(name: 'activity_area_organizations')]
+    #[Groups(['organization.get', 'organization.get.item'])]
+    private Collection $activityAreas;
+
     #[ORM\Column]
     #[Groups('organization.get')]
     private DateTimeImmutable $createdAt;
@@ -85,6 +98,7 @@ class Organization extends AbstractEntity
     {
         $this->createdAt = new DateTimeImmutable();
         $this->agents = new ArrayCollection();
+        $this->activityAreas = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -117,6 +131,16 @@ class Organization extends AbstractEntity
         $this->description = $description;
     }
 
+    public function getLongDescription(): ?string
+    {
+        return $this->longDescription;
+    }
+
+    public function setLongDescription(?string $longDescription): void
+    {
+        $this->longDescription = $longDescription;
+    }
+
     public function getType(): string
     {
         return $this->type;
@@ -135,6 +159,16 @@ class Organization extends AbstractEntity
     public function setImage(?string $image): void
     {
         $this->image = $image;
+    }
+
+    public function getCoverImage(): ?string
+    {
+        return $this->coverImage;
+    }
+
+    public function setCoverImage(?string $coverImage): void
+    {
+        $this->coverImage = $coverImage;
     }
 
     public function getAgents(): Collection
@@ -190,6 +224,28 @@ class Organization extends AbstractEntity
     public function addExtraField(string $name, mixed $value): void
     {
         $this->extraFields[$name] = $value;
+    }
+
+    public function getActivityAreas(): Collection
+    {
+        return $this->activityAreas;
+    }
+
+    public function setActivityAreas(Collection $activityAreas): void
+    {
+        $this->activityAreas = $activityAreas;
+    }
+
+    public function addActivityArea(ActivityArea $activityArea): void
+    {
+        if (!$this->activityAreas->contains($activityArea)) {
+            $this->activityAreas->add($activityArea);
+        }
+    }
+
+    public function removeActivityArea(ActivityArea $activityArea): void
+    {
+        $this->activityAreas->removeElement($activityArea);
     }
 
     public function getSocialNetworks(): array

@@ -36,5 +36,8 @@
 {% endblock %}
 
 {% block extra_javascripts %}
+    {{ parent() }}
     <script type="module" src="{{ asset('js/agent/create.js') }}"></script>
+    <script type="module" src="{{ asset('js/load-cities.js') }}"></script>
+    <script type="module" src="{{ asset('js/viacep-integration.js') }}"></script>
 {% endblock %}

@@ -136,6 +136,23 @@ class UserAdminController extends AbstractAdminController
         ]);
     }
 
+    public function details(Uuid $id): Response
+    {
+        $user = $this->service->get($id);
+
+        $this->denyAccessUnlessGranted('get', $user);
+
+        $lastLogin = $this->documentService->getLastLoginByUserId($id);
+
+        $agents = $this->agentService->findBy(['user' => $user]);
+
+        return $this->render('user/details.html.twig', [
+            'user' => $user,
+            'lastLogin' => $lastLogin,
+            'agents' => $agents,
+        ]);
+    }
+
     public function accountPrivacy(Uuid $id): Response
     {
         $user = $this->service->get($id);
@@ -166,7 +183,7 @@ class UserAdminController extends AbstractAdminController
             'email' => $request->request->get('email'),
         ];
 
-        if (null !== $request->request->get('password')) {
+        if (true !== empty($request->request->get('password'))) {
             $userData['password'] = PasswordHasher::hash($request->request->get('password'));
         }
 
@@ -174,6 +191,10 @@ class UserAdminController extends AbstractAdminController
 
         if ($uploadedImage = $request->files->get('profileImage')) {
             $this->service->updateImage($user->getId(), $uploadedImage);
+        }
+
+        if ($uploadedCover = $request->files->get('coverImage')) {
+            $this->service->updateCoverImage($user->getId(), $uploadedCover);
         }
     }
 
@@ -250,6 +271,7 @@ class UserAdminController extends AbstractAdminController
                 'socialName' => $user->getSocialName(),
                 'email' => $user->getEmail(),
                 'image' => $user->getImage(),
+                'coverImage' => $user->getCoverImage(),
             ],
             'form_id' => 'edit_profile',
             'agents' => $agents,

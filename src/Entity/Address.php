@@ -15,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Table(name: 'address')]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'owner_type', type: 'string')]
-#[ORM\DiscriminatorMap(['agent' => AgentAddress::class, 'space' => SpaceAddress::class])]
+#[ORM\DiscriminatorMap(['agent' => AgentAddress::class, 'space' => SpaceAddress::class, 'event' => EventAddress::class])]
 abstract class Address extends AbstractEntity
 {
     #[ORM\Id]

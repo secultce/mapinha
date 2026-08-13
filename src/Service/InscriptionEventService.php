@@ -143,4 +143,26 @@ readonly class InscriptionEventService extends AbstractEntityService implements 
 
         return $this->repository->findMyInscriptions($firstAgent->getId()->toRfc4122(), 50);
     }
+
+    public function getUserInscription(Uuid $eventId): ?InscriptionEvent
+    {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        if (null === $user) {
+            return null;
+        }
+
+        /** @var Agent $firstAgent */
+        $firstAgent = $user->getAgents()->first();
+
+        if (!$firstAgent) {
+            return null;
+        }
+
+        return $this->repository->findInscriptionByAgentAndEvent(
+            $firstAgent->getId()->toRfc4122(),
+            $eventId->toRfc4122()
+        );
+    }
 }

@@ -29,4 +29,6 @@ interface InitiativeServiceInterface
     public function update(Uuid $id, array $initiative): Initiative;
 
     public function updateImage(Uuid $id, UploadedFile $uploadedFile): Initiative;
+
+    public function countByStatus(string $status): int;
 }

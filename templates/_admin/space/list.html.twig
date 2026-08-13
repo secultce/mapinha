@@ -42,7 +42,7 @@
                                         {% if item.deletedAt %}
                                             <span class="text-secondary">{{ item.name }}</span>
                                         {% else %}
-                                            <a href="{{ path('admin_space_timeline', {id: item.id}) }}">{{ item.name }}</a>
+                                            <a href="{{ path('web_space_getOne', {id: item.id}) }}">{{ item.name }}</a>
                                         {% endif %}
                                     </td>
                                     <td>

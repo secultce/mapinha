@@ -104,6 +104,9 @@ dropdown:
       - text: "my_initiatives"
         icon: article
         route: "admin_initiative_list"
+      - text: "my_organizations"
+        icon: build
+        route: "admin_organization_list"
 
 dashboard:
   cards:
@@ -171,6 +174,7 @@ dashboard:
 
 sidebar:
   dashboard:
+    acl: [ 'ROLE_USER' ]
     title: menu
     items:
       admin_dashboard:
@@ -180,6 +184,7 @@ sidebar:
 #        color: text-info
 
   my_opportunities:
+    acl: [ 'ROLE_USER' ]
     title: my_opportunities
     items:
       admin_registration_list:
@@ -192,6 +197,7 @@ sidebar:
         text: accountability
 
   my_events:
+    acl: [ 'ROLE_USER' ]
     title: my_events
     items:
       admin_my_event_list:
@@ -200,6 +206,7 @@ sidebar:
         text: my_subscriptions
 
   notice_opportunity:
+    acl: [ 'ROLE_USER' ]
     title: footer.notices_opportunities
     items:
       admin_opportunity_list:
@@ -212,6 +219,7 @@ sidebar:
         text: my_reviews
 
   entity:
+    acl: [ 'ROLE_ADMIN' ]
     title: management
     items:
       admin_agent_list:
@@ -237,45 +245,46 @@ sidebar:
 
   admin:
     title: admin_options
+    acl: ['ROLE_ADMIN']
     items:
       admin_seal_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: bookmark
         text: seals
       admin_subsite_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: account_tree
         text: subsites
       admin_user_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: manage_accounts
         text: users
       admin_faq_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: quiz
         text: faq
       admin_role_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: newspaper
         text: functions
       admin_activity_area_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: category
         text: area_of_activity
       admin_tag_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: label
         text: tags
       admin_space_type_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: room_preferences
         text: space_type
       admin_architectural_accessibility_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: accessibility
         text: architectural_accessibility
       admin_cultural_language_list:
-        acl: ['ROLE_USER']
+        acl: ['ROLE_ADMIN']
         icon: language
         text: cultural_language
 

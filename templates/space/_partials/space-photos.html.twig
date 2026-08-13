@@ -1,0 +1,25 @@
+<section class="card card-body shadow mt-4">
+    <h3>{{ 'photos' | trans }}</h3>
+    <hr>
+    {% if space.portfolio is defined and space.portfolio|length > 0 %}
+        <div class="row g-3">
+            {% for photo in space.portfolio %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100">
+                        <img src="{{ asset(photo.image) }}"
+                             class="card-img-top"
+                             alt="{{ photo.description }}"
+                             style="height: 200px; object-fit: cover;">
+                        {% if photo.description %}
+                            <div class="card-body p-2">
+                                <p class="card-text small text-muted mb-0">{{ photo.description }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <em>{{ 'view.space.no_photos_available' | trans }}</em>
+    {% endif %}
+</section>

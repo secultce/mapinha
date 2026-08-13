@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Serializer\Denormalizer;
 
 use App\Entity\Agent;
+use App\Entity\CulturalFunction;
 use App\Entity\Organization;
+use App\Entity\Photo;
 use App\Entity\User;
 use App\Service\Interface\FileServiceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -55,6 +57,25 @@ readonly class AgentDenormalizer implements DenormalizerInterface
             $agent->setOrganizations(new ArrayCollection($organizations));
         }
 
+        $culturalFunctions = array_map(
+            fn (string $id) => $this->entityManager->getRepository(CulturalFunction::class)->findOneBy(['id' => $id]),
+            $data['culturalFunction'] ?? []
+        );
+
+        if (true === array_key_exists('culturalFunction', $data)) {
+            $culturalFunctions = array_filter($culturalFunctions);
+            $agent->setCulturalFunction(new ArrayCollection($culturalFunctions));
+        }
+
+        $portfolio = array_map(
+            fn (string $id) => $this->entityManager->find(Photo::class, $id),
+            $data['portfolio'] ?? []
+        );
+
+        if (true === array_key_exists('portfolio', $data)) {
+            $agent->setPortfolio(new ArrayCollection($portfolio));
+        }
+
         return $agent;
     }
 
@@ -71,7 +92,7 @@ readonly class AgentDenormalizer implements DenormalizerInterface
 
     private function filterData(array $data): array
     {
-        unset($data['organizations']);
+        unset($data['organizations'], $data['culturalFunction'], $data['portfolio']);
 
         return $data;
     }

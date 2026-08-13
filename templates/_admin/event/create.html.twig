@@ -23,6 +23,7 @@
             <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
             <h2 class="fw-bold fs-3">{{ 'view.event.create_event.create'|trans }}</h2>
             <p>{{ 'view.event.create_event.description'|trans }}</p>
+
             <div class="mb-4">
                 <label for="name" class="form-label">{{ 'name'|trans }}</label>
                 <input type="text" class="form-control" id="name" name="name" required/>
@@ -30,8 +31,8 @@
 
             <div class="mb-4">
                 {% include '_components/tags-selector.html.twig' with {
-                    inputName: 'culturalLanguage',
-                    inputLabel: 'cultural_language'|trans,
+                    inputName: 'culturalLanguages',
+                    inputLabel: 'cultural_languages'|trans,
                     items: culturalLanguageItems|map(culturalLanguage => { 'label': culturalLanguage.name, 'value': culturalLanguage.id }),
                     tags: [],
                     required: false,
@@ -43,17 +44,17 @@
                 <label for="description">
                     {{ 'view.event.create_event.short_bio'|trans }}
                 </label>
-                <textarea id="description" name="description" maxlength="400" rows="5" class="form-control mt-1"></textarea>
-                <p id="counter">0/400</p>
+                <textarea id="description" name="description" maxlength="255" rows="5" class="form-control mt-1"></textarea>
+                <p id="counter">0/255</p>
             </div>
 
             <div class="mb-4">
-                <label class="form-label" for="event-type">{{ 'type'|trans }}</label>
+                <label class="form-label" for="format-event-type">{{ 'type'|trans }}</label>
                 <span class="text-danger">*</span>
-                <select class="form-select mt-1" id="event-type" name="type" required>
+                <select class="form-select mt-1" id="format-event-type" name="eventFormatType" required>
                     <option selected disabled value="">{{ 'select'|trans }}</option>
                     {% for type in typeItems %}
-                        <option value="{{ type.value }}">{{ ('event_types.' ~ type.name)|trans }}</option>
+                        <option value="{{ type.value }}">{{ ('event_format_types.' ~ type.name)|trans }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -74,7 +75,18 @@
 
 {% block extra_javascripts %}
     <script type="module" src="{{ asset('js/_components/tags-selector.js') }}"></script>
-    <script type="module" src="{{ asset('js/counter.js') }}"></script>
     <script type="module" src="{{ asset('js/dropdown.js') }}"></script>
     <script type="module" src="{{ asset('js/authentication/event/create.js') }}"></script>
+
+    <script>
+        const description = document.getElementById('description');
+        const counter = document.getElementById('counter');
+        const maxLength = description.getAttribute('maxlength');
+
+        description.addEventListener('input', () => {
+            const length = description.value.length;
+            counter.textContent = `${length}/${maxLength}`;
+        });
+
+    </script>
 {% endblock %}

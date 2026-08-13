@@ -7,7 +7,11 @@
 
     {% include "space/_partials/connections.html.twig" %}
 
-    <div class="space-details-actions">
+    {% include "space/_partials/contact.html.twig" %}
+
+    {% include "space/_partials/space-photos.html.twig" %}
+
+    <div class="space-details-actions d-none">
         <button class="left-button ">{{ 'view.agent_profile.profile_change_history' | trans }}</button>
         <button class="right-button">{{ 'view.agent_profile.report' | trans }}</button>
     </div>

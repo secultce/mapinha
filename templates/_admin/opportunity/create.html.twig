@@ -41,7 +41,7 @@
 
                         <p class="text-danger">{{ 'view.entities.message.required_fields'|trans }} (*)</p>
 
-                        <form action="#" method="post" id="create-opportunity-form">
+                        <form action="#" method="post" id="create-opportunity-form" enctype="multipart/form-data">
                             <input type="hidden" name="token" value="{{ csrf_token(form_id) }}">
                             <input type="hidden" id="opportunityId" name="id" value="{{ id }}">
                             <div class="mb-3">
@@ -83,10 +83,17 @@
                                     questionFill: false,
                                 } %}
                             </div>
-                            <div class="mb-3">
-                                <label for="opportunityCoverImage" class="mb-1">{{ 'cover_image'|trans }}</label>
-                                <input type="file" name="coverImage" class="form-control" id="opportunityCoverImage" accept="image/*">
-                                <input type="hidden" id="base64CoverImageOpportunity" name="extraFields[coverImage]" value="">
+                            <div id="banner-preview-box" class="banner border border-secondary rounded mb-3">
+                                <input type="file" name="coverImage" class="banner-input js-cropper-input" id="banner-input" accept="image/*"
+                                       data-modal-id="modalBannerCrop"
+                                       data-preview="#banner-preview-box"
+                                       data-aspect-ratio="{{ 1920/356 }}"
+                                />
+
+                                <label for="banner-input" class="banner-label">
+                                    <span class="iconify entity-edit-icon me-2" data-icon="tabler:camera-plus"></span>
+                                    {{ 'add_cover_image' | trans }}
+                                </label>
                             </div>
                             <div class="mb-3">
                                 <label for="entity-initiative">{{ 'view.opportunity.labels.choose_entity'|trans }} <span class="text-danger">*</span></label>
@@ -118,11 +125,15 @@
             </div>
         </div>
     </section>
+
+    {% include '_components/banner-cropper.html.twig' with {'modalId': 'modalBannerCrop'} %}
+
 {% endblock %}
 
 {% block footer %}{% endblock %}
 
 {% block extra_javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/banner-cropper.js') }}"></script>
     <script src="{{ asset('js/_components/tags-selector.js') }}"></script>
 {% endblock %}
